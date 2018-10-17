@@ -1,0 +1,25 @@
+version: "2"
+services:
+
+  backend:
+    build: .
+    command: tail -f /dev/null
+    environment:
+      DJANGO_SETTINGS_MODULE: pah-fm_org.settings.dev
+      PAH-FM_SECRET_KEY: a63eb5ef-3b25-4595-846a-5d97d99486f0
+      PAH-FM_DB_HOST: db
+      PAH-FM_DB_PASS: pah-fm
+    ports:
+      - "8000:8000"
+    links:
+      - db:db
+    volumes:
+      - ./backend:/pah-fm/backend
+      - /volontulo/backend/apps/pah-fm/node_modules
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: pah-fm
+      POSTGRES_USER: pah-fm
+      POSTGRES_PASSWORD: pah-fm
