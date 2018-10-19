@@ -1,7 +1,6 @@
 # pah-fm
 
-
-# Frontend setup
+## Project setup
 ```
 npm install
 ```
