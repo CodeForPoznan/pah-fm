@@ -7,7 +7,7 @@ EXPOSE 8000
 ENV LANG C.UTF-8
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
-# System-based package isntallation
+# System-based package installation
 RUN apt-get update -y && apt-get install -y python3-pip libpq-dev && apt-get autoremove
 
 # Setup wait-for-it for docker-compose
