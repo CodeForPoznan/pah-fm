@@ -13,7 +13,6 @@ services:
       - db:db
     volumes:
       - ./backend:/pah-fm/backend
-      - /pah-fm/backend/apps/pah-fm/node_modules
 
   db:
     image: postgres
