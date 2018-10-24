@@ -11,13 +11,13 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 RUN apt-get update -y && apt-get install -y python3-pip libpq-dev && apt-get autoremove
 
 # Setup wait-for-it for docker-compose
-ADD ../wait-for-it.sh /usr/bin/wait-for-it
+ADD wait-for-it.sh /usr/bin/wait-for-it
 RUN chmod a+x /usr/bin/wait-for-it
 
 # Backend setup
 RUN pip3 install --upgrade pip
 
 # Add build-time directories
-ADD .. /pah-fm
+ADD . /pah-fm
 WORKDIR /pah-fm
-RUN pip3 install -r ./backend/requirements.txt
+RUN pip3 install -r requirements.txt
