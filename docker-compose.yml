@@ -1,22 +1,7 @@
-version: "3"
-services:
-
-  backend:
-    build: .
-    command: tail -f /dev/null
-    environment:
-      PAH-FM_DB_HOST: db
-      PAH-FM_DB_PASS: pah-fm
-    ports:
-      - "8000:8000"
-    links:
-      - db:db
-    volumes:
-      - ./backend:/pah-fm/backend
-
-  db:
-    image: postgres
-    environment:
-      POSTGRES_DB: pah-fm
-      POSTGRES_USER: pah-fm
-      POSTGRES_PASSWORD: pah-fm
+frontend:
+  image: pah/frontend
+  command: npm run serve
+  ports:
+    - 4200:4200
+  volumes:
+    - ./frontend:/pah/frontend
