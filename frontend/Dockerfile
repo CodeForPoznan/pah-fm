@@ -1,5 +1,4 @@
-FROM node:8.12.0 as node
-
+FROM node:8.12.0
 # Expose network ports
 EXPOSE 4200
 
