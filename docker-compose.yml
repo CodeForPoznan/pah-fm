@@ -1,6 +1,14 @@
 version: "3"
 services:
 
+frontend:
+  image: pah/frontend
+  command: npm run serve
+  ports:
+    - 4200:4200
+  volumes:
+    - ./frontend:/pah/frontend
+
   backend:
     build: backend
     command: bash docker-entrypoint.sh
