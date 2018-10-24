@@ -1,27 +1,14 @@
 # pah-fm
 
 
-# Frontend setup
+# Build project
+
 ```
-npm install
+make build
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+# Run project
 
-### Compiles and minifies for production
 ```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
+docker-compose up
 ```
