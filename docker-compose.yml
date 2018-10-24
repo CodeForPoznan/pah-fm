@@ -3,7 +3,7 @@ services:
 
   backend:
     build: .
-    command: tail -f /dev/null
+    command: bash docker-entrypoint.sh
     environment:
       PAH-FM_DB_HOST: db
       PAH-FM_DB_PASS: pah-fm
