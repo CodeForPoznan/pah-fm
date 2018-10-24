@@ -1,0 +1,7 @@
+frontend:
+  image: pah/frontend
+  command: npm run serve
+  ports:
+    - 4200:4200
+  volumes:
+    - ./frontend:/pah/frontend
