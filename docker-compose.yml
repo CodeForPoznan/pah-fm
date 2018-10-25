@@ -12,10 +12,11 @@ services:
   backend:
     build: backend
     command: tail -f /dev/null
-    #command: bash docker-entrypoint.sh
+    #command: bash docker-enterpoint.sh
     environment:
       PAH-FM_DB_HOST: db
       PAH-FM_DB_PASS: pah-fm
+      SECRET_KEY: pah-fm
     ports:
       - "8000:8000"
     links:
