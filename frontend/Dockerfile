@@ -1,8 +1,11 @@
 FROM node:8.12.0
-# Expose network ports
+
 EXPOSE 4200
 
-WORKDIR /frontend
-COPY package*.json ./
+WORKDIR /pah-fm/frontend
+
+ADD package*.json /pah-fm/frontend/
+
 RUN npm install
-COPY . /frontend
+
+ADD . /pah-fm/frontend
