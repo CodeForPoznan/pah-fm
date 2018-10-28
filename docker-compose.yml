@@ -2,16 +2,18 @@ version: "3"
 services:
 
   frontend:
-    build: frontend
-    # image: pah/frontend
-    command: npm run serve
+    image: codeforpoznan/pah-fm-frontend
+    # build: frontend
+    command: bash docker-entrypoint.sh
+    # command: tail -f /dev/null
     ports:
       - 4200:4200
     volumes:
-      - ./frontend:/pah/frontend
+      - ./frontend:/pah-fm/frontend
 
   backend:
-    build: backend
+    image: codeforpoznan/pah-fm-backend
+    # build: backend
     command: bash docker-entrypoint.sh
     # command: tail -f /dev/null
     environment:
@@ -23,7 +25,7 @@ services:
     links:
       - db:db
     volumes:
-      - ./backend:/pah-fm
+      - ./backend:/pah-fm/backend
 
   db:
     image: postgres:9.5

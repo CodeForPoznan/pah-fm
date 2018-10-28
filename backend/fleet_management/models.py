@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.timezone import now
 
 
-class Driver(AbstractUser):
+class User(AbstractUser):
 
     def __str__(self):
         return self.username
@@ -17,15 +17,15 @@ class Car(models.Model):
 
 
 class Passenger(models.Model):
-    first_name = models.CharField(max_length=60, blank=False, unique=True)
-    last_name = models.CharField(max_length=60, blank=False, unique=True)
+    first_name = models.CharField(max_length=60, blank=False)
+    last_name = models.CharField(max_length=60, blank=False)
 
     def __str__(self):
         return self.last_name
 
 
 class Route(models.Model):
-    driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
+    driver = models.ForeignKey(User, on_delete=models.CASCADE)
     car = models.ForeignKey(Car, null=False, on_delete=models.CASCADE)
     passengers = models.ManyToManyField(Passenger)
     date = models.DateField(default=now, blank=False)
