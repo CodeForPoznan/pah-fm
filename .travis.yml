@@ -1,0 +1,30 @@
+sudo: required
+services:
+  - docker
+language: python
+python:
+  - 3.5
+install:
+  - pip install -r backend/requirements/dev.txt
+
+  - nvm install 8.12.0
+  - cd frontend && npm install && cd -
+script:
+  - cd backend
+  - pycodestyle --exclude='fleet_management/migrations/*' .
+  - cd ..
+
+  - cd frontend
+  - npm run lint
+  - cd ..
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" = false ]; then
+      docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD;
+      cd backend;
+      docker build -f Dockerfile -t codeforpoznan/pah-fm-backend:latest .;
+      docker push codeforpoznan/pah-fm-backend;
+      cd ../frontend;
+      docker build -f Dockerfile -t codeforpoznan/pah-fm-frontend:latest .;
+      docker push codeforpoznan/pah-fm-frontend;
+      cd ..;
+    fi
