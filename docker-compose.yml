@@ -1,7 +1,32 @@
-frontend:
-  image: pah/frontend
-  command: npm run serve
-  ports:
-    - 4200:4200
-  volumes:
-    - ./frontend:/pah/frontend
+version: "3"
+services:
+
+#  frontend:
+#    image: pah/frontend
+#    command: npm run serve
+#    ports:
+#      - 4200:4200
+#    volumes:
+#      - ./frontend:/pah/frontend
+
+  backend:
+    build: backend
+    command: tail -f /dev/null
+    #command: bash docker-enterpoint.sh
+    environment:
+      PAH-FM_DB_HOST: db
+      PAH-FM_DB_PASS: pah-fm
+      SECRET_KEY: pah-fm
+    ports:
+      - "8000:8000"
+    links:
+      - db:db
+    volumes:
+      - ./backend:/pah-fm
+
+  db:
+    image: postgres:9.5
+    environment:
+      POSTGRES_DB: pah-fm
+      POSTGRES_USER: pah-fm
+      POSTGRES_PASSWORD: pah-fm
