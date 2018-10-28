@@ -1,6 +1,8 @@
 from django.contrib import admin
-from .models import DriverUserProfile, CarModel
+from .models import Car, Driver, Passenger, Route
 
 
-admin.site.register(DriverUserProfile)
-admin.site.register(CarModel)
+admin.site.register(Car)
+admin.site.register(Driver)
+admin.site.register(Passenger)
+admin.site.register(Route)

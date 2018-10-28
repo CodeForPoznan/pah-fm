@@ -1,18 +1,19 @@
 version: "3"
 services:
 
-#  frontend:
-#    image: pah/frontend
-#    command: npm run serve
-#    ports:
-#      - 4200:4200
-#    volumes:
-#      - ./frontend:/pah/frontend
+  frontend:
+    build: frontend
+    # image: pah/frontend
+    command: npm run serve
+    ports:
+      - 4200:4200
+    volumes:
+      - ./frontend:/pah/frontend
 
   backend:
     build: backend
-    command: tail -f /dev/null
-    #command: bash docker-enterpoint.sh
+    command: bash docker-entrypoint.sh
+    # command: tail -f /dev/null
     environment:
       PAH-FM_DB_HOST: db
       PAH-FM_DB_PASS: pah-fm
