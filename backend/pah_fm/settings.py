@@ -136,7 +136,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Custom user model
 
-AUTH_USER_MODEL = 'fleet_management.DriverUserProfile'
+AUTH_USER_MODEL = 'fleet_management.User'
 
 
 # Internationalization
