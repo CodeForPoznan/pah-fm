@@ -6,11 +6,11 @@
 </template>
 
 <script>
-  export default {
-    name: 'LoginStatus',
-    props: {
-      id: Number,
-      username: String,
-    },
-  };
+export default {
+  name: 'LoginStatus',
+  props: {
+    id: Number,
+    username: String,
+  },
+};
 </script>

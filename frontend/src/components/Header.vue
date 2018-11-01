@@ -8,19 +8,19 @@
 </template>
 
 <script>
-  export default {
-    name: 'Header',
-    data() {
-      return {
-        links: [
-          {
-            text: 'Home',
-            to: '/',
-          },
-        ],
-      };
-    },
-  };
+export default {
+  name: 'Header',
+  data() {
+    return {
+      links: [
+        {
+          text: 'Home',
+          to: '/',
+        },
+      ],
+    };
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
