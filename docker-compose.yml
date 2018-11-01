@@ -20,6 +20,7 @@ services:
       PAH-FM_DB_HOST: db
       PAH-FM_DB_PASS: pah-fm
       SECRET_KEY: pah-fm
+      DEBUG: 1
     ports:
       - "8000:8000"
     links:
