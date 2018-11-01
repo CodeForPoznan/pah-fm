@@ -1,18 +1,29 @@
+import { getToken } from '../../services/api/auth';
+
+import { actions } from './actions';
+import { mutations } from './mutations';
+
+function rehydrateUser() {
+  const token = getToken(true);
+  if (token) {
+    return {
+      id: token.id,
+      username: token.username,
+    };
+  }
+  return null;
+}
+
 // initial state
 const state = {
-  user: null,
+  user: rehydrateUser(),
+  loginStatus: {
+    inProgress: false,
+  },
 };
 
 // getters
-const getters = {
-  user: state => state.user,
-};
-
-// actions
-const actions = { };
-
-// mutations
-const mutations = { };
+const getters = { };
 
 export default {
   namespaced: true,

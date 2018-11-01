@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Header />
+      <LoginStatus v-bind="user"/>
 
     <transition name="fade" mode="out-in" appear>
       <router-view></router-view>
@@ -11,8 +12,10 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
+import LoginStatus from './components/LoginStatus.vue';
 
 import store from './store';
 
@@ -22,6 +25,12 @@ export default {
   components: {
     Header,
     Footer,
+    LoginStatus,
+  },
+  computed: {
+    ...mapState('user', {
+      user: state => state.user,
+    }),
   },
 };
 </script>
