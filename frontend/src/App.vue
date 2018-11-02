@@ -28,9 +28,7 @@ export default {
     LoginStatus,
   },
   computed: {
-    ...mapState({
-      user: state => state.user,
-    }),
+    ...mapState(['user']),
   },
 };
 </script>
