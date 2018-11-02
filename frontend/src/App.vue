@@ -28,7 +28,7 @@ export default {
     LoginStatus,
   },
   computed: {
-    ...mapState('user', {
+    ...mapState({
       user: state => state.user,
     }),
   },

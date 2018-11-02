@@ -37,7 +37,7 @@
                             <div class="form-group">
                                 <button
                                   class="btn btn-primary"
-                                  :disabled="status.inProgress || !username || !password"
+                                  :disabled="loginInProgress || !username || !password"
                                 >Login</button>
                             </div>
                         </form>
@@ -50,7 +50,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import * as actions from '../store/modules/actions';
+import * as actions from '../store/actions';
 
 export default {
   name: 'LoginView',
@@ -62,13 +62,10 @@ export default {
     };
   },
   computed: {
-    ...mapState('user', {
-      user: state => state.user,
-      status: state => state.loginStatus,
-    }),
+    ...mapState(['user', 'loginInProgress']),
   },
   methods: {
-    ...mapActions('user', [actions.LOGIN]),
+    ...mapActions([actions.LOGIN]),
     handleSubmit() {
       this.submitted = true;
       const { username, password } = this;
