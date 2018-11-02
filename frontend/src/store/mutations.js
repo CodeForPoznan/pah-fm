@@ -3,9 +3,8 @@ export const SET_LOGIN_PROGRESS = 'SET_LOGIN_PROGRESS';
 export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
 
 export const mutations = {
-  [SET_USER](state, { user }) {
+  [SET_USER](state, user) {
     Object.assign(state, { user });
-    console.log(state);
   },
   [SET_LOGIN_PROGRESS](state, loginInProgress) {
     Object.assign(state, { loginInProgress });

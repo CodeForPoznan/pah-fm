@@ -1,5 +1,8 @@
 <template>
-    <div class="jumbotron">
+    <div v-if="user">
+        <b-button v-on:click="logout" variant="link">Log out</b-button>
+    </div>
+    <div v-else class="jumbotron">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 offset-sm-3">
@@ -68,7 +71,7 @@ export default {
     ...mapState(['user', 'loginInProgress', 'loginError']),
   },
   methods: {
-    ...mapActions([actions.LOGIN]),
+    ...mapActions([actions.LOGIN, actions.LOGOUT]),
     handleSubmit() {
       this.submitted = true;
       const { username, password } = this;
