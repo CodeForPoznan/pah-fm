@@ -1,6 +1,6 @@
 <template>
     <div v-if="username">User: {{ username }}</div>
-    <div v-else>
+    <div v-else-if="!isLoginpage">
         <b-link to="/login">Log in</b-link>
     </div>
 </template>
@@ -11,6 +11,11 @@ export default {
   props: {
     id: Number,
     username: String,
+  },
+  computed: {
+    isLoginpage() {
+      return this.$route.name === 'Login';
+    },
   },
 };
 </script>
