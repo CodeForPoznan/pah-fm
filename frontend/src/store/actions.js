@@ -17,10 +17,13 @@ export const actions = {
     commit(mutations.SET_LOGIN_PROGRESS, true);
     login(username, password)
       .then((token) => {
+        commit(mutations.SET_LOGIN_ERROR, null);
         saveToken(token);
         dispatch(FETCH_USER);
       })
-      .catch(e => console.log(e))
+      .catch(() => {
+        commit(mutations.SET_LOGIN_ERROR, 'Login unsuccessful');
+      })
       .finally(() => {
         commit(mutations.SET_LOGIN_PROGRESS, false);
       });

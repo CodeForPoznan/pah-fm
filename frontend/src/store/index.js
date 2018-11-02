@@ -12,6 +12,7 @@ Vue.use(Vuex);
 const state = {
   user: rehydrateUser(),
   loginInProgress: false,
+  loginError: null,
 };
 
 export default new Vuex.Store({

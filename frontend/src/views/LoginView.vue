@@ -4,6 +4,9 @@
             <div class="row">
                 <div class="col-sm-6 offset-sm-3">
                     <div>
+                        <div v-if="loginError" class="alert alert-danger">
+                            {{ loginError }}
+                        </div>
                         <h2>Login</h2>
                         <form @submit.prevent="handleSubmit">
                             <div class="form-group">
@@ -62,7 +65,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['user', 'loginInProgress']),
+    ...mapState(['user', 'loginInProgress', 'loginError']),
   },
   methods: {
     ...mapActions([actions.LOGIN]),
