@@ -18,6 +18,6 @@ RUN chmod a+x /usr/bin/wait-for-it
 RUN pip3 install --upgrade pip
 
 # Add build-time directories
-ADD . /pah-fm
-WORKDIR /pah-fm
-RUN pip3 install -r requirements.txt
+ADD . /pah-fm/backend
+WORKDIR /pah-fm/backend
+RUN pip3 install -r requirements/dev.txt
