@@ -33,3 +33,8 @@ class Route(models.Model):
     end_mileage = models.IntegerField(null=False)
     fuel_level_begin = models.FloatField(null=False)
     fuel_level_end = models.FloatField(null=False)
+
+    def fuel_consumption(self):
+        fuel_delta = self.fuel_level_end - self.fuel_level_begin
+        mileage_delta = self.end_mileage - self.start_mileage
+        return 100*(fuel_delta/mileage_delta)
