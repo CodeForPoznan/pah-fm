@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from rest_framework_jwt.views import obtain_jwt_token
-from fleet_management.api import PassengerListView, CarListView
+from fleet_management.api import PassengerListView, CarListView, ProjectsListView, RouteListView
 
 
 urlpatterns = [
@@ -25,5 +25,6 @@ urlpatterns = [
     path('api/users/me', CurrentUserRetrieveView.as_view(), name='me'),
     path('api/passengers', PassengerListView.as_view(), name='passengers'),
     path('api/cars', CarListView.as_view(), name='cars'),
-    path('api/projects', ProjectsListView.as_view(), name='projects')
+    path('api/projects', ProjectsListView.as_view(), name='projects'),
+    path('api/route', RouteListView.as_view(), name='route'),
 ]

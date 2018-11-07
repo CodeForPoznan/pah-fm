@@ -44,8 +44,3 @@ class Route(models.Model):
     description = models.CharField(max_length=500, blank=True)
     place_from = models.CharField(max_length=50, blank=False)
     place_destination = models.CharField(max_length=50, blank=False)
-
-    def get_fuel_consumption(self):
-        fuel_delta = self.fuel_level_end - self.fuel_level_begin
-        mileage_delta = self.end_mileage - self.start_mileage
-        return 100 * (fuel_delta / mileage_delta)
