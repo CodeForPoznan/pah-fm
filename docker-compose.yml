@@ -1,7 +1,6 @@
 version: "3"
 services:
 
-
   frontend:
     image: codeforpoznan/pah-fm-frontend
     # build: frontend
@@ -17,18 +16,17 @@ services:
     # build: backend
     command: bash docker-entrypoint.sh
     # command: tail -f /dev/null
-
     environment:
       PAH-FM_DB_HOST: db
       PAH-FM_DB_PASS: pah-fm
       SECRET_KEY: pah-fm
+      DEBUG: 1
     ports:
       - "8000:8000"
     links:
       - db:db
     volumes:
       - ./backend:/pah-fm/backend
-
   db:
     image: postgres:9.5
     environment:

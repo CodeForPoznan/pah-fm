@@ -38,3 +38,4 @@ class Route(models.Model):
         fuel_delta = self.fuel_level_end - self.fuel_level_begin
         mileage_delta = self.end_mileage - self.start_mileage
         return 100 * (fuel_delta / mileage_delta)
+

@@ -1,5 +1,11 @@
 from rest_framework import serializers
-from .models import Car, Passenger
+from .models import User, Car, Passenger
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username')
 
 
 class PassengerSerializer(serializers.ModelSerializer):

@@ -10,9 +10,17 @@
   "dependencies": {
     "bootstrap": "4.1.3",
     "bootstrap-vue": "2.0.0-rc.11",
+<<<<<<< HEAD
     "register-service-worker": "1.0.0",
     "vue": "2.5.17",
     "vue-router": "3.0.1"
+=======
+    "jwt-decode": "^2.2.0",
+    "register-service-worker": "1.0.0",
+    "vue": "2.5.17",
+    "vue-router": "3.0.1",
+    "vuex": "^3.0.1"
+>>>>>>> master
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "3.0.5",

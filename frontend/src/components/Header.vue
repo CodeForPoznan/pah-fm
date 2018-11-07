@@ -1,10 +1,19 @@
 <template>
+<<<<<<< HEAD
   <div class="header p-3">
       <h1><a href="https://www.pah.org.pl/">Polish Humanitarian Action</a></h1>
        <b-nav fill v-for="link in links" :key="link.text">
         <b-nav-item v-bind:to="link.to">{{ link.text }}</b-nav-item>
       </b-nav>
   </div>
+=======
+    <div class="header p-3">
+        <h1><a href="https://www.pah.org.pl/">Polish Humanitarian Action</a></h1>
+        <b-nav fill v-for="link in links" :key="link.text">
+            <b-nav-item v-bind:to="link.to">{{ link.text }}</b-nav-item>
+        </b-nav>
+    </div>
+>>>>>>> master
 </template>
 
 <script>
@@ -12,6 +21,7 @@ export default {
   name: 'Header',
   data() {
     return {
+<<<<<<< HEAD
       links: [{
         text: 'Home',
         to: '/',
@@ -19,6 +29,14 @@ export default {
         text: 'Login',
         to: '/login',
       }],
+=======
+      links: [
+        {
+          text: 'Home',
+          to: '/',
+        },
+      ],
+>>>>>>> master
     };
   },
 };
@@ -26,6 +44,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+<<<<<<< HEAD
 @import '../scss/variables';
 @import '../scss/mixins';
 
@@ -36,4 +55,16 @@ export default {
     background: $grey;
 }
 }
+=======
+    @import '../scss/variables';
+    @import '../scss/mixins';
+
+    .header {
+        background: $blue;
+
+        @include respond-to(tablet) {
+            background: $grey;
+        }
+    }
+>>>>>>> master
 </style>

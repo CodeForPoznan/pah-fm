@@ -1,6 +1,7 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics, filters
-from .serializer import CarSerializer, PassengerSerializer
+from rest_framework import generics, filters, views
+from rest_framework.response import Response
+from .serializers import CarSerializer, PassengerSerializer, UserSerializer
 from .models import Car, Passenger
 
 
@@ -21,3 +22,11 @@ class PassengerListView(generics.ListAPIView):
         'first_name',
         'last_name',
     )
+
+
+class CurrentUserRetrieveView(views.APIView):
+    def get(self, request):
+        return Response(
+            UserSerializer(request.user).data
+        )
+

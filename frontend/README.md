@@ -24,3 +24,13 @@ npm run test
 ```
 npm run lint
 ```
+<<<<<<< HEAD
+=======
+
+
+## Additional tools
+
+### Vue Chrome extension
+Allow you to inspect components and look into the store.
+https://chrome.google.com/webstore/detail/vuejs-devtools/
+>>>>>>> master
