@@ -44,3 +44,12 @@ class Route(models.Model):
     end_mileage = models.IntegerField(null=False)
     fuel_level_begin = models.FloatField(null=False)
     fuel_level_end = models.FloatField(null=False)
+
+
+class Project(models.Model):
+    routes = models.ManyToManyField(Route)
+    project_title = models.CharField(max_length=50, blank=False)
+    project_description = models.CharField(max_length=1000, blank=False)
+
+    def __str__(self):
+        return self.project_title

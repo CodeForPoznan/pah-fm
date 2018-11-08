@@ -2,10 +2,11 @@ from rest_framework import generics, filters, views
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
-from .models import Car, Passenger
+from .models import Car, Passenger, Project
 from .serializers import (
     CarSerializer,
     PassengerSerializer,
+    ProjectSerializer,
     UserSerializer,
 )
 
@@ -35,3 +36,15 @@ class CarListView(generics.ListAPIView):
     search_fields = ('plates',)
     filter_backends = (filters.OrderingFilter, filters.SearchFilter)
     ordering = ('plates',)
+
+
+class ProjectsListView(generics.ListAPIView):
+    authentication_classes = (IsAuthenticated,)
+    serializer_class = ProjectSerializer
+    queryset = Project.objects.all()
+    filter_backends = (filters.OrderingFilter, filters.SearchFilter, DjangoFilterBackend,)
+    search_fields = (
+        'project_title',
+        'project_description',
+        'routes',
+    )
