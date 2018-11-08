@@ -35,4 +35,7 @@ class CarListView(generics.ListAPIView):
     filter_backends = (filters.OrderingFilter, filters.SearchFilter, DjangoFilterBackend,)
     search_fields = (
         'plates',
+        'description',
+        'mileage_unit',
+        'fuel_consumption',
     )
