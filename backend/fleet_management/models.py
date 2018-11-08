@@ -27,9 +27,11 @@ class Passenger(models.Model):
 class Route(models.Model):
     driver = models.ForeignKey(User, on_delete=models.CASCADE)
     car = models.ForeignKey(Car, null=False, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     passengers = models.ManyToManyField(Passenger)
     date = models.DateField(default=now, blank=False)
     start_mileage = models.IntegerField(null=False)
     end_mileage = models.IntegerField(null=False)
-    fuel_level_begin = models.FloatField(null=False)
-    fuel_level_end = models.FloatField(null=False)
+    description = models.CharField(max_length=500, blank=True)
+    place_from = models.CharField(max_length=50, blank=False)
+    place_destination = models.CharField(max_length=50, blank=False)
