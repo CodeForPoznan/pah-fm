@@ -18,10 +18,12 @@ from django.urls import path
 
 from rest_framework_jwt.views import obtain_jwt_token
 
-from fleet_management.api import CurrentUserRetrieveView
+from fleet_management.api import CurrentUserRetrieveView, CarListView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/api-token-auth/', obtain_jwt_token),
     path('api/users/me', CurrentUserRetrieveView.as_view(), name='me'),
+    path('api/cars', CarListView.as_view(), name='cars'),
 ]

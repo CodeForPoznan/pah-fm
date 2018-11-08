@@ -11,6 +11,7 @@ class User(AbstractUser):
 
 class Car(models.Model):
     plates = models.CharField(max_length=10, blank=False, unique=True)
+    fuel_consumption = models.FloatField(null=False)
 
     def __str__(self):
         return self.plates
