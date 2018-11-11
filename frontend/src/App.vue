@@ -8,6 +8,7 @@
     </transition>
 
     <Footer />
+    <Refresh />
   </div>
 </template>
 
@@ -15,6 +16,7 @@
 import { mapState } from 'vuex';
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
+import Refresh from './components/Refresh.vue';
 import LoginStatus from './components/LoginStatus.vue';
 
 import store from './store';
@@ -23,6 +25,7 @@ export default {
   name: 'app',
   store,
   components: {
+    Refresh,
     Header,
     Footer,
     LoginStatus,
