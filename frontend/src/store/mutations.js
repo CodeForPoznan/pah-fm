@@ -1,6 +1,8 @@
 export const SET_USER = 'SET_USER';
 export const SET_LOGIN_PROGRESS = 'SET_LOGIN_PROGRESS';
 export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
+export const SET_UPDATE_READY = 'SET_UPDATE_READY';
+export const SET_IS_CONNECTED = 'SET_IS_CONNECTED';
 
 export const mutations = {
   [SET_USER](state, user) {
@@ -12,4 +14,10 @@ export const mutations = {
   [SET_LOGIN_ERROR](state, loginError) {
     Object.assign(state, { loginError });
   },
+  [SET_UPDATE_READY](state, isReady) {
+    Object.assign(state, { updateReady: isReady })
+  },
+  [SET_IS_CONNECTED](state, isOnline) {
+    Object.assign(state, { isOnline })
+  }
 };
