@@ -14,6 +14,6 @@ export const mutations = {
     Object.assign(state, { loginError });
   },
   [SET_UPDATE_READY](state, isReady) {
-    Object.assign(state, { updateReady: isReady })
-  }
+    Object.assign(state, { updateReady: isReady });
+  },
 };
