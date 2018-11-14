@@ -15,6 +15,7 @@ export default {
 @import "../scss/variables";
     .footer {
         background: $grey;
+        text-align: center;
     }
 
 </style>
