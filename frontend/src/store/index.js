@@ -13,6 +13,7 @@ const state = {
   user: rehydrateUser(),
   loginInProgress: false,
   loginError: null,
+  routes: [],
 };
 
 export default new Vuex.Store({

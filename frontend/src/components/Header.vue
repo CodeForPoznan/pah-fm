@@ -30,6 +30,7 @@ export default {
 
     .header {
         background: $blue;
+        text-align: center;
 
         @include respond-to(tablet) {
             background: $grey;

@@ -1,6 +1,7 @@
 export const SET_USER = 'SET_USER';
 export const SET_LOGIN_PROGRESS = 'SET_LOGIN_PROGRESS';
 export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
+export const ADD_ROUTE = 'ADD_ROUTE';
 
 export const mutations = {
   [SET_USER](state, user) {
@@ -11,5 +12,8 @@ export const mutations = {
   },
   [SET_LOGIN_ERROR](state, loginError) {
     Object.assign(state, { loginError });
+  },
+  [ADD_ROUTE](state, route) {
+    Object.assign(state, { routes: [...state.routes, Object.assign({}, route)] });
   },
 };

@@ -7,6 +7,7 @@ import * as mutations from './mutations';
 export const FETCH_USER = 'fetchUser';
 export const LOGIN = 'login';
 export const LOGOUT = 'logout';
+export const SUBMIT = 'submit';
 
 export const actions = {
   [FETCH_USER]({ commit }) {
@@ -32,5 +33,8 @@ export const actions = {
   [LOGOUT]({ commit }) {
     commit(mutations.SET_USER, null);
     deleteToken();
+  },
+  [SUBMIT]({ commit }, form) {
+    commit(mutations.ADD_ROUTE, form);
   },
 };
