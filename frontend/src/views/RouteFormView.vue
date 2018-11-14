@@ -107,13 +107,16 @@
 
 <script>
 import { mapActions } from 'vuex';
+import uuidv4 from 'uuid/v4';
 import * as actions from '../store/actions';
+
 
 export default {
   name: 'RouteFormView',
   data() {
     return {
       route: {
+        id: '',
         date: '',
         reason: '',
         from: '',
@@ -127,8 +130,10 @@ export default {
   methods: {
     ...mapActions([actions.SUBMIT]),
     handleSubmit() {
+
       this.isSubmitted = true;
       const route = this.route;
+      route.id = uuidv4();
       console.log(route);
       this[actions.SUBMIT](route);
     },
