@@ -42,9 +42,4 @@ class ProjectsListView(generics.ListAPIView):
     authentication_classes = (IsAuthenticated,)
     serializer_class = ProjectSerializer
     queryset = Project.objects.all()
-    filter_backends = (filters.OrderingFilter, filters.SearchFilter, DjangoFilterBackend,)
-    search_fields = (
-        'project_title',
-        'project_description',
-        'routes',
-    )
+    filter_backends = (filters.OrderingFilter,)

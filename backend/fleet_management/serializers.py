@@ -34,7 +34,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = (
-            'project_title',
-            'project_description',
-            'routes',
+            'id',
+            'title',
+            'description',
         )
