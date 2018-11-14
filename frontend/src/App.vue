@@ -1,11 +1,12 @@
 <template>
   <div id="app">
+    <Status />
     <Header />
       <LoginStatus v-bind="user"/>
 
-    <transition name="fade" mode="out-in" appear>
-      <router-view></router-view>
-    </transition>
+      <transition name="fade" mode="out-in" appear>
+        <router-view></router-view>
+      </transition>
 
     <Footer />
     <Refresh />
@@ -18,6 +19,7 @@ import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import Refresh from './components/Refresh.vue';
 import LoginStatus from './components/LoginStatus.vue';
+import Status from './components/Status.vue';
 
 import store from './store';
 
@@ -29,6 +31,7 @@ export default {
     Header,
     Footer,
     LoginStatus,
+    Status,
   },
   computed: {
     ...mapState(['user']),

@@ -13,7 +13,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 @import "../scss/base";
-  .footer {
-    background: $grey;
-  }
+.footer {
+  background: $grey;
+}
 </style>
