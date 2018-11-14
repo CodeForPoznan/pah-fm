@@ -3,10 +3,9 @@ import { getMyself } from '../services/api/user';
 
 import * as mutations from './mutations';
 
-
-export const FETCH_USER = 'fetchUser';
-export const LOGIN = 'login';
-export const LOGOUT = 'logout';
+export const FETCH_USER = 'FETCH_USER';
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
 
 export const actions = {
   [FETCH_USER]({ commit }) {
