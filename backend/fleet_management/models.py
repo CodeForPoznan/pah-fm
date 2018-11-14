@@ -37,8 +37,8 @@ class Route(models.Model):
 
 class Project(models.Model):
     routes = models.ManyToManyField(Route)
-    project_title = models.CharField(max_length=50, blank=False)
-    project_description = models.CharField(max_length=1000, blank=False)
+    title = models.CharField(max_length=50, blank=False)
+    description = models.CharField(max_length=1000, blank=False)
 
     def __str__(self):
-        return self.project_title
+        return self.title
