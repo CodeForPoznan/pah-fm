@@ -1,7 +1,7 @@
 <template>
   <div id="refresh" v-if="updateReady">
     <span> A new version of website is available.
-      <a v-on:click="reload" href="#">refresh</a>
+      <a v-on:click="reload" href="#">Refresh</a>
     </span>
   </div>
 </template>
@@ -25,7 +25,9 @@ export default {
 
   #refresh {
     @include p(3)
-    @include absolute(right 0 bottom 0);
+    @include sticky();
+    width: 100%;
+    bottom: 0;
     background: $white;
   }
 </style>

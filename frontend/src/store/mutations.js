@@ -15,9 +15,9 @@ export const mutations = {
     Object.assign(state, { loginError });
   },
   [SET_UPDATE_READY](state, isReady) {
-    Object.assign(state, { updateReady: isReady })
+    Object.assign(state, { updateReady: isReady });
   },
   [SET_IS_CONNECTED](state, isOnline) {
-    Object.assign(state, { isOnline })
+    Object.assign(state, { isOnline });
   }
 };
