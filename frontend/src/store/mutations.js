@@ -19,5 +19,5 @@ export const mutations = {
   },
   [SET_IS_CONNECTED](state, isOnline) {
     Object.assign(state, { isOnline });
-  }
+  },
 };
