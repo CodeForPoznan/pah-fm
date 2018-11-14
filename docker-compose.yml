@@ -34,3 +34,5 @@ services:
       POSTGRES_DB: pah-fm
       POSTGRES_USER: pah-fm
       POSTGRES_PASSWORD: pah-fm
+    ports:
+      - "5432:5432"
