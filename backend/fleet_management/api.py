@@ -1,4 +1,3 @@
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, filters, views
 from rest_framework.response import Response
 from .serializers import PassengerSerializer, UserSerializer
@@ -15,7 +14,7 @@ class CurrentUserRetrieveView(views.APIView):
 class PassengerListView(generics.ListAPIView):
     serializer_class = PassengerSerializer
     queryset = Passenger.objects.all()
-    filter_backends = (filters.OrderingFilter, filters.SearchFilter, DjangoFilterBackend,)
+    filter_backends = (filters.OrderingFilter,)
     search_fields = (
         'first_name',
         'last_name',
