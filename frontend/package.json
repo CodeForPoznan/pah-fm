@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "http:server": "http-server dist -c-1"
+    "http:server": "http-server dist -c-1",
     "lint": "vue-cli-service lint --no-fix",
     "lint:fix": "vue-cli-service lint"
   },
