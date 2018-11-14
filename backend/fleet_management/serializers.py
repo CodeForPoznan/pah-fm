@@ -23,6 +23,7 @@ class CarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
         fields = (
+            'id',
             'plates',
             'fuel_consumption',
         )

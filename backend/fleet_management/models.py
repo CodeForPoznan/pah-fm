@@ -10,10 +10,14 @@ class User(AbstractUser):
 
 
 class Car(models.Model):
+    UNITS = (
+        ('kilometers', 'kilometers'),
+        ('miles', 'miles'),
+    )
     plates = models.CharField(max_length=10, blank=False, unique=True)
     description = models.CharField(max_length=500, blank=True)
-    mileage_unit = models.CharField(max_length=10, blank=False)
-    fuel_consumption = models.FloatField(null=False)
+    mileage_unit = models.CharField(choices=UNITS, max_length=11, default='kilometers')
+    fuel_consumption = models.FloatField(null=False, default=0)
 
     def __str__(self):
         return self.plates
