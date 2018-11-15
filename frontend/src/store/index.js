@@ -15,6 +15,7 @@ const state = {
   user: rehydrateUser(),
   loginInProgress: false,
   loginError: null,
+  routes: [],
   updateReady: false,
   [IS_ONLINE]: navigator.onLine,
 };
