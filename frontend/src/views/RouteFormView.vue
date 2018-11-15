@@ -125,11 +125,13 @@ export default {
     validateForm() {
       this.errors = [];
 
-      Object.keys(this.route).forEach((key) => {
-        if (!this.route[key]) {
-          this.errors.push(`${key} is required`);
-        }
-      });
+      Object.keys(this.route)
+        .filter(key => key !== 'id')
+        .forEach((key) => {
+          if (!this.route[key]) {
+            this.errors.push(`${key} is required`);
+          }
+        });
     },
   },
 };

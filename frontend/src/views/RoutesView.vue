@@ -13,8 +13,8 @@
       <div :class="['collapse', { show: routeVisible === route.id }]">
         <div class="card-body">
           <p>
-            <span class="font-weight-bold">Reason: </span>
-            <span>{{ route.reason }}</span>
+            <span class="font-weight-bold">Description: </span>
+            <span>{{ route.description }}</span>
           </p>
           <p>
             <span class="font-weight-bold">Start mileage: </span>
