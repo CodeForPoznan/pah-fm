@@ -6,7 +6,8 @@
     <div class="card" v-for="route in routes" :key="route.id">
       <div class="card-header" @click="showRoute(route.id)">
         <h5 class="mb-0">
-          <span class="font-weight-bold">{{ route.date }}</span> From {{ route.from }} to {{ route.destination }}
+          <span class="font-weight-bold">{{ route.date }}</span>
+          From {{ route.from }} to {{ route.destination }}
         </h5>
       </div>
       <div :class="['collapse', { show: routeVisible === route.id }]">
@@ -30,32 +31,32 @@
 </template>
 
 <script>
-    import { mapState } from 'vuex';
+import { mapState } from 'vuex';
 
-    export default {
-        name: "RoutesView",
-        data() {
-            return {
-                routeVisible: null,
-            };
-        },
-        methods: {
-            showRoute: function(id) {
-                this.routeVisible = id;
-            }
-        },
-        computed: {
-          ...mapState(['routes']),
-        },
-    }
+export default {
+  name: 'RoutesView',
+  data() {
+    return {
+      routeVisible: null,
+    };
+  },
+  methods: {
+    showRoute(id) {
+      this.routeVisible = id;
+    },
+  },
+  computed: {
+    ...mapState(['routes']),
+  },
+};
 </script>
 
 <style scoped lang="scss">
-  .card-header {
-    cursor: pointer;
-  }
-  .accordion {
-    max-height: 300px;
-    overflow: auto;
-  }
+.card-header {
+  cursor: pointer;
+}
+.accordion {
+  max-height: 300px;
+  overflow: auto;
+}
 </style>
