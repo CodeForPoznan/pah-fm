@@ -4,6 +4,12 @@
             <div class="row">
                 <div class="col-sm-8 offset-sm-2">
                     <div>
+                        <div class="alert alert-danger" v-if="errors.length">
+                          <b>Please correct the following error(s):</b>
+                          <ul>
+                            <li v-for="error in errors" :key="error">{{ error }}</li>
+                          </ul>
+                        </div>
                         <h2>Add New Route</h2>
                         <form @submit.prevent="handleSubmit">
                             <div class="form-group">
@@ -15,24 +21,16 @@
                                   class="form-control"
                                   :class="{ 'is-invalid': isSubmitted && !route.date }"
                                 />
-                                <div
-                                  v-show="isSubmitted && !route.date"
-                                  class="invalid-feedback"
-                                >Date is required</div>
                             </div>
                             <div class="form-group">
-                                <label>Reason:</label>
+                                <label>Description:</label>
                                 <input
                                   type="text"
-                                  v-model="route.reason"
-                                  name="reason"
+                                  v-model="route.description"
+                                  name="description"
                                   class="form-control"
-                                  :class="{ 'is-invalid': isSubmitted && !route.reason }"
+                                  :class="{ 'is-invalid': isSubmitted && !route.description }"
                                 />
-                                <div
-                                  v-show="isSubmitted && !route.reason"
-                                  class="invalid-feedback"
-                                >Reason is required</div>
                             </div>
                             <div class="form-group">
                                 <label>From:</label>
@@ -43,10 +41,6 @@
                                   class="form-control"
                                   :class="{ 'is-invalid': isSubmitted && !route.from }"
                                 />
-                                <div
-                                  v-show="isSubmitted && !route.from"
-                                  class="invalid-feedback"
-                                >From is required</div>
                             </div>
                             <div class="form-group">
                                 <label>Destination:</label>
@@ -57,39 +51,27 @@
                                   class="form-control"
                                   :class="{ 'is-invalid': isSubmitted && !route.destination }"
                                 />
-                                <div
-                                  v-show="isSubmitted && !route.from"
-                                  class="invalid-feedback"
-                                >Destination is required</div>
                             </div>
                             <div class="row">
                               <div class="form-group col-sm-6">
                                   <label>Starting Mileage:</label>
                                   <input
-                                    type="text"
-                                    v-model="route.mileageBefore"
-                                    name="mileageBefore"
+                                    type="number"
+                                    v-model="route.startMileage"
+                                    name="startMileage"
                                     class="form-control"
-                                    :class="{ 'is-invalid': isSubmitted && !route.mileageBefore }"
+                                    :class="{ 'is-invalid': isSubmitted && !route.startMileage }"
                                   />
-                                  <div
-                                    v-show="isSubmitted && !route.mileageBefore"
-                                    class="invalid-feedback"
-                                  >Starting mileage is required</div>
                               </div>
                               <div class="form-group col-sm-6">
-                                  <label>Starting Mileage:</label>
+                                  <label>Ending Mileage:</label>
                                   <input
-                                    type="text"
-                                    v-model="route.mileageAfter"
-                                    name="mileageAfter"
+                                    type="number"
+                                    v-model="route.endMileage"
+                                    name="endMileage"
                                     class="form-control"
-                                    :class="{ 'is-invalid': isSubmitted && !route.mileageAfter }"
+                                    :class="{ 'is-invalid': isSubmitted && !route.endMileage }"
                                   />
-                                  <div
-                                    v-show="isSubmitted && !route.mileageAfter"
-                                    class="invalid-feedback"
-                                  >Starting mileage is required</div>
                               </div>
                             </div>
                             <div class="form-group">
@@ -107,35 +89,44 @@
 
 <script>
 import { mapActions } from 'vuex';
-import uuidv4 from 'uuid/v4';
 import * as actions from '../store/actions';
-
 
 export default {
   name: 'RouteFormView',
   data() {
     return {
       route: {
-        id: '',
         date: '',
-        reason: '',
+        description: '',
         from: '',
         destination: '',
-        mileageBefore: '',
-        mileageAfter: '',
+        startMileage: '',
+        endMileage: '',
       },
+      errors: [],
       isSubmitted: false,
     };
   },
   methods: {
     ...mapActions([actions.SUBMIT]),
-    handleSubmit() {
 
+    handleSubmit() {
+      this.validateForm();
       this.isSubmitted = true;
-      const route = this.route;
-      route.id = uuidv4();
-      console.log(route);
-      this[actions.SUBMIT](route);
+
+      if (!this.errors.length) {
+        this[actions.SUBMIT](this.route);
+      }
+    },
+
+    validateForm() {
+      this.errors = [];
+
+      Object.keys(this.route).forEach((key) => {
+        if (!this.route[key]) {
+          this.errors.push(`${key} is required`);
+        }
+      });
     },
   },
 };
