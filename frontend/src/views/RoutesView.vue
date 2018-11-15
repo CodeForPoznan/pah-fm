@@ -3,7 +3,7 @@
     You have no routes stored in database. You can add a new route by choosing option from the menu.
   </div>
   <div v-else class="accordion m-5" id="routesAccordion">
-    <div class="card" v-for="route in routes">
+    <div class="card" v-for="route in routes" :key="route.id">
       <div class="card-header" @click="showRoute(route.id)">
         <h5 class="mb-0">
           <span class="font-weight-bold">{{ route.date }}</span> From {{ route.from }} to {{ route.destination }}
@@ -17,11 +17,11 @@
           </p>
           <p>
             <span class="font-weight-bold">Start mileage: </span>
-            <span>{{ route.mileageBefore }}</span>
+            <span>{{ route.startMileage }}</span>
           </p>
           <p>
             <span class="font-weight-bold">End mileage: </span>
-            <span>{{ route.mileageAfter }}</span>
+            <span>{{ route.endMileage }}</span>
           </p>
         </div>
       </div>
