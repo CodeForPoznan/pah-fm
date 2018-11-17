@@ -1,10 +1,21 @@
 <template>
-  <div v-if="!routes.length" class="alert alert-warning m-5" role="alert">
+  <div
+    v-if="!routes.length"
+    class="alert alert-warning m-5"
+    role="alert">
     You have no routes stored in database. You can add a new route by choosing option from the menu.
   </div>
-  <div v-else class="accordion m-5" id="routesAccordion">
-    <div class="card" v-for="route in routes" :key="route.id">
-      <div class="card-header" @click="showRoute(route.id)">
+  <div
+    v-else
+    class="accordion m-5"
+    id="routesAccordion">
+    <div
+      class="card"
+      v-for="route in routes"
+      :key="route.id">
+      <div
+        class="card-header"
+        @click="showRoute(route.id)">
         <h5 class="mb-0">
           <span class="font-weight-bold">{{ route.date }}</span>
           From {{ route.from }} to {{ route.destination }}
