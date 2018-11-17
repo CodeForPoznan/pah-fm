@@ -1,6 +1,5 @@
 <template>
-  <span v-bind:class="{ isOnline: true, online: isOnline }">
-  </span>
+  <span :class="{ isOnline: true, online: isOnline }"/>
 </template>
 
 <script>
@@ -21,8 +20,8 @@ export default {
   .isOnline {
     @include absolute(left 0 top 0);
     @include m(3);
-    height: 15px;
-    width: 15px;
+    height: 10px;
+    width: 10px;
     background-color: $red;
     border-radius: 50%;
     display: inline-block;

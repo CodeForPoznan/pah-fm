@@ -1,7 +1,11 @@
 <template>
-  <div id="refresh" v-if="updateReady">
+  <div
+    id="refresh"
+    v-if="updateReady">
     <span> A new version of website is available.
-      <a v-on:click="reload" href="#">Refresh</a>
+      <a
+        @click="reload"
+        href="#">Refresh</a>
     </span>
   </div>
 </template>

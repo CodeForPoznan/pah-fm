@@ -2,40 +2,42 @@
   <div id="app">
     <Status />
     <Header />
-      <LoginStatus v-bind="user"/>
-
-      <transition name="fade" mode="out-in" appear>
-        <router-view></router-view>
-      </transition>
-
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <transition
+            name="fade"
+            mode="out-in"
+            appear>
+            <router-view/>
+          </transition>
+        </div>
+      </div>
+    </div>
     <Footer />
     <Refresh />
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import Refresh from './components/Refresh.vue';
-import LoginStatus from './components/LoginStatus.vue';
 import Status from './components/Status.vue';
 
 import store from './store';
 
 export default {
-  name: 'app',
+  name: 'App',
   store,
   components: {
     Refresh,
     Header,
     Footer,
-    LoginStatus,
     Status,
   },
-  computed: {
-    ...mapState(['user']),
-  },
+
 };
 </script>
 

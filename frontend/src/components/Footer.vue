@@ -1,6 +1,6 @@
 <template>
   <div class="footer p-3">
-      <h3><a href="http://codeforpoznan.pl">Code for Poznan</a></h3>
+    <h3><a href="http://codeforpoznan.pl">Code for Poznan</a></h3>
   </div>
 </template>
 
