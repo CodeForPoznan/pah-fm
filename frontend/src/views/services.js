@@ -1,4 +1,3 @@
-
 const requiredFields = [
   'date', 'desciption', 'from', 'destination', 'startMileage', 'endMileage',
 ];
