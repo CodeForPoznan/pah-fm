@@ -1,6 +1,8 @@
 import { getToken } from '../services/api/auth';
+import { getItem } from '../services/localStore';
+import { UNSYNCED_ROUTES } from '../services/constants';
 
-export function rehydrateUser() {
+const rehydrateUser = () => {
   const token = getToken(true);
   if (token) {
     return {
@@ -9,4 +11,12 @@ export function rehydrateUser() {
     };
   }
   return null;
-}
+};
+
+const rehydrateDriverRoutes = () => getItem(UNSYNCED_ROUTES) || [];
+
+export {
+  rehydrateUser,
+  rehydrateDriverRoutes,
+};
+

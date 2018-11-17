@@ -92,26 +92,34 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import uuidv4 from 'uuid/v4';
 import * as actions from '../store/actions';
+import { isErroring, makeErrorMessage } from './services.js';
+
+const defaultFormState = {
+  id: uuidv4(),
+  date: '',
+  description: '',
+  from: '',
+  destination: '',
+  startMileage: '',
+  endMileage: '',
+  isSynced: '',
+};
+
 
 export default {
   name: 'RouteFormView',
   data() {
     return {
-      route: {
-        id: '',
-        date: '',
-        description: '',
-        from: '',
-        destination: '',
-        startMileage: '',
-        endMileage: '',
-      },
+      route: { ...defaultFormState },
       errors: [],
       isSubmitted: false,
     };
+  },
+  computed: {
+    ...mapState(['routes']),
   },
   methods: {
     ...mapActions([actions.SUBMIT]),
@@ -121,21 +129,18 @@ export default {
       this.isSubmitted = true;
 
       if (!this.errors.length) {
-        this.route.id = uuidv4();
-        this[actions.SUBMIT](this.route);
+        this[actions.SUBMIT]({ form: this.route, routes: this.routes });
+        this.route = { ...defaultFormState };
+        this.isSubmitted = false;
       }
     },
 
     validateForm() {
-      this.errors = [];
+      const { route } = this;
 
-      Object.keys(this.route)
-        .filter(key => key !== 'id')
-        .forEach((key) => {
-          if (!this.route[key]) {
-            this.errors.push(`${key} is required`);
-          }
-        });
+      this.errors = Object.keys(route)
+        .filter(isErroring(route))
+        .map(makeErrorMessage);
     },
   },
 };

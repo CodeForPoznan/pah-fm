@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import { rehydrateUser } from './utils';
+import { rehydrateUser, rehydrateDriverRoutes } from './utils';
 import { actions } from './actions';
 import { mutations, SET_IS_CONNECTED } from './mutations';
 
@@ -15,7 +15,7 @@ const state = {
   user: rehydrateUser(),
   loginInProgress: false,
   loginError: null,
-  routes: [],
+  routes: rehydrateDriverRoutes(),
   updateReady: false,
   [IS_ONLINE]: navigator.onLine,
 };
