@@ -32,8 +32,12 @@ export default {
           to: '/',
         },
         {
-          text: 'Add route',
-          to: '/route',
+          text: 'Add new route',
+          to: '/route/',
+        },
+        {
+          text: 'Routes',
+          to: '/routes/',
         },
       ],
     };

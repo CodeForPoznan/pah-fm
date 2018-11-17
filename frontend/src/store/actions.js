@@ -6,7 +6,7 @@ import * as mutations from './mutations';
 export const FETCH_USER = 'FETCH_USER';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
-export const SUBMIT = 'submit';
+export const SUBMIT = 'SUBMIT';
 
 export const actions = {
   [FETCH_USER]({ commit }) {
