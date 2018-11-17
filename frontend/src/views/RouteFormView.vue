@@ -95,7 +95,7 @@
 import { mapActions, mapState } from 'vuex';
 import uuidv4 from 'uuid/v4';
 import * as actions from '../store/actions';
-import { isErroring, makeErrorMessage } from './services.js';
+import { isErroring, makeErrorMessage } from './services';
 
 const defaultFormState = {
   id: uuidv4(),
