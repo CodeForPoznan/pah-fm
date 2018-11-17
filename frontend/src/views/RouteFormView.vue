@@ -89,6 +89,7 @@
 
 <script>
 import { mapActions } from 'vuex';
+import uuidv4 from 'uuid/v4';
 import * as actions from '../store/actions';
 
 export default {
@@ -96,6 +97,7 @@ export default {
   data() {
     return {
       route: {
+        id: '',
         date: '',
         description: '',
         from: '',
@@ -115,6 +117,7 @@ export default {
       this.isSubmitted = true;
 
       if (!this.errors.length) {
+        this.route.id = uuidv4();
         this[actions.SUBMIT](this.route);
       }
     },
@@ -122,11 +125,13 @@ export default {
     validateForm() {
       this.errors = [];
 
-      Object.keys(this.route).forEach((key) => {
-        if (!this.route[key]) {
-          this.errors.push(`${key} is required`);
-        }
-      });
+      Object.keys(this.route)
+        .filter(key => key !== 'id')
+        .forEach((key) => {
+          if (!this.route[key]) {
+            this.errors.push(`${key} is required`);
+          }
+        });
     },
   },
 };

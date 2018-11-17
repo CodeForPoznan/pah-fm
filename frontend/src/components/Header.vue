@@ -17,6 +17,14 @@ export default {
           text: 'Home',
           to: '/',
         },
+        {
+          text: 'Add new route',
+          to: '/route/',
+        },
+        {
+          text: 'Routes',
+          to: '/routes/',
+        },
       ],
     };
   },
