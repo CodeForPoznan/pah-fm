@@ -94,14 +94,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-  @import "../scss/base";
+@import "../scss/base";
 
-  .jumbotron {
+.login-form {
+  @include mx(auto);
+  @include my(4);
 
-  }
-  .login-form {
-    @include mx(auto)
-    @include my(4);
-    max-width: 450px;
-  }
+  max-width: 450px;
+}
 </style>

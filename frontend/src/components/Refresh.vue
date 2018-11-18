@@ -25,14 +25,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  @import "../scss/base";
+@import "../scss/base";
 
-  #refresh {
-    @include p(3)
-    @include sticky();
-    width: 100%;
-    bottom: 0;
-    background: $white;
-  }
+#refresh {
+  @include p(3);
+  @include sticky();
+
+  width: 100%;
+  bottom: 0;
+  background: $white;
+}
 </style>
 

@@ -1,5 +1,5 @@
 <template>
-  <span :class="{ isOnline: true, online: isOnline }"/>
+  <span :class="{ is-online: true, online: isOnline }"/>
 </template>
 
 <script>
@@ -15,22 +15,21 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  @import "../scss/base";
+@import "../scss/base";
 
-  .isOnline {
-    @include absolute(left 0 top 0);
-    @include m(3);
-    height: 10px;
-    width: 10px;
-    background-color: $red;
-    border-radius: 50%;
-    display: inline-block;
-  }
+.is-online {
+  @include absolute(left 0 top 0);
+  @include m(3);
 
-  .online {
-    background-color: $green;
-  }
+  height: 10px;
+  width: 10px;
+  background-color: $red;
+  border-radius: 50%;
+  display: inline-block;
+}
 
-
+.online {
+  background-color: $green;
+}
 </style>
 
