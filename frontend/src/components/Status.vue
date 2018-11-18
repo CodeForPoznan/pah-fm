@@ -1,5 +1,5 @@
 <template>
-  <span :class="{ is-online: true, online: isOnline }"/>
+  <span :class="{ 'is-online': true, online: isOnline }"/>
 </template>
 
 <script>
