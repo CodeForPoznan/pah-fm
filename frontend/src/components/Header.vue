@@ -46,15 +46,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    @import '../scss/variables';
-    @import '../scss/mixins';
+@import '../scss/variables';
+@import '../scss/mixins';
 
-    .header {
-        background: $blue;
-        text-align: center;
+.header {
+  background: $blue;
+  text-align: center;
 
-        @include respond-to(tablet) {
-            background: $grey;
-        }
-    }
+  @include respond-to(tablet) {
+    background: $grey;
+  }
+}
 </style>
