@@ -66,6 +66,7 @@ export default {
 .card-header {
   cursor: pointer;
 }
+
 .accordion {
   max-height: 300px;
   overflow: auto;

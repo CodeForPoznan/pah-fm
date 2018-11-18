@@ -6,8 +6,9 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "http:server": "http-server dist -c-1",
-    "lint": "vue-cli-service lint --no-fix",
-    "lint:fix": "vue-cli-service lint"
+    "stylelint": "stylelint src/**/*.vue src/**/*.scss --syntax scss --cache",
+    "lint:fix": "vue-cli-service lint",
+    "lint": "vue-cli-service lint --no-fix && npm run stylelint"
   },
   "dependencies": {
     "@7ninjas/scss-mixins": "^1.0.1",
@@ -15,10 +16,10 @@
     "bootstrap-vue": "2.0.0-rc.11",
     "jwt-decode": "^2.2.0",
     "register-service-worker": "^1.5.2",
+    "uuid": "3.3.2",
     "vue": "2.5.17",
     "vue-router": "3.0.1",
-    "vuex": "^3.0.1",
-    "uuid": "3.3.2"
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "3.0.5",
@@ -29,6 +30,9 @@
     "http-server": "^0.11.1",
     "node-sass": "4.9.0",
     "sass-loader": "7.0.1",
+    "stylelint": "^9.8.0",
+    "stylelint-config-standard": "^18.2.0",
+    "stylelint-processor-html": "^1.0.0",
     "vue-template-compiler": "2.5.17"
   }
 }

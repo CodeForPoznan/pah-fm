@@ -3,25 +3,25 @@
 @mixin respond-to($media) {
   @if $media == mobile-only {
     @media only screen and (max-width: $break-mobile) {
-    @content;
+      @content;
     }
   }
 
   @else if $media == tablet {
     @media only screen and (min-width: $break-mobile) {
-    @content;
+      @content;
     }
   }
 
   @else if $media == tablet-only {
     @media only screen and (min-width: $break-mobile) and (max-width: $break-desktop) {
-    @content;
+      @content;
     }
   }
 
   @else if $media == desktop {
     @media only screen and (min-width: $break-tablet) {
-    @content;
+      @content;
     }
   }
 }
