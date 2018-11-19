@@ -1,6 +1,7 @@
 import jwtDecode from 'jwt-decode';
 
 import { post } from './http';
+import { setItem, getItem, removeItem } from '../localStore';
 
 const tokenKey = 'jwt';
 
@@ -10,15 +11,15 @@ export function login(username, password) {
 }
 
 export function saveToken(token) {
-  localStorage.setItem(tokenKey, token);
+  setItem(tokenKey, token);
 }
 
 export function deleteToken() {
-  localStorage.removeItem(tokenKey);
+  removeItem(tokenKey);
 }
 
 export function getToken(decoded = false) {
-  const raw = localStorage.getItem(tokenKey);
+  const raw = getItem(tokenKey);
   if (raw) {
     const now = Math.floor(Date.now() / 1000);
     const token = jwtDecode(raw);

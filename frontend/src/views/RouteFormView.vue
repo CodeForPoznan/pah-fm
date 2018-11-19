@@ -95,20 +95,25 @@
 import { mapActions } from 'vuex';
 import uuidv4 from 'uuid/v4';
 import * as actions from '../store/actions';
+import { isErroring, makeErrorMessage } from './services';
+
+const defaultFormState = {
+  id: uuidv4(),
+  date: '',
+  description: '',
+  from: '',
+  destination: '',
+  startMileage: '',
+  endMileage: '',
+  isSynced: false,
+};
+
 
 export default {
   name: 'RouteFormView',
   data() {
     return {
-      route: {
-        id: '',
-        date: '',
-        description: '',
-        from: '',
-        destination: '',
-        startMileage: '',
-        endMileage: '',
-      },
+      route: { ...defaultFormState },
       errors: [],
       isSubmitted: false,
     };
@@ -121,21 +126,18 @@ export default {
       this.isSubmitted = true;
 
       if (!this.errors.length) {
-        this.route.id = uuidv4();
-        this[actions.SUBMIT](this.route);
+        this[actions.SUBMIT]({ form: this.route });
+        this.route = { ...defaultFormState };
+        this.isSubmitted = false;
       }
     },
 
     validateForm() {
-      this.errors = [];
+      const { route } = this;
 
-      Object.keys(this.route)
-        .filter(key => key !== 'id')
-        .forEach((key) => {
-          if (!this.route[key]) {
-            this.errors.push(`${key} is required`);
-          }
-        });
+      this.errors = Object.keys(route)
+        .filter(isErroring(route))
+        .map(makeErrorMessage);
     },
   },
 };

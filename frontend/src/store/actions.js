@@ -33,7 +33,7 @@ export const actions = {
     commit(mutations.SET_USER, null);
     deleteToken();
   },
-  [SUBMIT]({ commit }, form) {
+  [SUBMIT]({ commit }, { form }) {
     commit(mutations.ADD_ROUTE, form);
   },
 };
