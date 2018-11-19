@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions } from 'vuex';
 import uuidv4 from 'uuid/v4';
 import * as actions from '../store/actions';
 import { isErroring, makeErrorMessage } from './services';
@@ -105,7 +105,7 @@ const defaultFormState = {
   destination: '',
   startMileage: '',
   endMileage: '',
-  isSynced: '',
+  isSynced: false,
 };
 
 
@@ -118,9 +118,6 @@ export default {
       isSubmitted: false,
     };
   },
-  computed: {
-    ...mapState(['routes']),
-  },
   methods: {
     ...mapActions([actions.SUBMIT]),
 
@@ -129,7 +126,7 @@ export default {
       this.isSubmitted = true;
 
       if (!this.errors.length) {
-        this[actions.SUBMIT]({ form: this.route, routes: this.routes });
+        this[actions.SUBMIT]({ form: this.route });
         this.route = { ...defaultFormState };
         this.isSubmitted = false;
       }

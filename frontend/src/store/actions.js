@@ -1,7 +1,5 @@
 import { login, saveToken, deleteToken } from '../services/api/auth';
 import { getMyself } from '../services/api/user';
-import { setItem } from '../services/localStore';
-import { UNSYNCED_ROUTES } from '../services/constants';
 
 import * as mutations from './mutations';
 
@@ -35,8 +33,7 @@ export const actions = {
     commit(mutations.SET_USER, null);
     deleteToken();
   },
-  [SUBMIT]({ commit }, { form, routes }) {
+  [SUBMIT]({ commit }, { form }) {
     commit(mutations.ADD_ROUTE, form);
-    setItem(UNSYNCED_ROUTES, [...routes, form]);
   },
 };

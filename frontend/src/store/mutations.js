@@ -1,3 +1,6 @@
+import { setItem } from '../services/localStore';
+import { UNSYNCED_ROUTES } from '../services/constants';
+
 export const SET_USER = 'SET_USER';
 export const SET_LOGIN_PROGRESS = 'SET_LOGIN_PROGRESS';
 export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
@@ -17,6 +20,7 @@ export const mutations = {
   },
   [ADD_ROUTE](state, route) {
     Object.assign(state, { routes: [...state.routes, Object.assign({}, route)] });
+    setItem(UNSYNCED_ROUTES, [...state.routes]);
   },
   [SET_UPDATE_READY](state, isReady) {
     Object.assign(state, { updateReady: isReady });
