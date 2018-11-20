@@ -1,9 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
 
-import { rehydrateUser, rehydrateDriverRoutes } from './utils';
 import { actions } from './actions';
 import { mutations, SET_IS_CONNECTED } from './mutations';
+
+const USER = 'user';
+const ROUTES = 'routes';
 
 const debug = process.env.NODE_ENV !== 'production';
 
@@ -12,12 +15,12 @@ Vue.use(Vuex);
 export const IS_ONLINE = 'isOnline';
 
 const state = {
-  user: rehydrateUser(),
+  [USER]: null,
+  [ROUTES]: [],
+  [IS_ONLINE]: navigator.onLine,
   loginInProgress: false,
   loginError: null,
-  routes: rehydrateDriverRoutes(),
   updateReady: false,
-  [IS_ONLINE]: navigator.onLine,
 };
 
 const store = new Vuex.Store({
@@ -25,6 +28,9 @@ const store = new Vuex.Store({
   state,
   actions,
   mutations,
+  plugins: [createPersistedState({
+    paths: [USER, ROUTES],
+  })],
 });
 
 window.addEventListener('online', () => store.commit(SET_IS_CONNECTED, true));

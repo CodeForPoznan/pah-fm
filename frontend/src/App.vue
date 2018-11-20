@@ -2,7 +2,7 @@
   <div id="app">
     <Status />
     <Header />
-    <div class="container">
+    <div class="container page-container">
       <div class="row">
         <div class="col-sm-12">
           <transition
@@ -47,5 +47,9 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+
+.page-container {
+  min-height: calc(100vh - 65px - 128px);
 }
 </style>

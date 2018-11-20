@@ -33,10 +33,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    @import '../scss/base';
+@import '../scss/base';
 
-    .login-status {
-      @include py(2);
-    }
+.login-status {
+  @include py(2);
+}
 </style>
 
