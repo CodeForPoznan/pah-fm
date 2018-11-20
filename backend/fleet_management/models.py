@@ -10,9 +10,11 @@ class User(AbstractUser):
 
 
 class Car(models.Model):
+    KILOMETERS = 'kilometers'
+    MILES = 'miles'
     UNITS = (
-        ('kilometers', 'kilometers'),
-        ('miles', 'miles'),
+        (KILOMETERS, KILOMETERS),
+        (MILES, MILES),
     )
     plates = models.CharField(max_length=10, blank=False, unique=True)
     description = models.CharField(max_length=500, blank=True)

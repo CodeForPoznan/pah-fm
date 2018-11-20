@@ -28,7 +28,7 @@ class PassengerListView(generics.ListAPIView):
 
 
 class CarListView(generics.ListAPIView):
-    authentication_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     serializer_class = CarSerializer
     queryset = Car.objects.all()
     filter_backends = (filters.OrderingFilter,)
