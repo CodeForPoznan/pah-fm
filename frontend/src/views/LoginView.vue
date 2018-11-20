@@ -16,10 +16,10 @@
               class="alert alert-danger">
               {{ loginError }}
             </div>
-            <h2>Login</h2>
+            <h2>{{ $t('common.login') }}</h2>
             <form @submit.prevent="handleSubmit">
               <div class="form-group">
-                <label>Username</label>
+                <label>{{ $t('login.username') }}</label>
                 <input
                   type="text"
                   v-model="username"
@@ -30,10 +30,10 @@
                 <div
                   v-show="submitted && !username"
                   class="invalid-feedback"
-                >Username is required</div>
+                >{{ $t('login.username') }}</div>
               </div>
               <div class="form-group">
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">{{ $t('login.password') }}</label>
                 <input
                   type="password"
                   v-model="password"
@@ -44,13 +44,13 @@
                 <div
                   v-show="submitted && !password"
                   class="invalid-feedback"
-                >Password is required</div>
+                >{{ $t('login.username') }}</div>
               </div>
               <div class="form-group">
                 <button
                   class="btn btn-primary"
                   :disabled="loginInProgress || !username || !password"
-                >Login</button>
+                >{{ $t('common.login') }}</button>
               </div>
             </form>
           </div>
@@ -92,7 +92,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 @import "../scss/base";
 

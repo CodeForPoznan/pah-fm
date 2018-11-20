@@ -7,17 +7,17 @@
             <div
               class="alert alert-danger"
               v-if="errors.length">
-              <b>Please correct the following error(s):</b>
+              <b>{{ $t('routes.please_correct_errors') }}</b>
               <ul>
                 <li
                   v-for="error in errors"
                   :key="error">{{ error }}</li>
               </ul>
             </div>
-            <h2>Add New Route</h2>
+            <h2>{{ $t('common.new_route') }}</h2>
             <form @submit.prevent="handleSubmit">
               <div class="form-group">
-                <label>Date:</label>
+                <label>{{ $t('routes.date') }}</label>
                 <input
                   type="date"
                   v-model="route.date"
@@ -27,7 +27,7 @@
                 >
               </div>
               <div class="form-group">
-                <label>Description:</label>
+                <label>{{ $t('routes.description') }}</label>
                 <input
                   type="text"
                   v-model="route.description"
@@ -37,7 +37,7 @@
                 >
               </div>
               <div class="form-group">
-                <label>From:</label>
+                <label>{{ $t('routes.from') }}</label>
                 <input
                   type="text"
                   v-model="route.from"
@@ -47,7 +47,7 @@
                 >
               </div>
               <div class="form-group">
-                <label>Destination:</label>
+                <label>{{ $t('routes.destination') }}</label>
                 <input
                   type="text"
                   v-model="route.destination"
@@ -58,7 +58,7 @@
               </div>
               <div class="row">
                 <div class="form-group col-sm-6">
-                  <label>Starting Mileage:</label>
+                  <label>{{ $t('routes.starting_mileage') }}</label>
                   <input
                     type="number"
                     v-model="route.startMileage"
@@ -68,7 +68,7 @@
                   >
                 </div>
                 <div class="form-group col-sm-6">
-                  <label>Ending Mileage:</label>
+                  <label>{{ $t('routes.ending_mileage') }}</label>
                   <input
                     type="number"
                     v-model="route.endMileage"
@@ -81,7 +81,7 @@
               <div class="form-group">
                 <button
                   class="btn btn-primary"
-                >Submit</button>
+                >{{ $t('routes.submit') }}</button>
               </div>
             </form>
           </div>
@@ -134,10 +134,9 @@ export default {
 
     validateForm() {
       const { route } = this;
-
       this.errors = Object.keys(route)
         .filter(isErroring(route))
-        .map(makeErrorMessage);
+        .map(makeErrorMessage(this.$t.bind(this)));
     },
   },
 };
