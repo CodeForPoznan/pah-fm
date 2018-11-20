@@ -20,21 +20,18 @@ class CurrentUserRetrieveView(views.APIView):
 class PassengerListView(generics.ListAPIView):
     serializer_class = PassengerSerializer
     queryset = Passenger.objects.all()
-    filter_backends = (filters.OrderingFilter,)
+    filter_backends = (filters.OrderingFilter, filters.SearchFilter)
     search_fields = (
         'first_name',
         'last_name',
     )
+    ordering = ('first_name', 'last_name')
 
 
 class CarListView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = CarSerializer
     queryset = Car.objects.all()
-    filter_backends = (filters.OrderingFilter,)
-    search_fields = (
-        'plates',
-        'description',
-        'mileage_unit',
-        'fuel_consumption',
-    )
+    search_fields = ('plates',)
+    filter_backends = (filters.OrderingFilter, filters.SearchFilter)
+    ordering = ('plates',)

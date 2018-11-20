@@ -26,4 +26,5 @@ class CarSerializer(serializers.ModelSerializer):
             'id',
             'plates',
             'fuel_consumption',
+            'description',
         )
