@@ -10,7 +10,18 @@ class User(AbstractUser):
 
 
 class Car(models.Model):
+    KILOMETERS = 'kilometers'
+    MILES = 'miles'
+    UNITS = (
+        (KILOMETERS, KILOMETERS),
+        (MILES, MILES),
+    )
     plates = models.CharField(max_length=10, blank=False, unique=True)
+    description = models.CharField(max_length=500, blank=True)
+    mileage_unit = models.CharField(
+        choices=UNITS, max_length=11, default='kilometers',
+    )
+    fuel_consumption = models.FloatField(null=False, default=0)
 
     def __str__(self):
         return self.plates
@@ -21,7 +32,7 @@ class Passenger(models.Model):
     last_name = models.CharField(max_length=60, blank=False)
 
     def __str__(self):
-        return self.last_name
+        return f'{self.first_name} {self.last_name}'
 
 
 class Route(models.Model):
