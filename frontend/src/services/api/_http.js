@@ -1,4 +1,4 @@
-import { getAuthHeader } from './auth';
+import { getAuthHeader } from '../auth';
 
 export const apiUrl = '/api/';
 
@@ -13,6 +13,10 @@ function handleResponse(response) {
 }
 
 export function get(url, auth = true) {
+  if (!navigator.onLine) {
+    return null;
+  }
+
   const requestOptions = {
     headers: {
       Accept: 'application/json; charset=utf-8',
@@ -26,6 +30,10 @@ export function get(url, auth = true) {
 }
 
 export function post(url, payload) {
+  if (!navigator.onLine) {
+    return null;
+  }
+
   const requestOptions = {
     method: 'POST',
     body: JSON.stringify(payload),

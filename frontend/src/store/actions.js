@@ -1,17 +1,28 @@
-import { login, saveToken, deleteToken } from '../services/api/auth';
+import { login, saveToken, deleteToken } from '../services/auth';
 import { getMyself } from '../services/api/user';
+import { getRoutes } from '../services/api/routes';
+import { compose } from '../services/helpers';
 
 import * as mutations from './mutations';
 
-export const FETCH_USER = 'FETCH_USER';
+const makeFetch = name => `FETCH_${name.toUpperCase()}`;
+
+export const FETCH_USER = makeFetch('user');
+export const FETCH_ROUTES = makeFetch('cars');
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const SUBMIT = 'SUBMIT';
 
+
 export const actions = {
   [FETCH_USER]({ commit }) {
-    getMyself().then((user) => {
-      commit(mutations.SET_USER, user);
+    getMyself().then(compose(commit, mutations.SET_USER));
+  },
+  // eslint-disable-next-line
+  [FETCH_ROUTES]({ commit }) {
+    getRoutes().then((data) => {
+      console.log(data);
+      // commit(mutations.SET_USER, user);
     });
   },
   [LOGIN]({ commit, dispatch }, { username, password }) {

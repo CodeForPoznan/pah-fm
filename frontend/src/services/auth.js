@@ -1,7 +1,8 @@
 import jwtDecode from 'jwt-decode';
 
-import { post } from './http';
-import { setItem, getItem, removeItem } from '../localStore';
+import { post } from './api/_http';
+
+import { setItem, getItem, removeItem } from './localStore';
 
 const tokenKey = 'jwt';
 

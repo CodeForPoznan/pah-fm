@@ -21,6 +21,8 @@
 
 <script>
 
+import { FETCH_ROUTES, FETCH_USER } from './store/actions';
+
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import Refresh from './components/Refresh.vue';
@@ -31,6 +33,10 @@ import store from './store';
 export default {
   name: 'App',
   store,
+  mounted() {
+    this.$store.dispatch(FETCH_USER);
+    this.$store.dispatch(FETCH_ROUTES);
+  },
   components: {
     Refresh,
     Header,
