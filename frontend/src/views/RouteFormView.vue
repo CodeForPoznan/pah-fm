@@ -15,7 +15,9 @@
               </ul>
             </div>
             <h2>{{ $t('common.new_route') }}</h2>
-            <form @submit.prevent="handleSubmit">
+            <form
+              v-if="!!cars.length"
+              @submit.prevent="handleSubmit">
               <div class="form-group">
                 <label>{{ $t('routes.date') }}</label>
                 <input
@@ -25,6 +27,22 @@
                   class="form-control"
                   :class="{ 'is-invalid': isSubmitted && !route.date }"
                 >
+              </div>
+              <div class="form-group">
+                <label>{{ $t('routes.cars') }}</label>
+                <select
+                  v-model="route.car"
+                  name="car"
+                  class="form-control"
+                  :class="{ 'is-invalid': isSubmitted && !route.car }"
+                >
+                  <option
+                    v-for="car in cars"
+                    :key="car.id"
+                    :value="car">
+                    {{ car.plates }}
+                  </option>
+                </select>
               </div>
               <div class="form-group">
                 <label>{{ $t('routes.description') }}</label>
@@ -92,7 +110,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import uuidv4 from 'uuid/v4';
 import * as actions from '../store/actions';
 import { isErroring, makeErrorMessage } from './services';
@@ -100,6 +118,7 @@ import { isErroring, makeErrorMessage } from './services';
 const defaultFormState = {
   id: uuidv4(),
   date: '',
+  car: null,
   description: '',
   from: '',
   destination: '',
@@ -119,7 +138,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions([actions.SUBMIT]),
+    ...mapActions([actions.SUBMIT, actions.FETCH_CARS]),
 
     handleSubmit() {
       this.validateForm();
@@ -138,6 +157,12 @@ export default {
         .filter(isErroring(route))
         .map(makeErrorMessage(this.$t.bind(this)));
     },
+  },
+  created() {
+    this[actions.FETCH_CARS]();
+  },
+  computed: {
+    ...mapState(['cars', 'fetchingCarsInProgress']),
   },
 };
 </script>
