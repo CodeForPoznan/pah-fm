@@ -2,10 +2,10 @@
   <div
     id="refresh"
     v-if="updateReady">
-    <span> A new version of website is available.
+    <span> {{ $t("refresh.new_version") }}
       <a
         @click="reload"
-        href="#">Refresh</a>
+        href="#">{{ $t("refresh.reload") }}</a>
     </span>
   </div>
 </template>

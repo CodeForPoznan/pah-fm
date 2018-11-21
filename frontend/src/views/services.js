@@ -4,7 +4,7 @@ const requiredFields = [
 
 const isErroring = route => key => requiredFields.includes(key) && !route[key];
 
-const makeErrorMessage = key => `${key} is required`;
+const makeErrorMessage = t => field => t('routes.validation_error', { field });
 
 export {
   isErroring,

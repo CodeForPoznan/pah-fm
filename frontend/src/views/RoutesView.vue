@@ -3,7 +3,7 @@
     v-if="!routes.length"
     class="alert alert-warning m-5"
     role="alert">
-    You have no routes stored in database. You can add a new route by choosing option from the menu.
+    {{ $t('routes.no_driver_routes') }}
   </div>
   <div
     v-else
@@ -18,21 +18,21 @@
         @click="showRoute(route.id)">
         <h5 class="mb-0">
           <span class="font-weight-bold">{{ route.date }}</span>
-          From {{ route.from }} to {{ route.destination }}
+          {{ $t('routes.from_to', { from: route.from, destination: route.destination}) }}
         </h5>
       </div>
       <div :class="['collapse', { show: routeVisible === route.id }]">
         <div class="card-body">
           <p>
-            <span class="font-weight-bold">Description: </span>
+            <span class="font-weight-bold">{{ $t('routes.description') }}</span>
             <span>{{ route.description }}</span>
           </p>
           <p>
-            <span class="font-weight-bold">Start mileage: </span>
+            <span class="font-weight-bold">{{ $t('routes.starting_mileage') }}</span>
             <span>{{ route.startMileage }}</span>
           </p>
           <p>
-            <span class="font-weight-bold">End mileage: </span>
+            <span class="font-weight-bold">{{ $t('routes.ending_mileage') }}</span>
             <span>{{ route.endMileage }}</span>
           </p>
         </div>
