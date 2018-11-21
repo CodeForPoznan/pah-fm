@@ -11,10 +11,20 @@ import messages from './translations.json';
 
 Vue.use(VueI18n);
 
-const locale = 'en';
+const EN = 'EN';
+const PL = 'PL';
+
+const languages = {
+  [EN]: 'en',
+  [PL]: 'pl',
+};
+
+const locale = languages[EN];
+const fallbackLocale = languages[EN];
 
 const i18n = new VueI18n({
   locale,
+  fallbackLocale,
   messages,
 });
 
