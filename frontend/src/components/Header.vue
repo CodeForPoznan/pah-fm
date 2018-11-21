@@ -3,11 +3,17 @@
     <h1><a href="https://www.pah.org.pl/">{{ $t("header.polish_humanitarian_action") }}</a></h1>
     <b-nav
       fill
-      v-for="link in links"
-      :key="link.text">
-      <b-nav-item :to="link.to">{{ link.text }}</b-nav-item>
+    >
+      <b-nav-item
+        v-for="link in links"
+        :to="link.to"
+        :key="link.text"
+      >
+        {{ link.text }}
+      </b-nav-item>
+      <LoginStatus v-bind="user"/>
     </b-nav>
-    <LoginStatus v-bind="user"/>
+
   </div>
 </template>
 
