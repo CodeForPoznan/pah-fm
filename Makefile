@@ -11,3 +11,6 @@ run_django:
 
 manage:
 	SECRET_KEY=pah-fm DJANGO_SETTINGS_MODULE=pah_fm.settings python3 backend/manage.py ${CMD}
+
+lint-backend:
+	pycodestyle --exclude='backend/fleet_management/migrations/*' backend

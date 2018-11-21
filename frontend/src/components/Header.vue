@@ -1,8 +1,6 @@
 <template>
   <div class="header p-3">
-    <h1><a
-      href="https://www.pah.org.pl/"
-      target="_blank">Polish Humanitarian Action</a></h1>
+    <h1><a href="https://www.pah.org.pl/">{{ $t("header.polish_humanitarian_action") }}</a></h1>
     <b-nav
       fill
     >
@@ -36,15 +34,15 @@ export default {
     return {
       links: [
         {
-          text: 'Home',
+          text: this.$t('common.home'),
           to: '/',
         },
         {
-          text: 'Add new route',
+          text: this.$t('common.new_route'),
           to: '/route/',
         },
         {
-          text: 'Routes',
+          text: this.$t('common.routes'),
           to: '/routes/',
         },
       ],

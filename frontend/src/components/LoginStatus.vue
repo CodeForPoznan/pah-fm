@@ -6,10 +6,10 @@
     <div
       v-if="username"
     >
-      User: {{ username }}
+      {{ $t('login.user', { username: username }) }}
     </div>
     <div v-else>
-      <b-link to="/login">Log in</b-link>
+      <b-link to="/login">{{ $t('common.login') }} </b-link>
     </div>
   </div>
 
