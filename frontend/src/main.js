@@ -14,7 +14,7 @@ Vue.use(VueI18n);
 const EN = 'EN';
 const PL = 'PL';
 
-const languages = {
+export const languages = {
   [EN]: 'en',
   [PL]: 'pl',
 };

@@ -1,6 +1,13 @@
 {
   "pl": {
-
+    "common": {
+      "about": "O nas",
+      "home": "Strona główna",
+      "login": "Login"
+    },
+    "header": {
+      "polish_humanitarian_action": "Polska Akcja Humanitarna"
+    }
   },
   "en": {
     "common": {
