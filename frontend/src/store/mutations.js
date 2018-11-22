@@ -13,9 +13,7 @@ export const SET_UPDATE_READY = 'SET_UPDATE_READY';
 export const SET_IS_CONNECTED = 'SET_IS_CONNECTED';
 
 export const mutations = {
-  [SET_USER](state, user) {
-    Object.assign(state, { user });
-  },
+  [SET_USER]: makeMutation(USER),
   [SET_ROUTES]: makeMutation(ROUTES),
   [SET_LOGIN_PROGRESS](state, loginInProgress) {
     Object.assign(state, { loginInProgress });

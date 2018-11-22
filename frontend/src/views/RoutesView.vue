@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="!routes.data.length"
+    v-if="!routes.length"
     class="alert alert-warning m-5"
     role="alert">
     {{ $t('routes.no_driver_routes') }}
@@ -11,7 +11,7 @@
     id="routesAccordion">
     <div
       class="card"
-      v-for="route in routes.data"
+      v-for="route in routes"
       :key="route.id">
       {{route}}
       <div
@@ -44,6 +44,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import { ROUTES } from '../store/constants'
 
 export default {
   name: 'RoutesView',
@@ -58,7 +59,14 @@ export default {
     },
   },
   computed: {
-    ...mapState(['routes']),
+    routes: function() {
+      // TODO const
+      const routes = this.$store.state[ROUTES];
+      return {
+        routes: routes ? routes.data : [],
+      }
+    }
+
   },
 };
 </script>

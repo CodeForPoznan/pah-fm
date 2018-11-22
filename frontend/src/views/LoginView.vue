@@ -63,6 +63,7 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import * as actions from '../store/actions';
+import { USER } from '../store/constants'
 
 const logoutAction = mapActions([actions.LOGOUT])[actions.LOGOUT];
 
@@ -77,6 +78,11 @@ export default {
   },
   computed: {
     ...mapState(['user', 'loginInProgress', 'loginError']),
+    user: function() {
+      const userData = this.$store.state[USER];
+      return userData ? userData.data : null;
+    }
+
   },
   methods: {
     ...mapActions([actions.LOGIN]),

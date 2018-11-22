@@ -7,6 +7,7 @@ import { makeDefaultState } from '../store/helpers';
 import { setItem, getItem, removeItem } from './localStore';
 
 const tokenKey = 'jwt';
+const vuex = 'vuex';
 
 export function login(username, password) {
   return post('api-token-auth/', { username, password })
@@ -18,11 +19,12 @@ export function saveToken(token) {
 }
 
 export function deleteToken() {
-  const localData = getItem('vuex');
-  setItem({
+  const localData = getItem(vuex);
+  setItem(vuex, {
     ...localData,
     [USER]: makeDefaultState(),
   });
+
   removeItem(tokenKey);
 }
 

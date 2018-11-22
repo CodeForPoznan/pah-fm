@@ -6,18 +6,26 @@ import * as mutations from './mutations';
 
 const makeFetch = name => `FETCH_${name.toUpperCase()}`;
 
-export const FETCH_USER = makeFetch('user');
+export const USER = 'user';
+
+export const FETCH_USER = makeFetch(USER);
 export const FETCH_ROUTES = makeFetch('cars');
+
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const SUBMIT = 'SUBMIT';
 
 
+const makeAction = (action, actionName) => ({ commit }) => {
+  const f = action();
+  if (f) {
+    f.then(data => commit(mutations[actionName], data));
+  }
+};
+
 export const actions = {
-  [FETCH_USER]: ({ commit }) =>
-    getMyself().then(data => commit(mutations.SET_USER, data)),
-  [FETCH_ROUTES]: ({ commit }) =>
-    getRoutes().then(data => commit(mutations.SET_ROUTES, data)),
+  [FETCH_USER]: makeAction(getMyself, 'SET_USER'),
+  [FETCH_ROUTES]: makeAction(getRoutes, 'SET_ROUTES'),
   [LOGIN]({ commit, dispatch }, { username, password }) {
     commit(mutations.SET_LOGIN_PROGRESS, true);
     login(username, password)
@@ -33,8 +41,7 @@ export const actions = {
         commit(mutations.SET_LOGIN_PROGRESS, false);
       });
   },
-  [LOGOUT]({ commit }) {
-    commit(mutations.SET_USER, makeDefaultState());
+  [LOGOUT]() {
     deleteToken();
   },
   [SUBMIT]({ commit }, { form }) {
