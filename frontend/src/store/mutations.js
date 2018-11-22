@@ -1,5 +1,17 @@
-import { USER, ROUTES } from './constants';
-import { makeMutation } from './helpers';
+import { USER, ROUTES, DATA, LOADING, ERRORS } from './constants';
+
+const makeMutation = name => (state, data) =>
+  Object.assign(
+    state,
+    {
+      [name]: {
+        [LOADING]: false,
+        [DATA]: data,
+        [ERRORS]: [],
+      },
+    },
+  );
+
 
 const makeSetAction = name => `SET_${name}`;
 

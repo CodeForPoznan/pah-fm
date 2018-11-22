@@ -41,7 +41,8 @@ export const actions = {
         commit(mutations.SET_LOGIN_PROGRESS, false);
       });
   },
-  [LOGOUT]() {
+  [LOGOUT]({ commit }) {
+    commit(mutations.SET_USER, null);
     deleteToken();
   },
   [SUBMIT]({ commit }, { form }) {
