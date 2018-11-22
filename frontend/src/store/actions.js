@@ -15,14 +15,16 @@ export const SUBMIT = 'SUBMIT';
 
 export const actions = {
   [FETCH_USER]: ({ commit }) =>
-    getMyself().then(user => commit(mutations.SET_USER, user)),
-  // eslint-disable-next-line
-  [FETCH_ROUTES]({ commit }) {
-    getRoutes().then((data) => {
-      console.log(data);
-      // commit(mutations.SET_USER, user);
-    });
-  },
+    getMyself().then(data => commit(mutations.SET_USER, data)),
+  [FETCH_ROUTES]: ({ commit }) =>
+    getRoutes().then(data => commit(mutations.SET_ROUTES, data)),
+  // // eslint-disable-next-line
+  // [FETCH_ROUTES]({ commit }) {
+  //   getRoutes().then((data) => {
+  //     console.log(data);
+  //     // commit(mutations.SET_USER, user);
+  //   });
+  // },
   [LOGIN]({ commit, dispatch }, { username, password }) {
     commit(mutations.SET_LOGIN_PROGRESS, true);
     login(username, password)

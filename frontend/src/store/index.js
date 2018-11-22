@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 
 import { actions } from './actions';
+import { makeDefaultState } from './helpers';
 import { mutations, SET_IS_CONNECTED } from './mutations';
 
 const USER = 'user';
@@ -14,9 +15,11 @@ Vue.use(Vuex);
 
 export const IS_ONLINE = 'isOnline';
 
+
+
 const state = {
   [USER]: null,
-  [ROUTES]: [],
+  [ROUTES]: makeDefaultState(),
   [IS_ONLINE]: navigator.onLine,
   loginInProgress: false,
   loginError: null,
