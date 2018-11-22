@@ -16,7 +16,6 @@ Vue.use(Vuex);
 export const IS_ONLINE = 'isOnline';
 
 
-
 const state = {
   [USER]: null,
   [ROUTES]: makeDefaultState(),

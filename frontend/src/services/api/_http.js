@@ -25,6 +25,9 @@ export function get(url, auth = true) {
 
   if (auth) {
     const authHeader = getAuthHeader();
+    if (!authHeader.Authorization) {
+      return null;
+    }
     Object.assign(requestOptions.headers, authHeader);
   }
   return fetch(`${apiUrl}${url}`, requestOptions).then(handleResponse);

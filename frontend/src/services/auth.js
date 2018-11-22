@@ -1,6 +1,8 @@
 import jwtDecode from 'jwt-decode';
 
 import { post } from './api/_http';
+import { USER } from '../store/constants';
+import { makeDefaultState } from '../store/helpers';
 
 import { setItem, getItem, removeItem } from './localStore';
 
@@ -16,6 +18,11 @@ export function saveToken(token) {
 }
 
 export function deleteToken() {
+  const localData = getItem('vuex');
+  setItem({
+    ...localData,
+    [USER]: makeDefaultState(),
+  });
   removeItem(tokenKey);
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="!routes.length"
+    v-if="!routes.data.length"
     class="alert alert-warning m-5"
     role="alert">
     {{ $t('routes.no_driver_routes') }}
@@ -11,8 +11,9 @@
     id="routesAccordion">
     <div
       class="card"
-      v-for="route in routes"
+      v-for="route in routes.data"
       :key="route.id">
+      {{route}}
       <div
         class="card-header"
         @click="showRoute(route.id)">

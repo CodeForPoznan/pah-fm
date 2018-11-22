@@ -1,8 +1,23 @@
+import { DATA, LOADING, ERRORS } from './constants';
+
+const makeMutation = name => (state, data) =>
+  Object.assign(
+    state,
+    {
+      [name]: {
+        [LOADING]: false,
+        [DATA]: data,
+        [ERRORS]: [],
+      },
+    },
+  );
+
+
 const makeDefaultState = () => ({
-  data: null,
-  loading: false,
-  errors: [],
+  [DATA]: null,
+  [LOADING]: false,
+  [ERRORS]: [],
 });
 
-export { makeDefaultState };
+export { makeDefaultState, makeMutation };
 

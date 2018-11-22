@@ -18,13 +18,6 @@ export const actions = {
     getMyself().then(data => commit(mutations.SET_USER, data)),
   [FETCH_ROUTES]: ({ commit }) =>
     getRoutes().then(data => commit(mutations.SET_ROUTES, data)),
-  // // eslint-disable-next-line
-  // [FETCH_ROUTES]({ commit }) {
-  //   getRoutes().then((data) => {
-  //     console.log(data);
-  //     // commit(mutations.SET_USER, user);
-  //   });
-  // },
   [LOGIN]({ commit, dispatch }, { username, password }) {
     commit(mutations.SET_LOGIN_PROGRESS, true);
     login(username, password)
@@ -41,7 +34,7 @@ export const actions = {
       });
   },
   [LOGOUT]({ commit }) {
-    commit(mutations.SET_USER, null);
+    commit(mutations.SET_USER, makeDefaultState());
     deleteToken();
   },
   [SUBMIT]({ commit }, { form }) {
