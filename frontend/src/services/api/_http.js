@@ -22,6 +22,7 @@ export function get(url, auth = true) {
       Accept: 'application/json; charset=utf-8',
     },
   };
+
   if (auth) {
     const authHeader = getAuthHeader();
     Object.assign(requestOptions.headers, authHeader);

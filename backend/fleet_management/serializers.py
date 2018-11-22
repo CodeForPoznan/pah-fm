@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Car, Passenger, User
+from .models import Car, Passenger, User, Route
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -27,4 +27,19 @@ class CarSerializer(serializers.ModelSerializer):
             'plates',
             'fuel_consumption',
             'description',
+        )
+
+class RouteListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Route
+        fields = (
+            'id',
+            'date',
+            'start_mileage',
+            'end_mileage',
+            'fuel_level_begin',
+            'fuel_level_end',
+            'car',
+            'driver',
+            'passengers'
         )
