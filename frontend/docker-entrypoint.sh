@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
 npm install
-npm run serve
+rm /pah-fm/backend/*
+npm run watch
