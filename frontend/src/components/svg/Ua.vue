@@ -3,22 +3,24 @@
     width="40"
     height="30"
     xmlns="http://www.w3.org/2000/svg"
-    id="flag-icon-css-pl"
+    id="flag-icon-css-ua"
     viewBox="0 0 640 480">
-    <g fill-rule="evenodd">
+    <g
+      fill-rule="evenodd"
+      stroke-width="1pt">
       <path
-        fill="#fff"
-        d="M640 480H0V0h640z"/>
+        fill="#ffd500"
+        d="M0 0h640v480H0z"/>
       <path
-        fill="#dc143c"
-        d="M640 480H0V240h640z"/>
+        fill="#005bbb"
+        d="M0 0h640v240H0z"/>
     </g>
   </svg>
 </template>
 
 <script>
 export default {
-  name: 'Pl',
+  name: 'UA',
 };
 </script>
 

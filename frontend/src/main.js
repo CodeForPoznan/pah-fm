@@ -13,10 +13,12 @@ Vue.use(VueI18n);
 
 const EN = 'EN';
 const PL = 'PL';
+const UA = 'UA';
 
 export const languages = {
   [EN]: 'en',
   [PL]: 'pl',
+  [UA]: 'ua',
 };
 
 const locale = languages[EN];
