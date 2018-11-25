@@ -48,6 +48,7 @@ class DriveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Drive
         fields = (
+            'id',
             'driver', 'car', 'passengers',
             'date', 'start_mileage', 'end_mileage', 'description',
         )

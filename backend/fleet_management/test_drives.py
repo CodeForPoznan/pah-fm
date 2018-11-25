@@ -63,6 +63,7 @@ class DrivesApiTest(APITransactionTestCase):
         self.assertEqual(
             drives[0],
             {
+                'id': self.drives[0].id,
                 'date': self.drives[0].date.isoformat(),
                 'startMileage': self.drives[0].start_mileage,
                 'endMileage': self.drives[0].end_mileage,
@@ -91,3 +92,28 @@ class DrivesApiTest(APITransactionTestCase):
                 }
             }
         )
+
+    def test_can_retrieve_only_my_drives(self):
+        other_driver = get_user_model().objects.create_user(
+            username='JessicaDownson',
+            first_name='Jessica',
+            last_name='Downson',
+            email='crazy_jess@gmail.com',
+            password='XXXXXXXXXXX',
+        )
+        Drive.objects.create(
+            car=self.car,
+            driver=other_driver,
+            date=date.today(),
+            start_mileage=200,
+            end_mileage=12123,
+            description=''
+        )
+
+        self.client.force_login(self.driver)
+        res = self.client.get(self.url)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+        drives = json.loads(res.content)
+        self.assertEqual(len(drives), 1)
+        self.assertEqual(drives[0]['id'], self.drives[0].id)
