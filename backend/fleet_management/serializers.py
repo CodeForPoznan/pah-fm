@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Car, Drive, Passenger, Project, User
+from .models import Car, Drive, Passenger, User
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -26,16 +26,6 @@ class CarSerializer(serializers.ModelSerializer):
             'id',
             'plates',
             'fuel_consumption',
-            'description',
-        )
-
-
-class ProjectSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Project
-        fields = (
-            'id',
-            'title',
             'description',
         )
 

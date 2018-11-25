@@ -23,7 +23,6 @@ from fleet_management.api import (
     CurrentUserRetrieveView,
     DriveView,
     PassengerListView,
-    ProjectsListView,
 )
 
 
@@ -33,6 +32,5 @@ urlpatterns = [
     path('api/users/me', CurrentUserRetrieveView.as_view(), name='me'),
     path('api/passengers', PassengerListView.as_view(), name='passengers'),
     path('api/cars', CarListView.as_view(), name='cars'),
-    path('api/projects', ProjectsListView.as_view(), name='projects'),
     path('api/drives', DriveView.as_view(), name='drives'),
 ]
