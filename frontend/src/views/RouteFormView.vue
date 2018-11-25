@@ -94,8 +94,8 @@
 <script>
 import { mapActions } from 'vuex';
 import uuidv4 from 'uuid/v4';
-import * as actions from '../store/actions';
 import { isErroring, makeErrorMessage } from './services';
+import { SUBMIT } from '../store/constants';
 
 const defaultFormState = {
   id: uuidv4(),
@@ -119,14 +119,14 @@ export default {
     };
   },
   methods: {
-    ...mapActions([actions.SUBMIT]),
+    ...mapActions([SUBMIT]),
 
     handleSubmit() {
       this.validateForm();
       this.isSubmitted = true;
 
       if (!this.errors.length) {
-        this[actions.SUBMIT]({ form: this.route });
+        this[SUBMIT]({ form: this.route });
         this.route = { ...defaultFormState };
         this.isSubmitted = false;
       }

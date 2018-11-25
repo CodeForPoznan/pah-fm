@@ -6,10 +6,10 @@ const makeDefaultState = () => ({
   [ERRORS]: [],
 });
 
-const makeAction = mutations => (action, actionName) => ({ commit }) => {
+const makeAction = (action, actionName) => ({ commit }) => {
   const f = action();
   if (f) {
-    f.then(data => commit(mutations[actionName], data));
+    f.then(data => commit(actionName, data));
   }
 };
 

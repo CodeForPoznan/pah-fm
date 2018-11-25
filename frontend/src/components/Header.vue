@@ -19,7 +19,6 @@
 
 <script>
 
-import { mapState } from 'vuex';
 import LoginStatus from './LoginStatus.vue';
 import { USER } from '../store/constants';
 
@@ -47,7 +46,7 @@ export default {
     };
   },
   computed: {
-    user: function() {
+    user() {
       return this.$store.state[USER].data;
     },
   },

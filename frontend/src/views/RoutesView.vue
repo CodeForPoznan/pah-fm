@@ -13,7 +13,7 @@
       class="card"
       v-for="route in routes"
       :key="route.id">
-      {{route}}
+      {{ route }}
       <div
         class="card-header"
         @click="showRoute(route.id)">
@@ -43,8 +43,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import { ROUTES } from '../store/constants'
+import { ROUTES } from '../store/constants';
 
 export default {
   name: 'RoutesView',
@@ -59,9 +58,9 @@ export default {
     },
   },
   computed: {
-    routes: function() {
+    routes() {
       return this.$store.state[ROUTES].data || [];
-    }
+    },
   },
 };
 </script>

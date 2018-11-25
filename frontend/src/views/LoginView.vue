@@ -62,10 +62,9 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import * as actions from '../store/actions';
-import { USER } from '../store/constants'
+import { USER, LOGIN, LOGOUT } from '../store/constants';
 
-const logoutAction = mapActions([actions.LOGOUT])[actions.LOGOUT];
+const logoutAction = mapActions([LOGOUT])[LOGOUT];
 
 export default {
   name: 'LoginView',
@@ -78,20 +77,19 @@ export default {
   },
   computed: {
     ...mapState(['user', 'loginInProgress', 'loginError']),
-    user: function() {
-      const userData = this.$store.state[USER];
-      return userData ? userData.data : null;
-    }
+    user() {
+      return this.$store.state[USER].data;
+    },
 
   },
   methods: {
-    ...mapActions([actions.LOGIN]),
+    ...mapActions([LOGIN]),
     logoutAction,
     handleSubmit() {
       this.submitted = true;
       const { username, password } = this;
       if (username && password) {
-        this[actions.LOGIN]({ username, password });
+        this[LOGIN]({ username, password });
       }
     },
   },
