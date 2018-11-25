@@ -5,9 +5,7 @@ import createPersistedState from 'vuex-persistedstate';
 import { actions } from './actions';
 import { makeDefaultState } from './helpers';
 import { mutations, SET_IS_CONNECTED } from './mutations';
-
-const USER = 'user';
-const ROUTES = 'routes';
+import { USER, ROUTES } from './constants';
 
 const debug = process.env.NODE_ENV !== 'production';
 
@@ -17,7 +15,7 @@ export const IS_ONLINE = 'isOnline';
 
 
 const state = {
-  [USER]: null,
+  [USER]: makeDefaultState(),
   [ROUTES]: makeDefaultState(),
   [IS_ONLINE]: navigator.onLine,
   loginInProgress: false,

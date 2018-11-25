@@ -1,38 +1,36 @@
-import { USER, ROUTES, DATA, LOADING, ERRORS } from './constants';
+import { USER, ROUTES } from './constants';
 
-const makeMutation = name => (state, data) =>
-  Object.assign(
-    state,
-    {
-      [name]: {
-        [LOADING]: false,
-        [DATA]: data,
-        [ERRORS]: [],
-      },
-    },
-  );
+import {
+  makeSetData,
+  makeSetError,
+  makeSetLoading,
+  makeSetActionName,
+  makeErrorActionName,
+  makeLoadingActionName,
+} from './helpers';
 
+// API:
+export const SET_USER = makeSetActionName(USER);
+export const SET_USER_ERROR = makeErrorActionName(USER);
+export const SET_USER_LOADING = makeLoadingActionName(USER);
 
-const makeSetAction = name => `SET_${name}`;
+export const SET_ROUTES = makeSetActionName(ROUTES);
 
-export const SET_USER = makeSetAction(USER);
-export const SET_ROUTES = makeSetAction(ROUTES);
-
-export const SET_LOGIN_PROGRESS = 'SET_LOGIN_PROGRESS';
-export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
+// APPLICATION STATE:
 export const ADD_ROUTE = 'ADD_ROUTE';
 export const SET_UPDATE_READY = 'SET_UPDATE_READY';
 export const SET_IS_CONNECTED = 'SET_IS_CONNECTED';
 
 export const mutations = {
-  [SET_USER]: makeMutation(USER),
-  [SET_ROUTES]: makeMutation(ROUTES),
-  [SET_LOGIN_PROGRESS](state, loginInProgress) {
-    Object.assign(state, { loginInProgress });
-  },
-  [SET_LOGIN_ERROR](state, loginError) {
-    Object.assign(state, { loginError });
-  },
+  // user:
+  [SET_USER]: makeSetData(USER),
+  [SET_USER_ERROR]: makeSetError(USER),
+  [SET_USER_LOADING]: makeSetLoading(USER),
+
+  // routes:
+  [SET_ROUTES]: makeSetData(ROUTES),
+
+  // app state
   [ADD_ROUTE](state, route) {
     Object.assign(state, { routes: [...state.routes, Object.assign({}, route)] });
   },

@@ -60,13 +60,8 @@ export default {
   },
   computed: {
     routes: function() {
-      // TODO const
-      const routes = this.$store.state[ROUTES];
-      return {
-        routes: routes ? routes.data : [],
-      }
+      return this.$store.state[ROUTES].data || [];
     }
-
   },
 };
 </script>

@@ -4,4 +4,5 @@ export const ERRORS = 'errors';
 
 export const USER = 'user';
 export const ROUTES = 'routes';
+export const CARS = 'cars';
 

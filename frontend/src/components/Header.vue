@@ -21,14 +21,12 @@
 
 import { mapState } from 'vuex';
 import LoginStatus from './LoginStatus.vue';
+import { USER } from '../store/constants';
 
 export default {
   name: 'Header',
   components: {
     LoginStatus,
-  },
-  computed: {
-    ...mapState(['user']),
   },
   data() {
     return {
@@ -47,6 +45,11 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    user: function() {
+      return this.$store.state[USER].data;
+    },
   },
 };
 </script>
