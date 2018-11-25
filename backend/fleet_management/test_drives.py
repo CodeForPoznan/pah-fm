@@ -1,4 +1,5 @@
-from datetime import datetime
+from datetime import date
+import json
 
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -6,7 +7,6 @@ from rest_framework import status
 from rest_framework.test import APITransactionTestCase
 
 from fleet_management.models import Car, Drive, Passenger
-from fleet_management.serializers import CarSerializer, Passenger, UserSerializer
 
 
 class DrivesApiTest(APITransactionTestCase):
@@ -18,6 +18,7 @@ class DrivesApiTest(APITransactionTestCase):
         )
 
     def setUp(self):
+        self.maxDiff = None
         self.url = reverse('drives')
         self.passengers = [
             self.create_passenger('Mike', 'Melnik'),
@@ -40,7 +41,7 @@ class DrivesApiTest(APITransactionTestCase):
             Drive.objects.create(
                 car=self.car,
                 driver=self.driver,
-                date=datetime.today(),
+                date=date.today(),
                 start_mileage=200,
                 end_mileage=12123,
                 description=''
@@ -58,7 +59,7 @@ class DrivesApiTest(APITransactionTestCase):
         res = self.client.get(self.url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
-        drives = res.json()
+        drives = json.loads(res.content)
         self.assertEqual(
             drives[0],
             {
@@ -66,10 +67,27 @@ class DrivesApiTest(APITransactionTestCase):
                 'startMileage': self.drives[0].start_mileage,
                 'endMileage': self.drives[0].end_mileage,
                 'description': self.drives[0].description,
-                'car': CarSerializer(self.drives[0].car).data,
-                'passengers': Passenger(
-                    self.drives[0].passengers, many=True,
-                ).data,
-                'driver': UserSerializer(self.driver).data,
+                'car': {
+                    'id': self.car.id,
+                    'plates': self.car.plates,
+                    'fuelConsumption': self.car.fuel_consumption,
+                    'description': self.car.description,
+                },
+                'passengers': [
+                    {
+                        'id': self.passengers[0].id,
+                        'lastName': self.passengers[0].last_name,
+                        'firstName': self.passengers[0].first_name,
+                    },
+                    {
+                        'id': self.passengers[1].id,
+                        'lastName': self.passengers[1].last_name,
+                        'firstName': self.passengers[1].first_name,
+                    },
+                ],
+                'driver': {
+                    'id': self.driver.id,
+                    'username': self.driver.username,
+                }
             }
         )

@@ -49,5 +49,5 @@ class DriveSerializer(serializers.ModelSerializer):
         model = Drive
         fields = (
             'driver', 'car', 'passengers',
-            'date', 'start_mileage', 'end_mileage',
+            'date', 'start_mileage', 'end_mileage', 'description',
         )
