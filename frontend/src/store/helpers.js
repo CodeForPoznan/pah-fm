@@ -52,9 +52,9 @@ const makeSetLoading = name => (state, isLoading) =>
   );
 
 
-const makeSetActionName = name => `SET_${name.toUpperCase()}`;
-const makeErrorActionName = name => `SET_ERROR_${name.toUpperCase()}`;
-const makeLoadingActionName = name => `SET_LOADING_${name.toUpperCase()}`;
+const makeSetActionName = name => `API/SET_${name.toUpperCase()}`;
+const makeErrorActionName = name => `API/SET_ERROR_${name.toUpperCase()}`;
+const makeLoadingActionName = name => `API/SET_LOADING_${name.toUpperCase()}`;
 
 export {
   makeDefaultState,

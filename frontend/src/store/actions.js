@@ -14,7 +14,6 @@ import {
 export const FETCH_USER = makeFetch(USER);
 export const FETCH_ROUTES = makeFetch(CARS);
 
-
 export const actions = {
   [FETCH_USER]: makeAction(getMyself, SET_USER),
   [FETCH_ROUTES]: makeAction(getRoutes, SET_ROUTES),
@@ -31,7 +30,7 @@ export const actions = {
         commit(SET_LOGIN_ERROR, 'Login unsuccessful');
       })
       .finally(() => {
-        // commit(SET_LOGIN_PROGRESS, false);
+        commit(SET_LOGIN_LOADING, false);
       });
   },
   [LOGOUT]({ commit }) {
