@@ -22,7 +22,7 @@ const languages = {
 const locale = languages[EN];
 const fallbackLocale = languages[EN];
 
-const i18n = new VueI18n({
+export const i18n = new VueI18n({
   locale,
   fallbackLocale,
   messages,

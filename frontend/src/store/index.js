@@ -7,7 +7,7 @@ import { mutations, SET_IS_CONNECTED } from './mutations';
 
 const USER = 'user';
 const ROUTES = 'routes';
-const CARS = 'cars';
+export const CARS = 'cars';
 
 const debug = process.env.NODE_ENV !== 'production';
 

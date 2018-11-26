@@ -16,7 +16,6 @@
             </div>
             <h2>{{ $t('common.new_route') }}</h2>
             <form
-              v-if="!!cars.length"
               @submit.prevent="handleSubmit">
               <div class="form-group">
                 <label>{{ $t('routes.date') }}</label>
@@ -31,18 +30,21 @@
               <div class="form-group">
                 <label>{{ $t('routes.cars') }}</label>
                 <select
+                  v-if="!!cars.data.length"
                   v-model="route.car"
                   name="car"
                   class="form-control"
                   :class="{ 'is-invalid': isSubmitted && !route.car }"
                 >
                   <option
-                    v-for="car in cars"
+                    v-for="car in cars.data"
                     :key="car.id"
-                    :value="car">
-                    {{ car.plates }}
-                  </option>
+                    :value="car"
+                  >{{ car.plates }}</option>
                 </select>
+                <p
+                  class="font-weight-bold"
+                  v-if="!cars.data.length">{{ $t('routes.no_cars_message') }}</p>
               </div>
               <div class="form-group">
                 <label>{{ $t('routes.description') }}</label>
@@ -114,9 +116,10 @@ import { mapActions, mapState } from 'vuex';
 import uuidv4 from 'uuid/v4';
 import * as actions from '../store/actions';
 import { isErroring, makeErrorMessage } from './services';
+import { CARS } from '../store';
 
 const defaultFormState = {
-  id: uuidv4(),
+  id: '',
   date: '',
   car: null,
   description: '',
@@ -145,6 +148,7 @@ export default {
       this.isSubmitted = true;
 
       if (!this.errors.length) {
+        this.route.id = uuidv4();
         this[actions.SUBMIT]({ form: this.route });
         this.route = { ...defaultFormState };
         this.isSubmitted = false;
@@ -162,7 +166,7 @@ export default {
     this[actions.FETCH_CARS]();
   },
   computed: {
-    ...mapState(['cars', 'fetchingCarsInProgress']),
+    ...mapState([CARS]),
   },
 };
 </script>

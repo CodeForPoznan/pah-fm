@@ -24,19 +24,19 @@
       <div :class="['collapse', { show: routeVisible === route.id }]">
         <div class="card-body">
           <p>
-            <span class="font-weight-bold">{{ $t('routes.description') }} </span>
+            <span class="font-weight-bold mr-1">{{ $t('routes.description') }}</span>
             <span>{{ route.description }}</span>
           </p>
           <p>
-            <span class="font-weight-bold">{{ $t('routes.car') }} </span>
+            <span class="font-weight-bold mr-1">{{ $t('routes.car') }}</span>
             <span>{{ route.car.plates }}</span>
           </p>
           <p>
-            <span class="font-weight-bold">{{ $t('routes.starting_mileage') }} </span>
+            <span class="font-weight-bold mr-1">{{ $t('routes.starting_mileage') }}</span>
             <span>{{ route.startMileage }}</span>
           </p>
           <p>
-            <span class="font-weight-bold">{{ $t('routes.ending_mileage') }} </span>
+            <span class="font-weight-bold mr-1">{{ $t('routes.ending_mileage') }}</span>
             <span>{{ route.endMileage }}</span>
           </p>
         </div>

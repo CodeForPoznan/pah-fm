@@ -28,12 +28,12 @@ export const mutations = {
     Object.assign(state, { isOnline });
   },
   [SET_FETCHING_CARS_PROGRESS](state, fetchingCarsInProgress) {
-    Object.assign(state.cars, { ...state.cars, loading: fetchingCarsInProgress });
+    Object.assign(state.cars, { loading: fetchingCarsInProgress });
   },
   [SET_FETCHING_CARS_ERROR](state, fetchingCarsError) {
-    Object.assign(state, { ...state.cars, error: fetchingCarsError });
+    Object.assign(state.cars, { error: fetchingCarsError });
   },
   [SET_CARS](state, cars) {
-    Object.assign(state, { ...state.cars, cars: [...cars] });
+    Object.assign(state.cars, { data: [...cars] });
   },
 };
