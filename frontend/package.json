@@ -8,7 +8,8 @@
     "http:server": "http-server dist -c-1",
     "stylelint": "stylelint src/**/*.vue src/**/*.scss --syntax scss --cache",
     "lint:fix": "vue-cli-service lint",
-    "lint": "vue-cli-service lint --no-fix && npm run stylelint"
+    "lint": "vue-cli-service lint --no-fix && npm run stylelint",
+    "watch": "vue-cli-service build --watch --no-clean"
   },
   "dependencies": {
     "@7ninjas/scss-mixins": "^1.0.1",
