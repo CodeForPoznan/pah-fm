@@ -1,5 +1,6 @@
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import FlagIcon from 'vue-flag-icon';
 
 import VueI18n from 'vue-i18n';
 import Vue from 'vue';
@@ -9,6 +10,7 @@ import './registerServiceWorker';
 import router from './router/index';
 import messages from './translations.json';
 
+Vue.use(FlagIcon);
 Vue.use(VueI18n);
 
 const EN = 'EN';

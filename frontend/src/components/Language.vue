@@ -5,9 +5,15 @@
       :key="index"
       class="lang">
       <li @click="changeLang(key)">
-        <Pl v-if="index == 'pl'" />
-        <En v-if="index == 'en'" />
-        <Ua v-if="index == 'ua'" />
+        <flag
+          v-if="index == 'en'"
+          iso="gb" />
+        <flag
+          v-if="index == 'pl'"
+          iso="pl"/>
+        <flag
+          v-if="index == 'ua'"
+          iso="ua" />
       </li>
     </ul>
   </div>
@@ -16,17 +22,10 @@
 <script>
 
 import { languages } from '../main';
-import En from './svg/En.vue';
-import Pl from './svg/Pl.vue';
-import Ua from './svg/Ua.vue';
+
 /* eslint-disable no-underscore-dangle */
 export default {
   name: 'Language',
-  components: {
-    En,
-    Pl,
-    Ua,
-  },
   methods: {
     changeLang(event) {
       this._i18n.locale = languages[event];
@@ -45,9 +44,11 @@ export default {
   list-style-type: none;
   float: right;
   padding-left: 10px;
+  cursor: pointer;
 }
 
-svg {
-  cursor: pointer;
+.lang li {
+  height: 30px;
+  width: 40px;
 }
 </style>
