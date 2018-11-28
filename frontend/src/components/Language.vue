@@ -1,19 +1,13 @@
 <template>
   <div>
     <ul
-      v-for="(index, key) in languages"
-      :key="index"
       class="lang">
-      <li @click="changeLang(key)">
+      <li
+        v-for="language in languagesOrder"
+        :key="language"
+        @click="changeLang(language)">
         <flag
-          v-if="index == 'en'"
-          iso="gb" />
-        <flag
-          v-if="index == 'pl'"
-          iso="pl"/>
-        <flag
-          v-if="index == 'ua'"
-          iso="ua" />
+          :iso="language" />
       </li>
     </ul>
   </div>
@@ -21,26 +15,26 @@
 
 <script>
 
-import { languages } from '../main';
+import { languagesOrder } from '../main';
 
 /* eslint-disable no-underscore-dangle */
 export default {
   name: 'Language',
   methods: {
-    changeLang(event) {
-      this._i18n.locale = languages[event];
+    changeLang(languageChecked) {
+      this._i18n.locale = languageChecked;
     },
   },
   data() {
     return {
-      languages,
+      languagesOrder,
     };
   },
 };
 </script>
 
 <style scoped lang="scss">
-.lang {
+ul.lang {
   list-style-type: none;
   float: right;
   padding-left: 10px;
@@ -48,6 +42,8 @@ export default {
 }
 
 .lang li {
+  display: inline;
   font-size: 30px;
+  margin-left: 20px;
 }
 </style>

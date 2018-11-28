@@ -13,18 +13,24 @@ import messages from './translations.json';
 Vue.use(FlagIcon);
 Vue.use(VueI18n);
 
-const EN = 'EN';
+const GB = 'GB';
 const PL = 'PL';
 const UA = 'UA';
 
 export const languages = {
-  [EN]: 'en',
+  [GB]: 'gb',
   [PL]: 'pl',
   [UA]: 'ua',
 };
 
-const locale = languages[EN];
-const fallbackLocale = languages[EN];
+export const languagesOrder = [
+  'pl',
+  'gb',
+  'ua',
+];
+
+const locale = languages[GB];
+const fallbackLocale = languages[GB];
 
 const i18n = new VueI18n({
   locale,
