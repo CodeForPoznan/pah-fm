@@ -1,17 +1,15 @@
 <template>
-  <div class="row justify-content-end">
-    <div class="col-4">
-      <ul
-        v-for="(index, key) in languages"
-        :key="index"
-        class="lang">
-        <li @click="changeLang(key)">
-          <Pl v-if="index == 'pl'" />
-          <En v-if="index == 'en'" />
-          <Ua v-if="index == 'ua'" />
-        </li>
-      </ul>
-    </div>
+  <div>
+    <ul
+      v-for="(index, key) in languages"
+      :key="index"
+      class="lang">
+      <li @click="changeLang(key)">
+        <Pl v-if="index == 'pl'" />
+        <En v-if="index == 'en'" />
+        <Ua v-if="index == 'ua'" />
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -32,7 +30,6 @@ export default {
   methods: {
     changeLang(event) {
       this._i18n.locale = languages[event];
-      console.log(this._i18n.locale);
     },
   },
   data() {
@@ -49,6 +46,7 @@ export default {
   float: right;
   padding-left: 10px;
 }
+
 svg {
   cursor: pointer;
 }
