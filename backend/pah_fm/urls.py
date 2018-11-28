@@ -21,6 +21,7 @@ from rest_framework_jwt.views import obtain_jwt_token
 from fleet_management.api import (
     CarListView,
     CurrentUserRetrieveView,
+    DriveView,
     PassengerListView,
 )
 
@@ -31,4 +32,5 @@ urlpatterns = [
     path('api/users/me', CurrentUserRetrieveView.as_view(), name='me'),
     path('api/passengers', PassengerListView.as_view(), name='passengers'),
     path('api/cars', CarListView.as_view(), name='cars'),
+    path('api/drives', DriveView.as_view(), name='drives'),
 ]
