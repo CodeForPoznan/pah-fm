@@ -48,7 +48,6 @@ export default {
 }
 
 .lang li {
-  height: 30px;
-  width: 40px;
+  font-size: 30px;
 }
 </style>
