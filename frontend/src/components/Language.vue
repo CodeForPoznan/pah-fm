@@ -49,4 +49,7 @@ export default {
   float: right;
   padding-left: 10px;
 }
+svg {
+  cursor: pointer;
+}
 </style>
