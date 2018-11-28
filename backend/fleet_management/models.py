@@ -46,7 +46,7 @@ class Drive(models.Model):
 
 
 class Project(models.Model):
-    routes = models.ManyToManyField(Drive)
+    drives = models.ManyToManyField(Drive)
     title = models.CharField(max_length=50, blank=False)
     description = models.CharField(max_length=1000, blank=False)
 
