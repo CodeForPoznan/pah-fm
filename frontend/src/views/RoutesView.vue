@@ -1,48 +1,14 @@
 <template>
-  <div
-    v-if="!routes.length"
-    class="alert alert-warning m-5"
-    role="alert">
-    {{ $t('routes.no_driver_routes') }}
-  </div>
-  <div
-    v-else
-    class="accordion m-5"
-    id="routesAccordion">
-    <div
-      class="card"
-      v-for="route in routes"
-      :key="route.id">
-      <div
-        class="card-header"
-        @click="showRoute(route.id)">
-        <h5 class="mb-0">
-          <span class="font-weight-bold">{{ route.date }}</span>
-          {{ $t('routes.from_to', { from: route.from, destination: route.destination}) }}
-        </h5>
-      </div>
-      <div :class="['collapse', { show: routeVisible === route.id }]">
-        <div class="card-body">
-          <p>
-            <span class="font-weight-bold">{{ $t('routes.description') }}</span>
-            <span>{{ route.description }}</span>
-          </p>
-          <p>
-            <span class="font-weight-bold">{{ $t('routes.starting_mileage') }}</span>
-            <span>{{ route.startMileage }}</span>
-          </p>
-          <p>
-            <span class="font-weight-bold">{{ $t('routes.ending_mileage') }}</span>
-            <span>{{ route.endMileage }}</span>
-          </p>
-        </div>
-      </div>
-    </div>
+  <div>
+
+    {{ data }} {{ loading }}
+    <button @click="getCars">action</button>
   </div>
 </template>
-
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters, mapActions } from 'vuex';
+import { namespaces } from '../store'
+import { DATA, LOADING } from '../store/constants';
 
 export default {
   name: 'RoutesView',
@@ -55,9 +21,11 @@ export default {
     showRoute(id) {
       this.routeVisible = id;
     },
+    ...mapActions(namespaces.cars, ['getCars']),
   },
   computed: {
     ...mapState(['routes']),
+    ...mapState(namespaces.cars, [DATA, LOADING]),
   },
 };
 </script>
