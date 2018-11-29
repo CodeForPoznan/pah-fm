@@ -1,3 +1,4 @@
+from django.db import transaction
 from rest_framework import fields, serializers
 
 from .models import Car, Drive, Passenger, User
@@ -57,11 +58,12 @@ class DriveSerializer(serializers.ModelSerializer):
             id__in=[p['id'] for p in passengers_data],
         ).all()
 
-        drive = Drive.objects.create(
-            **validated_data,
-            driver=self.context['driver'],
-            car=car,
-        )
-        drive.passengers.set(passengers)
-        drive.save()
-        return drive
+        with transaction.atomic():
+            drive = Drive.objects.create(
+                **validated_data,
+                driver=self.context['driver'],
+                car=car,
+            )
+            drive.passengers.set(passengers)
+            drive.save()
+            return drive
