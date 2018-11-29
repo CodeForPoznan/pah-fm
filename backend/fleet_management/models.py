@@ -42,7 +42,9 @@ class Drive(models.Model):
     date = models.DateField(default=now, blank=False)
     start_mileage = models.IntegerField(null=False)
     end_mileage = models.IntegerField(null=False)
-    description = models.CharField(max_length=1000)
+    description = models.CharField(max_length=1000, blank=True)
+    start_location = models.CharField(max_length=100, blank=False)
+    end_location = models.CharField(max_length=100, blank=False)
 
     def __str__(self):
         return f'{self.driver.username} ({self.date})'

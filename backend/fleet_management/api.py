@@ -44,6 +44,9 @@ class DriveView(generics.ListCreateAPIView):
     filter_backends = (filters.OrderingFilter,)
     ordering = ('-date',)
 
+    def get_serializer_context(self):
+        return {'driver': self.request.user}
+
     def get_queryset(self):
         return Drive.objects.filter(
             driver__id=self.request.user.id,
