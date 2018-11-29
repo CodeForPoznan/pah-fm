@@ -1,5 +1,6 @@
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import FlagIcon from 'vue-flag-icon';
 
 import VueI18n from 'vue-i18n';
 import Vue from 'vue';
@@ -9,18 +10,27 @@ import './registerServiceWorker';
 import router from './router/index';
 import messages from './translations.json';
 
+Vue.use(FlagIcon);
 Vue.use(VueI18n);
 
-const EN = 'EN';
+const GB = 'GB';
 const PL = 'PL';
+const UA = 'UA';
 
-const languages = {
-  [EN]: 'en',
+export const languages = {
+  [GB]: 'gb',
   [PL]: 'pl',
+  [UA]: 'ua',
 };
 
-const locale = languages[EN];
-const fallbackLocale = languages[EN];
+export const languagesOrder = [
+  'pl',
+  'gb',
+  'ua',
+];
+
+const locale = languages[GB];
+const fallbackLocale = languages[GB];
 
 const i18n = new VueI18n({
   locale,

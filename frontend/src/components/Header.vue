@@ -1,5 +1,6 @@
 <template>
   <div class="header p-3">
+    <Language />
     <h1><a href="https://www.pah.org.pl/">{{ $t("header.polish_humanitarian_action") }}</a></h1>
     <b-nav
       fill
@@ -21,11 +22,13 @@
 
 import { mapState } from 'vuex';
 import LoginStatus from './LoginStatus.vue';
+import Language from './Language.vue';
 
 export default {
   name: 'Header',
   components: {
     LoginStatus,
+    Language,
   },
   computed: {
     ...mapState(['user']),
