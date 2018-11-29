@@ -32,7 +32,7 @@ export const languagesOrder = [
 const locale = languages[GB];
 const fallbackLocale = languages[GB];
 
-const i18n = new VueI18n({
+export const i18n = new VueI18n({
   locale,
   fallbackLocale,
   messages,

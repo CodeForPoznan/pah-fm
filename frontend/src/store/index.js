@@ -7,6 +7,7 @@ import { mutations, SET_IS_CONNECTED } from './mutations';
 
 const USER = 'user';
 const ROUTES = 'routes';
+export const CARS = 'cars';
 
 const debug = process.env.NODE_ENV !== 'production';
 
@@ -17,6 +18,11 @@ export const IS_ONLINE = 'isOnline';
 const state = {
   [USER]: null,
   [ROUTES]: [],
+  [CARS]: {
+    loading: false,
+    data: [],
+    error: null,
+  },
   [IS_ONLINE]: navigator.onLine,
   loginInProgress: false,
   loginError: null,
@@ -29,7 +35,7 @@ const store = new Vuex.Store({
   actions,
   mutations,
   plugins: [createPersistedState({
-    paths: [USER, ROUTES],
+    paths: [USER, ROUTES, CARS],
   })],
 });
 

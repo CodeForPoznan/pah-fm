@@ -1,9 +1,12 @@
 import { login, saveToken, deleteToken } from '../services/api/auth';
 import { getMyself } from '../services/api/user';
+import { getCars } from '../services/api/cars';
 
 import * as mutations from './mutations';
+import { i18n } from '../main';
 
 export const FETCH_USER = 'FETCH_USER';
+export const FETCH_CARS = 'FETCH_CARS';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const SUBMIT = 'SUBMIT';
@@ -14,6 +17,20 @@ export const actions = {
       commit(mutations.SET_USER, user);
     });
   },
+  [FETCH_CARS]({ commit }) {
+    commit(mutations.SET_FETCHING_CARS_PROGRESS, true);
+    commit(mutations.SET_FETCHING_CARS_ERROR, null);
+    getCars()
+      .then((cars) => {
+        commit(mutations.SET_CARS, cars);
+      })
+      .catch(() => {
+        commit(mutations.SET_FETCHING_CARS_ERROR, i18n.tc('routes.fetching_cars_error'));
+      })
+      .finally(() => {
+        commit(mutations.SET_FETCHING_CARS_PROGRESS, false);
+      });
+  },
   [LOGIN]({ commit, dispatch }, { username, password }) {
     commit(mutations.SET_LOGIN_PROGRESS, true);
     login(username, password)
@@ -23,7 +40,7 @@ export const actions = {
         dispatch(FETCH_USER);
       })
       .catch(() => {
-        commit(mutations.SET_LOGIN_ERROR, 'Login unsuccessful');
+        commit(mutations.SET_LOGIN_ERROR, i18n.tc('login.login_error'));
       })
       .finally(() => {
         commit(mutations.SET_LOGIN_PROGRESS, false);

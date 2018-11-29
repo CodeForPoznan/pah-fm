@@ -63,13 +63,17 @@
       "date": "Date:",
       "description": "Description:",
       "from": "From:",
-      "destination": "Desitination:",
+      "destination": "Destination:",
       "starting_mileage": "Starting Mileage:",
       "ending_mileage": "Ending Mileage:",
       "submit": "Submit",
       "validation_error": "{field} is required",
       "no_driver_routes": "You have no routes stored in database. You can add a new route by choosing option from the menu.",
-      "from_to": "From {from} to {destination}"
+      "from_to": "From {from} to {destination}",
+      "cars": "Choose a car:",
+      "car": "With car:",
+      "fetching_cars_error": "Fetching cars unsuccessful",
+      "no_cars_message": "No cars available"
     },
     "header": {
       "polish_humanitarian_action": "Polish Humanitarian Action"
@@ -79,7 +83,8 @@
       "username": "Username",
       "password": "Password",
       "username_required": "Username is required",
-      "password_required": "Password is required"
+      "password_required": "Password is required",
+      "login_error": "Login unsuccessful"
     },
     "refresh": {
       "new_version": "A new version of website is available.",
