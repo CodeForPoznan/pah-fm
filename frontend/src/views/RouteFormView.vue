@@ -116,7 +116,6 @@ import { mapActions, mapState } from 'vuex';
 import uuidv4 from 'uuid/v4';
 import * as actions from '../store/actions';
 import { isErroring, makeErrorMessage } from './services';
-import { CARS } from '../store';
 import { namespaces, actions as apiActions } from '../store/constants';
 
 
@@ -174,8 +173,8 @@ export default {
 
   computed: {
     ...mapState(namespaces.cars, {
-        cars: state => state
-      })
+      cars: state => state,
+    }),
   },
 };
 </script>
