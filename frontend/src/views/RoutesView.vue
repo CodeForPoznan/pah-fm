@@ -46,9 +46,7 @@
   </div>
 </template>
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
-import { namespaces } from '../store'
-import { DATA, LOADING } from '../store/constants';
+import { mapState } from 'vuex';
 
 export default {
   name: 'RoutesView',
@@ -61,11 +59,9 @@ export default {
     showRoute(id) {
       this.routeVisible = id;
     },
-    ...mapActions(namespaces.cars, ['getCars']),
   },
   computed: {
     ...mapState(['routes']),
-    ...mapState(namespaces.cars, [DATA, LOADING]),
   },
 };
 </script>

@@ -1,9 +1,10 @@
 import jwtDecode from 'jwt-decode';
 
 import { post } from './http';
-import { setItem, getItem, removeItem } from '../localStore';
+import { setItem, getItem } from '../localStore';
 
 const tokenKey = 'jwt';
+const vuex = 'vuex';
 
 export function login(username, password) {
   return post('api-token-auth/', { username, password })
@@ -15,7 +16,14 @@ export function saveToken(token) {
 }
 
 export function deleteToken() {
-  removeItem(tokenKey);
+  const localData = getItem(vuex);
+  setItem(vuex, {
+    ...localData,
+    user: null,
+  });
+
+  // way of triggering store refresh
+  window.location.reload();
 }
 
 export function getToken(decoded = false) {

@@ -1,5 +1,13 @@
-import { LOADING, DATA, ERRORS } from './constants';
-
+import {
+  LOADING,
+  DATA,
+  ERRORS,
+  FETCH,
+  SET_DATA,
+  SET_ERRORS,
+} from './constants';
+import { get } from '../services/api/http';
+import { i18n } from '../main';
 
 const defaultState = {
   [LOADING]: false,
@@ -12,16 +20,16 @@ const makeModule = moduleActions => ({
   state: { ...defaultState },
   mutations: {
     /* eslint-disable no-param-reassign */
-    fetch(state) {
+    [FETCH](state) {
       state[LOADING] = true;
       state[ERRORS] = null;
     },
-    setData(state, data) {
+    [SET_DATA](state, data) {
       state[LOADING] = false;
       state[DATA] = data;
       state[ERRORS] = null;
     },
-    setErrors(state, errors) {
+    [SET_ERRORS](state, errors) {
       state[LOADING] = false;
       state[ERRORS] = errors;
     },
@@ -30,6 +38,17 @@ const makeModule = moduleActions => ({
   actions: moduleActions,
 });
 
+const makeFetchData = url => ({ commit }) => {
+  get(url)
+    .then((data) => {
+      commit(SET_DATA, data);
+    })
+    .catch(() => {
+      commit(SET_ERRORS, i18n.tc('common.error'));
+    });
+};
+
 export {
   makeModule,
+  makeFetchData,
 };
