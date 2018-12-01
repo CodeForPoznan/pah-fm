@@ -21,9 +21,6 @@ export function deleteToken() {
     ...localData,
     user: null,
   });
-
-  // way of triggering store refresh
-  window.location.reload();
 }
 
 export function getToken(decoded = false) {

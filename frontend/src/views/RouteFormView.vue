@@ -117,6 +117,8 @@ import uuidv4 from 'uuid/v4';
 import * as actions from '../store/actions';
 import { isErroring, makeErrorMessage } from './services';
 import { CARS } from '../store';
+import { namespaces, actions as apiActions } from '../store/constants';
+
 
 const defaultFormState = {
   id: '',
@@ -130,7 +132,6 @@ const defaultFormState = {
   isSynced: false,
 };
 
-
 export default {
   name: 'RouteFormView',
   data() {
@@ -141,11 +142,14 @@ export default {
     };
   },
   methods: {
-    ...mapActions([actions.SUBMIT, actions.FETCH_CARS]),
-
+    ...mapActions([actions.SUBMIT]),
+    ...mapActions(namespaces.drives, [apiActions.fetchDrives]),
+    ...mapActions(namespaces.cars, [apiActions.fetchCars]),
+    ...mapActions(namespaces.passengers, [apiActions.fetchPassengers]),
     handleSubmit() {
       this.validateForm();
       this.isSubmitted = true;
+
 
       if (!this.errors.length) {
         this.route.id = uuidv4();
@@ -163,7 +167,9 @@ export default {
     },
   },
   created() {
-    this[actions.FETCH_CARS]();
+    this.fetchDrives();
+    this.fetchCars();
+    this.fetchPassengers();
   },
   computed: {
     ...mapState([CARS]),

@@ -7,7 +7,8 @@
         :key="language"
         @click="changeLang(language)">
         <flag
-          :iso="language" />
+          :iso="language"
+          :squared="false" />
       </li>
     </ul>
   </div>
@@ -43,7 +44,7 @@ ul.lang {
 
 .lang li {
   display: inline;
-  font-size: 30px;
-  margin-left: 20px;
+  font-size: 1.5em;
+  margin-left: 0.5em;
 }
 </style>

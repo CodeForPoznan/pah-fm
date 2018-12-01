@@ -21,28 +21,16 @@
 
 <script>
 
-import { mapActions } from 'vuex';
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import Refresh from './components/Refresh.vue';
 import Status from './components/Status.vue';
 
 import store from './store';
-import { namespaces, actions } from './store/constants'
 
 export default {
   name: 'App',
   store,
-  methods: {
-    ...mapActions(namespaces.drives, [actions.fetchDrives]),
-    ...mapActions(namespaces.cars, [actions.fetchCars]),
-    ...mapActions(namespaces.passengers, [actions.fetchPassengers]),
-  },
-  created() {
-    this.fetchDrives();
-    this.fetchCars();
-    this.fetchPassengers();
-  },
   components: {
     Refresh,
     Header,
