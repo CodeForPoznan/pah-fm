@@ -171,8 +171,11 @@ export default {
     this.fetchCars();
     this.fetchPassengers();
   },
+
   computed: {
-    ...mapState([CARS]),
+    ...mapState(namespaces.cars, {
+        cars: state => state
+      })
   },
 };
 </script>

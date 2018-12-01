@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode';
 
 import { post } from './http';
-import { setItem, getItem } from '../localStore';
+import { setItem, getItem, removeItem } from '../localStore';
 
 const tokenKey = 'jwt';
 const vuex = 'vuex';
@@ -21,6 +21,7 @@ export function deleteToken() {
     ...localData,
     user: null,
   });
+  removeItem(tokenKey);
 }
 
 export function getToken(decoded = false) {
