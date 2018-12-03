@@ -13,8 +13,7 @@
         fill
       >
         <b-nav-item
-          v-for="(link, key) in links"
-          :id="key"
+          v-for="link in links"
           :to="link.to"
           :key="link.text"
         >
@@ -23,8 +22,7 @@
 
         <b-nav-item
           v-if="user"
-          id="links.length + 1"
-          to="/logout"
+          to="/login"
           key="logout"
           class="username"
         >
@@ -33,7 +31,6 @@
 
         <b-nav-item
           v-else
-          id="links.length + 1"
           to="/login"
           key="login"
         >
@@ -116,19 +113,19 @@ export default {
     }
 
     & > li:nth-child(1) {
-      background: #0072bc;
+      background: $pah-color-1;
     }
 
     & > li:nth-child(2) {
-      background: #1980c3;
+      background: $pah-color-2;
     }
 
     & > li:nth-child(3) {
-      background: #338ec9;
+      background: $pah-color-3;
     }
 
     & > li:nth-child(4) {
-      background: #ec1818;
+      background: $pah-color-4;
     }
   }
 }

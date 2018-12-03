@@ -16,7 +16,25 @@
         >
           {{ link.text }}
         </b-nav-item>
+
+        <b-nav-item
+          v-if="user"
+          to="/logout"
+          key="logout"
+          class="username"
+        >
+          {{ $t('login.user', { username: user.username }) }}
+        </b-nav-item>
+
+        <b-nav-item
+          v-else
+          to="/login"
+          key="login"
+        >
+          {{ $t('common.login') }}
+        </b-nav-item>
       </b-nav>
+      <Language class="language-mobile"/>
 
     </ScaleRotate>
     <div
@@ -39,6 +57,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { ScaleRotate } from 'vue-burger-menu';
 
 import Language from './components/Language.vue';
@@ -52,6 +71,9 @@ import store from './store';
 export default {
   name: 'App',
   store,
+  computed: {
+    ...mapState(['user']),
+  },
   components: {
     Refresh,
     Header,
@@ -98,9 +120,45 @@ export default {
   top: 1em;
 }
 
+.language-mobile {
+  display: flex;
+  margin-top: 50px;
+
+  & .lang {
+    margin: 0 auto;
+    padding: 0 !important;
+
+    & li {
+      padding: 10px;
+      margin: 0;
+    }
+  }
+}
+
+.bm-item-list {
+  margin-right: 10%;
+  margin-left: 10%;
+}
+
 .mobile-menu {
   @include media-breakpoint-up (md) {
     display: none;
+  }
+
+  .bm-menu {
+    background: $pah-color-3;
+  }
+
+  & .nav-item a {
+    color: $white;
+  }
+
+  & .nav-item a:hover {
+    text-decoration: underline;
+  }
+
+  & .username {
+    font-size: 0.75em;
   }
 }
 </style>
