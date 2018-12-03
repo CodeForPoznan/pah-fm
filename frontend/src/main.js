@@ -41,10 +41,6 @@ export const i18n = new VueI18n({
 
 const navigation = [
   {
-    text: i18n.tc('common.home'),
-    to: '/',
-  },
-  {
     text: i18n.tc('common.new_route'),
     to: '/route/',
   },

@@ -2,16 +2,7 @@
   <div
     v-if="!isLoginPage"
     class="login-status"
-  >
-    <div
-      v-if="username"
-    >
-      {{ $t('login.user', { username: username }) }}
-    </div>
-    <div v-else>
-      <b-link to="/login">{{ $t('common.login') }} </b-link>
-    </div>
-  </div>
+  />
 
 </template>
 

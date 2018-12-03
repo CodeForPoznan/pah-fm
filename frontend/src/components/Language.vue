@@ -17,11 +17,11 @@
 
 import { languagesOrder } from '../main';
 
-/* eslint-disable no-underscore-dangle */
 export default {
   name: 'Language',
   methods: {
     changeLang(languageChecked) {
+    /* eslint-disable-next-line no-underscore-dangle */
       this._i18n.locale = languageChecked;
     },
   },
