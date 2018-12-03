@@ -1,29 +1,37 @@
 # pah-fm
 
 
-# Build project
+## Run project (in background)
 
 ```
-make build
+make start
 ```
 
-# Run project
-
+## Stop project
 ```
-docker-compose up
+make stop
 ```
 
-# Run project locally for testing
+## Attach to logs
 ```
-docker-compose up -d db
-
-virtualenv env -p /usr/local/bin/python3
-source env/bin/activate
-
-pip install -r backend/requirements/dev.txt
-
-make manage CMD=createsuperuser
+make logs
 ```
+
+## Run linters
+```
+make lint
+```
+
+## Run tests
+```
+make test
+```
+
+## Debug backend (Django)
+```
+make debug-backend
+```
+After finishing debugging detach from shell using *CTRL*+`p` and *CTRL*+`q`.
 
 ## Initial admin credentials
 We have 2 levels of admin users and 2 initial users - with and without Django Admin access:
