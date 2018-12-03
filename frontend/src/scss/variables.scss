@@ -1,4 +1,3 @@
-// COLORS
 
 $blue: #71caf0;
 $grey: #dadada;
@@ -7,10 +6,12 @@ $white: white;
 $green: green;
 $red: red;
 
-//
-// Media breakpoints
-//
-
 $break-mobile: 768px;
 $break-tablet: 992px;
 $break-desktop: 1200px;
+
+$header-height: 250px;
+$header-height-mobile: 120px;
+
+$footer-height: 65px;
+$footer-height-mobile: 51px;

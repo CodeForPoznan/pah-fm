@@ -81,7 +81,11 @@ export default {
 }
 
 .page-container {
-  min-height: calc(100vh - 65px - 250px);
+  min-height: calc(100vh - #{$footer-height} - #{$header-height});
+
+  @include media-breakpoint-down (sm) {
+    min-height: calc(100vh - #{$footer-height-mobile} - #{$header-height-mobile});
+  }
 }
 
 .language {

@@ -20,19 +20,24 @@
         >
           {{ link.text }}
         </b-nav-item>
+
         <b-nav-item
+          v-if="user"
+          id="links.length + 1"
+          to="/logout"
+          key="logout"
+          class="username"
+        >
+          {{ $t('login.user', { username: user.username }) }}
+        </b-nav-item>
+
+        <b-nav-item
+          v-else
           id="links.length + 1"
           to="/login"
           key="login"
         >
-          <span
-            v-if="username"
-          >
-            {{ $t('login.user', { username: username }) }}
-          </span>
-          <span v-else>
-            {{ $t('common.login') }}
-          </span>
+          {{ $t('common.login') }}
         </b-nav-item>
       </b-nav>
     </nav>
@@ -46,12 +51,6 @@ import { PL, languages } from '../main';
 
 export default {
   name: 'Header',
-  props: {
-    username: {
-      type: String,
-      default: '',
-    },
-  },
   computed: {
     ...mapState(['user']),
     isLoginPage() {
@@ -82,7 +81,11 @@ export default {
 
   text-align: center;
   background: $white;
-  height: 250px;
+  height: $header-height;
+
+  @include media-breakpoint-down (sm) {
+    height: $header-height-mobile;
+  }
 }
 
 .menu {
@@ -96,6 +99,11 @@ export default {
   & .nav {
     & .nav-item {
       max-width: 200px;
+    }
+
+    & .nav-item.username {
+      max-width: 400px;
+      flex-grow: initial;
     }
 
     & > li > a {
@@ -125,7 +133,7 @@ export default {
   }
 }
 
-.logo-container{
+.logo-container {
   flex: 1;
 }
 
@@ -133,6 +141,11 @@ export default {
   color: #0072bc;
   max-width: 240px;
   max-height: 150px;
+
+  @include media-breakpoint-down (sm) {
+    max-width: 180px;
+    max-height: 125px;
+  }
 }
 
 </style>
