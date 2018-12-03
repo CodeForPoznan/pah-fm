@@ -144,5 +144,4 @@ export default {
     max-height: 125px;
   }
 }
-
 </style>
