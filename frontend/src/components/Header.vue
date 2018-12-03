@@ -103,6 +103,11 @@ export default {
       flex-grow: initial;
     }
 
+    & .nav-link:hover {
+      padding-bottom: 12px;
+      transition: 0.2s;
+    }
+
     & > li > a {
       min-height: 100px;
       font-size: 20px;
