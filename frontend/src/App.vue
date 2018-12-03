@@ -2,7 +2,10 @@
   <div id="app">
     <Status />
     <Header />
-    <ScaleRotate class="mobile-menu">
+    <Language class="language"/>
+    <ScaleRotate
+      class="mobile-menu"
+      right>
       <b-nav
         fill
       >
@@ -38,6 +41,7 @@
 <script>
 import { ScaleRotate } from 'vue-burger-menu';
 
+import Language from './components/Language.vue';
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import Refresh from './components/Refresh.vue';
@@ -53,6 +57,7 @@ export default {
     Header,
     Footer,
     Status,
+    Language,
     ScaleRotate,
   },
   data() {
@@ -76,6 +81,16 @@ export default {
 
 .page-container {
   min-height: calc(100vh - 65px - 128px);
+}
+
+.language {
+  @include media-breakpoint-down (sm) {
+    display: none;
+  }
+
+  position: absolute;
+  right: 1em;
+  top: 1em;
 }
 
 .mobile-menu {

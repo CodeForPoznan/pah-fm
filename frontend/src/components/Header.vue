@@ -1,10 +1,12 @@
 <template>
-  <div class="header p-3">
-    <Language />
-    {{ logo }}
-    <h1><a
+  <div class="header">
+    <a
       href="https://www.pah.org.pl/"
-      target="_blank">{{ $t("header.polish_humanitarian_action") }}</a></h1>
+      target="_blank">
+      <img
+        class="logo"
+        :src="logo" >
+    </a>
     <nav class="menu">
       <b-nav
         fill
@@ -26,19 +28,21 @@
 
 import { mapState } from 'vuex';
 import LoginStatus from './LoginStatus.vue';
-import Language from './Language.vue';
 import { PL, languages } from '../main';
 
 export default {
   name: 'Header',
   components: {
     LoginStatus,
-    Language,
   },
   computed: {
     ...mapState(['user']),
     logo() {
-      return this._i18n.locale === languages[PL] ? require('../assets/logo_pl.svg') : require('../assets/logo_en.svg');
+      /* eslint-disable */
+      return this._i18n.locale === languages[PL]
+        ? require('../assets/logo_pl.svg')
+        : require('../assets/logo_en.svg');
+      /* eslint-enable */
     },
   },
   data() {
@@ -53,17 +57,23 @@ export default {
 @import '../scss/base';
 
 .header {
-  background: $blue;
-  text-align: center;
+  @include p(3);
+  @include flex(row);
 
-  @include respond-to(tablet) {
-    background: $grey;
-  }
+  text-align: center;
+  background: $white;
+  height: 315px;
 }
 
 .menu {
-  @include media-breakpoint-down (md) {
+  @include media-breakpoint-down (sm) {
     display: none;
   }
+}
+
+.logo {
+  color: #0072bc;
+  max-width: 240px;
+  max-height: 150px;
 }
 </style>
