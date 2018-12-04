@@ -18,6 +18,9 @@ run-django:
 manage:
 	SECRET_KEY=pah-fm DJANGO_SETTINGS_MODULE=pah_fm.settings python3 backend/manage.py ${CMD}
 
+populate-database:
+	docker-compose run --rm backend python3 manage.py populate_database
+
 test-backend-docker:
 	docker-compose run --rm backend python3 manage.py test
 
