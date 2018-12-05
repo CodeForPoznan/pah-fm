@@ -15,6 +15,10 @@ export default {
 
 .heading {
   margin: 0;
+
+  @include media-breakpoint-down (sm) {
+    font-size: 1rem;
+  }
 }
 
 .footer {

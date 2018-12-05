@@ -17,6 +17,8 @@ services:
     # build: backend
     command: bash docker-entrypoint.sh
     # command: tail -f /dev/null
+    stdin_open: true
+    tty: true
     environment:
       PAH-FM_DB_HOST: db
       PAH-FM_DB_PASS: pah-fm

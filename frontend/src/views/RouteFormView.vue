@@ -180,9 +180,5 @@ export default {
 
 <style scoped lang="scss">
   @import "../scss/base";
-
-  .jumbotron {
-    @include my(4);
-  }
 </style>
 
