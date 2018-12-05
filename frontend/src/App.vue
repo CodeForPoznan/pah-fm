@@ -113,6 +113,10 @@ export default {
   margin-left: 10%;
 }
 
+.nav {
+  flex-wrap: nowrap;
+}
+
 .mobile-menu {
   @include media-breakpoint-up (lg) {
     display: none;
