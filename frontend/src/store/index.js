@@ -20,11 +20,6 @@ export const IS_ONLINE = 'isOnline';
 const state = {
   [USER]: null,
   [ROUTES]: [],
-  [CARS]: {
-    loading: false,
-    data: [],
-    error: null,
-  },
   [LANGUAGE]: null,
   [IS_ONLINE]: navigator.onLine,
   loginInProgress: false,
