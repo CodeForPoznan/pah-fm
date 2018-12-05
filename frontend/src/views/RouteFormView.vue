@@ -6,7 +6,7 @@
           <div>
             <div
               class="alert alert-danger"
-              v-if="errors.length">
+              v-if="errors">
               <b>{{ $t('routes.please_correct_errors') }}</b>
               <ul>
                 <li
@@ -30,7 +30,7 @@
               <div class="form-group">
                 <label>{{ $t('routes.cars') }}</label>
                 <select
-                  v-if="!!cars.data.length"
+                  v-if="cars.data"
                   v-model="route.car"
                   name="car"
                   class="form-control"
@@ -44,7 +44,7 @@
                 </select>
                 <p
                   class="font-weight-bold"
-                  v-if="!cars.data.length">{{ $t('routes.no_cars_message') }}</p>
+                  v-if="!cars.data">{{ $t('routes.no_cars_message') }}</p>
               </div>
               <div class="form-group">
                 <label>{{ $t('routes.description') }}</label>
@@ -116,7 +116,8 @@ import { mapActions, mapState } from 'vuex';
 import uuidv4 from 'uuid/v4';
 import * as actions from '../store/actions';
 import { isErroring, makeErrorMessage } from './services';
-import { CARS } from '../store';
+import { namespaces, actions as apiActions } from '../store/constants';
+
 
 const defaultFormState = {
   id: '',
@@ -130,19 +131,20 @@ const defaultFormState = {
   isSynced: false,
 };
 
-
 export default {
   name: 'RouteFormView',
   data() {
     return {
       route: { ...defaultFormState },
-      errors: [],
+      errors: null,
       isSubmitted: false,
     };
   },
   methods: {
-    ...mapActions([actions.SUBMIT, actions.FETCH_CARS]),
-
+    ...mapActions([actions.SUBMIT]),
+    ...mapActions(namespaces.drives, [apiActions.fetchDrives]),
+    ...mapActions(namespaces.cars, [apiActions.fetchCars]),
+    ...mapActions(namespaces.passengers, [apiActions.fetchPassengers]),
     handleSubmit() {
       this.validateForm();
       this.isSubmitted = true;
@@ -163,10 +165,15 @@ export default {
     },
   },
   created() {
-    this[actions.FETCH_CARS]();
+    this[apiActions.fetchCars]();
+    this[apiActions.fetchDrives]();
+    this[apiActions.fetchPassengers]();
   },
+
   computed: {
-    ...mapState([CARS]),
+    ...mapState(namespaces.cars, {
+      cars: state => state,
+    }),
   },
 };
 </script>

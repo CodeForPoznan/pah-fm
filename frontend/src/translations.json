@@ -1,6 +1,7 @@
 {
   "pl": {
     "common": {
+      "error": "Błąd",
       "about": "O nas",
       "home": "Strona glowna",
       "login": "Login",
@@ -51,6 +52,7 @@
   },
   "gb": {
     "common": {
+      "error": "Error",
       "about": "About",
       "home": "Home",
       "login": "Login",

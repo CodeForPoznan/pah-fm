@@ -4,6 +4,7 @@ import createPersistedState from 'vuex-persistedstate';
 
 import { actions } from './actions';
 import { mutations, SET_IS_CONNECTED } from './mutations';
+import { modules } from './modules';
 
 const USER = 'user';
 const ROUTES = 'routes';
@@ -35,6 +36,7 @@ const store = new Vuex.Store({
   strict: debug,
   state,
   actions,
+  modules,
   mutations,
   plugins: [createPersistedState({
     paths: [USER, ROUTES, CARS, LANGUAGE],
