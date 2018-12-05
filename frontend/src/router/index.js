@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-// import your views here
 import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import RouteFormView from '../views/RouteFormView.vue';

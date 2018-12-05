@@ -13,9 +13,9 @@ import messages from './translations.json';
 Vue.use(FlagIcon);
 Vue.use(VueI18n);
 
-const GB = 'GB';
-const PL = 'PL';
-const UA = 'UA';
+export const GB = 'GB';
+export const PL = 'PL';
+export const UA = 'UA';
 
 export const languages = {
   [GB]: 'gb',
@@ -38,9 +38,27 @@ export const i18n = new VueI18n({
   messages,
 });
 
+
+const navigation = [
+  {
+    text: i18n.tc('common.home'),
+    to: '/',
+  },
+  {
+    text: i18n.tc('common.new_route'),
+    to: '/route/',
+  },
+  {
+    text: i18n.tc('common.routes'),
+    to: '/routes/',
+  },
+];
+
 Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);
+
+Vue.prototype.navigation = navigation;
 
 new Vue({
   render: h => h(App),
