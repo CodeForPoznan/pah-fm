@@ -46,18 +46,17 @@ export default {
 
 };
 </script>
+<style>
+.bm-burger-button {
+  right: 16px !important;
+}
+</style>
 
 <style scoped lang="scss">
 @import '../scss/base';
 
 .menu-items {
-  @include media-breakpoint-up (md) {
-    .nav-item {
-      @include media-breakpoint-down(md) {
-        flex: 1 0 50%;
-      }
-    }
-
+  @include media-breakpoint-up (lg) {
     .nav-item.username {
       max-width: 400px;
       flex-grow: initial;

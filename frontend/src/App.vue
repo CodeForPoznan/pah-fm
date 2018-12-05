@@ -85,7 +85,7 @@ export default {
 }
 
 .language {
-  @include media-breakpoint-down (sm) {
+  @include media-breakpoint-down (md) {
     display: none;
   }
 
@@ -115,7 +115,7 @@ export default {
 }
 
 .mobile-menu {
-  @include media-breakpoint-up (md) {
+  @include media-breakpoint-up (lg) {
     display: none;
   }
 

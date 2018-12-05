@@ -50,7 +50,7 @@ export default {
   background: $white;
   height: $header-height;
 
-  @include media-breakpoint-down (sm) {
+  @include media-breakpoint-down (md) {
     height: $header-height-mobile;
   }
 }
@@ -59,7 +59,7 @@ export default {
   flex: 2;
   padding-bottom: 20px;
 
-  @include media-breakpoint-down (sm) {
+  @include media-breakpoint-down (md) {
     display: none;
   }
 }
@@ -71,7 +71,7 @@ export default {
 
   @include mr(3);
 
-  @include media-breakpoint-down (sm) {
+  @include media-breakpoint-down (md) {
     max-width: 180px;
     max-height: 125px;
     margin: 0 auto;
