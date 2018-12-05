@@ -136,7 +136,7 @@ export default {
   data() {
     return {
       route: { ...defaultFormState },
-      errors: [],
+      errors: null,
       isSubmitted: false,
     };
   },
