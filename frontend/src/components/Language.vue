@@ -15,15 +15,16 @@
 </template>
 
 <script>
-
+import { mapActions } from 'vuex';
 import { languagesOrder } from '../main';
+import * as actions from '../store/actions';
 
 export default {
   name: 'Language',
   methods: {
+    ...mapActions([actions.SWITCH_LANGUAGE]),
     changeLang(languageChecked) {
-    /* eslint-disable-next-line no-underscore-dangle */
-      this._i18n.locale = languageChecked;
+      this[actions.SWITCH_LANGUAGE](languageChecked);
     },
   },
   data() {

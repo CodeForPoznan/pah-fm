@@ -9,6 +9,7 @@ import { modules } from './modules';
 const USER = 'user';
 const ROUTES = 'routes';
 export const CARS = 'cars';
+export const LANGUAGE = 'language';
 
 const debug = process.env.NODE_ENV !== 'production';
 
@@ -19,6 +20,7 @@ export const IS_ONLINE = 'isOnline';
 const state = {
   [USER]: null,
   [ROUTES]: [],
+  [LANGUAGE]: null,
   [IS_ONLINE]: navigator.onLine,
   loginInProgress: false,
   loginError: null,
@@ -32,7 +34,7 @@ const store = new Vuex.Store({
   modules,
   mutations,
   plugins: [createPersistedState({
-    paths: [USER, ROUTES, CARS],
+    paths: [USER, ROUTES, CARS, LANGUAGE],
   })],
 });
 

@@ -37,15 +37,20 @@ import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import Refresh from './components/Refresh.vue';
 import Status from './components/Status.vue';
+import store, { LANGUAGE } from './store';
 import NavigationItems from './components/NavigationItems.vue';
-
-import store from './store';
 
 export default {
   name: 'App',
   store,
   computed: {
-    ...mapState(['user']),
+    ...mapState([LANGUAGE]),
+  },
+  created() {
+    if (this.language) {
+      /* eslint-disable-next-line no-underscore-dangle */
+      this._i18n.locale = this.language;
+    }
   },
   components: {
     Refresh,

@@ -7,6 +7,7 @@ export const SET_IS_CONNECTED = 'SET_IS_CONNECTED';
 export const SET_FETCHING_CARS_ERROR = 'SET_FETCHING_CARS_ERROR';
 export const SET_FETCHING_CARS_PROGRESS = 'SET_FETCHING_CARS_PROGRESS';
 export const SET_CARS = 'SET_CARS';
+export const SET_LANG = 'SET_LANG';
 
 export const mutations = {
   [SET_USER](state, user) {
@@ -35,5 +36,8 @@ export const mutations = {
   },
   [SET_CARS](state, cars) {
     Object.assign(state.cars, { data: [...cars] });
+  },
+  [SET_LANG](state, language) {
+    Object.assign(state, { language });
   },
 };
