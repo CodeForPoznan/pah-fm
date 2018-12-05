@@ -165,9 +165,9 @@ export default {
     },
   },
   created() {
-    this[apiActions.fetchCars]()
-    this[apiActions.fetchDrives]()
-    this[apiActions.fetchPassengers]()
+    this[apiActions.fetchCars]();
+    this[apiActions.fetchDrives]();
+    this[apiActions.fetchPassengers]();
   },
 
   computed: {
