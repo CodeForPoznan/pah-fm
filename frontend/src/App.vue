@@ -78,7 +78,7 @@ export default {
 .page-container {
   min-height: calc(100vh - #{$footer-height} - #{$header-height});
 
-  @include media-breakpoint-down (sm) {
+  @include media-breakpoint-down (md) {
     min-height: calc(100vh - #{$footer-height-mobile} - #{$header-height-mobile});
   }
 }
