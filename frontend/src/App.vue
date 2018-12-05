@@ -142,5 +142,4 @@ export default {
     font-size: 0.75em;
   }
 }
-
 </style>
