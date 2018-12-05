@@ -1,69 +1,84 @@
 <template>
-  <div class="header p-3">
-    <Language />
-    <h1><a href="https://www.pah.org.pl/">{{ $t("header.polish_humanitarian_action") }}</a></h1>
-    <b-nav
-      fill
-    >
-      <b-nav-item
-        v-for="link in links"
-        :to="link.to"
-        :key="link.text"
+  <div class="header">
+    <a
+      class="logo-container"
+      href="https://www.pah.org.pl/"
+      target="_blank">
+      <img
+        class="logo"
+        :src="logo"
       >
-        {{ link.text }}
-      </b-nav-item>
-      <LoginStatus v-bind="user"/>
-    </b-nav>
-
+    </a>
+    <nav class="menu">
+      <NavigationItems />
+    </nav>
   </div>
 </template>
 
 <script>
-
-import { mapState } from 'vuex';
-import LoginStatus from './LoginStatus.vue';
-import Language from './Language.vue';
+import { PL, languages } from '../main';
+import NavigationItems from './NavigationItems.vue';
 
 export default {
   name: 'Header',
   components: {
-    LoginStatus,
-    Language,
+    NavigationItems,
   },
   computed: {
-    ...mapState(['user']),
-  },
-  data() {
-    return {
-      links: [
-        {
-          text: this.$t('common.home'),
-          to: '/',
-        },
-        {
-          text: this.$t('common.new_route'),
-          to: '/route/',
-        },
-        {
-          text: this.$t('common.routes'),
-          to: '/routes/',
-        },
-      ],
-    };
+    isLoginPage() {
+      return this.$route.name === 'Login';
+    },
+    logo() {
+      /* eslint-disable */
+      return this._i18n.locale === languages[PL]
+        ? require('../assets/logo_pl.svg')
+        : require('../assets/logo_en.svg');
+      /* eslint-enable */
+    },
   },
 };
 </script>
 
 <style scoped lang="scss">
-@import '../scss/variables';
-@import '../scss/mixins';
+@import '../scss/base';
 
 .header {
-  background: $blue;
-  text-align: center;
+  @include p(3);
+  @include flex(row, center);
 
-  @include respond-to(tablet) {
-    background: $grey;
+  text-align: center;
+  background: $white;
+  height: $header-height;
+
+  @include media-breakpoint-down (md) {
+    height: $header-height-mobile;
   }
+}
+
+.menu {
+  flex: 2;
+  padding-bottom: 20px;
+
+  @include media-breakpoint-down (md) {
+    display: none;
+  }
+}
+
+.logo-container {
+  flex: 1;
+  max-width: 240px;
+  max-height: 150px;
+
+  @include mr(3);
+
+  @include media-breakpoint-down (md) {
+    max-width: 180px;
+    max-height: 125px;
+    margin: 0 auto;
+  }
+}
+
+.logo {
+  width: 100%;
 }
 </style>
