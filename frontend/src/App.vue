@@ -48,7 +48,7 @@ export default {
   },
   created() {
     if (this.language) {
-      /* eslint-disable-line no-underscore-dangle */
+      /* eslint-disable-next-line no-underscore-dangle */
       this._i18n.locale = this.language;
     }
   },
