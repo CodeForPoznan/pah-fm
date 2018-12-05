@@ -6,7 +6,7 @@
           <div>
             <div
               class="alert alert-danger"
-              v-if="errors.length">
+              v-if="errors">
               <b>{{ $t('routes.please_correct_errors') }}</b>
               <ul>
                 <li
@@ -30,7 +30,7 @@
               <div class="form-group">
                 <label>{{ $t('routes.cars') }}</label>
                 <select
-                  v-if="!!cars.data.length"
+                  v-if="cars.data"
                   v-model="route.car"
                   name="car"
                   class="form-control"
@@ -44,7 +44,7 @@
                 </select>
                 <p
                   class="font-weight-bold"
-                  v-if="!cars.data.length">{{ $t('routes.no_cars_message') }}</p>
+                  v-if="!cars.data">{{ $t('routes.no_cars_message') }}</p>
               </div>
               <div class="form-group">
                 <label>{{ $t('routes.description') }}</label>
@@ -149,7 +149,6 @@ export default {
       this.validateForm();
       this.isSubmitted = true;
 
-
       if (!this.errors.length) {
         this.route.id = uuidv4();
         this[actions.SUBMIT]({ form: this.route });
@@ -166,9 +165,9 @@ export default {
     },
   },
   created() {
-    this.fetchDrives();
-    this.fetchCars();
-    this.fetchPassengers();
+    this[apiActions.fetchCars]()
+    this[apiActions.fetchDrives]()
+    this[apiActions.fetchPassengers]()
   },
 
   computed: {

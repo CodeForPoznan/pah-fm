@@ -5,7 +5,6 @@ import * as mutations from './mutations';
 import { i18n } from '../main';
 
 export const FETCH_USER = 'FETCH_USER';
-export const FETCH_CARS = 'FETCH_CARS';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const SUBMIT = 'SUBMIT';
