@@ -1,4 +1,5 @@
 <template>
+
   <div
     v-if="!routes.length"
     class="alert alert-warning m-5"
@@ -44,7 +45,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import { mapState } from 'vuex';
 

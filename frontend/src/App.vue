@@ -61,7 +61,6 @@ export default {
       links: this.navigation,
     };
   },
-
 };
 </script>
 
