@@ -18,7 +18,6 @@ import { mapActions } from 'vuex';
 import { languagesOrder } from '../main';
 import * as actions from '../store/actions';
 
-/* eslint-disable no-underscore-dangle */
 export default {
   name: 'Language',
   methods: {

@@ -16,7 +16,6 @@ Vue.use(Vuex);
 
 export const IS_ONLINE = 'isOnline';
 
-
 const state = {
   [USER]: null,
   [ROUTES]: [],
@@ -32,7 +31,7 @@ const state = {
   updateReady: false,
 };
 
-export const store = new Vuex.Store({
+const store = new Vuex.Store({
   strict: debug,
   state,
   actions,
@@ -45,3 +44,4 @@ export const store = new Vuex.Store({
 window.addEventListener('online', () => store.commit(SET_IS_CONNECTED, true));
 window.addEventListener('offline', () => store.commit(SET_IS_CONNECTED, false));
 
+export default store;
