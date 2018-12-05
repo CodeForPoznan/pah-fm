@@ -21,23 +21,32 @@
 
 <script>
 
+import { mapState } from 'vuex';
+
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import Refresh from './components/Refresh.vue';
 import Status from './components/Status.vue';
+import { LANGUAGE, store } from './store';
 
-import store from './store';
-
+/* eslint-disable no-underscore-dangle */
 export default {
   name: 'App',
   store,
+  computed: {
+    ...mapState([LANGUAGE]),
+  },
+  created() {
+    if (this.language) {
+      this._i18n.locale = this.language;
+    }
+  },
   components: {
     Refresh,
     Header,
     Footer,
     Status,
   },
-
 };
 </script>
 

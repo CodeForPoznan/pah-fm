@@ -10,6 +10,7 @@ export const FETCH_CARS = 'FETCH_CARS';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const SUBMIT = 'SUBMIT';
+export const SWITCH_LANGUAGE = 'SWITCH_LANGUAGE';
 
 export const actions = {
   [FETCH_USER]({ commit }) {
@@ -52,5 +53,9 @@ export const actions = {
   },
   [SUBMIT]({ commit }, { form }) {
     commit(mutations.ADD_ROUTE, form);
+  },
+  [SWITCH_LANGUAGE]({ commit }, language) {
+    commit(mutations.SET_LANG, language);
+    i18n.locale = language;
   },
 };
