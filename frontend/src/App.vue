@@ -6,36 +6,8 @@
     <ScaleRotate
       class="mobile-menu"
       right>
-      <b-nav
-        fill
-      >
-        <b-nav-item
-          v-for="link in links"
-          :to="link.to"
-          :key="link.text"
-        >
-          {{ link.text }}
-        </b-nav-item>
-
-        <b-nav-item
-          v-if="user"
-          to="/logout"
-          key="logout"
-          class="username"
-        >
-          {{ $t('login.user', { username: user.username }) }}
-        </b-nav-item>
-
-        <b-nav-item
-          v-else
-          to="/login"
-          key="login"
-        >
-          {{ $t('common.login') }}
-        </b-nav-item>
-      </b-nav>
+      <NavigationItems />
       <Language class="language-mobile"/>
-
     </ScaleRotate>
     <div
       id="page-wrap"
@@ -65,6 +37,7 @@ import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import Refresh from './components/Refresh.vue';
 import Status from './components/Status.vue';
+import NavigationItems from './components/NavigationItems.vue';
 
 import store from './store';
 
@@ -81,6 +54,7 @@ export default {
     Status,
     Language,
     ScaleRotate,
+    NavigationItems,
   },
   data() {
     return {
@@ -155,6 +129,10 @@ export default {
 
   & .nav-item a:hover {
     text-decoration: underline;
+  }
+
+  & .nav {
+    flex-direction: column;
   }
 
   & .username {
