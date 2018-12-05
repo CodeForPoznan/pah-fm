@@ -38,3 +38,6 @@ bash-backend:
 
 debug-backend:
 	docker attach `docker-compose ps -q backend`
+
+populate-database:
+	docker-compose run --rm backend python3 manage.py populate_database
