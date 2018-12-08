@@ -50,7 +50,6 @@ class DriveSerializer(serializers.ModelSerializer):
         )
 
     def create(self, validated_data):
-        # tracks_data = validated_data.pop('tracks')
         passengers_data = validated_data.pop('passengers')
         car_data = validated_data.pop('car')
         car = Car.objects.get(pk=car_data['id'])
