@@ -5,13 +5,14 @@
         <div class="col-lg-8 offset-lg-2">
           <div>
             <div
-              class="alert alert-danger"
-              v-if="errors">
+              class="alert alert-danger errors"
+              v-if="Object.keys(errors).length">
               <b>{{ $t('routes.please_correct_errors') }}</b>
               <ul>
                 <li
-                  v-for="error in errors"
-                  :key="error">{{ error }}</li>
+                  class="error"
+                  v-for="error in Object.keys(errors)"
+                  :key="error">{{ errors[error] }}</li>
               </ul>
             </div>
             <h2>{{ $t('common.new_route') }}</h2>
@@ -24,7 +25,7 @@
                   v-model="route.date"
                   name="date"
                   class="form-control"
-                  :class="{ 'is-invalid': isSubmitted && !route.date }"
+                  :class="{ 'is-invalid': errors['date'] }"
                 >
               </div>
               <div class="form-group">
@@ -34,7 +35,7 @@
                   v-model="route.car"
                   name="car"
                   class="form-control"
-                  :class="{ 'is-invalid': isSubmitted && !route.car }"
+                  :class="{ 'is-invalid': errors['car'] }"
                 >
                   <option
                     v-for="car in cars.data"
@@ -53,7 +54,7 @@
                   v-model="route.description"
                   name="description"
                   class="form-control"
-                  :class="{ 'is-invalid': isSubmitted && !route.description }"
+                  :class="{ 'is-invalid': errors['description']}"
                 >
               </div>
               <div class="form-group">
@@ -63,7 +64,7 @@
                   v-model="route.from"
                   name="from"
                   class="form-control"
-                  :class="{ 'is-invalid': isSubmitted && !route.from }"
+                  :class="{ 'is-invalid': errors['from']}"
                 >
               </div>
               <div class="form-group">
@@ -73,7 +74,7 @@
                   v-model="route.destination"
                   name="destination"
                   class="form-control"
-                  :class="{ 'is-invalid': isSubmitted && !route.destination }"
+                  :class="{ 'is-invalid': errors['destination'] }"
                 >
               </div>
               <div class="row">
@@ -84,7 +85,7 @@
                     v-model="route.startMileage"
                     name="startMileage"
                     class="form-control"
-                    :class="{ 'is-invalid': isSubmitted && !route.startMileage }"
+                    :class="{ 'is-invalid': errors['startMileage'] }"
                   >
                 </div>
                 <div class="form-group col-sm-6">
@@ -94,7 +95,7 @@
                     v-model="route.endMileage"
                     name="endMileage"
                     class="form-control"
-                    :class="{ 'is-invalid': isSubmitted && !route.endMileage }"
+                    :class="{ 'is-invalid': errors['endMileage'] }"
                   >
                 </div>
               </div>
@@ -113,14 +114,11 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import uuidv4 from 'uuid/v4';
 import * as actions from '../store/actions';
-import { isErroring, makeErrorMessage } from './services';
+import { isErroring, reduceFields } from './services';
 import { namespaces, actions as apiActions } from '../store/constants';
 
-
 const defaultFormState = {
-  id: '',
   date: '',
   car: null,
   description: '',
@@ -136,8 +134,7 @@ export default {
   data() {
     return {
       route: { ...defaultFormState },
-      errors: null,
-      isSubmitted: false,
+      errors: {},
     };
   },
   methods: {
@@ -147,21 +144,30 @@ export default {
     ...mapActions(namespaces.passengers, [apiActions.fetchPassengers]),
     handleSubmit() {
       this.validateForm();
-      this.isSubmitted = true;
 
-      if (!this.errors.length) {
-        this.route.id = uuidv4();
+      if (!Object.keys(this.errors).length) {
         this[actions.SUBMIT]({ form: this.route });
         this.route = { ...defaultFormState };
-        this.isSubmitted = false;
       }
     },
 
     validateForm() {
       const { route } = this;
+
       this.errors = Object.keys(route)
         .filter(isErroring(route))
-        .map(makeErrorMessage(this.$t.bind(this)));
+        .reduce(reduceFields(this.$t.bind(this)), {});
+
+      const { startMileage, endMileage } = this.route;
+
+      if (
+        !!startMileage
+        && !!endMileage
+        && parseInt(startMileage, 10) >= parseInt(endMileage, 10)
+      ) {
+        this.errors.startMileage = this.$t('common.start_mileage_error');
+        this.errors.endMileage = this.$t('common.end_mileage_error');
+      }
     },
   },
   created() {
@@ -179,6 +185,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  @import "../scss/base";
+@import "../scss/base";
+
+.error::first-letter {
+  text-transform: capitalize;
+}
 </style>
 
