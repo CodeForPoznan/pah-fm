@@ -2,6 +2,7 @@ from django.db import transaction
 from rest_framework import fields, serializers
 
 from .models import Car, Drive, Passenger, User
+from .signals import drive_created
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -66,4 +67,10 @@ class DriveSerializer(serializers.ModelSerializer):
             )
             drive.passengers.set(passengers)
             drive.save()
+            drive_created.send(
+                self.__class__,
+                drive_id=drive.id,
+                driver_id=self.context['driver'].id,
+                passengers_ids=[p.id for p in passengers],
+            )
             return drive

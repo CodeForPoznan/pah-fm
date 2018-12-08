@@ -163,7 +163,11 @@ STATIC_URL = '/static/'
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 EMAIL_USE_TLS = False
+EMAIL_ADDRESS = 'hello@cfp.com'
 
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+    EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'emails')
 
 # verify if it's required for registering user
 AUTHENTICATION_BACKENDS = (
