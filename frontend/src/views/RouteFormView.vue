@@ -115,7 +115,7 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import * as actions from '../store/actions';
-import { isErroring, reduceFields } from './services';
+import { isErroring, makeErrors } from './services';
 import { namespaces, actions as apiActions } from '../store/constants';
 
 const defaultFormState = {
@@ -154,9 +154,11 @@ export default {
     validateForm() {
       const { route } = this;
 
+      const makeErrorsPartial = makeErrors(this.$t.bind(this));
+
       this.errors = Object.keys(route)
         .filter(isErroring(route))
-        .reduce(reduceFields(this.$t.bind(this)), {});
+        .reduce(makeErrorsPartial, {});
 
       const { startMileage, endMileage } = this.route;
 

@@ -10,14 +10,14 @@ const requiredFields = [
 
 const isErroring = route => key => requiredFields.includes(key) && !route[key];
 
-const splitField = fieldName => fieldName.replace(/([A-Z])/g, ' $1');
+const splitCamelCase = fieldName => fieldName.replace(/([A-Z])/g, ' $1');
 
 const makeErrorMessage = t => field =>
-  t('routes.validation_error', { field: splitField(field) });
+  t('routes.validation_error', { field: splitCamelCase(field) });
 
-const reduceFields = t => (acc, field) => ({
+const makeErrors = t => (acc, field) => ({
   ...acc,
   [field]: makeErrorMessage(t)(field),
 });
 
-export { isErroring, makeErrorMessage, reduceFields };
+export { isErroring, makeErrorMessage, makeErrors };
