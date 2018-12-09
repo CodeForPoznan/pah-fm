@@ -3,7 +3,7 @@ import jwtDecode from 'jwt-decode';
 import { post } from './http';
 import { setItem, getItem, removeItem } from '../localStore';
 
-const tokenKey = 'jwt';
+export const tokenKey = 'jwt';
 const vuex = 'vuex';
 
 export function login(username, password) {

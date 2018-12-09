@@ -1,15 +1,23 @@
 <template>
-  <span :class="{ 'is-online': true, online: isOnline }"/>
+  <span
+    class="is-online"
+    :class="{ online: isOnline, hidden: isLogin }"/>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import { IS_ONLINE } from '../store';
+import { LOGIN_PATH } from '../router/constants';
 
 export default {
   name: 'Refresh',
   computed: {
     ...mapState([IS_ONLINE]),
+  },
+  data() {
+    return {
+      isLogin: this.$router.currentRoute.path === LOGIN_PATH,
+    };
   },
 };
 </script>
@@ -30,6 +38,10 @@ export default {
 
 .online {
   background-color: $green;
+}
+
+.hidden {
+  display: none;
 }
 </style>
 

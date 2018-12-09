@@ -1,10 +1,11 @@
 <template>
   <div id="app">
     <Status />
-    <Header />
+    <Header v-if="!isLogin" />
     <Language class="language"/>
     <ScaleRotate
       class="mobile-menu"
+      v-if="!isLogin"
       right>
       <NavigationItems />
       <Language class="language-mobile"/>
@@ -39,12 +40,16 @@ import Refresh from './components/Refresh.vue';
 import Status from './components/Status.vue';
 import store, { LANGUAGE } from './store';
 import NavigationItems from './components/NavigationItems.vue';
+import { LOGIN_PATH } from './router/constants';
 
 export default {
   name: 'App',
   store,
   computed: {
     ...mapState([LANGUAGE]),
+    isLogin() {
+      return this.$router.currentRoute.path === LOGIN_PATH;
+    },
   },
   created() {
     if (this.language) {
