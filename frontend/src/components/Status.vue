@@ -1,7 +1,8 @@
 <template>
   <span
     class="is-online"
-    :class="{ online: isOnline, hidden: isLogin }"/>
+    v-if="!isLogin"
+    :class="{ online: isOnline }"/>
 </template>
 
 <script>
@@ -38,10 +39,6 @@ export default {
 
 .online {
   background-color: $green;
-}
-
-.hidden {
-  display: none;
 }
 </style>
 
