@@ -1,5 +1,7 @@
 <template>
-  <div class="footer">
+  <div
+    class="footer p-3"
+    :class="{ 'full-screen': isLogin }">
     <a
       href="http://codeforpoznan.pl"
       target="_blank">
