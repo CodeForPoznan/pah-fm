@@ -1,5 +1,7 @@
 <template>
-  <div class="footer">
+  <div
+    class="footer p-3"
+    :class="{ 'full-screen': isLogin }">
     <a
       href="http://codeforpoznan.pl"
       target="_blank">
@@ -20,8 +22,15 @@
 </template>
 
 <script>
+import { LOGIN_PATH } from '../router/constants';
+
 export default {
   name: 'Footer',
+  data() {
+    return {
+      isLogin: this.$router.currentRoute.path === LOGIN_PATH,
+    };
+  },
 };
 </script>
 
@@ -48,5 +57,11 @@ export default {
   @include p(2);
 
   background: $white;
+}
+
+.footer.full-screen {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
 }
 </style>

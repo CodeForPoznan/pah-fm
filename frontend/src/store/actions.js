@@ -23,6 +23,7 @@ export const actions = {
         commit(mutations.SET_LOGIN_ERROR, null);
         saveToken(token);
         dispatch(FETCH_USER);
+        window.location.replace('/');
       })
       .catch(() => {
         commit(mutations.SET_LOGIN_ERROR, i18n.tc('login.login_error'));
