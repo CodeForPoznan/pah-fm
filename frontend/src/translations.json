@@ -15,6 +15,7 @@
     },
     "routes": {
       "passengers": "Pasażerowie:",
+      "passengers-error": "Pasażerowie są wymagani",
       "please_correct_errors": "Please correct the following error(s):",
       "date": "Date:",
       "description": "Description:",
@@ -75,6 +76,7 @@
     },
     "routes": {
       "passengers": "Passengers:",
+      "passengers-error": "Passengers are required",
       "please_correct_errors": "Please correct the following error(s):",
       "date": "Date:",
       "description": "Description:",

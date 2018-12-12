@@ -55,6 +55,7 @@
                   :options="passengers"
                   :selected-options="selectedPassengers"
                   @select="onPassengerSelect"
+                  class="form-control"
                   :class="{ 'is-invalid': errors['passengers']}" />
               </div>
 
@@ -127,7 +128,7 @@
 import { MultiSelect } from 'vue-search-select';
 import { mapActions, mapState } from 'vuex';
 import * as actions from '../store/actions';
-import { isErroring, makeErrors } from './services';
+import { isErroring, makeErrors, stringFields } from './services';
 import { namespaces, actions as apiActions } from '../store/constants';
 
 
@@ -139,6 +140,7 @@ const defaultFormState = {
   destination: '',
   startMileage: '',
   endMileage: '',
+  passengers: [],
 };
 
 export default {
@@ -175,18 +177,26 @@ export default {
     },
 
     validateForm() {
+      const makeErrorsPartial = makeErrors(this.$t.bind(this));
+
       const data =
         Object.entries(this.route).reduce((acc, [key, value]) =>
-          ({ ...acc, [key]: String(value).trim() }), {});
-
-      const makeErrorsPartial = makeErrors(this.$t.bind(this));
+          ({
+            ...acc,
+            [key]: stringFields.includes(key)
+              ? String(value).trim()
+              : value
+          }), {});
 
       this.errors = Object.keys(data)
         .filter(isErroring(data))
         .reduce(makeErrorsPartial, {});
 
-      const { startMileage, endMileage } = data;
+      if (!data.passengers || !data.passengers.length) {
+        this.errors.passengers = this.$t('routes.passengers-error');
+      }
 
+      const { startMileage, endMileage } = data;
       if (
         !!startMileage
         && !!endMileage
@@ -222,6 +232,10 @@ export default {
 
 .error::first-letter {
   text-transform: capitalize;
+}
+
+.form-control.is-invalid {
+  border-color: red !important;
 }
 </style>
 
