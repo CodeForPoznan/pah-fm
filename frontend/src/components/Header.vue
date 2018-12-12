@@ -1,14 +1,14 @@
 <template>
   <div class="header">
-    <a
+    <b-nav-item
       class="logo-container"
-      href="https://www.pah.org.pl/"
-      target="_blank">
+      to="/"
+    >
       <img
         class="logo"
         :src="logo"
       >
-    </a>
+    </b-nav-item>
     <nav class="menu">
       <NavigationItems />
     </nav>
@@ -65,11 +65,12 @@ export default {
 }
 
 .logo-container {
+  @include mr(3);
+
   flex: 1;
   max-width: 240px;
   max-height: 150px;
-
-  @include mr(3);
+  list-style-type: none;
 
   @include media-breakpoint-down (md) {
     max-width: 180px;

@@ -2,12 +2,16 @@
   "pl": {
     "common": {
       "error": "Błąd",
+      "start_mileage_error":
+        "Początkowy stan licznika ma nieprawidłową wartość",
+      "end_mileage_error": "Końcowy stan licznika ma nieprawidłową wartość",
       "about": "O nas",
       "home": "Strona glowna",
       "login": "Login",
       "new_route": "Dodaj tras",
       "routes": "Trasy",
-      "intro": "Polska Akcja Humanitarna jest polską organizacją pozarządową działającą w Polsce i innych krajach. Jego misją jest \"jest uczynienie świata lepszym miejscem poprzez łagodzenie ludzkiego cierpienia i promowanie wartości humanitarnych\"."
+      "intro":
+        "Polska Akcja Humanitarna jest polską organizacją pozarządową działającą w Polsce i innych krajach. Jego misją jest \"jest uczynienie świata lepszym miejscem poprzez łagodzenie ludzkiego cierpienia i promowanie wartości humanitarnych\"."
     },
     "routes": {
       "please_correct_errors": "Please correct the following error(s):",
@@ -19,7 +23,8 @@
       "ending_mileage": "Ending Mileage:",
       "submit": "Submit",
       "validation_error": "{field} is required",
-      "no_driver_routes": "You have no routes stored in database. You can add a new route by choosing option from the menu.",
+      "no_driver_routes":
+        "You have no routes stored in database. You can add a new route by choosing option from the menu.",
       "from_to": "From {from} to {destination}"
     },
     "login": {
@@ -39,12 +44,16 @@
   },
   "ua": {
     "common": {
+      "start_mileage_error":
+        "Початкове значення вимірювального приладу має неправильне значення",
+      "end_mileage_error": "Стан кінцевого лічильника має неправильне значення",
       "about": "Про",
       "home": "Домашня сторінка",
       "login": "Логін",
       "new_route": "Додати новий маршрут",
       "routes": "Маршрути",
-      "intro": "Польська гуманітарна акція - це польська неурядова організація, яка працює у Польщі та інших країнах. Його завдання \"зробити світ кращим місцем шляхом полегшення людських страждань та просування гуманітарних цінностей\"."
+      "intro":
+        "Польська гуманітарна акція - це польська неурядова організація, яка працює у Польщі та інших країнах. Його завдання \"зробити світ кращим місцем шляхом полегшення людських страждань та просування гуманітарних цінностей\"."
     },
     "header": {
       "polish_humanitarian_action": "Польська гуманітарна акція"
@@ -52,13 +61,16 @@
   },
   "gb": {
     "common": {
+      "start_mileage_error": "Start mileage is incorrect",
+      "end_mileage_error": "End milage is incorrect",
       "error": "Error",
       "about": "About",
       "home": "Home",
       "login": "Login",
       "new_route": "Add New Route",
       "routes": "Routes",
-      "intro": "The Polish Humanitarian Action is a Polish non-governmental organisation which operates in Poland and other countries. Its mission is \"to make the world a better place through alleviation of human suffering and promotion of humanitarian values\"."
+      "intro":
+        "The Polish Humanitarian Action is a Polish non-governmental organisation which operates in Poland and other countries. Its mission is \"to make the world a better place through alleviation of human suffering and promotion of humanitarian values\"."
     },
     "routes": {
       "please_correct_errors": "Please correct the following error(s):",
@@ -70,7 +82,8 @@
       "ending_mileage": "Ending Mileage:",
       "submit": "Submit",
       "validation_error": "{field} is required",
-      "no_driver_routes": "You have no routes stored in database. You can add a new route by choosing option from the menu.",
+      "no_driver_routes":
+        "You have no routes stored in database. You can add a new route by choosing option from the menu.",
       "from_to": "From {from} to {destination}",
       "cars": "Choose a car:",
       "car": "With car:",

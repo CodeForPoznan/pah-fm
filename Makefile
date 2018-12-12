@@ -28,7 +28,7 @@ lint:
 	make lint-backend
 
 test-backend:
-	docker-compose run --rm backend python3 manage.py test
+	make manage CMD=test
 
 test:
 	make test-backend
@@ -39,5 +39,8 @@ bash-backend:
 debug-backend:
 	docker attach `docker-compose ps -q backend`
 
+manage:
+	docker-compose run --rm backend python3 manage.py ${CMD}
+
 populate-database:
-	docker-compose run --rm backend python3 manage.py populate_database
+	make manage CMD=populate_database

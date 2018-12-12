@@ -46,6 +46,7 @@ export default {
 
 };
 </script>
+
 <style>
 .bm-burger-button {
   right: 16px !important;
