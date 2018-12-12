@@ -20,7 +20,6 @@ class DrivesApiTest(APITransactionTestCase):
         )
 
     def setUp(self):
-        self.maxDiff = None
         self.url = reverse('drives')
         self.passengers = [
             self.create_passenger('Mike', 'Melnik', 'mike@melnik.com'),
