@@ -111,6 +111,9 @@
                   >
                 </div>
               </div>
+              <div class="form-group col-xs-12">
+                {{ $t('routes.distance_traveled', { distance: distance }) }}
+              </div>
               <div class="form-group">
                 <button
                   class="btn btn-primary"
@@ -185,7 +188,7 @@ export default {
             ...acc,
             [key]: stringFields.includes(key)
               ? String(value).trim()
-              : value
+              : value,
           }), {});
 
       this.errors = Object.keys(data)
@@ -223,6 +226,10 @@ export default {
         text: [p.firstName, p.lastName].join(' '),
       })),
     }),
+    distance() {
+      const distance = this.route.startMileage - this.route.endMileage;
+      return distance > 0 ? distance : 0;
+    },
   },
 };
 </script>

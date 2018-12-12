@@ -14,6 +14,7 @@
         "Polska Akcja Humanitarna jest polską organizacją pozarządową działającą w Polsce i innych krajach. Jego misją jest \"jest uczynienie świata lepszym miejscem poprzez łagodzenie ludzkiego cierpienia i promowanie wartości humanitarnych\"."
     },
     "routes": {
+      "distance_traveled": "Łącznie przejechano {distance}km",
       "passengers": "Pasażerowie:",
       "passengers-error": "Pasażerowie są wymagani",
       "please_correct_errors": "Please correct the following error(s):",
@@ -75,6 +76,7 @@
         "The Polish Humanitarian Action is a Polish non-governmental organisation which operates in Poland and other countries. Its mission is \"to make the world a better place through alleviation of human suffering and promotion of humanitarian values\"."
     },
     "routes": {
+      "distance_traveled": "{distance}km traveled",
       "passengers": "Passengers:",
       "passengers-error": "Passengers are required",
       "please_correct_errors": "Please correct the following error(s):",
