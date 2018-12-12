@@ -1,5 +1,6 @@
 # pah-fm
 
+[![Build Status](https://travis-ci.com/CodeForPoznan/pah-fm.svg?branch=master)](https://travis-ci.com/CodeForPoznan/pah-fm)
 
 ## Run project (in background)
 
