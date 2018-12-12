@@ -126,9 +126,9 @@ class DrivesApiTest(APITransactionTestCase):
         self.assertEqual(len(drives), 1)
         self.assertEqual(drives[0]['id'], self.drives[0].id)
 
-    # this test allows to verify email template
     @override_settings(EMAIL_BACKEND='django.core.mail.backends.filebased.EmailBackend')
     def test_can_create_a_drive(self):
+        # this test allows to verify email template
         payload = {
             'car': {
                 'id': self.car.id,
