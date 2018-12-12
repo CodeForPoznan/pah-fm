@@ -44,7 +44,9 @@ class DrivesApiTest(APITransactionTestCase):
                 date=date.today(),
                 start_mileage=200,
                 end_mileage=12123,
-                description=''
+                description='',
+                start_location='Poznan',
+                end_location='Warsaw',
             )
         ]
         self.drives[0].passengers.set(self.passengers)
@@ -89,7 +91,9 @@ class DrivesApiTest(APITransactionTestCase):
                 'driver': {
                     'id': self.driver.id,
                     'username': self.driver.username,
-                }
+                },
+                'startLocation': 'Poznan',
+                'endLocation': 'Warsaw',
             }
         )
 
@@ -107,7 +111,9 @@ class DrivesApiTest(APITransactionTestCase):
             date=date.today(),
             start_mileage=200,
             end_mileage=12123,
-            description=''
+            description='',
+            start_location='Poznan',
+            end_location='Warsaw',
         )
 
         self.client.force_login(self.driver)
@@ -117,3 +123,38 @@ class DrivesApiTest(APITransactionTestCase):
         drives = json.loads(res.content)
         self.assertEqual(len(drives), 1)
         self.assertEqual(drives[0]['id'], self.drives[0].id)
+
+    def test_can_create_a_drive(self):
+        payload = {
+            'car': {
+                'id': self.car.id,
+            },
+            'passengers': [
+                {'id': self.passengers[0].id},
+                {'id': self.passengers[1].id},
+            ],
+            'date': date.today().isoformat(),
+            'startMileage': 180000,
+            'endMileage': 180250,
+            'description': '',
+            'startLocation': 'Warsaw',
+            'endLocation': 'Poznan',
+        }
+
+        self.client.force_login(self.driver)
+        res = self.client.post(self.url, data=payload, format='json')
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+
+        drive = Drive.objects.get(pk=res.data['id'])
+        self.assertSetEqual(
+            {p.id for p in drive.passengers.all()},
+            {p.id for p in self.passengers},
+        )
+        self.assertEqual(drive.car.id, self.car.id)
+        self.assertEqual(drive.date.isoformat(), res.data['date'])
+        self.assertEqual(drive.start_mileage, res.data['start_mileage'])
+        self.assertEqual(drive.end_mileage, res.data['end_mileage'])
+        self.assertEqual(drive.description, res.data['description'])
+        self.assertEqual(drive.start_location, res.data['start_location'])
+        self.assertEqual(drive.end_location, res.data['end_location'])
