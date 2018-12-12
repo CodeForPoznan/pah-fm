@@ -227,7 +227,7 @@ export default {
       })),
     }),
     distance() {
-      const distance = this.route.startMileage - this.route.endMileage;
+      const distance = this.route.endMileage - this.route.startMileage;
       return distance > 0 ? distance : 0;
     },
   },
