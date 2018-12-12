@@ -8,7 +8,9 @@ const requiredFields = [
   'endMileage',
 ];
 
-const isErroring = route => key => requiredFields.includes(key) && !route[key];
+const isErroring = route => key =>
+  requiredFields.includes(key)
+  && !route[key].trim();
 
 const splitCamelCase = fieldName => fieldName.replace(/([A-Z])/g, ' $1');
 

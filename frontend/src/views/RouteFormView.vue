@@ -34,13 +34,14 @@
                   v-if="cars.data"
                   v-model="route.car"
                   name="car"
+                  value=""
                   class="form-control"
                   :class="{ 'is-invalid': errors['car'] }"
                 >
                   <option
                     v-for="car in cars.data"
                     :key="car.id"
-                    :value="car"
+                    :value="car.id"
                   >{{ car.plates }}</option>
                 </select>
                 <p
@@ -120,13 +121,12 @@ import { namespaces, actions as apiActions } from '../store/constants';
 
 const defaultFormState = {
   date: '',
-  car: null,
+  car: '',
   description: '',
   from: '',
   destination: '',
   startMileage: '',
   endMileage: '',
-  isSynced: false,
 };
 
 export default {
@@ -152,15 +152,17 @@ export default {
     },
 
     validateForm() {
-      const { route } = this;
+      const data =
+        Object.entries(this.route).reduce((acc, [key, value]) =>
+          ({ ...acc, [key]: String(value).trim() }), {});
 
       const makeErrorsPartial = makeErrors(this.$t.bind(this));
 
-      this.errors = Object.keys(route)
-        .filter(isErroring(route))
+      this.errors = Object.keys(data)
+        .filter(isErroring(data))
         .reduce(makeErrorsPartial, {});
 
-      const { startMileage, endMileage } = this.route;
+      const { startMileage, endMileage } = data;
 
       if (
         !!startMileage
