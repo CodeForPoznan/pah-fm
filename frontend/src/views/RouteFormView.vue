@@ -48,6 +48,16 @@
                   class="font-weight-bold"
                   v-if="!cars.data">{{ $t('routes.no_cars_message') }}</p>
               </div>
+
+              <div class="form-group">
+                <label>{{ $t('routes.passengers') }}</label>
+                <multi-select
+                  :options="passengers"
+                  :selected-options="selectedPassengers"
+                  @select="onPassengerSelect"
+                  :class="{ 'is-invalid': errors['passengers']}" />
+              </div>
+
               <div class="form-group">
                 <label>{{ $t('routes.description') }}</label>
                 <input
@@ -114,10 +124,12 @@
 </template>
 
 <script>
+import { MultiSelect } from 'vue-search-select';
 import { mapActions, mapState } from 'vuex';
 import * as actions from '../store/actions';
 import { isErroring, makeErrors } from './services';
 import { namespaces, actions as apiActions } from '../store/constants';
+
 
 const defaultFormState = {
   date: '',
@@ -131,10 +143,16 @@ const defaultFormState = {
 
 export default {
   name: 'RouteFormView',
+  components: {
+    MultiSelect,
+  },
   data() {
     return {
       route: { ...defaultFormState },
       errors: {},
+      searchText: '',
+      selectedPassengers: [],
+      lastSelectPassenger: {},
     };
   },
   methods: {
@@ -142,6 +160,11 @@ export default {
     ...mapActions(namespaces.drives, [apiActions.fetchDrives]),
     ...mapActions(namespaces.cars, [apiActions.fetchCars]),
     ...mapActions(namespaces.passengers, [apiActions.fetchPassengers]),
+    onPassengerSelect(passengers, lastSelectPassenger) {
+      this.selectedPassengers = passengers;
+      this.lastSelectPassenger = lastSelectPassenger;
+      this.route.passengers = passengers.map(i => i.value);
+    },
     handleSubmit() {
       this.validateForm();
 
@@ -183,6 +206,12 @@ export default {
   computed: {
     ...mapState(namespaces.cars, {
       cars: state => state,
+    }),
+    ...mapState(namespaces.passengers, {
+      passengers: state => (state.data || []).map(p => ({
+        value: p.id,
+        text: [p.firstName, p.lastName].join(' '),
+      })),
     }),
   },
 };
