@@ -2,6 +2,7 @@ from datetime import date
 import json
 
 from django.contrib.auth import get_user_model
+from django.test import override_settings
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITransactionTestCase
@@ -11,18 +12,18 @@ from fleet_management.models import Car, Drive, Passenger
 
 class DrivesApiTest(APITransactionTestCase):
 
-    def create_passenger(self, first_name, last_name):
+    def create_passenger(self, first_name, last_name, email):
         return Passenger.objects.create(
             first_name=first_name,
             last_name=last_name,
+            email=email,
         )
 
     def setUp(self):
-        self.maxDiff = None
         self.url = reverse('drives')
         self.passengers = [
-            self.create_passenger('Mike', 'Melnik'),
-            self.create_passenger('Mykhailo', 'Возняк'),
+            self.create_passenger('Mike', 'Melnik', 'mike@melnik.com'),
+            self.create_passenger('Mykhailo', 'Возняк', 'mik@bo.uk'),
         ]
         self.car = Car.objects.create(
             plates='FOO 129338',
@@ -124,7 +125,9 @@ class DrivesApiTest(APITransactionTestCase):
         self.assertEqual(len(drives), 1)
         self.assertEqual(drives[0]['id'], self.drives[0].id)
 
+    @override_settings(EMAIL_BACKEND='django.core.mail.backends.filebased.EmailBackend')
     def test_can_create_a_drive(self):
+        # this test allows to verify email template
         payload = {
             'car': {
                 'id': self.car.id,
