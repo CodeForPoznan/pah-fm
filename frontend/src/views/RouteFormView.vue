@@ -176,6 +176,7 @@ export default {
       if (!Object.keys(this.errors).length) {
         this[actions.SUBMIT]({ form: this.route });
         this.route = { ...defaultFormState };
+        this.selectedPassengers = [];
       }
     },
 
