@@ -10,6 +10,7 @@ User open pah-fm website.
 
 ### Expected results 1
 User see login view with 2 text fields: "Username" and "Password" and 1 button "Login".
+User see 3 flages: polish, english, ukrainian, in the right side, at top of the page.
 
 ### Step 2
 User enter his email (attached to already created account) into "Username" field.
