@@ -103,6 +103,8 @@
       "loading": "Loading"
     },
     "routes": {
+      "synced_drives": "Previous drives",
+      "unsynced_drives": "Unsynces drives",
       "distance_traveled": "{distance}km traveled",
       "passengers": "Passengers:",
       "passengers-error": "Passengers are required",

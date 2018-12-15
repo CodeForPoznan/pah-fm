@@ -3,6 +3,7 @@ import {
   DATA,
   ERRORS,
   FETCH,
+  SAVE,
   SET_DATA,
   SET_ERRORS,
 } from './constants';
@@ -33,6 +34,10 @@ const makeModule = moduleActions => ({
       state[LOADING] = false;
       state[ERRORS] = errors;
     },
+    [SAVE](state) {
+      state[LOADING] = true;
+      state[ERRORS] = null;
+    },
     /* eslint-enable no-param-reassign */
   },
   actions: moduleActions,
@@ -48,7 +53,18 @@ const makeFetchData = url => ({ commit }) => {
     });
 };
 
+const makeDomainItem = id => ({ id });
+
+const mapRoute = route => ({
+  ...route,
+  car: makeDomainItem(route.car),
+  passengers: route.passengers.map(makeDomainItem),
+});
+
+
 export {
+  mapRoute,
+  makeDomainItem,
   makeModule,
   makeFetchData,
 };

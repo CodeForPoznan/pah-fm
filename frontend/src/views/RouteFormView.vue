@@ -74,6 +74,7 @@
                   type="text"
                   v-model="route.startLocation"
                   name="startLocation"
+                  maxlength="100"
                   class="form-control"
                   :class="{ 'is-invalid': errors['startLocation'] }"
                 >
@@ -82,6 +83,7 @@
                 <label>{{ $t('routes.endLocation') }}</label>
                 <input
                   type="text"
+                  maxlength="100"
                   v-model="route.endLocation"
                   name="endLocation"
                   class="form-control"
@@ -161,7 +163,6 @@ export default {
   },
   methods: {
     ...mapActions([actions.SUBMIT]),
-    ...mapActions(namespaces.drives, [apiActions.fetchDrives]),
     ...mapActions(namespaces.cars, [apiActions.fetchCars]),
     ...mapActions(namespaces.passengers, [apiActions.fetchPassengers]),
     onPassengerSelect(passengers, lastSelectPassenger) {
@@ -173,7 +174,7 @@ export default {
       this.validateForm();
 
       if (!Object.keys(this.errors).length) {
-        this[actions.SUBMIT]({ form: this.route });
+        this[actions.SUBMIT]({ form: { ...this.route, syncId: Math.floor(Date.now() / 1000) } });
         this.route = { ...defaultFormState };
         this.selectedPassengers = [];
       }
@@ -212,7 +213,6 @@ export default {
   },
   created() {
     this[apiActions.fetchCars]();
-    this[apiActions.fetchDrives]();
     this[apiActions.fetchPassengers]();
   },
 
