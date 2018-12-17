@@ -12,31 +12,30 @@
     </b-nav-item>
 
     <b-nav-item
-      v-if="user"
+      @click="logout"
       to="/logout"
       key="logout"
       class="username"
     >
-      {{ $t('login.user', { username: user.username }) }}
-    </b-nav-item>
-
-    <b-nav-item
-      v-else
-      to="/login"
-      key="login"
-    >
-      {{ $t('common.login') }}
+      {{ $t('common.logout') }}
     </b-nav-item>
   </b-nav>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
+import * as actions from '../store/actions';
 
 export default {
   name: 'NavigationItems',
   computed: {
     ...mapState(['user']),
+  },
+  methods: {
+    ...mapActions([actions.LOGOUT]),
+    logout() {
+      this[actions.LOGOUT]();
+    },
   },
   data() {
     return {

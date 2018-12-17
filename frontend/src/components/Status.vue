@@ -1,8 +1,12 @@
 <template>
-  <span
-    class="is-online"
+  <div
     v-if="!isLogin"
-    :class="{ online: isOnline }"/>
+    class="is-online"
+    :class="{ online: isOnline }">
+    <span>
+      {{ user.username }}
+    </span>
+  </div>
 </template>
 
 <script>
@@ -14,6 +18,7 @@ export default {
   name: 'Refresh',
   computed: {
     ...mapState([IS_ONLINE]),
+    ...mapState(['user']),
   },
   data() {
     return {
@@ -37,8 +42,14 @@ export default {
   display: inline-block;
 }
 
+.is-online span {
+  margin-left: 20px;
+  margin-bottom: 25px;
+}
+
 .online {
   background-color: $green;
+  line-height: inherit;
 }
 </style>
 

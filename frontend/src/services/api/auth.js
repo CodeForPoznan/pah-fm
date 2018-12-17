@@ -17,11 +17,12 @@ export function saveToken(token) {
 
 export function deleteToken() {
   const localData = getItem(vuex);
-  setItem(vuex, {
-    ...localData,
-    user: null,
-  });
+  const lang = localData.language;
   removeItem(tokenKey);
+  removeItem(localData);
+  setItem(vuex, {
+    language: lang,
+  });
 }
 
 export function getToken(decoded = false) {
