@@ -1,6 +1,7 @@
 <template>
     <div>
-        Confirmation
+        Confirmation.
+        Token: {{ this.$route.params.token }}
     </div>
 </template>
 
