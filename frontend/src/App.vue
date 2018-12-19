@@ -5,7 +5,7 @@
     <Language class="language"/>
     <ScaleRotate
       class="mobile-menu"
-      v-if="!isLogin"
+      v-if="!isLogin && !isConfirmationPage"
       right>
       <NavigationItems />
       <Language class="language-mobile"/>
@@ -49,6 +49,9 @@ export default {
     ...mapState([LANGUAGE]),
     isLogin() {
       return this.$router.currentRoute.path === LOGIN_PATH;
+    },
+    isConfirmationPage() {
+      return this.$route.name === 'Confirmation';
     },
   },
   created() {
