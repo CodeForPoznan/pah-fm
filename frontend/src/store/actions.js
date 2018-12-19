@@ -1,3 +1,4 @@
+import { get } from '../services/api/http';
 import { login, saveToken, deleteToken } from '../services/api/auth';
 import { getMyself } from '../services/api/user';
 
@@ -9,6 +10,7 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const SUBMIT = 'SUBMIT';
 export const SWITCH_LANGUAGE = 'SWITCH_LANGUAGE';
+export const VERIFY_CONFIRMATION_TOKEN = 'VERIFY_CONFIRMATION_TOKEN';
 
 export const actions = {
   [FETCH_USER]({ commit }, { callback }) {
@@ -44,5 +46,10 @@ export const actions = {
   [SWITCH_LANGUAGE]({ commit }, language) {
     commit(mutations.SET_LANG, language);
     i18n.locale = language;
+  },
+  [VERIFY_CONFIRMATION_TOKEN]({ commit }, token) {
+    get(`confirmation_token/${token}`)
+      .then(resp => resp.active)
+      .then(active => commit(mutations.SET_CONFIRMATION_TOKEN_ACTIVE, { token, active }));
   },
 };
