@@ -1,3 +1,6 @@
+import uuid
+from datetime import datetime, timedelta
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.timezone import now
@@ -58,3 +61,22 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class VerificationToken(models.Model):
+    """
+    Keeps track of drives' verification statuses.
+    """
+    EXPIRATION_DELTA = timedelta(days=7)
+
+    comment = models.CharField(2000)
+    confirmed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    drive = models.ForeignKey(Drive, on_delete=models.CASCADE)
+    is_ok = models.BooleanField()
+    passenger = models.ForeignKey(Passenger, on_delete=models.CASCADE)
+    token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+
+    @property
+    def is_expired(self):
+        return datetime.now() < self.created_at + self.EXPIRATION_DELTA
