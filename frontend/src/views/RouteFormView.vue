@@ -55,7 +55,6 @@
                   :options="passengers"
                   :selected-options="selectedPassengers"
                   @select="onPassengerSelect"
-                  class="form-control"
                   :class="{ 'is-invalid': errors['passengers']}" />
               </div>
 
@@ -129,6 +128,7 @@
 
 <script>
 import { MultiSelect } from 'vue-search-select';
+
 import { mapActions, mapState } from 'vuex';
 import * as actions from '../store/actions';
 import { isErroring, makeErrors, stringFields } from './services';
@@ -242,7 +242,7 @@ export default {
   text-transform: capitalize;
 }
 
-.form-control.is-invalid {
+.is-invalid {
   border-color: red !important;
 }
 </style>
