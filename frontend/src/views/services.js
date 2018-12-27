@@ -8,9 +8,10 @@ const requiredFields = [
   'endMileage',
 ];
 
+const stringFields = requiredFields;
+
 const isErroring = route => key =>
-  requiredFields.includes(key)
-  && !route[key].trim();
+  requiredFields.includes(key) && !route[key].trim();
 
 const splitCamelCase = fieldName => fieldName.replace(/([A-Z])/g, ' $1');
 
@@ -22,4 +23,4 @@ const makeErrors = t => (acc, field) => ({
   [field]: makeErrorMessage(t)(field),
 });
 
-export { isErroring, makeErrorMessage, makeErrors };
+export { isErroring, makeErrorMessage, makeErrors, stringFields };

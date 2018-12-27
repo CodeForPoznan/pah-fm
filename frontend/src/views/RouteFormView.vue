@@ -48,6 +48,16 @@
                   class="font-weight-bold"
                   v-if="!cars.data">{{ $t('routes.no_cars_message') }}</p>
               </div>
+
+              <div class="form-group">
+                <label>{{ $t('routes.passengers') }}</label>
+                <multi-select
+                  :options="passengers"
+                  :selected-options="selectedPassengers"
+                  @select="onPassengerSelect"
+                  :class="{ 'is-invalid': errors['passengers']}" />
+              </div>
+
               <div class="form-group">
                 <label>{{ $t('routes.description') }}</label>
                 <input
@@ -100,6 +110,9 @@
                   >
                 </div>
               </div>
+              <div class="form-group col-xs-12">
+                {{ $t('routes.distance_traveled', { distance: distance }) }}
+              </div>
               <div class="form-group">
                 <button
                   class="btn btn-primary"
@@ -114,10 +127,13 @@
 </template>
 
 <script>
+import { MultiSelect } from 'vue-search-select';
+
 import { mapActions, mapState } from 'vuex';
 import * as actions from '../store/actions';
-import { isErroring, makeErrors } from './services';
+import { isErroring, makeErrors, stringFields } from './services';
 import { namespaces, actions as apiActions } from '../store/constants';
+
 
 const defaultFormState = {
   date: '',
@@ -127,14 +143,21 @@ const defaultFormState = {
   destination: '',
   startMileage: '',
   endMileage: '',
+  passengers: [],
 };
 
 export default {
   name: 'RouteFormView',
+  components: {
+    MultiSelect,
+  },
   data() {
     return {
       route: { ...defaultFormState },
       errors: {},
+      searchText: '',
+      selectedPassengers: [],
+      lastSelectPassenger: {},
     };
   },
   methods: {
@@ -142,28 +165,42 @@ export default {
     ...mapActions(namespaces.drives, [apiActions.fetchDrives]),
     ...mapActions(namespaces.cars, [apiActions.fetchCars]),
     ...mapActions(namespaces.passengers, [apiActions.fetchPassengers]),
+    onPassengerSelect(passengers, lastSelectPassenger) {
+      this.selectedPassengers = passengers;
+      this.lastSelectPassenger = lastSelectPassenger;
+      this.route.passengers = passengers.map(i => i.value);
+    },
     handleSubmit() {
       this.validateForm();
 
       if (!Object.keys(this.errors).length) {
         this[actions.SUBMIT]({ form: this.route });
         this.route = { ...defaultFormState };
+        this.selectedPassengers = [];
       }
     },
 
     validateForm() {
+      const makeErrorsPartial = makeErrors(this.$t.bind(this));
+
       const data =
         Object.entries(this.route).reduce((acc, [key, value]) =>
-          ({ ...acc, [key]: String(value).trim() }), {});
-
-      const makeErrorsPartial = makeErrors(this.$t.bind(this));
+          ({
+            ...acc,
+            [key]: stringFields.includes(key)
+              ? String(value).trim()
+              : value,
+          }), {});
 
       this.errors = Object.keys(data)
         .filter(isErroring(data))
         .reduce(makeErrorsPartial, {});
 
-      const { startMileage, endMileage } = data;
+      if (!data.passengers || !data.passengers.length) {
+        this.errors.passengers = this.$t('routes.passengers-error');
+      }
 
+      const { startMileage, endMileage } = data;
       if (
         !!startMileage
         && !!endMileage
@@ -184,6 +221,16 @@ export default {
     ...mapState(namespaces.cars, {
       cars: state => state,
     }),
+    ...mapState(namespaces.passengers, {
+      passengers: state => (state.data || []).map(p => ({
+        value: p.id,
+        text: [p.firstName, p.lastName].join(' '),
+      })),
+    }),
+    distance() {
+      const distance = this.route.endMileage - this.route.startMileage;
+      return distance > 0 ? distance : 0;
+    },
   },
 };
 </script>
@@ -193,6 +240,10 @@ export default {
 
 .error::first-letter {
   text-transform: capitalize;
+}
+
+.is-invalid {
+  border-color: red !important;
 }
 </style>
 
