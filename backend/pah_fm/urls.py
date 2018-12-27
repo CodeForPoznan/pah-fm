@@ -23,7 +23,7 @@ from fleet_management.api import (
     CurrentUserRetrieveView,
     DriveView,
     PassengerListView,
-)
+    VerificationTokenSubmissionView)
 
 
 urlpatterns = [
@@ -33,4 +33,6 @@ urlpatterns = [
     path('api/passengers', PassengerListView.as_view(), name='passengers'),
     path('api/cars', CarListView.as_view(), name='cars'),
     path('api/drives', DriveView.as_view(), name='drives'),
+    path('api/verification-token/<uuid:token>',
+         VerificationTokenSubmissionView.as_view(), name='verification-token')
 ]

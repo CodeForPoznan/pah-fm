@@ -69,13 +69,13 @@ class VerificationToken(models.Model):
     Keeps track of drives' verification statuses.
     """
     EXPIRATION_DELTA = timedelta(days=7)
-    DESCRIPTION_MAX_LENGTH = 2000
+    COMMENT_MAX_LENGTH = 2000
 
-    comment = models.CharField(max_length=DESCRIPTION_MAX_LENGTH)
-    confirmed = models.BooleanField(default=False)
+    comment = models.CharField(max_length=COMMENT_MAX_LENGTH)
+    is_confirmed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     drive = models.ForeignKey(Drive, on_delete=models.CASCADE)
-    is_ok = models.BooleanField(null=True)
+    is_ok = models.NullBooleanField()
     passenger = models.ForeignKey(Passenger, on_delete=models.CASCADE)
     token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 

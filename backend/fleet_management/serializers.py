@@ -1,6 +1,7 @@
 from django.db import transaction
 from rest_framework import fields, serializers
 
+from fleet_management.models import VerificationToken
 from .models import Car, Drive, Passenger, User
 from .signals import drive_created
 
@@ -73,3 +74,21 @@ class DriveSerializer(serializers.ModelSerializer):
                 passengers_ids=[p.id for p in passengers],
             )
             return drive
+
+
+class VerificationTokenSerializer(serializers.ModelSerializer):
+    is_confirmed = fields.BooleanField(read_only=True)
+    is_expired = fields.BooleanField(read_only=True)
+
+    comment = fields.CharField(
+        max_length=VerificationToken.COMMENT_MAX_LENGTH,
+        write_only=True,
+    )
+    is_ok = fields.NullBooleanField(write_only=True)
+
+    class Meta:
+        model = VerificationToken
+        fields = [
+            'comment', 'is_ok',
+            'is_expired', 'is_confirmed',
+        ]

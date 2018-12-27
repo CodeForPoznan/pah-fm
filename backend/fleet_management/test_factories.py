@@ -34,4 +34,4 @@ class VerificationTokenFactoryTest(TestCase):
         self.assertEqual(token.created_at, now)
 
         self.assertIsNone(token.is_ok)
-        self.assertFalse(token.confirmed)
+        self.assertFalse(token.is_confirmed)

@@ -171,7 +171,7 @@ class ProjectFactory(factory.DjangoModelFactory):
 class VerificationTokenFactory(factory.DjangoModelFactory):
 
     comment = factory.Faker(
-        'text', max_nb_chars=VerificationToken.DESCRIPTION_MAX_LENGTH,
+        'text', max_nb_chars=VerificationToken.COMMENT_MAX_LENGTH,
     )
     token = factory.Faker('uuid4')
 
