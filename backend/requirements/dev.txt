@@ -1,5 +1,6 @@
 -r base.txt
 
 factory_boy==2.11.1
+freezegun==0.3.11
 pycodestyle==2.4.0
 tqdm==4.28.1
