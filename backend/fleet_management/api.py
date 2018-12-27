@@ -1,5 +1,3 @@
-from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404
 from rest_framework import generics, filters, permissions, views
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated

@@ -120,4 +120,3 @@ class VerificationTokenViewTest(APITransactionTestCase):
             'isExpired': self.token.is_expired,
             'isConfirmed': self.token.is_confirmed,
         })
-
