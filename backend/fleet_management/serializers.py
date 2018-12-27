@@ -92,3 +92,11 @@ class VerificationTokenSerializer(serializers.ModelSerializer):
             'comment', 'is_ok',
             'is_expired', 'is_confirmed',
         ]
+
+    def update(self, instance, validated_data):
+        instance.comment = validated_data['comment']
+        instance.is_ok = validated_data['is_ok']
+        instance.is_confirmed = True
+        instance.save()
+
+        return instance

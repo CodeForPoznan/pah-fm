@@ -57,32 +57,23 @@ class DriveView(generics.ListCreateAPIView):
         )
 
 
-class VerificationTokenSubmissionView(generics.GenericAPIView):
+class VerificationTokenView(generics.RetrieveUpdateAPIView):
     permission_classes = (permissions.AllowAny,)
+    lookup_field = 'token'
+    serializer_class = VerificationTokenSerializer
+    queryset = VerificationToken.objects.all()
 
-    def post(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs):
+        kwargs['partial'] = False
+        return super().update(request, args, kwargs)
+
+    def perform_update(self, serializer: VerificationTokenSerializer):
         """
         Updates token status.
 
         If token is expired or already confirmed, the update is skipped.
         """
-        VerificationTokenSerializer(data=request.data).is_valid(raise_exception=True)
+        token = serializer.instance
 
-        try:
-            token = VerificationToken.objects.get(token=self.kwargs['token'])  # type: VerificationToken
-        except ObjectDoesNotExist:
-            raise Http404
-
-        if token.is_expired or token.is_confirmed:
-            return Response(
-                VerificationTokenSerializer(token).data
-            )
-
-        token.comment = request.data['comment']
-        token.is_ok = request.data['is_ok']
-        token.save()
-
-        return Response(
-            VerificationTokenSerializer(token).data
-        )
-
+        if not (token.is_expired or token.is_confirmed):
+            serializer.save()
