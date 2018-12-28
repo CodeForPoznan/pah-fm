@@ -87,3 +87,6 @@ class VerificationToken(models.Model):
     @property
     def is_active(self):
         return not self.is_confirmed and not self.is_expired
+
+    def __str__(self):
+        return str(self.token)
