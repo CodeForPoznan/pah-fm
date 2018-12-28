@@ -69,23 +69,23 @@
                 >
               </div>
               <div class="form-group">
-                <label>{{ $t('routes.start_location') }}</label>
+                <label>{{ $t('routes.startLocation') }}</label>
                 <input
                   type="text"
-                  v-model="route.start_location"
-                  name="start_location"
+                  v-model="route.startLocation"
+                  name="startLocation"
                   class="form-control"
-                  :class="{ 'is-invalid': errors['start_location'] }"
+                  :class="{ 'is-invalid': errors['startLocation'] }"
                 >
               </div>
               <div class="form-group">
-                <label>{{ $t('routes.end_location') }}</label>
+                <label>{{ $t('routes.endLocation') }}</label>
                 <input
                   type="text"
-                  v-model="route.end_location"
-                  name="end_location"
+                  v-model="route.endLocation"
+                  name="endLocation"
                   class="form-control"
-                  :class="{ 'is-invalid': errors['end_location'] }"
+                  :class="{ 'is-invalid': errors['endLocation'] }"
                 >
               </div>
               <div class="row">
@@ -93,20 +93,20 @@
                   <label>{{ $t('routes.starting_mileage') }}</label>
                   <input
                     type="number"
-                    v-model="route.start_mileage"
-                    name="start_mileage"
+                    v-model="route.startMileage"
+                    name="startMileage"
                     class="form-control"
-                    :class="{ 'is-invalid': errors['start_mileage'] }"
+                    :class="{ 'is-invalid': errors['startMileage'] }"
                   >
                 </div>
                 <div class="form-group col-sm-6">
                   <label>{{ $t('routes.ending_mileage') }}</label>
                   <input
                     type="number"
-                    v-model="route.end_mileage"
-                    name="end_mileage"
+                    v-model="route.endMileage"
+                    name="endMileage"
                     class="form-control"
-                    :class="{ 'is-invalid': errors['end_mileage'] }"
+                    :class="{ 'is-invalid': errors['endMileage'] }"
                   >
                 </div>
               </div>
@@ -138,11 +138,11 @@ const defaultFormState = {
   date: '',
   car: '',
   description: '',
-  start_mileage: '',
-  end_mileage: '',
+  startMileage: '',
+  endMileage: '',
   passengers: [],
-  start_location: '',
-  end_location: '',
+  startLocation: '',
+  endLocation: '',
 };
 
 export default {
@@ -199,15 +199,14 @@ export default {
         this.errors.passengers = this.$t('routes.passengers-error');
       }
 
-      /* eslint-disable camelcase */
-      const { start_mileage, end_mileage } = data;
+      const { startMileage, endMileage } = data;
       if (
-        !!start_mileage
-        && !!end_mileage
-        && parseInt(start_mileage, 10) >= parseInt(end_mileage, 10)
+        !!startMileage
+        && !!endMileage
+        && parseInt(startMileage, 10) >= parseInt(endMileage, 10)
       ) {
-        this.errors.start_mileage = this.$t('common.start_mileage_error');
-        this.errors.end_mileage = this.$t('common.end_mileage_error');
+        this.errors.startMileage = this.$t('common.startMileage_error');
+        this.errors.endMileage = this.$t('common.endMileage_error');
       }
     },
   },
@@ -228,7 +227,7 @@ export default {
       })),
     }),
     distance() {
-      const distance = this.route.end_mileage - this.route.start_mileage;
+      const distance = this.route.endMileage - this.route.startMileage;
       return distance > 0 ? distance : 0;
     },
   },
