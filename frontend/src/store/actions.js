@@ -48,8 +48,13 @@ export const actions = {
     i18n.locale = language;
   },
   [VERIFY_CONFIRMATION_TOKEN]({ commit }, token) {
-    get(`confirmation_token/${token}`)
-      .then(resp => resp.active)
-      .then(active => commit(mutations.SET_CONFIRMATION_TOKEN_ACTIVE, { token, active }));
+    get(`verification-token/${token}`)
+      .catch((err) => {
+        commit(mutations.SET_CONFIRMATION_TOKEN_ACTIVE, { token, isActive: false });
+        throw err;
+      })
+      .then(resp => resp.isActive)
+      .then(isActive => commit(mutations.SET_CONFIRMATION_TOKEN_ACTIVE, { token, isActive }))
+      .catch(() => console.debug(`Token ${token} not found.`));
   },
 };

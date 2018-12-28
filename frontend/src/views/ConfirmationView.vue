@@ -1,21 +1,37 @@
 <template>
-    <div>
-        Confirmation.
-        Token: {{ this.$route.params.token }}
+  <div>
+    <div v-if="token && verificationToken && token === verificationToken.token">
+        <div v-if="verificationToken.isActive">
+            Token active.
+        </div>
+        <div v-else>
+            Token inactive.
+        </div>
     </div>
+    <div v-else>
+      Loading...
+    </div>
+  </div>
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
-  import { VERIFY_CONFIRMATION_TOKEN } from '../store/actions';
+import { mapActions, mapState } from 'vuex';
+import * as actions from '../store/actions';
+import { VERIFICATION_TOKEN } from '../store/constants';
 
-  export default {
-    name: 'ConfirmationView',
-    created() {
-        this[VERIFY_CONFIRMATION_TOKEN](this.$route.params.token);
+export default {
+  name: 'ConfirmationView',
+  created() {
+    this[actions.VERIFY_CONFIRMATION_TOKEN](this.token);
+  },
+  computed: {
+    ...mapState([VERIFICATION_TOKEN]),
+    token() {
+      return this.$route.params.token;
     },
-    methods: {
-      ...mapActions([VERIFY_CONFIRMATION_TOKEN]),
-    },
-  }
+  },
+  methods: {
+    ...mapActions([actions.VERIFY_CONFIRMATION_TOKEN]),
+  },
+};
 </script>

@@ -1,3 +1,5 @@
+import { VERIFICATION_TOKEN } from './constants';
+
 export const SET_USER = 'SET_USER';
 export const SET_LOGIN_PROGRESS = 'SET_LOGIN_PROGRESS';
 export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
@@ -41,9 +43,9 @@ export const mutations = {
   [SET_LANG](state, language) {
     Object.assign(state, { language });
   },
-  [SET_CONFIRMATION_TOKEN_ACTIVE](state, { token, active }) {
+  [SET_CONFIRMATION_TOKEN_ACTIVE](state, { token, isActive }) {
     Object.assign(state, {
-      tokenConfirmationStatus: { token, active },
+      [VERIFICATION_TOKEN]: { token, isActive },
     });
   },
 };
