@@ -87,6 +87,10 @@ export default {
   background: $white;
 }
 
+html {
+  height: auto;
+}
+
 #page-wrap {
   margin-bottom: auto;
 }
