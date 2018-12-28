@@ -1,16 +1,17 @@
 import { getAuthHeader } from './auth';
 
-export const apiUrl = '/api/';
-
 function handleResponse(response) {
-  return response.json().then((data) => {
-    if (!response.ok) {
-      return Promise.reject(data);
-    }
+  if (response.status >= 200 && response.status < 300) {
+    return response.json();
+  }
 
-    return data;
-  });
+  const error = new Error(response.statusText || response.status);
+  error.response = response;
+
+  return Promise.reject(error);
 }
+
+export const apiUrl = '/api/';
 
 export function get(url, auth = true) {
   const requestOptions = {
