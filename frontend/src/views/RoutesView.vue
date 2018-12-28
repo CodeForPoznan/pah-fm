@@ -34,11 +34,11 @@
           </p>
           <p>
             <span class="font-weight-bold mr-1">{{ $t('routes.starting_mileage') }}</span>
-            <span>{{ route.startMileage }}</span>
+            <span>{{ route.start_mileage }}</span>
           </p>
           <p>
             <span class="font-weight-bold mr-1">{{ $t('routes.ending_mileage') }}</span>
-            <span>{{ route.endMileage }}</span>
+            <span>{{ route.end_mileage }}</span>
           </p>
         </div>
       </div>

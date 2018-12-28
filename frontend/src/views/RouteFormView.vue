@@ -8,7 +8,7 @@
               class="alert alert-danger errors"
               v-if="Object.keys(errors).length">
               <b>{{ $t('routes.please_correct_errors') }}</b>
-              <ul>
+              <ul class="error-list">
                 <li
                   class="error"
                   v-for="error in Object.keys(errors)"
@@ -69,23 +69,23 @@
                 >
               </div>
               <div class="form-group">
-                <label>{{ $t('routes.from') }}</label>
+                <label>{{ $t('routes.start_location') }}</label>
                 <input
                   type="text"
-                  v-model="route.from"
-                  name="from"
+                  v-model="route.start_location"
+                  name="start_location"
                   class="form-control"
-                  :class="{ 'is-invalid': errors['from']}"
+                  :class="{ 'is-invalid': errors['start_location'] }"
                 >
               </div>
               <div class="form-group">
-                <label>{{ $t('routes.destination') }}</label>
+                <label>{{ $t('routes.end_location') }}</label>
                 <input
                   type="text"
-                  v-model="route.destination"
-                  name="destination"
+                  v-model="route.end_location"
+                  name="end_location"
                   class="form-control"
-                  :class="{ 'is-invalid': errors['destination'] }"
+                  :class="{ 'is-invalid': errors['end_location'] }"
                 >
               </div>
               <div class="row">
@@ -93,20 +93,20 @@
                   <label>{{ $t('routes.starting_mileage') }}</label>
                   <input
                     type="number"
-                    v-model="route.startMileage"
-                    name="startMileage"
+                    v-model="route.start_mileage"
+                    name="start_mileage"
                     class="form-control"
-                    :class="{ 'is-invalid': errors['startMileage'] }"
+                    :class="{ 'is-invalid': errors['start_mileage'] }"
                   >
                 </div>
                 <div class="form-group col-sm-6">
                   <label>{{ $t('routes.ending_mileage') }}</label>
                   <input
                     type="number"
-                    v-model="route.endMileage"
-                    name="endMileage"
+                    v-model="route.end_mileage"
+                    name="end_mileage"
                     class="form-control"
-                    :class="{ 'is-invalid': errors['endMileage'] }"
+                    :class="{ 'is-invalid': errors['end_mileage'] }"
                   >
                 </div>
               </div>
@@ -134,16 +134,15 @@ import * as actions from '../store/actions';
 import { isErroring, makeErrors, stringFields } from './services';
 import { namespaces, actions as apiActions } from '../store/constants';
 
-
 const defaultFormState = {
   date: '',
   car: '',
   description: '',
-  from: '',
-  destination: '',
-  startMileage: '',
-  endMileage: '',
+  start_mileage: '',
+  end_mileage: '',
   passengers: [],
+  start_location: '',
+  end_location: '',
 };
 
 export default {
@@ -200,14 +199,15 @@ export default {
         this.errors.passengers = this.$t('routes.passengers-error');
       }
 
-      const { startMileage, endMileage } = data;
+      /* eslint-disable camelcase */
+      const { start_mileage, end_mileage } = data;
       if (
-        !!startMileage
-        && !!endMileage
-        && parseInt(startMileage, 10) >= parseInt(endMileage, 10)
+        !!start_mileage
+        && !!end_mileage
+        && parseInt(start_mileage, 10) >= parseInt(end_mileage, 10)
       ) {
-        this.errors.startMileage = this.$t('common.start_mileage_error');
-        this.errors.endMileage = this.$t('common.end_mileage_error');
+        this.errors.start_mileage = this.$t('common.start_mileage_error');
+        this.errors.end_mileage = this.$t('common.end_mileage_error');
       }
     },
   },
@@ -228,7 +228,7 @@ export default {
       })),
     }),
     distance() {
-      const distance = this.route.endMileage - this.route.startMileage;
+      const distance = this.route.end_mileage - this.route.start_mileage;
       return distance > 0 ? distance : 0;
     },
   },
@@ -244,6 +244,10 @@ export default {
 
 .is-invalid {
   border-color: red !important;
+}
+
+.error-list {
+  margin-bottom: 0;
 }
 </style>
 
