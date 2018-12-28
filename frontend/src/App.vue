@@ -155,4 +155,8 @@ export default {
     font-size: 0.75em;
   }
 }
+
+.is-invalid {
+    border-color: red !important;
+}
 </style>

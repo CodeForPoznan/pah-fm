@@ -73,7 +73,12 @@
       "new_route": "Add New Route",
       "routes": "Routes",
       "intro":
-        "The Polish Humanitarian Action is a Polish non-governmental organisation which operates in Poland and other countries. Its mission is \"to make the world a better place through alleviation of human suffering and promotion of humanitarian values\"."
+        "The Polish Humanitarian Action is a Polish non-governmental organisation which operates in Poland and other countries. Its mission is \"to make the world a better place through alleviation of human suffering and promotion of humanitarian values\".",
+      "yes": "yes",
+      "no": "no",
+      "submit": "Submit",
+      "unexpected_error": "Unexpected error occurred. Please contact the administrator.",
+      "loading": "Loading"
     },
     "routes": {
       "distance_traveled": "{distance}km traveled",
@@ -110,6 +115,12 @@
     "refresh": {
       "new_version": "A new version of website is available.",
       "reload": "Reload"
+    },
+    "confirmation": {
+      "drive_ok_label": "Was the drive OK?",
+      "comment_label": "Please add a comment.",
+      "submission_success": "Your confirmation was sent. Thank you!",
+      "token_inactive": "Your link expired or has already been confirmed. Thank you!"
     }
   }
 }

@@ -7,7 +7,7 @@ export const tokenKey = 'jwt';
 const vuex = 'vuex';
 
 export function login(username, password) {
-  return post('api-token-auth/', { username, password })
+  return post('api-token-auth/', { username, password }, false)
     .then(response => response.token);
 }
 

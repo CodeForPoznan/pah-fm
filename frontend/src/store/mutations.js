@@ -10,7 +10,8 @@ export const SET_FETCHING_CARS_ERROR = 'SET_FETCHING_CARS_ERROR';
 export const SET_FETCHING_CARS_PROGRESS = 'SET_FETCHING_CARS_PROGRESS';
 export const SET_CARS = 'SET_CARS';
 export const SET_LANG = 'SET_LANG';
-export const SET_CONFIRMATION_TOKEN_ACTIVE = 'SET_CONFIRMATION_TOKEN_ACTIVE';
+export const SET_VERIFICATION_TOKEN_ACTIVE = 'SET_VERIFICATION_TOKEN_ACTIVE';
+export const SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS = 'SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS';
 
 export const mutations = {
   [SET_USER](state, user) {
@@ -43,9 +44,12 @@ export const mutations = {
   [SET_LANG](state, language) {
     Object.assign(state, { language });
   },
-  [SET_CONFIRMATION_TOKEN_ACTIVE](state, { token, isActive }) {
+  [SET_VERIFICATION_TOKEN_ACTIVE](state, { token, isActive }) {
     Object.assign(state, {
       [VERIFICATION_TOKEN]: { token, isActive },
     });
+  },
+  [SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS](state, inProgress) {
+    Object.assign(state[VERIFICATION_TOKEN], { inProgress });
   },
 };

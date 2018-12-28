@@ -1,4 +1,4 @@
-import { get } from '../services/api/http';
+import { get, patch } from '../services/api/http';
 import { login, saveToken, deleteToken } from '../services/api/auth';
 import { getMyself } from '../services/api/user';
 
@@ -11,6 +11,7 @@ export const LOGOUT = 'LOGOUT';
 export const SUBMIT = 'SUBMIT';
 export const SWITCH_LANGUAGE = 'SWITCH_LANGUAGE';
 export const VERIFY_CONFIRMATION_TOKEN = 'VERIFY_CONFIRMATION_TOKEN';
+export const SUBMIT_CONFIRMATION_TOKEN = 'SUBMIT_CONFIRMATION_TOKEN';
 
 export const actions = {
   [FETCH_USER]({ commit }, { callback }) {
@@ -50,11 +51,17 @@ export const actions = {
   [VERIFY_CONFIRMATION_TOKEN]({ commit }, token) {
     get(`verification-token/${token}`)
       .catch((err) => {
-        commit(mutations.SET_CONFIRMATION_TOKEN_ACTIVE, { token, isActive: false });
+        commit(mutations.SET_VERIFICATION_TOKEN_ACTIVE, { token, isActive: false });
         throw err;
       })
       .then(resp => resp.isActive)
-      .then(isActive => commit(mutations.SET_CONFIRMATION_TOKEN_ACTIVE, { token, isActive }))
+      .then(isActive => commit(mutations.SET_VERIFICATION_TOKEN_ACTIVE, { token, isActive }))
       .catch(() => console.debug(`Token ${token} not found.`));
+  },
+  [SUBMIT_CONFIRMATION_TOKEN]({ commit }, { payload, token }) {
+    return patch(`verification-token/${token}`, payload, false)
+      .then(resp => resp.isActive)
+      .then(isActive => commit(mutations.SET_VERIFICATION_TOKEN_ACTIVE, { token, isActive }))
+      .then(() => commit(mutations.SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS, false));
   },
 };
