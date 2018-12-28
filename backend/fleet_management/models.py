@@ -83,3 +83,7 @@ class VerificationToken(models.Model):
     def is_expired(self):
         utc_now = pytz.utc.localize(datetime.utcnow())
         return utc_now > self.created_at + self.EXPIRATION_DELTA
+
+    @property
+    def is_active(self):
+        return not self.is_confirmed and not self.is_expired

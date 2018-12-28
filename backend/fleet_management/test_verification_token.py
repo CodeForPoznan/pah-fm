@@ -56,15 +56,15 @@ class VerificationTokenViewTest(APITransactionTestCase):
         self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_patch_200_expired_token(self):
+        self.token.is_confirmed = False
+        self.token.save()
+
         now = datetime.utcnow()
         with freeze_time(now + VerificationToken.EXPIRATION_DELTA + timedelta(seconds=1)):
             res = self.client.patch(self.url, self.payload, format='json')
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertDictEqual(res.json(), {
-            'isExpired': True,
-            'isConfirmed': self.token.is_confirmed,
-        })
+        self.assertDictEqual(res.json(), {'isActive': False})
 
     def test_patch_200_confirmed(self):
         self.token.is_confirmed = True
@@ -74,10 +74,7 @@ class VerificationTokenViewTest(APITransactionTestCase):
         res = self.client.patch(self.url, self.payload, format='json')
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertDictEqual(res.json(), {
-            'isExpired': self.token.is_expired,
-            'isConfirmed': self.token.is_confirmed,
-        })
+        self.assertDictEqual(res.json(), {'isActive': False})
 
     def test_patch_200_confirmation_ok(self):
         self.payload['isOk'] = True
@@ -99,6 +96,8 @@ class VerificationTokenViewTest(APITransactionTestCase):
         self.assertFalse(token.is_ok)
         self.assertTrue(token.is_confirmed)
 
+        self.assertFalse(res.json()['isActive'])
+
     def test_patch_400_validation(self):
         res = self.client.patch(self.url, {}, format='json')
 
@@ -116,7 +115,4 @@ class VerificationTokenViewTest(APITransactionTestCase):
         res = self.client.get(self.url)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertDictEqual(res.json(), {
-            'isExpired': self.token.is_expired,
-            'isConfirmed': self.token.is_confirmed,
-        })
+        self.assertDictEqual(res.json(), {'isActive': self.token.is_active})

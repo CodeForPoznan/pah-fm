@@ -71,7 +71,7 @@ class VerificationTokenView(generics.RetrieveUpdateAPIView):
 
         If token is expired or already confirmed, the update is skipped.
         """
-        token = serializer.instance
+        token = serializer.instance  # type: VerificationToken
 
-        if not (token.is_expired or token.is_confirmed):
+        if token.is_active:
             serializer.save()

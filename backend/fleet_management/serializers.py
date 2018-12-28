@@ -77,8 +77,7 @@ class DriveSerializer(serializers.ModelSerializer):
 
 
 class VerificationTokenSerializer(serializers.ModelSerializer):
-    is_confirmed = fields.BooleanField(read_only=True)
-    is_expired = fields.BooleanField(read_only=True)
+    is_active = fields.BooleanField(read_only=True)
 
     comment = fields.CharField(
         max_length=VerificationToken.COMMENT_MAX_LENGTH,
@@ -88,10 +87,7 @@ class VerificationTokenSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = VerificationToken
-        fields = [
-            'comment', 'is_ok',
-            'is_expired', 'is_confirmed',
-        ]
+        fields = ['comment', 'is_ok', 'is_active']
 
     def update(self, instance, validated_data):
         instance.comment = validated_data['comment']
