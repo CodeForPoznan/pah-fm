@@ -12,7 +12,7 @@
     </ScaleRotate>
     <div
       id="page-wrap"
-      class="container page-container page-wrap">
+      class="container">
       <div class="row">
         <div class="col-sm-12">
           <transition
@@ -78,6 +78,8 @@ export default {
 @import './scss/base';
 
 #app {
+  @include flex($direction: column, $justify: space-between);
+  min-height: 100vh;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -85,12 +87,8 @@ export default {
   background: $white;
 }
 
-.page-container {
-  min-height: calc(100vh - #{$footer-height} - #{$header-height});
-
-  @include media-breakpoint-down (md) {
-    min-height: calc(100vh - #{$footer-height-mobile} - #{$header-height-mobile});
-  }
+#page-wrap {
+  margin-bottom: auto;
 }
 
 .language {
