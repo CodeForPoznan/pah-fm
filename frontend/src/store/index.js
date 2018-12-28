@@ -6,7 +6,7 @@ import { actions } from './actions';
 import { mutations, SET_IS_CONNECTED } from './mutations';
 import { modules } from './modules';
 
-const USER = 'user';
+export const USER = 'user';
 const ROUTES = 'routes';
 export const CARS = 'cars';
 export const LANGUAGE = 'language';

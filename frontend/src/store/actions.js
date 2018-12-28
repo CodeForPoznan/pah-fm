@@ -11,9 +11,12 @@ export const SUBMIT = 'SUBMIT';
 export const SWITCH_LANGUAGE = 'SWITCH_LANGUAGE';
 
 export const actions = {
-  [FETCH_USER]({ commit }) {
+  [FETCH_USER]({ commit }, { callback }) {
     getMyself().then((user) => {
       commit(mutations.SET_USER, user);
+      if (callback) {
+        callback();
+      }
     });
   },
   [LOGIN]({ commit, dispatch }, { username, password }) {
@@ -22,8 +25,7 @@ export const actions = {
       .then((token) => {
         commit(mutations.SET_LOGIN_ERROR, null);
         saveToken(token);
-        dispatch(FETCH_USER);
-        window.location.replace('/');
+        dispatch(FETCH_USER, { callback: () => window.location.replace('/') });
       })
       .catch(() => {
         commit(mutations.SET_LOGIN_ERROR, i18n.tc('login.login_error'));

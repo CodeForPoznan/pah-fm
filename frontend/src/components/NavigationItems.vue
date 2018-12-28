@@ -12,7 +12,7 @@
     </b-nav-item>
 
     <b-nav-item
-      @click="logout"
+      @click="LOGOUT"
       to="/logout"
       key="logout"
       class="username"
@@ -25,17 +25,15 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import * as actions from '../store/actions';
+import { USER } from '../store';
 
 export default {
   name: 'NavigationItems',
   computed: {
-    ...mapState(['user']),
+    ...mapState([USER]),
   },
   methods: {
     ...mapActions([actions.LOGOUT]),
-    logout() {
-      this[actions.LOGOUT]();
-    },
   },
   data() {
     return {

@@ -11,14 +11,13 @@
 
 <script>
 import { mapState } from 'vuex';
-import { IS_ONLINE } from '../store';
+import { IS_ONLINE, USER } from '../store';
 import { LOGIN_PATH } from '../router/constants';
 
 export default {
   name: 'Refresh',
   computed: {
-    ...mapState([IS_ONLINE]),
-    ...mapState(['user']),
+    ...mapState([IS_ONLINE, USER]),
   },
   data() {
     return {
