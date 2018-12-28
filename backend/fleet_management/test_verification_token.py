@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from unittest.mock import patch, PropertyMock
 from uuid import uuid4
 
 from django.test import TestCase
@@ -27,6 +28,37 @@ class VerificationTokenTest(TestCase):
 
         with freeze_time(now + VerificationToken.EXPIRATION_DELTA):
             self.assertFalse(token.is_expired)
+
+    def test_is_active(self):
+        passenger = PassengerFactory.create()
+        drive = DriveFactory.create()
+        token = VerificationTokenFactory.create(
+            drive=drive, passenger=passenger,
+        )  # type: VerificationToken
+
+        with patch(
+            'fleet_management.models.VerificationToken.is_expired',
+            new_callable=PropertyMock,
+        ) as mock_is_expired:
+            # not expired and not confirmed
+            mock_is_expired.return_value = False
+            token.is_confirmed = False
+            token.save()
+            self.assertTrue(token.is_active)
+
+            # expired and not confirmed
+            mock_is_expired.return_value = True
+            self.assertFalse(token.is_active)
+
+            # not expired and confirmed
+            mock_is_expired.return_value = False
+            token.is_confirmed = True
+            token.save()
+            self.assertFalse(token.is_active)
+
+            # expired and confirmed
+            mock_is_expired.return_value = True
+            self.assertFalse(token.is_active)
 
 
 class VerificationTokenViewTest(APITransactionTestCase):
