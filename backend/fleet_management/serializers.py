@@ -67,12 +67,19 @@ class DriveSerializer(serializers.ModelSerializer):
             )
             drive.passengers.set(passengers)
             drive.save()
-            drive_created.send(
-                self.__class__,
-                drive_id=drive.id,
-                driver_id=self.context['driver'].id,
-                passengers_ids=[p.id for p in passengers],
-            )
+
+            for passenger in passengers:
+                token = VerificationToken.objects.create(
+                    drive=drive,
+                    passenger=passenger,
+                )
+                drive_created.send(
+                    self.__class__,
+                    drive_id=drive.id,
+                    driver_id=self.context['driver'].id,
+                    passenger_id=passenger.id,
+                    token_id=token.id,
+                )
             return drive
 
 

@@ -3,6 +3,7 @@ import uuid
 from datetime import datetime, timedelta
 
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.utils.timezone import now
 
@@ -87,6 +88,10 @@ class VerificationToken(models.Model):
     @property
     def is_active(self):
         return not self.is_confirmed and not self.is_expired
+
+    @property
+    def verification_url(self):
+        return f'{settings.BASE_URL}/confirmation/{self.token}'
 
     def __str__(self):
         return str(self.token)
