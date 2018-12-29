@@ -73,7 +73,7 @@ class VerificationToken(models.Model):
     EXPIRATION_DELTA = timedelta(days=7)
     COMMENT_MAX_LENGTH = 2000
 
-    comment = models.CharField(max_length=COMMENT_MAX_LENGTH)
+    comment = models.CharField(max_length=COMMENT_MAX_LENGTH, blank=True)
     is_confirmed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     drive = models.ForeignKey(Drive, on_delete=models.CASCADE)

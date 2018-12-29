@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='VerificationToken',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('comment', models.CharField(max_length=2000)),
+                ('comment', models.CharField(max_length=2000, blank=True)),
                 ('is_confirmed', models.BooleanField(default=False)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('is_ok', models.NullBooleanField()),
