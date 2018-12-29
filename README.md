@@ -43,3 +43,22 @@ username               | password | Django Admin access
 ---------------------- | -------- | -------------------
 hello@codeforpoznan.pl | cfp123   | yes
 ola@pah.org.pl         | pah123   | no
+
+## Deployment
+Dev deployment is done manually by Jacek @jacol12345 (or @jacekbj - same person, different alias).
+
+Backend runs on Heroku free plan.
+It is painfully slow and needs to warm up.
+```
+make deploy-backend-heroku
+```
+
+Frontend is deployed to Firebase:
+```
+make deploy-frontend-heroku
+```
+
+Links:
+https://pah-backend.herokuapp.com/admin/  - admin
+https://pah-backend.herokuapp.com/api/  - API
+https://pah-fm.firebaseapp.com  - frontend

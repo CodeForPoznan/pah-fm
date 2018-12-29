@@ -18,10 +18,10 @@ build:
 	make build-frontend
 
 lint-backend:
-	docker-compose run --rm backend pycodestyle --exclude='fleet_management/migrations/*' .
+	docker-compose run --rm --no-deps backend pycodestyle --exclude='fleet_management/migrations/*' .
 
 lint-frontend:
-	docker-compose run --rm frontend npm run lint
+	docker-compose run --rm --no-deps frontend npm run lint
 
 lint:
 	make lint-frontend
@@ -40,7 +40,14 @@ debug-backend:
 	docker attach `docker-compose ps -q backend`
 
 manage:
-	docker-compose run --rm backend python3 manage.py ${CMD}
+	docker-compose run --rm --no-deps backend python3 manage.py ${CMD}
 
 populate-database:
 	make manage CMD=populate_database
+
+deploy-backend-heroku:
+	git subtree push --prefix backend/ heroku-backend master
+
+deploy-frontend-heroku:
+	docker-compose run --rm --no-deps frontend npm run build:heroku
+	cd ./frontend && npm run deploy:heroku

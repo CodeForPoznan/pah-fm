@@ -1,6 +1,6 @@
 import { getAuthHeader } from './auth';
 
-export const apiUrl = '/api/';
+export const apiUrl = process.env.VUE_APP_API_URL;
 
 function handleResponse(response) {
   return response.json().then((data) => {
