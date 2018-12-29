@@ -26,7 +26,7 @@ class VerificationTokenFactoryTest(TestCase):
         try:
             UUID(token.token, version=4)
         except ValueError:
-            self.fail(f'token ${token.token} is not a valid uuid4 token')
+            self.fail(f'token {token.token} is not a valid uuid4 token')
 
         self.assertEqual(token.drive, drive)
         self.assertEqual(token.passenger, passenger)
