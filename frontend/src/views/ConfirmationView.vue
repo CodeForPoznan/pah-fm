@@ -61,7 +61,7 @@
                 maxlength="2000"
                 required
                 :disabled="submissionInProgress()"
-              />
+              ></textarea>
             </div>
             <div class="form-group">
               <button
@@ -152,8 +152,8 @@ export default {
 </script>
 
 <style scoped>
-    .answers {
-        display: flex;
-        justify-content: space-between;
-    }
+  .answers {
+    display: flex;
+    justify-content: space-between;
+  }
 </style>
