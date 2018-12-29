@@ -61,7 +61,7 @@
                 maxlength="2000"
                 required
                 :disabled="submissionInProgress()"
-              ></textarea>
+              />
             </div>
             <div class="form-group">
               <button
