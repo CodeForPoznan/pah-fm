@@ -45,9 +45,18 @@ manage:
 populate-database:
 	make manage CMD=populate_database
 
+manage-heroku:
+	heroku run --remote heroku-backend python manage.py ${CMD}
+
 deploy-backend-heroku:
 	git subtree push --prefix backend/ heroku-backend master
+
+deploy-backend-heroku-force:
+	git push heroku-backend `git subtree split --prefix backend ${BRANCH}`:master --force
 
 deploy-frontend-heroku:
 	docker-compose run --rm --no-deps frontend npm run build:heroku
 	cd ./frontend && npm run deploy:heroku
+
+send-test-email-heroku:
+	make manage-heroku CMD="send_test_mail ${EMAIL}"
