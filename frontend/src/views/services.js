@@ -2,10 +2,10 @@ const requiredFields = [
   'date',
   'car',
   'description',
-  'from',
-  'destination',
   'startMileage',
   'endMileage',
+  'startLocation',
+  'endLocation',
 ];
 
 const stringFields = requiredFields;
@@ -13,7 +13,7 @@ const stringFields = requiredFields;
 const isErroring = route => key =>
   requiredFields.includes(key) && !route[key].trim();
 
-const splitCamelCase = fieldName => fieldName.replace(/([A-Z])/g, ' $1');
+const splitCamelCase = label => label.replace(/([A-Z])/g, ' $1');
 
 const makeErrorMessage = t => field =>
   t('routes.validation_error', { field: splitCamelCase(field) });

@@ -2,7 +2,7 @@ Hello {{ passenger.first_name }}!
 Thanks for driving with me on {{ drive.date }} from {{ drive.start_location }} to {{ drive.end_location }}.
 Please confirm your participation and select your project by clicking on the link below.
 
-LINK
+{{ verification_url }}
 
 Sincerely, {{ driver.first_name }} {{ driver.last_name }}
 
@@ -12,7 +12,7 @@ Sincerely, {{ driver.first_name }} {{ driver.last_name }}
 Дякую за кермо зі мною у  вівтор, з {{ drive.start_location }} до {{ drive.end_location }}.
 Будь ласка, підтвердіть свою участь і вибрати проект, натиснувши на посилання нижче.
 
-LINK
+{{ verification_url }}
 
 щиро, {{ driver.first_name }} {{ driver.last_name }}
 
@@ -20,9 +20,9 @@ LINK
 
 Witaj {{ passenger.first_name }}!
 Dziękuję za przejazd ze mną {{ drive.date }} z {{ drive.start_location }} do {{ drive.end_location }}.
-Potwierdź swój udzial i wybierz project klikając na link poniżej.
+Potwierdź swój udział i wybierz project klikając na link poniżej.
 
-LINK
+{{ verification_url }}
 
 Pozdrawiam, {{ driver.first_name }} {{ driver.last_name }}
 

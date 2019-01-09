@@ -19,7 +19,7 @@
         @click="showRoute(route.id)">
         <h5 class="mb-0">
           <span class="font-weight-bold">{{ route.date }}</span>
-          {{ $t('routes.from_to', { from: route.from, destination: route.destination}) }}
+          {{ $t('routes.from_to', { from: route.startLocation, destination: route.endLocation}) }}
         </h5>
       </div>
       <div :class="['collapse', { show: routeVisible === route.id }]">
@@ -30,7 +30,7 @@
           </p>
           <p>
             <span class="font-weight-bold mr-1">{{ $t('routes.car') }}</span>
-            <span>{{ route.car.plates }}</span>
+            <span>{{ route.car }}</span>
           </p>
           <p>
             <span class="font-weight-bold mr-1">{{ $t('routes.starting_mileage') }}</span>

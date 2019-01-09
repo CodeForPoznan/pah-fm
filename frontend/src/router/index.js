@@ -7,7 +7,7 @@ import RouteFormView from '../views/RouteFormView.vue';
 import RoutesView from '../views/RoutesView.vue';
 import { getItem } from '../services/localStore';
 import { tokenKey } from '../services/api/auth';
-import { LOGIN_PATH, LOGOUT_PATH, HOME_PATH } from './constants';
+import { LOGIN_PATH, LOGOUT_PATH, HOME_PATH, CONFIRMATION_PATH } from './constants';
 import { deleteToken } from '../services/api/auth';
 import store from '../store';
 import * as mutations from "../store/mutations";
@@ -33,6 +33,11 @@ const router = new Router({
       component: RoutesView,
     },
     {
+      path: CONFIRMATION_PATH,
+      name: 'Confirmation',
+      component: ConfirmationView,
+    },
+    {
       path: '/',
       name: HOME_PATH,
       component: HomeView,
@@ -40,17 +45,17 @@ const router = new Router({
   ],
 });
 
-const openRoutes = [LOGIN_PATH];
+const openRoutes = ['Login', 'Confirmation'];
 
 router.beforeEach((to, _from, next) => {
   if (to.fullPath === LOGOUT_PATH) {
     deleteToken();
     store.commit(mutations.SET_USER, null);
   }
-  if (!getItem(tokenKey) && !openRoutes.includes(to.fullPath)) {
+  if (!getItem(tokenKey) && !openRoutes.includes(to.name)) {
     return next({ path: LOGIN_PATH });
   }
-  if (openRoutes.includes(to.fullPath) && getItem(tokenKey)) {
+  if (openRoutes.includes(to.name) && getItem(tokenKey)) {
     return next({ path: HOME_PATH });
   }
   return next();

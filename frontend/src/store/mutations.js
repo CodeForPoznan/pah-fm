@@ -1,3 +1,5 @@
+import { VERIFICATION_TOKEN } from './constants';
+
 export const SET_USER = 'SET_USER';
 export const SET_LOGIN_PROGRESS = 'SET_LOGIN_PROGRESS';
 export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
@@ -8,6 +10,8 @@ export const SET_FETCHING_CARS_ERROR = 'SET_FETCHING_CARS_ERROR';
 export const SET_FETCHING_CARS_PROGRESS = 'SET_FETCHING_CARS_PROGRESS';
 export const SET_CARS = 'SET_CARS';
 export const SET_LANG = 'SET_LANG';
+export const SET_VERIFICATION_TOKEN_ACTIVE = 'SET_VERIFICATION_TOKEN_ACTIVE';
+export const SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS = 'SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS';
 
 export const mutations = {
   [SET_USER](state, user) {
@@ -39,5 +43,13 @@ export const mutations = {
   },
   [SET_LANG](state, language) {
     Object.assign(state, { language });
+  },
+  [SET_VERIFICATION_TOKEN_ACTIVE](state, { token, isActive }) {
+    Object.assign(state, {
+      [VERIFICATION_TOKEN]: { token, isActive },
+    });
+  },
+  [SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS](state, inProgress) {
+    Object.assign(state[VERIFICATION_TOKEN], { inProgress });
   },
 };

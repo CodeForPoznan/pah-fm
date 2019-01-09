@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 
 import { actions } from './actions';
+import { VERIFICATION_TOKEN } from './constants';
 import { mutations, SET_IS_CONNECTED } from './mutations';
 import { modules } from './modules';
 
@@ -22,6 +23,7 @@ const state = {
   [ROUTES]: [],
   [LANGUAGE]: null,
   [IS_ONLINE]: navigator.onLine,
+  [VERIFICATION_TOKEN]: null,
   loginInProgress: false,
   loginError: null,
   updateReady: false,

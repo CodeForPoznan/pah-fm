@@ -20,10 +20,12 @@ services:
     stdin_open: true
     tty: true
     environment:
+      BASE_URL: http://localhost:8080
       PAH-FM_DB_HOST: db
       PAH-FM_DB_PASS: pah-fm
       SECRET_KEY: pah-fm
       DEBUG: 1
+      DJANGO_LOG_LEVEL: 'DEBUG'
     links:
       - db:db
     volumes:
