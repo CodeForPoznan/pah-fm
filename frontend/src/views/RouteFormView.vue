@@ -8,7 +8,7 @@
               class="alert alert-danger errors"
               v-if="Object.keys(errors).length">
               <b>{{ $t('routes.please_correct_errors') }}</b>
-              <ul>
+              <ul class="error-list">
                 <li
                   class="error"
                   v-for="error in Object.keys(errors)"
@@ -69,23 +69,23 @@
                 >
               </div>
               <div class="form-group">
-                <label>{{ $t('routes.from') }}</label>
+                <label>{{ $t('routes.startLocation') }}</label>
                 <input
                   type="text"
-                  v-model="route.from"
-                  name="from"
+                  v-model="route.startLocation"
+                  name="startLocation"
                   class="form-control"
-                  :class="{ 'is-invalid': errors['from']}"
+                  :class="{ 'is-invalid': errors['startLocation'] }"
                 >
               </div>
               <div class="form-group">
-                <label>{{ $t('routes.destination') }}</label>
+                <label>{{ $t('routes.endLocation') }}</label>
                 <input
                   type="text"
-                  v-model="route.destination"
-                  name="destination"
+                  v-model="route.endLocation"
+                  name="endLocation"
                   class="form-control"
-                  :class="{ 'is-invalid': errors['destination'] }"
+                  :class="{ 'is-invalid': errors['endLocation'] }"
                 >
               </div>
               <div class="row">
@@ -134,16 +134,15 @@ import * as actions from '../store/actions';
 import { isErroring, makeErrors, stringFields } from './services';
 import { namespaces, actions as apiActions } from '../store/constants';
 
-
 const defaultFormState = {
   date: '',
   car: '',
   description: '',
-  from: '',
-  destination: '',
   startMileage: '',
   endMileage: '',
   passengers: [],
+  startLocation: '',
+  endLocation: '',
 };
 
 export default {
@@ -206,8 +205,8 @@ export default {
         && !!endMileage
         && parseInt(startMileage, 10) >= parseInt(endMileage, 10)
       ) {
-        this.errors.startMileage = this.$t('common.start_mileage_error');
-        this.errors.endMileage = this.$t('common.end_mileage_error');
+        this.errors.startMileage = this.$t('common.startMileage_error');
+        this.errors.endMileage = this.$t('common.endMileage_error');
       }
     },
   },

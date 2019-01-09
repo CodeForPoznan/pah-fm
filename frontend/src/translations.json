@@ -2,9 +2,9 @@
   "pl": {
     "common": {
       "error": "Błąd",
-      "start_mileage_error":
+      "startMileage_error":
         "Początkowy stan licznika ma nieprawidłową wartość",
-      "end_mileage_error": "Końcowy stan licznika ma nieprawidłową wartość",
+      "endMileage_error": "Końcowy stan licznika ma nieprawidłową wartość",
       "about": "O nas",
       "home": "Strona glowna",
       "login": "Login",
@@ -25,8 +25,8 @@
       "please_correct_errors": "Please correct the following error(s):",
       "date": "Date:",
       "description": "Description:",
-      "from": "From:",
-      "destination": "Desitination:",
+      "endLocation": "End location:",
+      "startLocation": "Start location:",
       "starting_mileage": "Starting Mileage:",
       "ending_mileage": "Ending Mileage:",
       "submit": "Submit",
@@ -58,9 +58,9 @@
   },
   "ua": {
     "common": {
-      "start_mileage_error":
+      "startMileage_error":
         "Початкове значення вимірювального приладу має неправильне значення",
-      "end_mileage_error": "Стан кінцевого лічильника має неправильне значення",
+      "endMileage_error": "Стан кінцевого лічильника має неправильне значення",
       "about": "Про",
       "home": "Домашня сторінка",
       "login": "Логін",
@@ -86,8 +86,8 @@
   },
   "gb": {
     "common": {
-      "start_mileage_error": "Start mileage is incorrect",
-      "end_mileage_error": "End milage is incorrect",
+      "startMileage_error": "Start mileage is incorrect",
+      "endMileage_error": "End milage is incorrect",
       "error": "Error",
       "about": "About",
       "home": "Home",
@@ -109,8 +109,8 @@
       "please_correct_errors": "Please correct the following error(s):",
       "date": "Date:",
       "description": "Description:",
-      "from": "From:",
-      "destination": "Destination:",
+      "endLocation": "End location:",
+      "startLocation": "Start location:",
       "starting_mileage": "Starting Mileage:",
       "ending_mileage": "Ending Mileage:",
       "submit": "Submit",
