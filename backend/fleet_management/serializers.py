@@ -1,8 +1,7 @@
 from django.db import transaction
 from rest_framework import fields, serializers
 
-from fleet_management.models import VerificationToken
-from .models import Car, Drive, Passenger, User
+from .models import Car, Drive, Passenger, User, Project, VerificationToken
 from .signals import drive_created
 
 
@@ -103,3 +102,10 @@ class VerificationTokenSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Project
+        fields = ('title', 'description')
