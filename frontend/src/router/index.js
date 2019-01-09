@@ -3,6 +3,7 @@ import Router from 'vue-router';
 
 import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
+import LogouView from '../views/LogoutView.vue';
 import RouteFormView from '../views/RouteFormView.vue';
 import RoutesView from '../views/RoutesView.vue';
 import { getItem } from '../services/localStore';
@@ -25,6 +26,11 @@ const router = new Router({
       component: RouteFormView,
     },
     {
+      path: LOGOUT_PATH,
+      name: 'Logout',
+      component: LogouView.default,
+    },
+    {
       path: '/routes',
       name: 'Routes',
       component: RoutesView,
@@ -37,7 +43,7 @@ const router = new Router({
   ],
 });
 
-const openRoutes = [LOGIN_PATH, LOGOUT_PATH];
+const openRoutes = [LOGIN_PATH];
 
 router.beforeEach((to, _from, next) => {
   if (!getItem(tokenKey) && !openRoutes.includes(to.fullPath)) {
