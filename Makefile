@@ -15,7 +15,7 @@ build-frontend:
 
 build:
 	make build-backend
-	make build-frontendk
+	make build-frontend
 
 lint-backend:
 	docker-compose run --rm --no-deps backend pycodestyle --exclude='fleet_management/migrations/*' .
