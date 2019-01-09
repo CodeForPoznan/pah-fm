@@ -4,12 +4,13 @@ from rest_framework.permissions import IsAuthenticated
 
 from fleet_management.models import VerificationToken
 from fleet_management.serializers import VerificationTokenSerializer
-from .models import Car, Drive, Passenger
+from .models import Car, Drive, Passenger, Project
 from .serializers import (
     CarSerializer,
     DriveSerializer,
     PassengerSerializer,
     UserSerializer,
+    ProjectSerializer,
 )
 
 
@@ -53,6 +54,12 @@ class DriveView(generics.ListCreateAPIView):
         return Drive.objects.filter(
             driver__id=self.request.user.id,
         )
+
+
+class ProjectView(generics.ListAPIView):
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = ProjectSerializer
+    queryset = Project.objects.all()
 
 
 class VerificationTokenView(generics.RetrieveUpdateAPIView):
