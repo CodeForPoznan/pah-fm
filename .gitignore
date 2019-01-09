@@ -26,4 +26,3 @@ __pycache__/
 env
 
 backend/emails
-backend/staticfiles
