@@ -25,6 +25,7 @@ services:
       PAH-FM_DB_PASS: pah-fm
       SECRET_KEY: pah-fm
       DEBUG: 1
+      DJANGO_LOG_LEVEL: 'DEBUG'
     links:
       - db:db
     volumes:

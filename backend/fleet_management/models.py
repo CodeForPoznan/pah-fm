@@ -5,7 +5,6 @@ from datetime import datetime, timedelta
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
-from django.urls import reverse
 from django.utils.timezone import now
 
 
@@ -92,8 +91,7 @@ class VerificationToken(models.Model):
 
     @property
     def verification_url(self):
-        url = reverse('verification-token', kwargs={'token': self.token})
-        return f'{settings.BASE_URL}{url}'
+        return f'{settings.FRONTEND_URL}/confirmation/{self.token}'
 
     def __str__(self):
         return str(self.token)

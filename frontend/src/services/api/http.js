@@ -1,5 +1,6 @@
 import { getAuthHeader } from './auth';
 
+export const apiUrl = process.env.VUE_APP_API_URL;
 const CONTENT_TYPE_JSON = 'application/json; charset=utf-8';
 
 function handleResponse(response) {
@@ -21,8 +22,6 @@ function setAuthData(requestOptions, auth) {
   }
   return Object.assign({}, requestOptions, { credentials: 'omit' });
 }
-
-export const apiUrl = '/api/';
 
 export function get(url, auth = true) {
   let requestOptions = {
