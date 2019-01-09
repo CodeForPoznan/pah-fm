@@ -240,13 +240,5 @@ export default {
 .error::first-letter {
   text-transform: capitalize;
 }
-
-.is-invalid {
-  border-color: red !important;
-}
-
-.error-list {
-  margin-bottom: 0;
-}
 </style>
 

@@ -25,9 +25,6 @@ export default {
     NavigationItems,
   },
   computed: {
-    isLoginPage() {
-      return this.$route.name === 'Login';
-    },
     logo() {
       /* eslint-disable */
       return this._i18n.locale === languages[PL]

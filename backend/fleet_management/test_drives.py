@@ -7,7 +7,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITransactionTestCase
 
-from fleet_management.models import Car, Drive, Passenger
+from fleet_management.models import Car, Drive, Passenger, VerificationToken
 
 
 class DrivesApiTest(APITransactionTestCase):
@@ -161,3 +161,13 @@ class DrivesApiTest(APITransactionTestCase):
         self.assertEqual(drive.description, res.data['description'])
         self.assertEqual(drive.start_location, res.data['start_location'])
         self.assertEqual(drive.end_location, res.data['end_location'])
+
+        tokens = VerificationToken.objects.filter(drive=drive).all()
+
+        self.assertEqual(len(tokens), 2)
+        self.assertSetEqual(
+            {token.passenger.id for token in tokens},
+            {self.passengers[0].id, self.passengers[1].id},
+        )
+        self.assertSetEqual({token.is_confirmed for token in tokens}, {False, False})
+        self.assertSetEqual({token.is_ok for token in tokens}, {None, None})

@@ -1,13 +1,15 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
+import ConfirmationView from '../views/ConfirmationView.vue';
 import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import RouteFormView from '../views/RouteFormView.vue';
 import RoutesView from '../views/RoutesView.vue';
 import { getItem } from '../services/localStore';
 import { tokenKey } from '../services/api/auth';
-import { LOGIN_PATH, LOGOUT_PATH, HOME_PATH } from './constants';
+import { LOGIN_PATH, HOME_PATH, CONFIRMATION_PATH } from './constants';
+
 
 Vue.use(Router);
 
@@ -30,6 +32,11 @@ const router = new Router({
       component: RoutesView,
     },
     {
+      path: CONFIRMATION_PATH,
+      name: 'Confirmation',
+      component: ConfirmationView,
+    },
+    {
       path: '/',
       name: HOME_PATH,
       component: HomeView,
@@ -37,13 +44,13 @@ const router = new Router({
   ],
 });
 
-const openRoutes = [LOGIN_PATH, LOGOUT_PATH];
+const openRoutes = ['Login', 'Confirmation'];
 
 router.beforeEach((to, _from, next) => {
-  if (!getItem(tokenKey) && !openRoutes.includes(to.fullPath)) {
+  if (!getItem(tokenKey) && !openRoutes.includes(to.name)) {
     return next({ path: LOGIN_PATH });
   }
-  if (openRoutes.includes(to.fullPath) && getItem(tokenKey)) {
+  if (openRoutes.includes(to.name) && getItem(tokenKey)) {
     return next({ path: HOME_PATH });
   }
   return next();

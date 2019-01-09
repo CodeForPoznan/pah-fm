@@ -11,7 +11,12 @@
       "new_route": "Dodaj tras",
       "routes": "Trasy",
       "intro":
-        "Polska Akcja Humanitarna jest polską organizacją pozarządową działającą w Polsce i innych krajach. Jego misją jest \"jest uczynienie świata lepszym miejscem poprzez łagodzenie ludzkiego cierpienia i promowanie wartości humanitarnych\"."
+        "Polska Akcja Humanitarna jest polską organizacją pozarządową działającą w Polsce i innych krajach. Jego misją jest \"jest uczynienie świata lepszym miejscem poprzez łagodzenie ludzkiego cierpienia i promowanie wartości humanitarnych\".",
+      "yes": "tag",
+      "no": "nie",
+      "submit": "Wyślij",
+      "unexpected_error": "Wystąpił nieoczekiwany błąd. Prosimy o kontakt z administratorem.",
+      "loading": "Ładowanie"
     },
     "routes": {
       "distance_traveled": "Łącznie przejechano {distance}km",
@@ -43,6 +48,12 @@
     },
     "header": {
       "polish_humanitarian_action": "Polska Akcja Humanitarna"
+    },
+    "confirmation": {
+      "drive_ok_label": "Czy przejazd był OK?",
+      "comment_label": "Proszę dodać komentarz",
+      "submission_success": "Potwierdzenie zostało wysłane. Dziękujemy!",
+      "token_inactive": "Link wygasł albo został już potwierdzony. Dziękujemy!"
     }
   },
   "ua": {
@@ -56,10 +67,21 @@
       "new_route": "Додати новий маршрут",
       "routes": "Маршрути",
       "intro":
-        "Польська гуманітарна акція - це польська неурядова організація, яка працює у Польщі та інших країнах. Його завдання \"зробити світ кращим місцем шляхом полегшення людських страждань та просування гуманітарних цінностей\"."
+        "Польська гуманітарна акція - це польська неурядова організація, яка працює у Польщі та інших країнах. Його завдання \"зробити світ кращим місцем шляхом полегшення людських страждань та просування гуманітарних цінностей\".",
+      "yes": "так",
+      "no": "ні",
+      "submit": "Надіслати",
+      "unexpected_error": "Сталася несподівана помилка. Зверніться до адміністратора.",
+      "loading": "Завантаження"
     },
     "header": {
       "polish_humanitarian_action": "Польська гуманітарна акція"
+    },
+    "confirmation": {
+      "drive_ok_label": "Чи був маршрут OK?",
+      "comment_label": "Додайте коментар",
+      "submission_success": "Ваше підтвердження надіслано. Дякую!",
+      "token_inactive": "Ваше посилання закінчилося або вже підтверджено. Дякую!"
     }
   },
   "gb": {
@@ -73,7 +95,12 @@
       "new_route": "Add New Route",
       "routes": "Routes",
       "intro":
-        "The Polish Humanitarian Action is a Polish non-governmental organisation which operates in Poland and other countries. Its mission is \"to make the world a better place through alleviation of human suffering and promotion of humanitarian values\"."
+        "The Polish Humanitarian Action is a Polish non-governmental organisation which operates in Poland and other countries. Its mission is \"to make the world a better place through alleviation of human suffering and promotion of humanitarian values\".",
+      "yes": "yes",
+      "no": "no",
+      "submit": "Submit",
+      "unexpected_error": "Unexpected error occurred. Please contact the administrator.",
+      "loading": "Loading"
     },
     "routes": {
       "distance_traveled": "{distance}km traveled",
@@ -110,6 +137,12 @@
     "refresh": {
       "new_version": "A new version of website is available.",
       "reload": "Reload"
+    },
+    "confirmation": {
+      "drive_ok_label": "Was the drive OK?",
+      "comment_label": "Please add a comment.",
+      "submission_success": "Your confirmation was sent. Thank you!",
+      "token_inactive": "Your link expired or has already been confirmed. Thank you!"
     }
   }
 }
