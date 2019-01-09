@@ -207,6 +207,8 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=30),
 }
 
+FRONTEND_URL = 'http://localhost:8080'
+
 if PRODUCTION:
     import django_heroku
 
@@ -220,3 +222,4 @@ if PRODUCTION:
     EMAIL_HOST_USER = os.environ.get('MAILGUN_SMTP_LOGIN')
     EMAIL_HOST_PASSWORD = os.environ.get('MAILGUN_SMTP_PASSWORD')
     EMAIL_ADDRESS = 'no-reply@pah-backend.herokuapp.com'
+    FRONTEND_URL = 'https://pah-fm.firebaseapp.com'

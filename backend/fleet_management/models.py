@@ -92,8 +92,7 @@ class VerificationToken(models.Model):
 
     @property
     def verification_url(self):
-        url = reverse('verification-token', kwargs={'token': self.token})
-        return f'{settings.BASE_URL}{url}'
+        return f'{settings.FRONTEND_URL}/confirmation/{self.token}'
 
     def __str__(self):
         return str(self.token)
