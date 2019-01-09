@@ -11,6 +11,7 @@ import { LOGIN_PATH, LOGOUT_PATH, HOME_PATH, CONFIRMATION_PATH } from './constan
 import { deleteToken } from '../services/api/auth';
 import store from '../store';
 import * as mutations from "../store/mutations";
+import ConfirmationView from "../views/ConfirmationView";
 
 Vue.use(Router);
 
