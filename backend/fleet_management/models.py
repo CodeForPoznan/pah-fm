@@ -1,5 +1,11 @@
+import pytz
+import uuid
+from datetime import datetime, timedelta
+
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
 from django.utils.timezone import now
 
 
@@ -58,3 +64,36 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class VerificationToken(models.Model):
+    """
+    Keeps track of drives' verification statuses.
+    """
+    EXPIRATION_DELTA = timedelta(days=7)
+    COMMENT_MAX_LENGTH = 2000
+
+    comment = models.CharField(max_length=COMMENT_MAX_LENGTH, blank=True)
+    is_confirmed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    drive = models.ForeignKey(Drive, on_delete=models.CASCADE)
+    is_ok = models.NullBooleanField()
+    passenger = models.ForeignKey(Passenger, on_delete=models.CASCADE)
+    token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+
+    @property
+    def is_expired(self):
+        utc_now = pytz.utc.localize(datetime.utcnow())
+        return utc_now > self.created_at + self.EXPIRATION_DELTA
+
+    @property
+    def is_active(self):
+        return not self.is_confirmed and not self.is_expired
+
+    @property
+    def verification_url(self):
+        url = reverse('verification-token', kwargs={'token': self.token})
+        return f'{settings.BASE_URL}{url}'
+
+    def __str__(self):
+        return str(self.token)

@@ -1,13 +1,14 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
+import ConfirmationView from '../views/ConfirmationView.vue';
 import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import RouteFormView from '../views/RouteFormView.vue';
 import RoutesView from '../views/RoutesView.vue';
 import { getItem } from '../services/localStore';
 import { tokenKey } from '../services/api/auth';
-import { LOGIN_PATH, LOGOUT_PATH, HOME_PATH } from './constants';
+import { LOGIN_PATH, LOGOUT_PATH, HOME_PATH, CONFIRMATION_PATH } from './constants';
 
 Vue.use(Router);
 
@@ -28,6 +29,11 @@ const router = new Router({
       path: '/routes',
       name: 'Routes',
       component: RoutesView,
+    },
+    {
+      path: CONFIRMATION_PATH,
+      name: 'Confirmation',
+      component: ConfirmationView,
     },
     {
       path: '/',

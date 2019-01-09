@@ -1,7 +1,9 @@
-from rest_framework import generics, filters, views
+from rest_framework import generics, filters, permissions, views
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
+from fleet_management.models import VerificationToken
+from fleet_management.serializers import VerificationTokenSerializer
 from .models import Car, Drive, Passenger
 from .serializers import (
     CarSerializer,
@@ -51,3 +53,25 @@ class DriveView(generics.ListCreateAPIView):
         return Drive.objects.filter(
             driver__id=self.request.user.id,
         )
+
+
+class VerificationTokenView(generics.RetrieveUpdateAPIView):
+    permission_classes = (permissions.AllowAny,)
+    lookup_field = 'token'
+    serializer_class = VerificationTokenSerializer
+    queryset = VerificationToken.objects.all()
+
+    def update(self, request, *args, **kwargs):
+        kwargs['partial'] = False
+        return super().update(request, args, kwargs)
+
+    def perform_update(self, serializer: VerificationTokenSerializer):
+        """
+        Updates token status.
+
+        If token is expired or already confirmed, the update is skipped.
+        """
+        token = serializer.instance  # type: VerificationToken
+
+        if token.is_active:
+            serializer.save()
