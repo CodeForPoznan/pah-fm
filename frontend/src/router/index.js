@@ -47,6 +47,7 @@ const router = new Router({
 
 const openRoutes = ['Login', 'Confirmation'];
 
+
 router.beforeEach((to, _from, next) => {
   if (to.fullPath === LOGOUT_PATH) {
     deleteToken();
