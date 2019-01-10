@@ -6,12 +6,11 @@ import LoginView from '../views/LoginView.vue';
 import RouteFormView from '../views/RouteFormView.vue';
 import RoutesView from '../views/RoutesView.vue';
 import { getItem } from '../services/localStore';
-import { tokenKey } from '../services/api/auth';
+import { tokenKey, deleteToken } from '../services/api/auth';
 import { LOGIN_PATH, LOGOUT_PATH, HOME_PATH, CONFIRMATION_PATH } from './constants';
-import { deleteToken } from '../services/api/auth';
 import store from '../store';
-import * as mutations from "../store/mutations";
-import ConfirmationView from "../views/ConfirmationView";
+import * as mutations from '../store/mutations';
+import ConfirmationView from '../views/ConfirmationView.vue';
 
 Vue.use(Router);
 
