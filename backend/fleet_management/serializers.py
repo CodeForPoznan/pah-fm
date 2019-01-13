@@ -82,6 +82,14 @@ class DriveSerializer(serializers.ModelSerializer):
             return drive
 
 
+class ProjectSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Project
+        fields = ('id', 'title', 'description')
+        read_only_fields = ('title', 'description')
+
+
 class VerificationTokenSerializer(serializers.ModelSerializer):
     is_active = fields.BooleanField(read_only=True)
 
@@ -93,19 +101,15 @@ class VerificationTokenSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = VerificationToken
-        fields = ['comment', 'is_ok', 'is_active']
+        fields = ['comment', 'is_ok', 'is_active', 'project']
 
     def update(self, instance, validated_data):
+        project = validated_data.get('project')
+        if project is not None:
+            instance.project = project
         instance.comment = validated_data['comment']
         instance.is_ok = validated_data['is_ok']
         instance.is_confirmed = True
         instance.save()
 
         return instance
-
-
-class ProjectSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Project
-        fields = ('title', 'description')

@@ -8,8 +8,10 @@ from freezegun import freeze_time
 from rest_framework import status
 from rest_framework.test import APITransactionTestCase
 
-from fleet_management.models import VerificationToken
-from .factories import PassengerFactory, DriveFactory, VerificationTokenFactory
+from fleet_management.factories import (
+    PassengerFactory, DriveFactory, VerificationTokenFactory, ProjectFactory,
+)
+from fleet_management.models import Project, VerificationToken
 
 
 class VerificationTokenTest(TestCase):
@@ -96,7 +98,7 @@ class VerificationTokenViewTest(APITransactionTestCase):
             res = self.client.patch(self.url, self.payload, format='json')
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertDictEqual(res.json(), {'isActive': False})
+        self.assertDictEqual(res.json(), {'isActive': False, 'project': None})
 
     def test_patch_200_confirmed(self):
         self.token.is_confirmed = True
@@ -106,7 +108,7 @@ class VerificationTokenViewTest(APITransactionTestCase):
         res = self.client.patch(self.url, self.payload, format='json')
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertDictEqual(res.json(), {'isActive': False})
+        self.assertDictEqual(res.json(), {'isActive': False, 'project': None})
 
     def test_patch_200_confirmation_ok(self):
         self.payload['isOk'] = True
@@ -130,6 +132,36 @@ class VerificationTokenViewTest(APITransactionTestCase):
 
         self.assertFalse(res.json()['isActive'])
 
+    def test_patch_200_project_not_given(self):
+        res = self.client.patch(self.url, self.payload, format='json')
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+        token = VerificationToken.objects.get(token=self.token.token)
+        self.assertIsNone(token.project)
+
+    def test_patch_200_project_supplied(self):
+        project = ProjectFactory.create()  # type: Project
+        self.payload['project'] = project.id
+        res = self.client.patch(self.url, self.payload, format='json')
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+        token = VerificationToken.objects.get(token=self.token.token)
+        self.assertEqual(token.project.id, project.id)
+
+    def test_patch_400_project_does_not_exist(self):
+        project = ProjectFactory.create()  # type: Project
+        self.payload['project'] = project.id + 1
+        res = self.client.patch(self.url, self.payload, format='json')
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+        self.assertDictEqual(
+            res.json(),
+            {'project': [f'Invalid pk "{project.id + 1}" - object does not exist.']}
+        )
+
     def test_patch_400_validation(self):
         res = self.client.patch(self.url, {}, format='json')
 
@@ -147,4 +179,10 @@ class VerificationTokenViewTest(APITransactionTestCase):
         res = self.client.get(self.url)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertDictEqual(res.json(), {'isActive': self.token.is_active})
+        self.assertDictEqual(
+            res.json(),
+            {
+                'isActive': self.token.is_active,
+                'project': None,
+            },
+        )

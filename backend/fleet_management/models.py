@@ -79,6 +79,7 @@ class VerificationToken(models.Model):
     is_ok = models.NullBooleanField()
     passenger = models.ForeignKey(Passenger, on_delete=models.CASCADE)
     token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
 
     @property
     def is_expired(self):
