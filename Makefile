@@ -17,6 +17,14 @@ build:
 	make build-backend
 	make build-frontend
 
+rebuild:
+	@echo "Rebuilding frontend and backend..."
+	docker-compose stop backend frontend 2>/dev/null
+	docker-compose rm -fv backend frontend 2>/dev/null
+	make build-backend
+	make build-frontend
+	@echo "Complete! Run 'docker-compose up -d' to start containers!"
+
 lint-backend:
 	docker-compose run --rm --no-deps backend pycodestyle --exclude='fleet_management/migrations/*' .
 
