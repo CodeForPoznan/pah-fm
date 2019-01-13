@@ -62,3 +62,7 @@ Links:
 https://pah-backend.herokuapp.com/admin/  - admin
 https://pah-backend.herokuapp.com/api/  - API
 https://pah-fm.firebaseapp.com  - frontend
+
+## API documentation
+Available at `/api/docs/` URL.
+Documentation is available only to logged-in users (DRF quirk).
