@@ -8,39 +8,45 @@ import RouteFormView from '../views/RouteFormView.vue';
 import RoutesView from '../views/RoutesView.vue';
 import { getItem } from '../services/localStore';
 import { tokenKey } from '../services/api/auth';
-import { LOGIN_PATH, HOME_PATH, CONFIRMATION_PATH } from './constants';
 
 
 Vue.use(Router);
 
+export const loginRoute = {
+  path: '/login',
+  name: 'Login',
+  component: LoginView,
+};
+export const driveCreateRoute = {
+  path: '/drive',
+  name: 'Drive',
+  component: RouteFormView,
+};
+export const driveListRoute = {
+  path: '/drives',
+  name: 'Drives',
+  component: RoutesView,
+};
+export const confirmationRoute = {
+  path: '/confirmation/:token',
+  name: 'Confirmation',
+  component: ConfirmationView,
+};
+export const homeRoute = {
+  path: '/',
+  name: 'Home',
+  component: HomeView,
+};
+
+
 const router = new Router({
   mode: 'history',
   routes: [
-    {
-      path: LOGIN_PATH,
-      name: 'Login',
-      component: LoginView,
-    },
-    {
-      path: '/route',
-      name: 'Route',
-      component: RouteFormView,
-    },
-    {
-      path: '/routes',
-      name: 'Routes',
-      component: RoutesView,
-    },
-    {
-      path: CONFIRMATION_PATH,
-      name: 'Confirmation',
-      component: ConfirmationView,
-    },
-    {
-      path: '/',
-      name: HOME_PATH,
-      component: HomeView,
-    },
+    loginRoute,
+    driveCreateRoute,
+    driveListRoute,
+    confirmationRoute,
+    homeRoute,
   ],
 });
 
@@ -48,10 +54,10 @@ const openRoutes = ['Login', 'Confirmation'];
 
 router.beforeEach((to, _from, next) => {
   if (!getItem(tokenKey) && !openRoutes.includes(to.name)) {
-    return next({ path: LOGIN_PATH });
+    return next({ path: loginRoute.path });
   }
   if (openRoutes.includes(to.name) && getItem(tokenKey)) {
-    return next({ path: HOME_PATH });
+    return next({ path: homeRoute.path });
   }
   return next();
 });
