@@ -37,6 +37,12 @@ export const homeRoute = {
   name: 'Home',
   component: HomeView,
 };
+export const pageNotFoundRoute = {
+  path: '*',
+  name: 'PageNotFound',
+  component: HomeView,
+  props: { pageNotFound: true },
+};
 
 
 const router = new Router({
@@ -47,16 +53,23 @@ const router = new Router({
     driveListRoute,
     confirmationRoute,
     homeRoute,
+    pageNotFoundRoute,
   ],
 });
 
-const openRoutes = ['Login', 'Confirmation'];
+const openRoutes = [loginRoute.name, confirmationRoute.name];
 
 router.beforeEach((to, _from, next) => {
+  // 404 if not route matches
+  if (to.name === pageNotFoundRoute) {
+    return next();
+  }
+  // Redirect to login if user tries to access closed route without token
   if (!getItem(tokenKey) && !openRoutes.includes(to.name)) {
     return next({ path: loginRoute.path });
   }
-  if (openRoutes.includes(to.name) && getItem(tokenKey)) {
+  // Redirect home if logged-in user tries to access login route
+  if (to.name === loginRoute.name && getItem(tokenKey)) {
     return next({ path: homeRoute.path });
   }
   return next();
