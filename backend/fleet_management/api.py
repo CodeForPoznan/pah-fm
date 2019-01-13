@@ -42,6 +42,26 @@ class CarListView(generics.ListAPIView):
 
 
 class DriveView(generics.ListCreateAPIView):
+    """
+    Create payload example:
+    {
+      "car": {
+        "id": 528
+      },
+      "passengers": [
+        {
+          "id": 151
+        }
+      ],
+      "project": 5,  // this field can be ommited
+      "date": "2019-01-09",
+      "startMileage": 180000,
+      "endMileage": 180250,
+      "description": "",
+      "startLocation": "Warsaw",
+      "endLocation": "Poznan"
+    }
+    """
     permission_classes = (IsAuthenticated,)
     serializer_class = DriveSerializer
     filter_backends = (filters.OrderingFilter,)
