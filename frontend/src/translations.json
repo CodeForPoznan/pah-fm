@@ -124,6 +124,8 @@
     },
     "routes": {
       "distance_traveled": "{distance} km traveled",
+      "synced_drives": "Previous drives",
+      "unsynced_drives": "Unsynces drives",
       "passengers": "Passengers:",
       "passengers-error": "Passengers are required",
       "please_correct_errors": "Please correct the following error(s):",

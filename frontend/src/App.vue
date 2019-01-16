@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { ScaleRotate } from 'vue-burger-menu';
 
 import Language from './components/Language.vue';
@@ -41,6 +41,8 @@ import Status from './components/Status.vue';
 import store, { LANGUAGE } from './store';
 import NavigationItems from './components/NavigationItems.vue';
 import { confirmationRoute, loginRoute } from './router';
+import { SYNC } from './store/constants';
+import { FETCH_USER } from './store/actions';
 
 export default {
   name: 'App',
@@ -54,11 +56,19 @@ export default {
       return this.$route.name === confirmationRoute.name;
     },
   },
+  methods: {
+    ...mapActions({
+      sync: SYNC,
+      fetchUser: FETCH_USER,
+    }),
+  },
   created() {
     if (this.language) {
       /* eslint-disable-next-line no-underscore-dangle */
       this._i18n.locale = this.language;
     }
+    this.sync();
+    this.fetchUser();
   },
   components: {
     Refresh,

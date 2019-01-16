@@ -3,12 +3,12 @@ import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 
 import { actions } from './actions';
-import { VERIFICATION_TOKEN } from './constants';
+import { VERIFICATION_TOKEN, SYNC, namespaces } from './constants';
 import { mutations, SET_IS_CONNECTED } from './mutations';
 import { modules } from './modules';
 
 export const USER = 'user';
-const ROUTES = 'routes';
+export const ROUTES = 'routes';
 export const CARS = 'cars';
 export const LANGUAGE = 'language';
 
@@ -36,11 +36,15 @@ const store = new Vuex.Store({
   modules,
   mutations,
   plugins: [createPersistedState({
-    paths: [USER, ROUTES, CARS, LANGUAGE],
+    paths: [USER, ROUTES, CARS, LANGUAGE, ...Object.values(namespaces)],
   })],
 });
 
-window.addEventListener('online', () => store.commit(SET_IS_CONNECTED, true));
+window.addEventListener('online', () => {
+  store.commit(SET_IS_CONNECTED, true);
+  store.dispatch(SYNC);
+});
+
 window.addEventListener('offline', () => store.commit(SET_IS_CONNECTED, false));
 
 export default store;
