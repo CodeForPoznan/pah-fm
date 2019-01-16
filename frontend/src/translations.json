@@ -8,7 +8,7 @@
       "about": "O nas",
       "home": "Strona glowna",
       "login": "Login",
-      "new_route": "Dodaj tras",
+      "new_route": "Dodaj trasę",
       "routes": "Trasy",
       "intro":
         "Polska Akcja Humanitarna jest polską organizacją pozarządową działającą w Polsce i innych krajach. Jego misją jest \"jest uczynienie świata lepszym miejscem poprzez łagodzenie ludzkiego cierpienia i promowanie wartości humanitarnych\".",
@@ -16,7 +16,8 @@
       "no": "nie",
       "submit": "Wyślij",
       "unexpected_error": "Wystąpił nieoczekiwany błąd. Prosimy o kontakt z administratorem.",
-      "loading": "Ładowanie"
+      "loading": "Ładowanie",
+      "pageNotFound": "Wyszukiwana strona nie istnieje."
     },
     "routes": {
       "distance_traveled": "Łącznie przejechano {distance}km",
@@ -72,7 +73,8 @@
       "no": "ні",
       "submit": "Надіслати",
       "unexpected_error": "Сталася несподівана помилка. Зверніться до адміністратора.",
-      "loading": "Завантаження"
+      "loading": "Завантаження",
+      "pageNotFound": "страница, которую вы ищете, не существует"
     },
     "header": {
       "polish_humanitarian_action": "Польська гуманітарна акція"
@@ -100,7 +102,8 @@
       "no": "no",
       "submit": "Submit",
       "unexpected_error": "Unexpected error occurred. Please contact the administrator.",
-      "loading": "Loading"
+      "loading": "Loading",
+      "pageNotFound": "The page you're looking for does not exist."
     },
     "routes": {
       "distance_traveled": "{distance}km traveled",
