@@ -86,8 +86,8 @@
   },
   "gb": {
     "common": {
-      "startMileage_error": "Start mileage is incorrect",
-      "endMileage_error": "End milage is incorrect",
+      "start_mileage_error": "Start mileage is incorrect",
+      "end_mileage_error": "End mileage is incorrect",
       "error": "Error",
       "about": "About",
       "home": "Home",
