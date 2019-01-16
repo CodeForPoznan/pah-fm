@@ -60,6 +60,7 @@ const router = new Router({
     confirmationRoute,
     homeRoute,
     pageNotFoundRoute,
+    logoutRoute,
   ],
 });
 
@@ -70,11 +71,17 @@ router.beforeEach((to, _from, next) => {
   if (to.name === pageNotFoundRoute) {
     return next();
   }
+
   if (to.name === logoutRoute.name) {
     deleteToken();
     store.commit(mutations.SET_USER, null);
     return next({ path: homeRoute.path });
   }
+
+  if (openRoutes.includes(to.name)) {
+    return next();
+  }
+
   // Redirect to login if user tries to access closed route without token
   if (!getItem(tokenKey) && !openRoutes.includes(to.name)) {
     return next({ path: loginRoute.path });
