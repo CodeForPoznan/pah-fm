@@ -77,7 +77,6 @@ export const actions = {
       return;
     }
 
-
     const { syncId, ...mappedRoute } = mapRoute(state.routes[0]);
 
     try {
@@ -85,7 +84,7 @@ export const actions = {
       commit(SYNC_ITEM_SUCCESS, syncId);
       dispatch(SYNC);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   },
 };
