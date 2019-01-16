@@ -92,6 +92,8 @@
                 <div class="form-group col-sm-6">
                   <label>{{ $t('routes.starting_mileage') }}</label>
                   <input
+                    min="0"
+                    max="1500000"
                     type="number"
                     v-model="route.startMileage"
                     name="startMileage"
@@ -102,6 +104,8 @@
                 <div class="form-group col-sm-6">
                   <label>{{ $t('routes.ending_mileage') }}</label>
                   <input
+                    min="0"
+                    max="1500000"
                     type="number"
                     v-model="route.endMileage"
                     name="endMileage"
