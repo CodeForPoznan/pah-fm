@@ -1,7 +1,6 @@
 import { get, patch, post } from '../services/api/http';
 import { login, saveToken, deleteToken } from '../services/api/auth';
 import { getMyself } from '../services/api/user';
-
 import * as mutations from './mutations';
 import { mapRoute } from './helpers';
 import { i18n } from '../main';
@@ -42,6 +41,7 @@ export const actions = {
   [LOGOUT]({ commit }) {
     commit(mutations.SET_USER, null);
     deleteToken();
+    window.location.replace(login.path);
   },
   [SUBMIT]({ commit, dispatch }, { form }) {
     commit(mutations.ADD_ROUTE, form);

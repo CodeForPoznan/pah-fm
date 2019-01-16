@@ -1,11 +1,5 @@
 <template>
-  <div v-if="user">
-    <b-button
-      @click="logoutAction"
-      variant="link">Log out</b-button>
-  </div>
   <div
-    v-else
     class="jumbotron login-form">
     <div>
       <div class="container">
@@ -64,8 +58,6 @@
 import { mapState, mapActions } from 'vuex';
 import * as actions from '../store/actions';
 
-const logoutAction = mapActions([actions.LOGOUT])[actions.LOGOUT];
-
 export default {
   name: 'LoginView',
   data() {
@@ -80,13 +72,15 @@ export default {
   },
   methods: {
     ...mapActions([actions.LOGIN]),
-    logoutAction,
     handleSubmit() {
       this.submitted = true;
       const { username, password } = this;
       if (username && password) {
         this[actions.LOGIN]({ username, password });
       }
+    },
+    logout() {
+      this[actions.LOGOUT]();
     },
   },
 };

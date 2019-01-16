@@ -1,23 +1,28 @@
 <template>
-  <span
+  <div
+    v-if="!isLogin && user"
     class="is-online"
-    v-if="!isLogin"
-    :class="{ online: isOnline }"/>
+    :class="{ online: isOnline }">
+    <span>
+      {{ user.username }}
+    </span>
+  </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import { IS_ONLINE } from '../store';
-import { LOGIN_PATH } from '../router/constants';
+import { IS_ONLINE, USER } from '../store';
+import { loginRoute } from '../router';
+
 
 export default {
   name: 'Refresh',
   computed: {
-    ...mapState([IS_ONLINE]),
+    ...mapState([IS_ONLINE, USER]),
   },
   data() {
     return {
-      isLogin: this.$router.currentRoute.path === LOGIN_PATH,
+      isLogin: this.$router.currentRoute.path === loginRoute.path,
     };
   },
 };
@@ -37,8 +42,14 @@ export default {
   display: inline-block;
 }
 
+.is-online span {
+  margin-left: 20px;
+  margin-bottom: 25px;
+}
+
 .online {
   background-color: $green;
+  line-height: inherit;
 }
 </style>
 

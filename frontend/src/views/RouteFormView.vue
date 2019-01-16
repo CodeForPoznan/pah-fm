@@ -94,6 +94,8 @@
                 <div class="form-group col-sm-6">
                   <label>{{ $t('routes.starting_mileage') }}</label>
                   <input
+                    min="0"
+                    max="1500000"
                     type="number"
                     v-model="route.startMileage"
                     name="startMileage"
@@ -104,6 +106,8 @@
                 <div class="form-group col-sm-6">
                   <label>{{ $t('routes.ending_mileage') }}</label>
                   <input
+                    min="0"
+                    max="1500000"
                     type="number"
                     v-model="route.endMileage"
                     name="endMileage"
@@ -206,8 +210,8 @@ export default {
         && !!endMileage
         && parseInt(startMileage, 10) >= parseInt(endMileage, 10)
       ) {
-        this.errors.startMileage = this.$t('common.startMileage_error');
-        this.errors.endMileage = this.$t('common.endMileage_error');
+        this.errors.startMileage = this.$t('common.start_mileage_error');
+        this.errors.endMileage = this.$t('common.end_mileage_error');
       }
     },
   },
