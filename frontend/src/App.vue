@@ -40,7 +40,7 @@ import Refresh from './components/Refresh.vue';
 import Status from './components/Status.vue';
 import store, { LANGUAGE } from './store';
 import NavigationItems from './components/NavigationItems.vue';
-import { LOGIN_PATH } from './router/constants';
+import { confirmationRoute, loginRoute } from './router';
 
 export default {
   name: 'App',
@@ -48,10 +48,10 @@ export default {
   computed: {
     ...mapState([LANGUAGE]),
     isLogin() {
-      return this.$router.currentRoute.path === LOGIN_PATH;
+      return this.$router.currentRoute.path === loginRoute.path;
     },
     isConfirmationPage() {
-      return this.$route.name === 'Confirmation';
+      return this.$route.name === confirmationRoute.name;
     },
   },
   created() {
@@ -157,6 +157,6 @@ export default {
 }
 
 .is-invalid {
-    border-color: red !important;
+  border-color: red !important;
 }
 </style>

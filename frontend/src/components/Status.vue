@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="!isLogin"
+    v-if="!isLogin && user"
     class="is-online"
     :class="{ online: isOnline }">
     <span>
@@ -12,7 +12,8 @@
 <script>
 import { mapState } from 'vuex';
 import { IS_ONLINE, USER } from '../store';
-import { LOGIN_PATH } from '../router/constants';
+import { loginRoute } from '../router';
+
 
 export default {
   name: 'Refresh',
@@ -21,7 +22,7 @@ export default {
   },
   data() {
     return {
-      isLogin: this.$router.currentRoute.path === LOGIN_PATH,
+      isLogin: this.$router.currentRoute.path === loginRoute.path,
     };
   },
 };

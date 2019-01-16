@@ -22,13 +22,13 @@
 </template>
 
 <script>
-import { LOGIN_PATH } from '../router/constants';
+import { loginRoute } from '../router';
 
 export default {
   name: 'Footer',
   data() {
     return {
-      isLogin: this.$router.currentRoute.path === LOGIN_PATH,
+      isLogin: this.$router.currentRoute.path === loginRoute.path,
     };
   },
 };

@@ -3,7 +3,6 @@ import { login, saveToken, deleteToken } from '../services/api/auth';
 import { getMyself } from '../services/api/user';
 import * as mutations from './mutations';
 import { i18n } from '../main';
-import { LOGIN_PATH } from '../router/constants';
 
 export const FETCH_USER = 'FETCH_USER';
 export const LOGIN = 'LOGIN';
@@ -40,7 +39,7 @@ export const actions = {
   [LOGOUT]({ commit }) {
     commit(mutations.SET_USER, null);
     deleteToken();
-    window.location.replace(LOGIN_PATH);
+    window.location.replace(login.path);
   },
   [SUBMIT]({ commit }, { form }) {
     commit(mutations.ADD_ROUTE, form);

@@ -1,7 +1,7 @@
 <template>
   <div class="home p-3">
-    <h4/>
-    <p>{{ $t('common.intro') }}</p>
+    <p v-if="pageNotFound">{{ $t('common.pageNotFound') }}</p>
+    <p v-else>{{ $t('common.intro') }}</p>
   </div>
 </template>
 
@@ -9,5 +9,11 @@
 
 export default {
   name: 'HomeView',
+  props: {
+    pageNotFound: {
+      type: Boolean,
+      default: false,
+    },
+  },
 };
 </script>
