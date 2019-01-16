@@ -73,8 +73,8 @@ router.beforeEach((to, _from, next) => {
   }
 
   if (to.name === logoutRoute.name) {
-    deleteToken();
     store.commit(mutations.SET_USER, null);
+    deleteToken();
     return next({ path: homeRoute.path });
   }
 
