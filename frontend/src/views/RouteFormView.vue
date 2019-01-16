@@ -209,8 +209,8 @@ export default {
         && !!endMileage
         && parseInt(startMileage, 10) >= parseInt(endMileage, 10)
       ) {
-        this.errors.startMileage = this.$t('common.startMileage_error');
-        this.errors.endMileage = this.$t('common.endMileage_error');
+        this.errors.startMileage = this.$t('common.start_mileage_error');
+        this.errors.endMileage = this.$t('common.end_mileage_error');
       }
     },
   },
