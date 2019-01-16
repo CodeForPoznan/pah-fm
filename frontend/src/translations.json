@@ -7,8 +7,9 @@
       "endMileage_error": "Końcowy stan licznika ma nieprawidłową wartość",
       "about": "O nas",
       "home": "Strona glowna",
-      "login": "Login",
-      "new_route": "Dodaj trasę",
+      "login": "Zaloguj",
+      "logout": "Wyloguj",
+      "new_route": "Dodaj trase",
       "routes": "Trasy",
       "intro":
         "Polska Akcja Humanitarna jest polską organizacją pozarządową działającą w Polsce i innych krajach. Jego misją jest \"jest uczynienie świata lepszym miejscem poprzez łagodzenie ludzkiego cierpienia i promowanie wartości humanitarnych\".",
@@ -20,7 +21,7 @@
       "pageNotFound": "Wyszukiwana strona nie istnieje."
     },
     "routes": {
-      "distance_traveled": "Łącznie przejechano {distance}km",
+      "distance_traveled": "Łącznie przejechano {distance} km",
       "passengers": "Pasażerowie:",
       "passengers-error": "Pasażerowie są wymagani",
       "please_correct_errors": "Please correct the following error(s):",
@@ -33,19 +34,19 @@
       "submit": "Submit",
       "validation_error": "{field} is required",
       "no_driver_routes":
-        "You have no routes stored in database. You can add a new route by choosing option from the menu.",
-      "from_to": "From {from} to {destination}"
+        "Nie masz żadnych tras zapisanych w bazie danych. Możesz dodać nową trasę, wybierając opcję z menu.",
+      "from_to": "Z {from} do {destination}"
     },
     "login": {
-      "user": "User: %{username}",
-      "username": "Username",
-      "password": "Password",
-      "username_required": "Username is required",
-      "password_required": "Password is required"
+      "user": "Użytkownik: %{username}",
+      "username": "Nazwa użytkownika",
+      "password": "Hasło",
+      "username_required": "Nazwa użytkownika jest wymagana",
+      "password_required": "Hasło jest wymagane"
     },
     "refresh": {
-      "new_version": "A new version of website is available.",
-      "reload": "Reload"
+      "new_version": "Jest dostępna nowa wersja strony.",
+      "reload": "Odśwież"
     },
     "header": {
       "polish_humanitarian_action": "Polska Akcja Humanitarna"
@@ -65,6 +66,7 @@
       "about": "Про",
       "home": "Домашня сторінка",
       "login": "Логін",
+      "logout": "Вийти",
       "new_route": "Додати новий маршрут",
       "routes": "Маршрути",
       "intro":
@@ -75,6 +77,20 @@
       "unexpected_error": "Сталася несподівана помилка. Зверніться до адміністратора.",
       "loading": "Завантаження",
       "pageNotFound": "страница, которую вы ищете, не существует"
+    },
+    "routes": {
+      "please_correct_errors": "Виправте наступні помилки:",
+      "date": "Дата:",
+      "description": "Опис:",
+      "from": "Від:",
+      "destination": "Місце призначення:",
+      "starting_mileage": "Початок пробігу:",
+      "ending_mileage": "Закінчення пробігу:",
+      "submit": "Відправити",
+      "validation_error": "{field} nнеобхідно",
+      "no_driver_routes":
+      "У вас немає маршрутів, що зберігаються в базі даних. Ви можете додати новий маршрут, вибравши опцію в меню.",
+      "from_to": "Від {from} до {destination}"
     },
     "header": {
       "polish_humanitarian_action": "Польська гуманітарна акція"
@@ -94,6 +110,7 @@
       "about": "About",
       "home": "Home",
       "login": "Login",
+      "logout": "Logout",
       "new_route": "Add New Route",
       "routes": "Routes",
       "intro":
@@ -106,7 +123,7 @@
       "pageNotFound": "The page you're looking for does not exist."
     },
     "routes": {
-      "distance_traveled": "{distance}km traveled",
+      "distance_traveled": "{distance} km traveled",
       "passengers": "Passengers:",
       "passengers-error": "Passengers are required",
       "please_correct_errors": "Please correct the following error(s):",

@@ -7,7 +7,9 @@ import LoginView from '../views/LoginView.vue';
 import RouteFormView from '../views/RouteFormView.vue';
 import RoutesView from '../views/RoutesView.vue';
 import { getItem } from '../services/localStore';
-import { tokenKey } from '../services/api/auth';
+import store from '../store';
+import * as mutations from '../store/mutations';
+import { tokenKey, deleteToken } from '../services/api/auth';
 
 
 Vue.use(Router);
@@ -37,6 +39,10 @@ export const homeRoute = {
   name: 'Home',
   component: HomeView,
 };
+export const logoutRoute = {
+  path: '/logout',
+  name: 'Logout',
+};
 export const pageNotFoundRoute = {
   path: '*',
   name: 'PageNotFound',
@@ -54,6 +60,7 @@ const router = new Router({
     confirmationRoute,
     homeRoute,
     pageNotFoundRoute,
+    logoutRoute,
   ],
 });
 
@@ -64,6 +71,17 @@ router.beforeEach((to, _from, next) => {
   if (to.name === pageNotFoundRoute) {
     return next();
   }
+
+  if (to.name === logoutRoute.name) {
+    store.commit(mutations.SET_USER, null);
+    deleteToken();
+    return next({ path: homeRoute.path });
+  }
+
+  if (openRoutes.includes(to.name)) {
+    return next();
+  }
+
   // Redirect to login if user tries to access closed route without token
   if (!getItem(tokenKey) && !openRoutes.includes(to.name)) {
     return next({ path: loginRoute.path });

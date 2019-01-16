@@ -157,6 +157,6 @@ export default {
 }
 
 .is-invalid {
-    border-color: red !important;
+  border-color: red !important;
 }
 </style>
