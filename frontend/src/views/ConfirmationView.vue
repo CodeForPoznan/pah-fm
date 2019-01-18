@@ -48,6 +48,28 @@
                 </div>
               </div>
             </div>
+            <div class="form-group">
+              <label
+                for="projects">
+                {{ $t('confirmation.projects') }}
+              </label>
+              <select
+                class="form-control"
+                v-model="confirmation.projects"
+                name="projects"
+                id="projects">
+                <option
+                  disabled
+                  value="">
+                  {{ $t('confirmation.please_select_one') }}</option>
+                <option
+                  v-for="project in projects.data"
+                  :key="project.title"
+                  :value="project.title">
+                  {{ project.title }}
+                </option>
+              </select>
+            </div>
 
             <div class="form-group">
               <label>
@@ -93,7 +115,7 @@
 <script>
 import { mapActions, mapMutations, mapState } from 'vuex';
 import * as actions from '../store/actions';
-import { VERIFICATION_TOKEN } from '../store/constants';
+import { VERIFICATION_TOKEN, namespaces, actions as apiActions } from '../store/constants';
 import * as mutations from '../store/mutations';
 
 export default {
@@ -102,6 +124,7 @@ export default {
       confirmation: {
         ok: '',
         comment: '',
+        projects: '',
       },
       submissionError: '',
       submissionSuccess: null,
@@ -110,14 +133,19 @@ export default {
   name: 'ConfirmationView',
   created() {
     this[actions.VERIFY_CONFIRMATION_TOKEN](this.token);
+    this[apiActions.fetchProjects]();
   },
   computed: {
     ...mapState([VERIFICATION_TOKEN]),
     token() {
       return this.$route.params.token;
     },
+    ...mapState(namespaces.projects, {
+      projects: state => state,
+    }),
   },
   methods: {
+    ...mapActions(namespaces.projects, [apiActions.fetchProjects]),
     ...mapActions([
       actions.VERIFY_CONFIRMATION_TOKEN,
       actions.SUBMIT_CONFIRMATION_TOKEN,
@@ -129,6 +157,7 @@ export default {
       const payload = {
         isOk: this.confirmation.ok === 'yes',
         comment: this.confirmation.comment,
+        projects: this.confirmation.projects,
       };
       this[mutations.SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS](true);
       this[actions.SUBMIT_CONFIRMATION_TOKEN]({ payload, token: this.token })
@@ -142,7 +171,7 @@ export default {
         });
     },
     formValid() {
-      return (['yes', 'no'].includes(this.confirmation.ok) && this.confirmation.comment);
+      return (['yes', 'no'].includes(this.confirmation.ok) && this.confirmation.comment && this.confirmation.projects);
     },
     submissionInProgress() {
       return this[VERIFICATION_TOKEN] && this[VERIFICATION_TOKEN].inProgress;

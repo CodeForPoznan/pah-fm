@@ -12,7 +12,7 @@
       "routes": "Trasy",
       "intro":
         "Polska Akcja Humanitarna jest polską organizacją pozarządową działającą w Polsce i innych krajach. Jego misją jest \"jest uczynienie świata lepszym miejscem poprzez łagodzenie ludzkiego cierpienia i promowanie wartości humanitarnych\".",
-      "yes": "tag",
+      "yes": "tak",
       "no": "nie",
       "submit": "Wyślij",
       "unexpected_error": "Wystąpił nieoczekiwany błąd. Prosimy o kontakt z administratorem.",
@@ -53,7 +53,9 @@
       "drive_ok_label": "Czy przejazd był OK?",
       "comment_label": "Proszę dodać komentarz",
       "submission_success": "Potwierdzenie zostało wysłane. Dziękujemy!",
-      "token_inactive": "Link wygasł albo został już potwierdzony. Dziękujemy!"
+      "token_inactive": "Link wygasł albo został już potwierdzony. Dziękujemy!",
+      "projects": "Projekt",
+      "please_select_one": "Wybierz projekt"
     }
   },
   "ua": {
@@ -142,7 +144,9 @@
       "drive_ok_label": "Was the drive OK?",
       "comment_label": "Please add a comment.",
       "submission_success": "Your confirmation was sent. Thank you!",
-      "token_inactive": "Your link expired or has already been confirmed. Thank you!"
+      "token_inactive": "Your link expired or has already been confirmed. Thank you!",
+      "projects": "Project",
+      "please_select_one": "Please select project"
     }
   }
 }
