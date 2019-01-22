@@ -3,7 +3,7 @@ Feature: Login view
     Scenario: User opens pah-fm login view
         When User opens pah-fm website
         Then User sees login view with two text fields: "Username" and "Password" and one button "Login"
-         And User sees 3 flags: polish, english, ukrainian, in the right side, at top of the page
+         And User sees three flags: polish, english, ukrainian, in the right side, at top of the page
 
     # Positive scenario (passing valid login and password)
     Scenario: User logins to pah-fm system
