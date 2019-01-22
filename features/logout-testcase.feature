@@ -10,4 +10,4 @@ Scenario: User logs out from pah-fm website using URL
    Given User is logged into Ppah-fm website
     When User enters URI '/logout' directly in the address bar
     Then User's session details are removed
-    And User is redirected to the Login view
+     And User is redirected to the Login view
