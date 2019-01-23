@@ -48,5 +48,14 @@ services:
     depends_on:
       - backend
 
+  behave:
+    build: behave
+    shm_size: 256m
+    environment:
+      DISPLAY: $DISPLAY
+    volumes:
+      - ./behave:/pah-fm/behave
+      - /tmp/.X11-unix:/tmp/.X11-unix
+
 volumes:
   asset-volume:

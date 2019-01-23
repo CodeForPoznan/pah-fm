@@ -1,5 +1,6 @@
 Feature: Add New Route
 
+    @skip
     Scenario: User opens pah-fm Add New Route view
        Given User has account in the system already created by system admin
          And User is already logged in
@@ -14,6 +15,7 @@ Feature: Add New Route
          And User sees button "Submit"
 
     # Positive scenario for large displays
+    @skip
     Scenario: User adds new route
        Given User has account in the system already created by system admin
          And User is already logged in

@@ -41,6 +41,11 @@ test-backend:
 test:
 	make test-backend
 
+test-behave:
+	xhost +si:localuser:root
+	docker-compose exec behave behave --tags=-skip
+	xhost -si:localuser:root
+
 bash-backend:
 	docker-compose exec -ti backend bash
 
