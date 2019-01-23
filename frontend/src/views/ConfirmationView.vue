@@ -50,22 +50,22 @@
             </div>
             <div class="form-group">
               <label
-                for="projects">
+                for="project">
                 {{ $t('confirmation.projects') }}
               </label>
               <select
                 class="form-control"
-                v-model="confirmation.projects"
-                name="projects"
-                id="projects">
+                v-model="confirmation.project"
+                name="project"
+                id="project">
                 <option
                   disabled
                   value="">
                   {{ $t('confirmation.please_select_one') }}</option>
                 <option
                   v-for="project in projects.data"
-                  :key="project.title"
-                  :value="project.title">
+                  :key="project.id"
+                  :value="project.id">
                   {{ project.title }}
                 </option>
               </select>
@@ -157,7 +157,7 @@ export default {
       const payload = {
         isOk: this.confirmation.ok === 'yes',
         comment: this.confirmation.comment,
-        projects: this.confirmation.projects,
+        project: this.confirmation.projects,
       };
       this[mutations.SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS](true);
       this[actions.SUBMIT_CONFIRMATION_TOKEN]({ payload, token: this.token })
@@ -171,7 +171,7 @@ export default {
         });
     },
     formValid() {
-      return (['yes', 'no'].includes(this.confirmation.ok) && this.confirmation.comment && this.confirmation.projects);
+      return (['yes', 'no'].includes(this.confirmation.ok) && this.confirmation.comment && this.confirmation.project);
     },
     submissionInProgress() {
       return this[VERIFICATION_TOKEN] && this[VERIFICATION_TOKEN].inProgress;
