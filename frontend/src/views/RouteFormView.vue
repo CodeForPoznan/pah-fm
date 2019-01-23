@@ -74,6 +74,7 @@
                   type="text"
                   v-model="route.startLocation"
                   name="startLocation"
+                  maxlength="100"
                   class="form-control"
                   :class="{ 'is-invalid': errors['startLocation'] }"
                 >
@@ -82,6 +83,7 @@
                 <label>{{ $t('routes.endLocation') }}</label>
                 <input
                   type="text"
+                  maxlength="100"
                   v-model="route.endLocation"
                   name="endLocation"
                   class="form-control"
@@ -92,6 +94,8 @@
                 <div class="form-group col-sm-6">
                   <label>{{ $t('routes.starting_mileage') }}</label>
                   <input
+                    min="0"
+                    max="1500000"
                     type="number"
                     v-model="route.startMileage"
                     name="startMileage"
@@ -102,6 +106,8 @@
                 <div class="form-group col-sm-6">
                   <label>{{ $t('routes.ending_mileage') }}</label>
                   <input
+                    min="0"
+                    max="1500000"
                     type="number"
                     v-model="route.endMileage"
                     name="endMileage"
@@ -161,7 +167,6 @@ export default {
   },
   methods: {
     ...mapActions([actions.SUBMIT]),
-    ...mapActions(namespaces.drives, [apiActions.fetchDrives]),
     ...mapActions(namespaces.cars, [apiActions.fetchCars]),
     ...mapActions(namespaces.passengers, [apiActions.fetchPassengers]),
     onPassengerSelect(passengers, lastSelectPassenger) {
@@ -173,7 +178,7 @@ export default {
       this.validateForm();
 
       if (!Object.keys(this.errors).length) {
-        this[actions.SUBMIT]({ form: this.route });
+        this[actions.SUBMIT]({ form: { ...this.route, syncId: Math.floor(Date.now() / 1000) } });
         this.route = { ...defaultFormState };
         this.selectedPassengers = [];
       }
@@ -205,14 +210,13 @@ export default {
         && !!endMileage
         && parseInt(startMileage, 10) >= parseInt(endMileage, 10)
       ) {
-        this.errors.startMileage = this.$t('common.startMileage_error');
-        this.errors.endMileage = this.$t('common.endMileage_error');
+        this.errors.startMileage = this.$t('common.start_mileage_error');
+        this.errors.endMileage = this.$t('common.end_mileage_error');
       }
     },
   },
   created() {
     this[apiActions.fetchCars]();
-    this[apiActions.fetchDrives]();
     this[apiActions.fetchPassengers]();
   },
 

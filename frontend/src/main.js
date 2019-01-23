@@ -7,7 +7,7 @@ import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
 import App from './App.vue';
 import './registerServiceWorker';
-import router from './router/index';
+import router, { driveCreateRoute, driveListRoute, homeRoute } from './router/index';
 import messages from './translations.json';
 
 Vue.use(FlagIcon);
@@ -42,15 +42,15 @@ export const i18n = new VueI18n({
 const navigation = [
   {
     text: i18n.tc('common.home'),
-    to: '/',
+    to: homeRoute.path,
   },
   {
     text: i18n.tc('common.new_route'),
-    to: '/route/',
+    to: driveCreateRoute.path,
   },
   {
     text: i18n.tc('common.routes'),
-    to: '/routes/',
+    to: driveListRoute.path,
   },
 ];
 

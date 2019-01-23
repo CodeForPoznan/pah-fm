@@ -1,4 +1,4 @@
-import { VERIFICATION_TOKEN } from './constants';
+import { SYNC_ITEM_SUCCESS, VERIFICATION_TOKEN } from './constants';
 
 export const SET_USER = 'SET_USER';
 export const SET_LOGIN_PROGRESS = 'SET_LOGIN_PROGRESS';
@@ -6,14 +6,16 @@ export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
 export const ADD_ROUTE = 'ADD_ROUTE';
 export const SET_UPDATE_READY = 'SET_UPDATE_READY';
 export const SET_IS_CONNECTED = 'SET_IS_CONNECTED';
-export const SET_FETCHING_CARS_ERROR = 'SET_FETCHING_CARS_ERROR';
-export const SET_FETCHING_CARS_PROGRESS = 'SET_FETCHING_CARS_PROGRESS';
-export const SET_CARS = 'SET_CARS';
 export const SET_LANG = 'SET_LANG';
 export const SET_VERIFICATION_TOKEN_ACTIVE = 'SET_VERIFICATION_TOKEN_ACTIVE';
 export const SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS = 'SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS';
 
 export const mutations = {
+  [SYNC_ITEM_SUCCESS](state, syncId) {
+    Object.assign(state, {
+      routes: state.routes.filter(route => route.syncId !== syncId),
+    });
+  },
   [SET_USER](state, user) {
     Object.assign(state, { user });
   },
@@ -31,15 +33,6 @@ export const mutations = {
   },
   [SET_IS_CONNECTED](state, isOnline) {
     Object.assign(state, { isOnline });
-  },
-  [SET_FETCHING_CARS_PROGRESS](state, fetchingCarsInProgress) {
-    Object.assign(state.cars, { loading: fetchingCarsInProgress });
-  },
-  [SET_FETCHING_CARS_ERROR](state, fetchingCarsError) {
-    Object.assign(state.cars, { error: fetchingCarsError });
-  },
-  [SET_CARS](state, cars) {
-    Object.assign(state.cars, { data: [...cars] });
   },
   [SET_LANG](state, language) {
     Object.assign(state, { language });
