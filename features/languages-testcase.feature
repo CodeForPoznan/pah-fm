@@ -15,7 +15,7 @@ Scenario Outline: Language is retained after User login
            Given User is on the login page
              And User chooses <chosen-language> by clicking on a flag
             When User log in <status>
-            Then  <outcome-language> should be the same
+            Then  <outcome-language> is the same as <chosen-language>
 
             Examples:
     | chosen-language | outcome-language |         status |
