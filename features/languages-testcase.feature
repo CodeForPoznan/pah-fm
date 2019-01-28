@@ -5,7 +5,7 @@ Scenario Outline: User is able to change the language
             When User clicks on <country-flag>
             Then The language on the page changes to <chosen-language>
 
-            Examples:
+         Examples:
     | country-flag | chosen-language |
     |      Ukraine |       Ukrainian |
     United Kingdom |         English |
@@ -14,11 +14,14 @@ Scenario Outline: User is able to change the language
 Scenario Outline: Language is retained after User login
            Given User is on the login page
              And User chooses <chosen-language> by clicking on a flag
-            When User log in successfully
+            When User log in <status>
             Then  <outcome-language> should be the same
 
             Examples:
-    | chosen-language | outcome-language |
-    |       Ukrainian |        Ukrainian |
-    |         English |          English |
-               Polish |           Polish |
+    | chosen-language | outcome-language |         status |
+    |       Ukrainian |        Ukrainian |   successfully |
+    |         English |          English |   successfully |
+               Polish |           Polish |   successfully |
+    |       Ukrainian |        Ukrainian | unsuccessfully |
+    |         English |          English | unsuccessfully |
+               Polish |           Polish | unsuccessfully |
