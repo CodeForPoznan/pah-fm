@@ -22,7 +22,6 @@ Scenario Outline: Language is retained after attempt to login
 | Ukrainian       | Ukrainian        | successfully   |
 | English         | English          | successfully   |
 | Polish          | Polish           | successfully   |
-| chosen-language | outcome-language | status         |
 | Ukrainian       | Ukrainian        | unsuccessfully |
 | English         | English          | unsuccessfully |
 | Polish          | Polish           | unsuccessfully |
