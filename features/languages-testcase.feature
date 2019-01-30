@@ -11,6 +11,12 @@ Examples:
   | United Kingdom | English         |
   | Poland         | Polish          |
 
+#User story 1: User has chosen a language before log into pah-fm website,
+#then the user fails to login by putting incorrect password
+#but the language stays the same as the one the user has chosen
+#User story 2: User has chosen a language before log into pah-fm website
+#the the user successfuly login
+#and the language stays the same as the one the user has chosen
 Scenario Outline: Language is retained after attempt to login
             Given User is on the pah-fm website
               And <chosen-language> language has been chosen
@@ -26,7 +32,7 @@ Examples:
   | English         | English          | unsuccessfully |
   | Polish          | Polish           | unsuccessfully |
 
-
+#User story: User 
  Scenario Outline: Language is retained after refreshing pah-fm page
             Given User is on the pah-fm website
               And <chosen-language> language has been chosen
