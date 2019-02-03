@@ -15,9 +15,12 @@ export const VERIFY_CONFIRMATION_TOKEN = 'VERIFY_CONFIRMATION_TOKEN';
 export const SUBMIT_CONFIRMATION_TOKEN = 'SUBMIT_CONFIRMATION_TOKEN';
 
 export const actions = {
-  [FETCH_USER]({ commit }, { callback } = {}) {
+  [FETCH_USER]({ dispatch, commit }, { callback } = {}) {
     getMyself().then((user) => {
       commit(mutations.SET_USER, user);
+      dispatch(`${namespaces.passengers}/${apiActions.fetchPassengers}`);
+      dispatch(`${namespaces.cars}/${apiActions.fetchCars}`);
+      dispatch(`${namespaces.drives}/${apiActions.fetchDrives}`);
       if (callback) {
         callback();
       }
