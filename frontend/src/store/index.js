@@ -18,7 +18,7 @@ Vue.use(Vuex);
 
 export const IS_ONLINE = 'isOnline';
 
-const state = {
+const initialState = {
   [USER]: null,
   [ROUTES]: [],
   [LANGUAGE]: null,
@@ -31,13 +31,16 @@ const state = {
 
 const store = new Vuex.Store({
   strict: debug,
-  state,
+  state: initialState,
   actions,
   modules,
   mutations,
   plugins: [createPersistedState({
     paths: [USER, ROUTES, CARS, LANGUAGE, ...Object.values(namespaces)],
   })],
+  getters: {
+    isOnline: state => state.isOnline,
+  },
 });
 
 window.addEventListener('online', () => {

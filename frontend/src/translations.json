@@ -35,7 +35,9 @@
       "validation_error": "{field} is required",
       "no_driver_routes":
         "Nie masz żadnych tras zapisanych w bazie danych. Możesz dodać nową trasę, wybierając opcję z menu.",
-      "from_to": "Z {from} do {destination}"
+      "from_to": "Z {from} do {destination}",
+      "drive-added-online-notification": "Przejazd został dodany do bazy i oczekuje na potwierdzenie",
+      "drive-added-offline-notification": "Przejazd zostanie dodany do bazy przy ponownym połączeniu z internetem"
     },
     "login": {
       "user": "Użytkownik: %{username}",
@@ -140,6 +142,8 @@
       "no_driver_routes":
         "You have no routes stored in database. You can add a new route by choosing option from the menu.",
       "from_to": "From {from} to {destination}",
+      "drive-added-online-notification": "Drive was successfully added to database",
+      "drive-added-offline-notification": "Drive will be added to database after restoring connection to the internet",
       "cars": "Choose a car:",
       "car": "With car:",
       "fetching_cars_error": "Fetching cars unsuccessful",

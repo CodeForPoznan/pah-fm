@@ -4,6 +4,22 @@
       <div class="row">
         <div class="col-lg-8 offset-lg-2">
           <div>
+            <b-alert
+              variant="success"
+              dismissible
+              :show="confirmationOnline"
+              @dismissed="confirmationOnline=false"
+            >
+              <b>{{ $t('routes.drive-added-online-notification') }}</b>
+            </b-alert>
+            <b-alert
+              variant="secondary"
+              dismissible
+              :show="confirmationOffline"
+              @dismissed="confirmationffline=false"
+            >
+              <b>{{ $t('routes.drive-added-offline-notification') }}</b>
+            </b-alert>
             <div
               class="alert alert-danger errors"
               v-if="Object.keys(errors).length">
@@ -135,7 +151,7 @@
 <script>
 import { MultiSelect } from 'vue-search-select';
 
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 import * as actions from '../store/actions';
 import { isErroring, makeErrors, stringFields } from './services';
 import { namespaces, actions as apiActions } from '../store/constants';
@@ -163,6 +179,8 @@ export default {
       searchText: '',
       selectedPassengers: [],
       lastSelectPassenger: {},
+      confirmationOnline: false,
+      confirmationOffline: false,
     };
   },
   methods: {
@@ -176,11 +194,18 @@ export default {
     },
     handleSubmit() {
       this.validateForm();
+      this.confirmationOffline = false;
+      this.confirmationOnline = false;
 
       if (!Object.keys(this.errors).length) {
         this[actions.SUBMIT]({ form: { ...this.route, syncId: Math.floor(Date.now() / 1000) } });
         this.route = { ...defaultFormState };
         this.selectedPassengers = [];
+        if (this.isOnline) {
+          this.confirmationOnline = true;
+        } else {
+          this.confirmationOffline = true;
+        }
       }
     },
 
@@ -230,6 +255,7 @@ export default {
         text: [p.firstName, p.lastName].join(' '),
       })),
     }),
+    ...mapGetters(['isOnline']),
     distance() {
       const distance = this.route.endMileage - this.route.startMileage;
       return distance > 0 ? distance : 0;
