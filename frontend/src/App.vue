@@ -67,8 +67,10 @@ export default {
       /* eslint-disable-next-line no-underscore-dangle */
       this._i18n.locale = this.language;
     }
-    this.sync();
-    this.fetchUser();
+    if (!this.isLogin) {
+      this.sync();
+      this.fetchUser();
+    }
   },
   components: {
     Refresh,
