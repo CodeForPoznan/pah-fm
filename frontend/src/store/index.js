@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 
 import { actions } from './actions';
-import { VERIFICATION_TOKEN, SYNC, namespaces } from './constants';
+import { VERIFICATION_TOKEN, SYNC, namespaces, IS_ONLINE } from './constants';
 import { mutations, SET_IS_CONNECTED } from './mutations';
 import { modules } from './modules';
 
@@ -15,8 +15,6 @@ export const LANGUAGE = 'language';
 const debug = process.env.NODE_ENV !== 'production';
 
 Vue.use(Vuex);
-
-export const IS_ONLINE = 'isOnline';
 
 const initialState = {
   [USER]: null,
@@ -39,7 +37,7 @@ const store = new Vuex.Store({
     paths: [USER, ROUTES, CARS, LANGUAGE, ...Object.values(namespaces)],
   })],
   getters: {
-    isOnline: state => state.isOnline,
+    [IS_ONLINE]: state => state.isOnline,
   },
 });
 

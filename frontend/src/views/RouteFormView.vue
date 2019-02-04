@@ -10,7 +10,7 @@
               :show="confirmationOnline"
               @dismissed="confirmationOnline=false"
             >
-              <b>{{ $t('routes.drive-added-online-notification') }}</b>
+              <b>{{ $t('routes.drive_added_online_notification') }}</b>
             </b-alert>
             <b-alert
               variant="secondary"
@@ -18,7 +18,7 @@
               :show="confirmationOffline"
               @dismissed="confirmationffline=false"
             >
-              <b>{{ $t('routes.drive-added-offline-notification') }}</b>
+              <b>{{ $t('routes.drive_added_offline_notification') }}</b>
             </b-alert>
             <div
               class="alert alert-danger errors"
@@ -154,7 +154,7 @@ import { MultiSelect } from 'vue-search-select';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import * as actions from '../store/actions';
 import { isErroring, makeErrors, stringFields } from './services';
-import { namespaces, actions as apiActions } from '../store/constants';
+import { namespaces, actions as apiActions, IS_ONLINE } from '../store/constants';
 
 const defaultFormState = {
   date: '',
@@ -226,7 +226,7 @@ export default {
         .reduce(makeErrorsPartial, {});
 
       if (!data.passengers || !data.passengers.length) {
-        this.errors.passengers = this.$t('routes.passengers-error');
+        this.errors.passengers = this.$t('routes.passengers_error');
       }
 
       const { startMileage, endMileage } = data;
@@ -255,7 +255,7 @@ export default {
         text: [p.firstName, p.lastName].join(' '),
       })),
     }),
-    ...mapGetters(['isOnline']),
+    ...mapGetters([IS_ONLINE]),
     distance() {
       const distance = this.route.endMileage - this.route.startMileage;
       return distance > 0 ? distance : 0;
