@@ -111,7 +111,10 @@
                   <label>{{ $t('routes.starting_mileage') }}</label>
                   <input
                     min="0"
-                    max="1500000"
+                    onkeypress="return event.key === 'Enter'
+                        || (Number(event.key) >= 0
+                        && Number(event.key) <= 9
+                        && event.target.value < 20000000)"
                     type="number"
                     v-model="route.startMileage"
                     name="startMileage"
@@ -123,7 +126,10 @@
                   <label>{{ $t('routes.ending_mileage') }}</label>
                   <input
                     min="0"
-                    max="1500000"
+                    onkeypress="return event.key === 'Enter'
+                        || (Number(event.key) >= 0
+                        && Number(event.key) <= 9
+                        && event.target.value < 20000000)"
                     type="number"
                     v-model="route.endMileage"
                     name="endMileage"
