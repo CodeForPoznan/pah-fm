@@ -124,7 +124,7 @@ export default {
       confirmation: {
         ok: '',
         comment: '',
-        projects: '',
+        project: '',
       },
       submissionError: '',
       submissionSuccess: null,
@@ -137,12 +137,12 @@ export default {
   },
   computed: {
     ...mapState([VERIFICATION_TOKEN]),
-    token() {
-      return this.$route.params.token;
-    },
     ...mapState(namespaces.projects, {
       projects: state => state,
     }),
+    token() {
+      return this.$route.params.token;
+    },
   },
   methods: {
     ...mapActions(namespaces.projects, [apiActions.fetchProjects]),
