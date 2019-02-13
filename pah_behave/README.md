@@ -10,31 +10,31 @@ You can repeat these steps for Geckodriver or other.
 
 Create separate folder for your virtual environment, eg. in home directory:
 
-```mkdir selenium```
-```cd selenium```
+1. ```mkdir selenium```
+1. ```cd selenium```
 
-```python3 -m venv pah_behave```
+1. ```python3 -m venv pah_behave```
 
-```source pah_behave/bin/activate```
+1. ```source pah_behave/bin/activate```
 
-```pip install -r requirements.txt```
+1. ```pip install -r requirements.txt```
 
 # Working with virtual environment
 
 From home directory:
 
-```cd selenium```
-```source pah_behave/bin/activate```
+1. ```cd selenium```
+1. ```source pah_behave/bin/activate```
 
-Go to the directory with PAH website, eg.
+Go to the directory with PAH website, eg.:
 
-```cd codeforpoznan/pah_fm/pah_behave```
+1. ```cd codeforpoznan/pah_fm/pah_behave```
 
 # Running behave tests
 
 Make sure, that virtual environment is active, so the prompt will look like:
 
-```(pah_behave) ~/codeforpoznan/pah-fm/pah_ccbehave```
+1. ```(pah_behave) ~/codeforpoznan/pah-fm/pah_ccbehave```
 
-```behave pah_ccbehave/features/```
+1. ```behave pah_ccbehave/features/```
 
