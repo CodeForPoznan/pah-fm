@@ -4,6 +4,22 @@
       <div class="row">
         <div class="col-lg-8 offset-lg-2">
           <div>
+            <b-alert
+              variant="success"
+              dismissible
+              :show="confirmationOnline"
+              @dismissed="confirmationOnline=false"
+            >
+              <b>{{ $t('routes.drive_added_online_notification') }}</b>
+            </b-alert>
+            <b-alert
+              variant="secondary"
+              dismissible
+              :show="confirmationOffline"
+              @dismissed="confirmationffline=false"
+            >
+              <b>{{ $t('routes.drive_added_offline_notification') }}</b>
+            </b-alert>
             <div
               class="alert alert-danger errors"
               v-if="Object.keys(errors).length">
@@ -95,7 +111,10 @@
                   <label>{{ $t('routes.starting_mileage') }}</label>
                   <input
                     min="0"
-                    max="1500000"
+                    onkeypress="return event.key === 'Enter'
+                        || (Number(event.key) >= 0
+                        && Number(event.key) <= 9
+                        && event.target.value < 20000000)"
                     type="number"
                     v-model="route.startMileage"
                     name="startMileage"
@@ -107,7 +126,10 @@
                   <label>{{ $t('routes.ending_mileage') }}</label>
                   <input
                     min="0"
-                    max="1500000"
+                    onkeypress="return event.key === 'Enter'
+                        || (Number(event.key) >= 0
+                        && Number(event.key) <= 9
+                        && event.target.value < 20000000)"
                     type="number"
                     v-model="route.endMileage"
                     name="endMileage"
@@ -135,10 +157,10 @@
 <script>
 import { MultiSelect } from 'vue-search-select';
 
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 import * as actions from '../store/actions';
 import { isErroring, makeErrors, stringFields } from './services';
-import { namespaces, actions as apiActions } from '../store/constants';
+import { namespaces, actions as apiActions, IS_ONLINE } from '../store/constants';
 
 const defaultFormState = {
   date: '',
@@ -163,6 +185,8 @@ export default {
       searchText: '',
       selectedPassengers: [],
       lastSelectPassenger: {},
+      confirmationOnline: false,
+      confirmationOffline: false,
     };
   },
   methods: {
@@ -176,11 +200,18 @@ export default {
     },
     handleSubmit() {
       this.validateForm();
+      this.confirmationOffline = false;
+      this.confirmationOnline = false;
 
       if (!Object.keys(this.errors).length) {
         this[actions.SUBMIT]({ form: { ...this.route, syncId: Math.floor(Date.now() / 1000) } });
         this.route = { ...defaultFormState };
         this.selectedPassengers = [];
+        if (this.isOnline) {
+          this.confirmationOnline = true;
+        } else {
+          this.confirmationOffline = true;
+        }
       }
     },
 
@@ -201,7 +232,7 @@ export default {
         .reduce(makeErrorsPartial, {});
 
       if (!data.passengers || !data.passengers.length) {
-        this.errors.passengers = this.$t('routes.passengers-error');
+        this.errors.passengers = this.$t('routes.passengers_error');
       }
 
       const { startMileage, endMileage } = data;
@@ -230,6 +261,7 @@ export default {
         text: [p.firstName, p.lastName].join(' '),
       })),
     }),
+    ...mapGetters([IS_ONLINE]),
     distance() {
       const distance = this.route.endMileage - this.route.startMileage;
       return distance > 0 ? distance : 0;

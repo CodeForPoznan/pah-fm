@@ -11,7 +11,8 @@
 
 <script>
 import { mapState } from 'vuex';
-import { IS_ONLINE, USER } from '../store';
+import { USER } from '../store';
+import { IS_ONLINE } from '../store/constants';
 import { loginRoute } from '../router';
 
 

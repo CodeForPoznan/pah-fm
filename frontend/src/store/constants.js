@@ -11,6 +11,8 @@ export const SET_ERRORS = 'setErrors';
 export const SAVE = 'save';
 export const VERIFICATION_TOKEN = 'verificationToken';
 
+export const IS_ONLINE = 'isOnline';
+
 export const namespaces = {
   cars: 'cars',
   drives: 'drives',
