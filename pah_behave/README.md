@@ -1,12 +1,12 @@
-1. Download chromedriver (or geckodriver for Firefox)
+# Download Chromedriver
 
-- go to the `http://chromedriver.chromium.org`
-- download the latest version of Chromedriver
-- move it to /usr/local/bin
+1. go to the `http://chromedriver.chromium.org`
+1. download the latest version of Chromedriver
+1. move it to /usr/local/bin
 
 You can repeat these steps for Geckodriver or other.
 
-1. Creating virtual environment
+# Creating virtual environment
 
 Create separate folder for your virtual environment, eg. in home directory:
 
@@ -19,7 +19,7 @@ source pah_behave/bin/activate
 
 pip install -r requirements.txt
 
-1. Working with virtual environment
+# Working with virtual environment
 
 From home directory:
 
@@ -30,7 +30,7 @@ Go to the directory with PAH website, eg.
 
 `cd codeforpoznan/pah_fm/pah_behave`
 
-1. Running behave tests
+# Running behave tests
 
 Make sure, that virtual environment is active, so the prompt will look like:
 
