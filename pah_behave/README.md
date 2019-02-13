@@ -13,11 +13,11 @@ Create separate folder for your virtual environment, eg. in home directory:
 ```mkdir selenium```
 ```cd selenium```
 
-python3 -m venv pah_behave
+```python3 -m venv pah_behave```
 
-source pah_behave/bin/activate
+```source pah_behave/bin/activate```
 
-pip install -r requirements.txt
+```pip install -r requirements.txt```
 
 # Working with virtual environment
 
