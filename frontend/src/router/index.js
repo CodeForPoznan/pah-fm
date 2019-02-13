@@ -4,8 +4,8 @@ import Router from 'vue-router';
 import ConfirmationView from '../views/ConfirmationView.vue';
 import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
-import RouteFormView from '../views/RouteFormView.vue';
-import RoutesView from '../views/RoutesView.vue';
+import DriveFormView from '../views/DriveFormView.vue';
+import DrivesView from '../views/DrivesView.vue';
 import { getItem } from '../services/localStore';
 import store from '../store';
 import * as mutations from '../store/mutations';
@@ -22,12 +22,12 @@ export const loginRoute = {
 export const driveCreateRoute = {
   path: '/drive',
   name: 'Drive',
-  component: RouteFormView,
+  component: DriveFormView,
 };
 export const driveListRoute = {
   path: '/drives',
   name: 'Drives',
-  component: RoutesView,
+  component: DrivesView,
 };
 export const confirmationRoute = {
   path: '/confirmation/:token',

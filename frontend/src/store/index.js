@@ -8,7 +8,7 @@ import { mutations, SET_IS_CONNECTED } from './mutations';
 import { modules } from './modules';
 
 export const USER = 'user';
-export const ROUTES = 'routes';
+export const UNSYNC_DRIVES = 'unsyncDrives';
 export const CARS = 'cars';
 export const LANGUAGE = 'language';
 
@@ -18,7 +18,7 @@ Vue.use(Vuex);
 
 const initialState = {
   [USER]: null,
-  [ROUTES]: [],
+  [UNSYNC_DRIVES]: [],
   [LANGUAGE]: null,
   [IS_ONLINE]: navigator.onLine,
   [VERIFICATION_TOKEN]: null,
@@ -34,10 +34,11 @@ const store = new Vuex.Store({
   modules,
   mutations,
   plugins: [createPersistedState({
-    paths: [USER, ROUTES, CARS, LANGUAGE, ...Object.values(namespaces)],
+    paths: [USER, UNSYNC_DRIVES, CARS, LANGUAGE, ...Object.values(namespaces)],
   })],
   getters: {
     [IS_ONLINE]: state => state.isOnline,
+    [UNSYNC_DRIVES]: state => state.unsyncDrives,
   },
 });
 

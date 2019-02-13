@@ -2,15 +2,15 @@
   "pl": {
     "common": {
       "error": "Błąd",
-      "startMileage_error":
+      "start_mileage_error":
         "Początkowy stan licznika ma nieprawidłową wartość",
-      "endMileage_error": "Końcowy stan licznika ma nieprawidłową wartość",
+      "end_mileage_error": "Końcowy stan licznika ma nieprawidłową wartość",
       "about": "O nas",
       "home": "Strona glowna",
       "login": "Zaloguj",
       "logout": "Wyloguj",
-      "new_route": "Dodaj trase",
-      "routes": "Trasy",
+      "new_drive": "Dodaj trase",
+      "drives": "Trasy",
       "intro":
         "Polska Akcja Humanitarna jest polską organizacją pozarządową działającą w Polsce i innych krajach. Jego misją jest \"jest uczynienie świata lepszym miejscem poprzez łagodzenie ludzkiego cierpienia i promowanie wartości humanitarnych\".",
       "yes": "tag",
@@ -20,20 +20,20 @@
       "loading": "Ładowanie",
       "pageNotFound": "Wyszukiwana strona nie istnieje."
     },
-    "routes": {
+    "drives": {
       "distance_traveled": "Łącznie przejechano {distance} km",
       "passengers": "Pasażerowie:",
       "passengers_error": "Pasażerowie są wymagani",
       "please_correct_errors": "Please correct the following error(s):",
       "date": "Date:",
       "description": "Description:",
-      "endLocation": "End location:",
-      "startLocation": "Start location:",
+      "end_location": "End location:",
+      "start_location": "Start location:",
       "starting_mileage": "Starting Mileage:",
       "ending_mileage": "Ending Mileage:",
       "submit": "Submit",
       "validation_error": "{field} is required",
-      "no_driver_routes":
+      "no_driver_drives":
         "Nie masz żadnych tras zapisanych w bazie danych. Możesz dodać nową trasę, wybierając opcję z menu.",
       "from_to": "Z {from} do {destination}",
       "drive_added_online_notification": "Przejazd został dodany do bazy i oczekuje na potwierdzenie",
@@ -62,15 +62,15 @@
   },
   "ua": {
     "common": {
-      "startMileage_error":
+      "start_mileage_error":
         "Початкове значення вимірювального приладу має неправильне значення",
-      "endMileage_error": "Стан кінцевого лічильника має неправильне значення",
+      "end_mileage_error": "Стан кінцевого лічильника має неправильне значення",
       "about": "Про",
       "home": "Домашня сторінка",
       "login": "Логін",
       "logout": "Вийти",
-      "new_route": "Додати новий маршрут",
-      "routes": "Маршрути",
+      "new_drive": "Додати новий маршрут",
+      "drives": "Маршрути",
       "intro":
         "Польська гуманітарна акція - це польська неурядова організація, яка працює у Польщі та інших країнах. Його завдання \"зробити світ кращим місцем шляхом полегшення людських страждань та просування гуманітарних цінностей\".",
       "yes": "так",
@@ -80,7 +80,7 @@
       "loading": "Завантаження",
       "pageNotFound": "страница, которую вы ищете, не существует"
     },
-    "routes": {
+    "drives": {
       "please_correct_errors": "Виправте наступні помилки:",
       "date": "Дата:",
       "description": "Опис:",
@@ -90,7 +90,7 @@
       "ending_mileage": "Закінчення пробігу:",
       "submit": "Відправити",
       "validation_error": "{field} nнеобхідно",
-      "no_driver_routes":
+      "no_driver_drives":
       "У вас немає маршрутів, що зберігаються в базі даних. Ви можете додати новий маршрут, вибравши опцію в меню.",
       "from_to": "Від {from} до {destination}"
     },
@@ -113,8 +113,8 @@
       "home": "Home",
       "login": "Login",
       "logout": "Logout",
-      "new_route": "Add New Route",
-      "routes": "Routes",
+      "new_drive": "Add New Drive",
+      "drives": "Drives",
       "intro":
         "The Polish Humanitarian Action is a Polish non-governmental organisation which operates in Poland and other countries. Its mission is \"to make the world a better place through alleviation of human suffering and promotion of humanitarian values\".",
       "yes": "yes",
@@ -124,23 +124,23 @@
       "loading": "Loading",
       "pageNotFound": "The page you're looking for does not exist."
     },
-    "routes": {
+    "drives": {
       "distance_traveled": "{distance} km traveled",
       "synced_drives": "Previous drives",
-      "unsynced_drives": "Unsynces drives",
+      "unsynced_drives": "Unsynced drives",
       "passengers": "Passengers:",
       "passengers_error": "Passengers are required",
       "please_correct_errors": "Please correct the following error(s):",
       "date": "Date:",
       "description": "Description:",
-      "endLocation": "End location:",
-      "startLocation": "Start location:",
+      "end_location": "End location:",
+      "start_location": "Start location:",
       "starting_mileage": "Starting Mileage:",
       "ending_mileage": "Ending Mileage:",
       "submit": "Submit",
       "validation_error": "{field} is required",
-      "no_driver_routes":
-        "You have no routes stored in database. You can add a new route by choosing option from the menu.",
+      "no_driver_drives":
+        "You have no drives stored in database. You can add a new route by choosing option from the menu.",
       "from_to": "From {from} to {destination}",
       "drive_added_online_notification": "Drive was successfully added to database",
       "drive_added_offline_notification": "Drive will be added to database after restoring connection to the internet",

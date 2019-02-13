@@ -45,11 +45,11 @@ const navigation = [
     to: homeRoute.path,
   },
   {
-    text: i18n.tc('common.new_route'),
+    text: i18n.tc('common.new_drive'),
     to: driveCreateRoute.path,
   },
   {
-    text: i18n.tc('common.routes'),
+    text: i18n.tc('common.drives'),
     to: driveListRoute.path,
   },
 ];

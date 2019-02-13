@@ -16,7 +16,7 @@ const isErroring = route => key =>
 const splitCamelCase = label => label.replace(/([A-Z])/g, ' $1');
 
 const makeErrorMessage = t => field =>
-  t('routes.validation_error', { field: splitCamelCase(field) });
+  t('drives.validation_error', { field: splitCamelCase(field) });
 
 const makeErrors = t => (acc, field) => ({
   ...acc,
