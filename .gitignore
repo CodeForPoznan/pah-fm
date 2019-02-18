@@ -24,5 +24,7 @@ yarn-error.log*
 
 __pycache__/
 env
+venv/
+chromedriver
 
 backend/emails
