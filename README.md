@@ -4,34 +4,17 @@
 [![Join the chat at https://gitter.im/CodeForPoznan/pah-fm](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/CodeForPoznan/pah-fm?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
-## Run project (in background)
+## How to use Make?
 
-```
-make start
-```
-
-## Stop project
-```
-make stop
+We use Make to make to manage running our project.
+Run this command in terminal to see what Make commands are available:
+```bash
+make
 ```
 
-## Attach to logs
-```
-make logs
-```
-
-## Run linters
-```
-make lint
-```
-
-## Run tests
-```
-make test
-```
-
-## Debug backend (Django)
-```
+## How to debug backend?
+Run in terminal:
+```bash
 make debug-backend
 ```
 After finishing debugging detach from shell using *CTRL*+`p` and *CTRL*+`q`.
