@@ -8,8 +8,7 @@
   </div>
   <div
     v-else
-    class="accordion m-5"
-    id="routesAccordion">
+  >
 
     <h4
       class="heading"
@@ -38,7 +37,7 @@
           </p>
           <p>
             <span class="font-weight-bold mr-1">{{ $t('routes.car') }}</span>
-            <span>{{ route.car }}</span>
+            <span>{{ route.car.plates }}</span>
           </p>
           <p>
             <span class="font-weight-bold mr-1">{{ $t('routes.starting_mileage') }}</span>
@@ -78,7 +77,7 @@
           </p>
           <p>
             <span class="font-weight-bold mr-1">{{ $t('routes.car') }}</span>
-            <span>{{ route.car }}</span>
+            <span>{{ route.car.plates }}</span>
           </p>
           <p>
             <span class="font-weight-bold mr-1">{{ $t('routes.starting_mileage') }}</span>
@@ -126,11 +125,6 @@ export default {
 <style scoped lang="scss">
 .card-header {
   cursor: pointer;
-}
-
-.accordion {
-  max-height: 300px;
-  overflow: auto;
 }
 
 .heading {

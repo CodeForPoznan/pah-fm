@@ -1,24 +1,7 @@
 <template>
   <div
     class="footer p-3"
-    :class="{ 'full-screen': isLogin }">
-    <a
-      href="http://codeforpoznan.pl"
-      target="_blank">
-      <img
-        class="footer-image"
-        src="../assets/logo_codeforpoznan.svg"
-      >
-    </a>
-    <a
-      href="https://www.pah.org.pl"
-      target="_blank">
-      <img
-        class="footer-image pah-logo"
-        src="../assets/logo_en.svg"
-      >
-    </a>
-  </div>
+    :class="{ 'full-screen': isLogin }"/>
 </template>
 
 <script>
@@ -40,13 +23,11 @@ export default {
 .footer {
   @include flex(row);
   @include p(1);
+  @include mt(3);
 
-  height: $footer-height-mobile;
+  height: 60px;
   background: $pah-color-1;
-
-  @include media-breakpoint-up (lg) {
-    height: $footer-height;
-  }
+  width: 100%;
 }
 
 .footer-image {
@@ -60,7 +41,6 @@ export default {
 }
 
 .footer.full-screen {
-  position: absolute;
   width: 100%;
   bottom: 0;
 }

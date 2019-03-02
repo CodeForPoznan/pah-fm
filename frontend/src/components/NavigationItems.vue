@@ -18,7 +18,28 @@
       class="username"
     >
       {{ $t('common.logout') }}
+      <p>
+        {{ user.username }}
+      </p>
+
+      <a
+        href="http://codeforpoznan.pl"
+        target="_blank">
+        <img
+          class="footer-image"
+          src="../assets/logo_codeforpoznan.svg"
+        >
+      </a>
+      <a
+        href="https://www.pah.org.pl"
+        target="_blank">
+        <img
+          class="footer-image pah-logo"
+          src="../assets/logo_en.svg"
+        >
+      </a>
     </b-nav-item>
+
   </b-nav>
 </template>
 
@@ -90,5 +111,12 @@ export default {
       background: $pah-color-4;
     }
   }
+}
+
+.login {
+  @include my(4);
+  margin: 0 auto;
+  font-size: 14px;
+  font-weight: 300;
 }
 </style>

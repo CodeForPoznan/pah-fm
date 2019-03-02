@@ -32,7 +32,7 @@ export const actions = {
       .then((token) => {
         commit(mutations.SET_LOGIN_ERROR, null);
         saveToken(token);
-        dispatch(FETCH_USER, { callback: () => window.location.replace('/') });
+        dispatch(FETCH_USER, { callback: () => window.location.replace('/drive') });
       })
       .catch(() => {
         commit(mutations.SET_LOGIN_ERROR, i18n.tc('login.login_error'));

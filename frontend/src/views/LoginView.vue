@@ -90,9 +90,6 @@ export default {
 @import "../scss/base";
 
 .login-form {
-  @include mx(auto);
-  @include my(4);
-
-  max-width: 450px;
+  @include m(2);
 }
 </style>

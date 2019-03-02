@@ -12,9 +12,9 @@
     </ScaleRotate>
     <div
       id="page-wrap"
-      class="container page-container page-wrap">
+      class="container">
       <div class="row">
-        <div class="col-sm-12">
+        <div class="col-xs-12 page">
           <transition
             name="fade"
             mode="out-in"
@@ -98,15 +98,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   background: $white;
+  min-height: 100vh;
 }
 
-.page-container {
-  min-height: calc(100vh - #{$footer-height} - #{$header-height});
-
-  @include media-breakpoint-down (md) {
-    min-height: calc(100vh - #{$footer-height-mobile} - #{$header-height-mobile});
-  }
-}
 
 .language {
   @include media-breakpoint-down (md) {
@@ -170,5 +164,9 @@ export default {
 
 .is-invalid {
   border-color: red !important;
+}
+
+.page {
+  width: 100%;
 }
 </style>
