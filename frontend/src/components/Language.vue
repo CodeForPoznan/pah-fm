@@ -15,6 +15,7 @@
 </template>
 
 <script>
+
 import { mapActions } from 'vuex';
 import { languagesOrder } from '../main';
 import * as actions from '../store/actions';
@@ -36,6 +37,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 @import '../scss/base';
 
 ul.lang {
