@@ -61,17 +61,12 @@ export default {
 };
 </script>
 
-<style>
-.bm-burger-button {
-  right: 16px !important;
-}
-</style>
-
 <style scoped lang="scss">
 @import '../scss/base';
 
 .login {
   @include my(4);
+
   margin: 0 auto;
   font-size: 14px;
   font-weight: 300;
@@ -87,5 +82,4 @@ export default {
   width: 100%;
   height: 100%;
 }
-
 </style>

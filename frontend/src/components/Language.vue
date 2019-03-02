@@ -37,12 +37,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 @import '../scss/base';
 
 ul.lang {
   @include list-unstyled;
   @include flex(row, center, space-around);
+
   width: 100%;
   margin-top: 80px;
 }

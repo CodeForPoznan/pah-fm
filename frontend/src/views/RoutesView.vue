@@ -123,7 +123,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 @import "../scss/base";
 
 .card-header {

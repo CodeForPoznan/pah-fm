@@ -97,14 +97,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    @import "../scss/base";
+@import "../scss/base";
 
-    .language-container {
-      max-width: 200px;
-      margin: 0 auto;
-    }
+.language-container {
+  max-width: 200px;
+  margin: 0 auto;
+}
 
-    .login-form {
-        @include m(2);
-    }
+.login-form {
+  @include m(2);
+}
 </style>

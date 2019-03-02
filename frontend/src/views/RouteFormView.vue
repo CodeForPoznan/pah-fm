@@ -281,4 +281,3 @@ export default {
   @include m(2);
 }
 </style>
-
