@@ -1,8 +1,6 @@
 
 <template>
-  <b-nav
-    fill
-    class="menu-items">
+  <b-nav fill >
     <b-nav-item
       v-for="link in links"
       :to="link.to"
@@ -22,22 +20,18 @@
         {{ user.username }}
       </p>
 
+      <Language />
+
       <a
+        class="out-link"
         href="http://codeforpoznan.pl"
         target="_blank">
         <img
-          class="footer-image"
+          class="out-link-image"
           src="../assets/logo_codeforpoznan.svg"
         >
       </a>
-      <a
-        href="https://www.pah.org.pl"
-        target="_blank">
-        <img
-          class="footer-image pah-logo"
-          src="../assets/logo_en.svg"
-        >
-      </a>
+
     </b-nav-item>
 
   </b-nav>
@@ -47,9 +41,13 @@
 import { mapState, mapActions } from 'vuex';
 import * as actions from '../store/actions';
 import { USER } from '../store';
+import Language from './Language.vue';
 
 export default {
   name: 'NavigationItems',
+  components: {
+    Language,
+  },
   computed: {
     ...mapState([USER]),
   },
@@ -74,49 +72,22 @@ export default {
 <style scoped lang="scss">
 @import '../scss/base';
 
-.menu-items {
-  @include media-breakpoint-up (lg) {
-    .nav-item.username {
-      max-width: 400px;
-      flex-grow: initial;
-    }
-
-    .nav-link {
-      min-height: 100px;
-      font-size: 20px;
-      min-width: 155px;
-      color: $white;
-      display: flex;
-      align-items: flex-end;
-    }
-
-    .nav-link:hover {
-      padding-bottom: 12px;
-      transition: 0.2s;
-    }
-
-    li:nth-child(1) {
-      background: $pah-color-1;
-    }
-
-    li:nth-child(2) {
-      background: $pah-color-2;
-    }
-
-    li:nth-child(3) {
-      background: $pah-color-3;
-    }
-
-    li:nth-child(4) {
-      background: $pah-color-4;
-    }
-  }
-}
-
 .login {
   @include my(4);
   margin: 0 auto;
   font-size: 14px;
   font-weight: 300;
 }
+
+.out-link {
+  display: block;
+  margin: 60px auto;
+  width: 80px;
+}
+
+.out-link-image {
+  width: 100%;
+  height: 100%;
+}
+
 </style>

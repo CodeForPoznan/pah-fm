@@ -2,13 +2,11 @@
   <div id="app">
     <Status />
     <Header v-if="!isLogin" />
-    <Language class="language"/>
     <ScaleRotate
       class="mobile-menu"
       v-if="!isLogin && !isConfirmationPage"
       right>
       <NavigationItems />
-      <Language class="language-mobile"/>
     </ScaleRotate>
     <div
       id="page-wrap"
@@ -24,7 +22,6 @@
         </div>
       </div>
     </div>
-    <Footer />
     <Refresh />
   </div>
 </template>
@@ -33,9 +30,7 @@
 import { mapState, mapActions } from 'vuex';
 import { ScaleRotate } from 'vue-burger-menu';
 
-import Language from './components/Language.vue';
 import Header from './components/Header.vue';
-import Footer from './components/Footer.vue';
 import Refresh from './components/Refresh.vue';
 import Status from './components/Status.vue';
 import store, { LANGUAGE } from './store';
@@ -75,9 +70,7 @@ export default {
   components: {
     Refresh,
     Header,
-    Footer,
     Status,
-    Language,
     ScaleRotate,
     NavigationItems,
   },
@@ -101,31 +94,6 @@ export default {
   min-height: 100vh;
 }
 
-
-.language {
-  @include media-breakpoint-down (md) {
-    display: none;
-  }
-
-  position: absolute;
-  right: 1em;
-  top: 1em;
-}
-
-.language-mobile {
-  display: flex;
-  margin-top: 50px;
-
-  & .lang {
-    margin: 0 auto;
-    padding: 0 !important;
-
-    & li {
-      padding: 10px;
-      margin: 0;
-    }
-  }
-}
 
 .bm-item-list {
   margin-right: 10%;

@@ -36,16 +36,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '../scss/base';
+
 ul.lang {
-  list-style-type: none;
-  float: right;
-  padding-left: 10px;
-  cursor: pointer;
+  @include list-unstyled;
+  @include flex(row, center, space-around);
+  width: 100%;
+  margin-top: 80px;
 }
 
-.lang li {
-  display: inline;
-  font-size: 1.5em;
-  margin-left: 0.5em;
+.lang li span {
+  cursor: pointer;
+  height: 50px;
+  width: 40px;
 }
 </style>
