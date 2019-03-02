@@ -114,7 +114,7 @@ export default {
   computed: {
     ...mapState(['routes']),
     ...mapState(namespaces.drives, {
-      drives: state => [...state.data].reverse(),
+      drives: state => state.data || [],
     }),
   },
   created() {
