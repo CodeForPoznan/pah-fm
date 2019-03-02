@@ -105,10 +105,6 @@ export default {
 }
 
 .mobile-menu {
-  @include media-breakpoint-up (lg) {
-    display: none;
-  }
-
   .bm-menu {
     background: $pah-color-3;
   }
