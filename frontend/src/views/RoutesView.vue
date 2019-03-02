@@ -21,14 +21,14 @@
         class="card"
         v-for="route in routes"
         :key="route.id">
-        <div
+        <button
           class="card-header"
           @click="showRoute(route.id)">
           <h5 class="mb-0">
             <span class="font-weight-bold">{{ route.date }}</span>
             {{ $t('routes.from_to', { from: route.startLocation, destination: route.endLocation}) }}
           </h5>
-        </div>
+        </button>
         <div :class="['collapse', { show: routeVisible === route.id }]">
           <div class="card-body">
             <p>

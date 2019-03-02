@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Status />
-    <Header v-if="!isLogin" />
+    <Header />
     <ScaleRotate
       class="mobile-menu"
       v-if="!isLogin && !isConfirmationPage"
