@@ -1,7 +1,7 @@
 <template>
-  <div
-    class="jumbotron login-form">
-    <div>
+  <div>
+    <div
+      class="jumbotron login-form">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
@@ -24,7 +24,8 @@
                 <div
                   v-show="submitted && !username"
                   class="invalid-feedback"
-                >{{ $t('login.username') }}</div>
+                >{{ $t('login.username') }}
+                </div>
               </div>
               <div class="form-group">
                 <label htmlFor="password">{{ $t('login.password') }}</label>
@@ -38,18 +39,23 @@
                 <div
                   v-show="submitted && !password"
                   class="invalid-feedback"
-                >{{ $t('login.username') }}</div>
+                >{{ $t('login.username') }}
+                </div>
               </div>
               <div class="form-group">
                 <button
                   class="btn btn-primary"
                   :disabled="loginInProgress || !username || !password"
-                >{{ $t('common.login') }}</button>
+                >{{ $t('common.login') }}
+                </button>
               </div>
             </form>
           </div>
         </div>
       </div>
+    </div>
+    <div class="language-container">
+      <Language/>
     </div>
   </div>
 </template>
@@ -57,6 +63,7 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import * as actions from '../store/actions';
+import Language from '../components/Language.vue';
 
 export default {
   name: 'LoginView',
@@ -66,6 +73,9 @@ export default {
       password: '',
       submitted: false,
     };
+  },
+  components: {
+    Language,
   },
   computed: {
     ...mapState(['user', 'loginInProgress', 'loginError']),
@@ -87,9 +97,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../scss/base";
+    @import "../scss/base";
 
-.login-form {
-  @include m(2);
-}
+    .language-container {
+      max-width: 200px;
+      margin: 0 auto;
+    }
+
+    .login-form {
+        @include m(2);
+    }
 </style>
