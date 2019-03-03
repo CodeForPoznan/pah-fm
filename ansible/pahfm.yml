@@ -1,0 +1,145 @@
+---
+  - hosts: pahfm
+    become: yes
+    vars_files:
+      - vault
+    tasks:
+      - name: install system packages
+        apt:
+          name:
+            - libpq-dev
+            - nginx
+            - postgresql
+            - postgresql-contrib
+            - python3-pip
+            - python-psycopg2
+          state: present
+          update_cache: yes
+
+      - name: install global pip packages
+        pip:
+          name:
+            - virtualenv
+            - uwsgi
+          executable: pip3
+
+      - name: ensure postgresql started
+        service:
+          name: postgresql
+          state: started
+          enabled: yes
+
+      - name: ensure nginx started
+        service:
+          name: nginx
+          state: started
+          enabled: yes
+
+      - name: create database
+        become_user: postgres
+        postgresql_db:
+          name: "{{ db_name }}"
+          state: present
+
+      - name: create database user
+        become_user: postgres
+        postgresql_user:
+          db: "{{ db_name }}"
+          name: "{{ db_user }}"
+          password: "{{ db_password }}"
+          state: present
+
+      - name: fetch application source
+        git:
+          repo: https://github.com/CodeForPoznan/pah-fm.git
+          dest: /var/www/pahfm
+          update: yes
+        notify: restart nginx
+
+      - name: setup python virtualenv
+        pip:
+          requirements: /var/www/pahfm/backend/requirements/base.txt
+          virtualenv: /var/www/pahfm/backend/.venv
+          virtualenv_python: python3.6
+        notify: restart nginx
+
+      - name: run django migrations
+        environment:
+          BASE_URL: '52.232.62.212'
+          SECRET_KEY: "{{ django_secret_key }}"
+          PAH_FM_DB_USER: "{{ db_user }}"
+          PAH_FM_DB_NAME: "{{ db_name }}"
+          PAH_FM_DB_PASS: "{{ db_password }}"
+        django_manage:
+          app_path: /var/www/pahfm/backend
+          command: migrate
+          virtualenv: /var/www/pahfm/backend/.venv
+
+      - name: Install NVM
+        shell: "wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | PROFILE=.bashrc bash"
+
+      - name: Install NodeJS
+        shell: bash -ic "nvm install 8.12.0"
+        register: nodejs_installed
+        changed_when: nodejs_installed.stderr.find("is already installed") < 0
+
+      - name: Install npm dependencies
+        shell: bash -ic "/root/.nvm/versions/node/v8.12.0/bin/npm install --unsafe-perm"
+        args:
+          chdir: /var/www/pahfm/frontend
+
+      - name: Build frontend distribution
+        shell: bash -ic "/root/.nvm/versions/node/v8.12.0/bin/npm run build"
+        args:
+          chdir: /var/www/pahfm/frontend
+        notify: restart nginx
+
+      - name: Ensures uwsgi dir exists
+        file:
+          path: /etc/uwsgi/sites
+          state: directory
+
+      - name: configure uwsgi application
+        template:
+          src: pah.ini.j2
+          dest: /etc/uwsgi/sites/pah.ini
+          mode: 0644
+        notify: restart nginx
+
+      - name: configure uwsgi service
+        template:
+          src: uwsgi.service.j2
+          dest: /etc/systemd/system/uwsgi.service
+          mode: 0644
+
+      - name: ensure uwsgi started
+        service:
+          name: uwsgi
+          state: started
+          enabled: yes
+
+      - name: configure nginx site
+        template:
+          src: nginx.conf.j2
+          dest: /etc/nginx/sites-available/pah
+          mode: 0644
+        notify: restart nginx
+
+      - name: deactivate nginx default site
+        file:
+          path: /etc/nginx/sites-enabled/default
+          state: absent
+        notify: restart nginx
+
+      - name: activate nginx pah site
+        file:
+          src: /etc/nginx/sites-available/pah
+          dest: /etc/nginx/sites-enabled/pah
+          state: link
+        notify: restart nginx
+
+    handlers:
+      - name: restart nginx
+        service:
+          name: nginx
+          state: restarted
