@@ -108,4 +108,4 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('title', 'description')
+        fields = ('title', 'description', 'id')

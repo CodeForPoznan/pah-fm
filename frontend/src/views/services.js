@@ -1,6 +1,7 @@
 const requiredFields = [
   'date',
   'car',
+  'project',
   'startMileage',
   'endMileage',
   'startLocation',

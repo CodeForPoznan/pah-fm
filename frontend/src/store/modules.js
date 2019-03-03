@@ -11,6 +11,9 @@ const modules = {
   [namespaces.passengers]: makeModule({
     [actions.fetchPassengers]: makeFetchData('passengers'),
   }),
+  [namespaces.projects]: makeModule({
+    [actions.fetchProjects]: makeFetchData('projects'),
+  }),
 };
 
 export {
