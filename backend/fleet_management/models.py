@@ -41,6 +41,14 @@ class Passenger(models.Model):
         return f'{self.first_name} {self.last_name}'
 
 
+class Project(models.Model):
+    title = models.CharField(max_length=50, blank=False)
+    description = models.CharField(max_length=1000, blank=False)
+
+    def __str__(self):
+        return self.title
+
+
 class Drive(models.Model):
     driver = models.ForeignKey(User, on_delete=models.CASCADE)
     car = models.ForeignKey(Car, null=False, on_delete=models.CASCADE)
@@ -51,18 +59,10 @@ class Drive(models.Model):
     description = models.CharField(max_length=1000, blank=True)
     start_location = models.CharField(max_length=100, blank=False)
     end_location = models.CharField(max_length=100, blank=False)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.driver.username} ({self.date})'
-
-
-class Project(models.Model):
-    drives = models.ManyToManyField(Drive)
-    title = models.CharField(max_length=50, blank=False)
-    description = models.CharField(max_length=1000, blank=False)
-
-    def __str__(self):
-        return self.title
 
 
 class VerificationToken(models.Model):

@@ -36,24 +36,37 @@ class CarSerializer(serializers.ModelSerializer):
         )
 
 
+class ProjectSerializer(serializers.ModelSerializer):
+    id = fields.IntegerField(required=True)
+    title = fields.CharField(read_only=True)
+    description = fields.CharField(read_only=True)
+
+    class Meta:
+        model = Project
+        fields = ('title', 'description', 'id')
+
+
 class DriveSerializer(serializers.ModelSerializer):
     driver = UserSerializer(read_only=True)
     car = CarSerializer()
     passengers = PassengerSerializer(many=True)
+    project = ProjectSerializer()
 
     class Meta:
         model = Drive
         fields = (
             'id',
-            'driver', 'car', 'passengers',
+            'driver', 'car', 'passengers',  'project',
             'date', 'start_mileage', 'end_mileage', 'description',
-            'start_location', 'end_location',
+            'start_location', 'end_location'
         )
 
     def create(self, validated_data):
         passengers_data = validated_data.pop('passengers')
         car_data = validated_data.pop('car')
         car = Car.objects.get(pk=car_data['id'])
+        project_data = validated_data.pop('project')
+        project = Project.objects.get(pk=project_data['id'])
         passengers = Passenger.objects.filter(
             id__in=[p['id'] for p in passengers_data],
         ).all()
@@ -63,6 +76,7 @@ class DriveSerializer(serializers.ModelSerializer):
                 **validated_data,
                 driver=self.context['driver'],
                 car=car,
+                project=project
             )
             drive.passengers.set(passengers)
             drive.save()
@@ -102,10 +116,3 @@ class VerificationTokenSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
-
-
-class ProjectSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Project
-        fields = ('title', 'description', 'id')
