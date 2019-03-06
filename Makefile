@@ -74,6 +74,9 @@ deploy-frontend-heroku:
 send-test-email-heroku:
 	make manage-heroku CMD="send_test_mail ${EMAIL}"
 
+init-behave:
+	cat features/data/fixtures.sql| docker-compose exec -T db psql -U pah-fm
+
 checkout:  ## Checkout to branch and start clean app, i.e. make checkout BRANCH=master
 	git fetch -a
 	git fetch upstream -a

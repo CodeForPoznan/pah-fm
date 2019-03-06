@@ -1,24 +1,64 @@
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 import time
 
-driver = webdriver.Chrome('./chromedriver')
 
 @when(u'User opens pah-fm website')
 def step_impl(context):
-    driver.get('http://localhost:8080/login')
+    """TODO
+    """
+    context.driver.get('http://localhost:8080/login')
 
 
-@then(u'User sees login view with two text fields: "Username" and "Password" and one button "Login"')
-def step_impl(context):
-    time.sleep(1)
-    driver.find_element_by_name('username')
-    driver.find_element_by_name('password')
-    driver.find_element_by_css_selector('button.btn.btn-primary')
+@then(u'User sees "{label}" {type_} field')
+def step_impl(context, label, type_):
+    """TODO
+    """
+    input_element = context.driver.find_element_by_xpath("//label[text()='" + label + "']/../input")
+    assert input_element.get_attribute('type') == type_
+
+@then(u'User sees "{text}" button')
+def step_impl(context, text):
+    """TODO
+    """
+    context.driver.find_element_by_xpath("//button[text()='" + text + "']")
 
 @then(u'User sees three flags: polish, english, ukrainian, in the right side, at top of the page')
 def step_impl(context):
-    driver.find_element_by_css_selector('span.flag-icon.flag-icon-pl')
-    driver.find_element_by_css_selector('span.flag-icon.flag-icon-gb')
-    driver.find_element_by_css_selector('span.flag-icon.flag-icon-ua')
-    driver.quit()
+    """TODO
+    """
+    context.driver.find_element_by_css_selector('span.flag-icon.flag-icon-pl')
+    context.driver.find_element_by_css_selector('span.flag-icon.flag-icon-gb')
+    context.driver.find_element_by_css_selector('span.flag-icon.flag-icon-ua')
+
+@given(u'User has account in the system already created by system admin')
+def step_impl(context):
+    """TODO
+    """
+    pass
+
+@when(u'User enters "{text}" into "{label}" field')
+def step_impl(context, text, label):
+    """TODO
+    """
+    input_element = context.driver.find_element_by_xpath("//label[text()='" + label + "']/../input")
+    input_element.click()
+    input_element.send_keys(text)
+
+@when(u'User clicks "{text}" button')
+def step_impl(context, text):
+    """TODO
+    """
+    context.driver.find_element_by_xpath("//button[text()='" + text + "']").click()
+
+@then(u'User succesfully logs in')
+def step_impl(context):
+    """TODO
+    """
+    time.sleep(1)
+    assert context.driver.execute_script("return window.localStorage.jwt") is not None
+
+@then(u'User is redirected to homepage')
+def step_impl(context):
+    """TODO
+    """
+    time.sleep(1)
+    assert context.driver.current_url == 'http://localhost:8080/'
