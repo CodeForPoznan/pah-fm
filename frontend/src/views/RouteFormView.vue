@@ -45,12 +45,30 @@
                 >
               </div>
               <div class="form-group">
+                <label>{{ $t('routes.project') }}</label>
+                <select
+                  v-if="projects.data"
+                  v-model="route.project"
+                  name="car"
+                  class="form-control"
+                  :class="{ 'is-invalid': errors['project'] }"
+                >
+                  <option
+                    v-for="project in projects.data"
+                    :key="project.id"
+                    :value="project.id"
+                  >{{ project.title }}</option>
+                </select>
+                <p
+                  class="font-weight-bold"
+                  v-if="!cars.data">{{ $t('routes.no_project_message') }}</p>
+              </div>
+              <div class="form-group">
                 <label>{{ $t('routes.cars') }}</label>
                 <select
                   v-if="cars.data"
                   v-model="route.car"
                   name="car"
-                  value=""
                   class="form-control"
                   :class="{ 'is-invalid': errors['car'] }"
                 >
@@ -168,6 +186,7 @@ const defaultFormState = {
   description: '',
   startMileage: '',
   endMileage: '',
+  project: '',
   passengers: [],
   startLocation: '',
   endLocation: '',
@@ -193,6 +212,7 @@ export default {
     ...mapActions([actions.SUBMIT]),
     ...mapActions(namespaces.cars, [apiActions.fetchCars]),
     ...mapActions(namespaces.passengers, [apiActions.fetchPassengers]),
+    ...mapActions(namespaces.projects, [apiActions.fetchProjects]),
     onPassengerSelect(passengers, lastSelectPassenger) {
       this.selectedPassengers = passengers;
       this.lastSelectPassenger = lastSelectPassenger;
@@ -249,11 +269,15 @@ export default {
   created() {
     this[apiActions.fetchCars]();
     this[apiActions.fetchPassengers]();
+    this[apiActions.fetchProjects]();
   },
 
   computed: {
     ...mapState(namespaces.cars, {
       cars: state => state,
+    }),
+    ...mapState(namespaces.projects, {
+      projects: state => state,
     }),
     ...mapState(namespaces.passengers, {
       passengers: state => (state.data || []).map(p => ({

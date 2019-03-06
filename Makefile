@@ -1,10 +1,15 @@
-start:
+.DEFAULT_GOAL:=help
+
+help:  ## Display this help
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n\nTargets:\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
+
+start:  ## Run project (in background)
 	docker-compose up -d
 
-stop:
+stop:  ## Stop project
 	docker-compose stop
 
-logs:
+logs:  ## Attach to logs
 	docker-compose logs -f
 
 build-backend:
@@ -31,20 +36,20 @@ lint-backend:
 lint-frontend:
 	docker-compose run --rm --no-deps frontend npm run lint
 
-lint:
+lint:   ## Run linters
 	make lint-frontend
 	make lint-backend
 
 test-backend:
 	make manage CMD=test
 
-test:
+test:  ## Run tests
 	make test-backend
 
 bash-backend:
 	docker-compose exec -ti backend bash
 
-debug-backend:
+debug-backend:  ## Debug backend (Django)
 	docker attach `docker-compose ps -q backend`
 
 manage:
@@ -71,3 +76,19 @@ send-test-email-heroku:
 
 init-behave:
 	cat features/data/fixtures.sql| docker-compose exec -T db psql -U pah-fm
+
+checkout:  ## Checkout to branch and start clean app, i.e. make checkout BRANCH=master
+	git fetch -a
+	git fetch upstream -a
+	git checkout ${BRANCH}
+	make rebuild
+	docker-compose stop db 2>/dev/null
+	docker-compose rm -fv db 2>/dev/null
+	docker-compose up -d
+	docker-compose exec backend wait-for-it localhost:8000
+	make populate-database
+	@echo "Complete! Go to localhost:8000 and work!"
+
+checkout-pr:  ## Checkout to Pull Request, i.e. make checkout-pr PR=150
+	git fetch upstream pull/${PR}/head:${PR}
+	make checkout BRANCH=${PR}

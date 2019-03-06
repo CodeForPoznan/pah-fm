@@ -21,6 +21,7 @@ export const actions = {
       dispatch(`${namespaces.passengers}/${apiActions.fetchPassengers}`);
       dispatch(`${namespaces.cars}/${apiActions.fetchCars}`);
       dispatch(`${namespaces.drives}/${apiActions.fetchDrives}`);
+      dispatch(`${namespaces.projects}/${apiActions.fetchProjects}`);
       if (callback) {
         callback();
       }

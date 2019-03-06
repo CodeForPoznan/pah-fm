@@ -58,6 +58,7 @@ const makeDomainItem = id => ({ id });
 const mapRoute = route => ({
   ...route,
   car: makeDomainItem(route.car),
+  project: makeDomainItem(route.project),
   passengers: route.passengers.map(makeDomainItem),
 });
 
