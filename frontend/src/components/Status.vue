@@ -2,11 +2,7 @@
   <div
     v-if="!isLogin && user"
     class="is-online"
-    :class="{ online: isOnline }">
-    <span>
-      {{ user.username }}
-    </span>
-  </div>
+    :class="{ online: isOnline }"/>
 </template>
 
 <script>

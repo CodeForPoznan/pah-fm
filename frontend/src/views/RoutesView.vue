@@ -1,98 +1,97 @@
 <template>
-
-  <div
-    v-if="!routes.length && !drives.length"
-    class="alert alert-warning m-5"
-    role="alert">
-    {{ $t('routes.no_driver_routes') }}
-  </div>
-  <div
-    v-else
-    class="accordion m-5"
-    id="routesAccordion">
-
-    <h4
-      class="heading"
-      v-if="routes.length"
-    >
-      {{ $t('routes.unsynced_drives') }}
-    </h4>
-
+  <div class="wrapper">
     <div
-      class="card"
-      v-for="route in routes"
-      :key="route.id">
+      v-if="!routes.length && !drives.length"
+      class="alert alert-warning m-5"
+      role="alert">
+      {{ $t('routes.no_driver_routes') }}
+    </div>
+    <div
+      v-else
+    >
+
+      <h4
+        class="heading"
+        v-if="routes.length"
+      >
+        {{ $t('routes.unsynced_drives') }}
+      </h4>
+
       <div
-        class="card-header"
-        @click="showRoute(route.id)">
-        <h5 class="mb-0">
-          <span class="font-weight-bold">{{ route.date }}</span>
-          {{ $t('routes.from_to', { from: route.startLocation, destination: route.endLocation}) }}
-        </h5>
+        class="card"
+        v-for="route in routes"
+        :key="route.id">
+        <button
+          class="card-header"
+          @click="showRoute(route.id)">
+          <h5 class="mb-0">
+            <span class="font-weight-bold">{{ route.date }}</span>
+            {{ $t('routes.from_to', { from: route.startLocation, destination: route.endLocation}) }}
+          </h5>
+        </button>
+        <div :class="['collapse', { show: routeVisible === route.id }]">
+          <div class="card-body">
+            <p>
+              <span class="font-weight-bold mr-1">{{ $t('routes.description') }}</span>
+              <span>{{ route.description }}</span>
+            </p>
+            <p>
+              <span class="font-weight-bold mr-1">{{ $t('routes.car') }}</span>
+              <span>{{ route.car.plates }}</span>
+            </p>
+            <p>
+              <span class="font-weight-bold mr-1">{{ $t('routes.starting_mileage') }}</span>
+              <span>{{ route.startMileage }}</span>
+            </p>
+            <p>
+              <span class="font-weight-bold mr-1">{{ $t('routes.ending_mileage') }}</span>
+              <span>{{ route.endMileage }}</span>
+            </p>
+          </div>
+        </div>
       </div>
-      <div :class="['collapse', { show: routeVisible === route.id }]">
-        <div class="card-body">
-          <p>
-            <span class="font-weight-bold mr-1">{{ $t('routes.description') }}</span>
-            <span>{{ route.description }}</span>
-          </p>
-          <p>
-            <span class="font-weight-bold mr-1">{{ $t('routes.car') }}</span>
-            <span>{{ route.car }}</span>
-          </p>
-          <p>
-            <span class="font-weight-bold mr-1">{{ $t('routes.starting_mileage') }}</span>
-            <span>{{ route.startMileage }}</span>
-          </p>
-          <p>
-            <span class="font-weight-bold mr-1">{{ $t('routes.ending_mileage') }}</span>
-            <span>{{ route.endMileage }}</span>
-          </p>
+
+      <h4
+        class="heading"
+        v-if="drives.length"
+      >
+        {{ $t('routes.synced_drives') }}
+      </h4>
+      <div
+        class="card"
+        v-for="route in drives"
+        :key="route.id">
+        <div
+          class="card-header"
+          @click="showRoute(route.id)">
+          <h5 class="mb-0">
+            <span class="font-weight-bold">{{ route.date }}</span>
+            {{ $t('routes.from_to', { from: route.startLocation, destination: route.endLocation}) }}
+          </h5>
+        </div>
+        <div :class="['collapse', { show: routeVisible === route.id }]">
+          <div class="card-body">
+            <p>
+              <span class="font-weight-bold mr-1">{{ $t('routes.description') }}</span>
+              <span>{{ route.description }}</span>
+            </p>
+            <p>
+              <span class="font-weight-bold mr-1">{{ $t('routes.car') }}</span>
+              <span>{{ route.car.plates }}</span>
+            </p>
+            <p>
+              <span class="font-weight-bold mr-1">{{ $t('routes.starting_mileage') }}</span>
+              <span>{{ route.startMileage }}</span>
+            </p>
+            <p>
+              <span class="font-weight-bold mr-1">{{ $t('routes.ending_mileage') }}</span>
+              <span>{{ route.endMileage }}</span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
-
-    <h4
-      class="heading"
-      v-if="drives.length"
-    >
-      {{ $t('routes.synced_drives') }}
-    </h4>
-    <div
-      class="card"
-      v-for="route in drives"
-      :key="route.id">
-      <div
-        class="card-header"
-        @click="showRoute(route.id)">
-        <h5 class="mb-0">
-          <span class="font-weight-bold">{{ route.date }}</span>
-          {{ $t('routes.from_to', { from: route.startLocation, destination: route.endLocation}) }}
-        </h5>
-      </div>
-      <div :class="['collapse', { show: routeVisible === route.id }]">
-        <div class="card-body">
-          <p>
-            <span class="font-weight-bold mr-1">{{ $t('routes.description') }}</span>
-            <span>{{ route.description }}</span>
-          </p>
-          <p>
-            <span class="font-weight-bold mr-1">{{ $t('routes.car') }}</span>
-            <span>{{ route.car }}</span>
-          </p>
-          <p>
-            <span class="font-weight-bold mr-1">{{ $t('routes.starting_mileage') }}</span>
-            <span>{{ route.startMileage }}</span>
-          </p>
-          <p>
-            <span class="font-weight-bold mr-1">{{ $t('routes.ending_mileage') }}</span>
-            <span>{{ route.endMileage }}</span>
-          </p>
-        </div>
-      </div>
-    </div>
   </div>
-
 </template>
 <script>
 import { mapActions, mapState } from 'vuex';
@@ -124,13 +123,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../scss/base";
+
 .card-header {
   cursor: pointer;
 }
 
-.accordion {
-  max-height: 300px;
-  overflow: auto;
+.wrapper {
+  @include m(2);
 }
 
 .heading {

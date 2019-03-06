@@ -2,28 +2,21 @@
   <div class="header">
     <b-nav-item
       class="logo-container"
-      to="/"
+      to="/drive"
     >
       <img
         class="logo"
         :src="logo"
       >
     </b-nav-item>
-    <nav class="menu">
-      <NavigationItems />
-    </nav>
   </div>
 </template>
 
 <script>
 import { PL, languages } from '../main';
-import NavigationItems from './NavigationItems.vue';
 
 export default {
   name: 'Header',
-  components: {
-    NavigationItems,
-  },
   computed: {
     logo() {
       /* eslint-disable */
@@ -45,20 +38,7 @@ export default {
 
   text-align: center;
   background: $white;
-  height: $header-height;
-
-  @include media-breakpoint-down (md) {
-    height: $header-height-mobile;
-  }
-}
-
-.menu {
-  flex: 2;
-  padding-bottom: 20px;
-
-  @include media-breakpoint-down (md) {
-    display: none;
-  }
+  height: 120px;
 }
 
 .logo-container {
