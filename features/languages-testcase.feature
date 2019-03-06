@@ -1,3 +1,5 @@
+@Skip
+
 Feature: Languages
 
 Scenario Outline: User is able to change the language
