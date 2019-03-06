@@ -7,9 +7,7 @@
     {{ $t('drives.no_driver_drives') }}
   </div>
   <div
-    v-else
-    class="accordion m-5"
-    id="drivesAccordion">
+    v-else>
 
     <h4
       class="heading"
@@ -17,7 +15,6 @@
     >
       {{ $t('drives.unsynced_drives') }}
     </h4>
-
     <div
       class="card"
       v-for="drive in unsyncDrives"
@@ -125,17 +122,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../scss/base";
 .card-header {
   cursor: pointer;
 }
-
-.accordion {
-  max-height: 300px;
-  overflow: auto;
+.wrapper {
+  @include m(2);
 }
-
 .heading {
   text-align: center;
-  padding: 10px 0;
 }
 </style>

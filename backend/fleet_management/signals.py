@@ -36,4 +36,4 @@ def send_emails_to_passengers(sender, **kwargs):
             connection=connection,
         )
         email.content_subtype = 'html'
-        email.send()
+        # email.send()

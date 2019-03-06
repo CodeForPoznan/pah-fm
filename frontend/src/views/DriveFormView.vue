@@ -1,5 +1,5 @@
 <template>
-  <div class="jumbotron">
+  <div class="jumbotron wrapper">
     <div class="container">
       <div class="row">
         <div class="col-lg-8 offset-lg-2">
@@ -300,5 +300,8 @@ export default {
 .error::first-letter {
   text-transform: capitalize;
 }
-</style>
 
+.wrapper {
+  @include m(2);
+}
+</style>

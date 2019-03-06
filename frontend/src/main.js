@@ -7,7 +7,7 @@ import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
 import App from './App.vue';
 import './registerServiceWorker';
-import router, { driveCreateRoute, driveListRoute, homeRoute } from './router/index';
+import router, { driveCreateRoute, driveListRoute } from './router/index';
 import messages from './translations.json';
 
 Vue.use(FlagIcon);
@@ -40,10 +40,6 @@ export const i18n = new VueI18n({
 
 
 const navigation = [
-  {
-    text: i18n.tc('common.home'),
-    to: homeRoute.path,
-  },
   {
     text: i18n.tc('common.new_drive'),
     to: driveCreateRoute.path,
