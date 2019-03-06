@@ -17,10 +17,12 @@ export const namespaces = {
   cars: 'cars',
   drives: 'drives',
   passengers: 'passengers',
+  projects: 'projects',
 };
 
 export const actions = {
   fetchDrives: 'fetchDrives',
   fetchCars: 'fetchCars',
   fetchPassengers: 'fetchPassengers',
+  fetchProjects: 'fetchProjects',
 };

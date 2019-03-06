@@ -58,6 +58,7 @@ const makeDomainItem = id => ({ id });
 const mapDrive = drive => ({
   ...drive,
   car: makeDomainItem(drive.car),
+  project: makeDomainItem(drive.project),
   passengers: drive.passengers.map(makeDomainItem),
 });
 

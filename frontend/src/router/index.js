@@ -50,7 +50,6 @@ export const pageNotFoundRoute = {
   props: { pageNotFound: true },
 };
 
-
 const router = new Router({
   mode: 'history',
   routes: [

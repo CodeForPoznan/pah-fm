@@ -125,6 +125,8 @@
       "pageNotFound": "The page you're looking for does not exist."
     },
     "drives": {
+      "project": "Project",
+      "no_project_message": "Project is required",
       "distance_traveled": "{distance} km traveled",
       "synced_drives": "Previous drives",
       "unsynced_drives": "Unsynced drives",

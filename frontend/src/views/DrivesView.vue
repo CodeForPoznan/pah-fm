@@ -97,7 +97,7 @@
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex';
 import { actions as apiActions, namespaces } from '../store/constants';
-import { UNSYNC_DRIVES } from '../store';
+import { UNSYNCRONISED_DRIVES } from '../store';
 
 export default {
   name: 'DrivesView',
@@ -113,7 +113,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters([UNSYNC_DRIVES]),
+    ...mapGetters([UNSYNCRONISED_DRIVES]),
     ...mapState(namespaces.drives, {
       drives: state => state.data || [],
     }),
