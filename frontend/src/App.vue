@@ -74,11 +74,6 @@ export default {
     ScaleRotate,
     NavigationItems,
   },
-  data() {
-    return {
-      links: this.navigation,
-    };
-  },
 };
 </script>
 
@@ -93,7 +88,6 @@ export default {
   background: $white;
   min-height: 100vh;
 }
-
 
 .bm-item-list {
   margin-right: 10%;
