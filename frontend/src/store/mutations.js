@@ -13,7 +13,7 @@ export const SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS = 'SET_VERIFICATION_TOKE
 export const mutations = {
   [SYNC_ITEM_SUCCESS](state, syncId) {
     Object.assign(state, {
-      unsyncDrives: state.unsyncDrives.filter(drive => drive.syncId !== syncId),
+      unsyncedDrives: state.unsyncedDrives.filter(drive => drive.syncId !== syncId),
     });
   },
   [SET_USER](state, user) {
@@ -26,7 +26,7 @@ export const mutations = {
     Object.assign(state, { loginError });
   },
   [ADD_DRIVE](state, drive) {
-    Object.assign(state, { unsyncDrives: [...state.unsyncDrives, Object.assign({}, drive)] });
+    Object.assign(state, { unsyncedDrives: [...state.unsyncedDrives, Object.assign({}, drive)] });
   },
   [SET_UPDATE_READY](state, isReady) {
     Object.assign(state, { updateReady: isReady });

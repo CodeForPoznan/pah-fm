@@ -72,16 +72,16 @@ export const actions = {
       .then(() => commit(mutations.SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS, false));
   },
   async [SYNC]({ dispatch, state, commit }) {
-    if (state.unsyncDrives.length === 0 && state.user) {
+    if (state.unsyncedDrives.length === 0 && state.user) {
       dispatch(`${namespaces.drives}/${apiActions.fetchDrives}`);
       return;
     }
 
-    if (state.unsyncDrives.length === 0 || !state.user || !navigator.onLine) {
+    if (state.unsyncedDrives.length === 0 || !state.user || !navigator.onLine) {
       return;
     }
 
-    const { syncId, ...mappedRoute } = mapDrive(state.unsyncDrives[0]);
+    const { syncId, ...mappedRoute } = mapDrive(state.unsyncedDrives[0]);
 
     try {
       await post('drives', mappedRoute);

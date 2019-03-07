@@ -8,7 +8,7 @@ import { mutations, SET_IS_CONNECTED } from './mutations';
 import { modules } from './modules';
 
 export const USER = 'user';
-export const UNSYNCRONISED_DRIVES = 'unsyncDrives';
+export const UNSYNCRONISED_DRIVES = 'unsyncedDrives';
 export const CARS = 'cars';
 export const LANGUAGE = 'language';
 
@@ -38,7 +38,7 @@ const store = new Vuex.Store({
   })],
   getters: {
     [IS_ONLINE]: state => state.isOnline,
-    [UNSYNCRONISED_DRIVES]: state => state.unsyncDrives,
+    [UNSYNCRONISED_DRIVES]: state => state.unsyncedDrives,
   },
 });
 

@@ -11,13 +11,13 @@
 
     <h4
       class="heading"
-      v-if="unsyncDrives.length"
+      v-if="unsyncedDrives.length"
     >
       {{ $t('drives.unsynced_drives') }}
     </h4>
     <div
       class="card"
-      v-for="drive in unsyncDrives"
+      v-for="drive in unsyncedDrives"
       :key="drive.id">
       <div
         class="card-header"
@@ -35,7 +35,7 @@
           </p>
           <p>
             <span class="font-weight-bold mr-1">{{ $t('drives.car') }}</span>
-            <span>{{ drive.car }}</span>
+            <span>{{ drive.car.plates }}</span>
           </p>
           <p>
             <span class="font-weight-bold mr-1">{{ $t('drives.starting_mileage') }}</span>
@@ -75,7 +75,7 @@
           </p>
           <p>
             <span class="font-weight-bold mr-1">{{ $t('drives.car') }}</span>
-            <span>{{ drive.car }}</span>
+            <span>{{ drive.car.plates }}</span>
           </p>
           <p>
             <span class="font-weight-bold mr-1">{{ $t('drives.starting_mileage') }}</span>
@@ -126,9 +126,11 @@ export default {
 .card-header {
   cursor: pointer;
 }
+
 .wrapper {
   @include m(2);
 }
+
 .heading {
   text-align: center;
 }
