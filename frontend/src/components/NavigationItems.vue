@@ -9,6 +9,18 @@
       {{ link.text }}
     </b-nav-item>
 
+    <Language />
+
+    <a
+      class="out-link"
+      href="http://codeforpoznan.pl"
+      target="_blank">
+      <img
+        class="out-link-image"
+        src="../assets/logo_codeforpoznan.svg"
+      >
+    </a>
+
     <b-nav-item
       @click="LOGOUT"
       to="/logout"
@@ -21,17 +33,6 @@
       </p>
 
     </b-nav-item>
-    <Language />
-
-    <a
-      class="out-link"
-      href="http://codeforpoznan.pl"
-      target="_blank">
-      <img
-        class="out-link-image"
-        src="../assets/logo_codeforpoznan.svg"
-      >
-    </a>
   </b-nav>
 </template>
 
