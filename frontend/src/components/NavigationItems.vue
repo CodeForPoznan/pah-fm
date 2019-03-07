@@ -58,11 +58,11 @@ export default {
     return {
       links: [
         {
-          text: this.$t('common.new_route'),
+          text: this.$t('common.new_drive'),
           to: driveCreateRoute.path,
         },
         {
-          text: this.$t('common.routes'),
+          text: this.$t('common.drives'),
           to: driveListRoute.path,
         },
       ],
