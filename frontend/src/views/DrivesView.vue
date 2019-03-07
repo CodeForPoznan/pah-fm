@@ -38,6 +38,10 @@
             <span>{{ drive.car.plates }}</span>
           </p>
           <p>
+            <span class="font-weight-bold mr-1">{{ $t('drives.project') }}</span>
+            <span>{{ drive.project.title }}</span>
+          </p>
+          <p>
             <span class="font-weight-bold mr-1">{{ $t('drives.starting_mileage') }}</span>
             <span>{{ drive.startMileage }}</span>
           </p>
@@ -76,6 +80,10 @@
           <p>
             <span class="font-weight-bold mr-1">{{ $t('drives.car') }}</span>
             <span>{{ drive.car.plates }}</span>
+          </p>
+          <p>
+            <span class="font-weight-bold mr-1">{{ $t('drives.project') }}</span>
+            <span>{{ drive.project.title }}</span>
           </p>
           <p>
             <span class="font-weight-bold mr-1">{{ $t('drives.starting_mileage') }}</span>
