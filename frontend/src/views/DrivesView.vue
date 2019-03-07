@@ -123,6 +123,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../scss/base";
+
 .card-header {
   cursor: pointer;
 }
