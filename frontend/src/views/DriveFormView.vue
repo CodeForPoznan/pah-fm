@@ -10,7 +10,7 @@
               :show="confirmationOnline"
               @dismissed="confirmationOnline=false"
             >
-              <b>{{ $t('routes.drive_added_online_notification') }}</b>
+              <b>{{ $t('drives.drive_added_online_notification') }}</b>
             </b-alert>
             <b-alert
               variant="secondary"
@@ -18,12 +18,12 @@
               :show="confirmationOffline"
               @dismissed="confirmationffline=false"
             >
-              <b>{{ $t('routes.drive_added_offline_notification') }}</b>
+              <b>{{ $t('drives.drive_added_offline_notification') }}</b>
             </b-alert>
             <div
               class="alert alert-danger errors"
               v-if="Object.keys(errors).length">
-              <b>{{ $t('routes.please_correct_errors') }}</b>
+              <b>{{ $t('drives.please_correct_errors') }}</b>
               <ul class="error-list">
                 <li
                   class="error"
@@ -31,24 +31,24 @@
                   :key="error">{{ errors[error] }}</li>
               </ul>
             </div>
-            <h2>{{ $t('common.new_route') }}</h2>
+            <h2>{{ $t('common.new_drive') }}</h2>
             <form
               @submit.prevent="handleSubmit">
               <div class="form-group">
-                <label>{{ $t('routes.date') }}</label>
+                <label>{{ $t('drives.date') }}</label>
                 <input
                   type="date"
-                  v-model="route.date"
+                  v-model="drive.date"
                   name="date"
                   class="form-control"
                   :class="{ 'is-invalid': errors['date'] }"
                 >
               </div>
               <div class="form-group">
-                <label>{{ $t('routes.project') }}</label>
+                <label>{{ $t('drives.project') }}</label>
                 <select
                   v-if="projects.data"
-                  v-model="route.project"
+                  v-model="drive.project"
                   name="car"
                   class="form-control"
                   :class="{ 'is-invalid': errors['project'] }"
@@ -61,13 +61,13 @@
                 </select>
                 <p
                   class="font-weight-bold"
-                  v-if="!cars.data">{{ $t('routes.no_project_message') }}</p>
+                  v-if="!cars.data">{{ $t('drives.no_project_message') }}</p>
               </div>
               <div class="form-group">
-                <label>{{ $t('routes.cars') }}</label>
+                <label>{{ $t('drives.cars') }}</label>
                 <select
                   v-if="cars.data"
-                  v-model="route.car"
+                  v-model="drive.car"
                   name="car"
                   class="form-control"
                   :class="{ 'is-invalid': errors['car'] }"
@@ -80,11 +80,11 @@
                 </select>
                 <p
                   class="font-weight-bold"
-                  v-if="!cars.data">{{ $t('routes.no_cars_message') }}</p>
+                  v-if="!cars.data">{{ $t('drives.no_cars_message') }}</p>
               </div>
 
               <div class="form-group">
-                <label>{{ $t('routes.passengers') }}</label>
+                <label>{{ $t('drives.passengers') }}</label>
                 <multi-select
                   :options="passengers"
                   :selected-options="selectedPassengers"
@@ -93,20 +93,20 @@
               </div>
 
               <div class="form-group">
-                <label>{{ $t('routes.description') }}</label>
+                <label>{{ $t('drives.description') }}</label>
                 <input
                   type="text"
-                  v-model="route.description"
+                  v-model="drive.description"
                   name="description"
                   class="form-control"
                   :class="{ 'is-invalid': errors['description']}"
                 >
               </div>
               <div class="form-group">
-                <label>{{ $t('routes.startLocation') }}</label>
+                <label>{{ $t('drives.start_location') }}</label>
                 <input
                   type="text"
-                  v-model="route.startLocation"
+                  v-model="drive.startLocation"
                   name="startLocation"
                   maxlength="100"
                   class="form-control"
@@ -114,11 +114,11 @@
                 >
               </div>
               <div class="form-group">
-                <label>{{ $t('routes.endLocation') }}</label>
+                <label>{{ $t('drives.end_location') }}</label>
                 <input
                   type="text"
                   maxlength="100"
-                  v-model="route.endLocation"
+                  v-model="drive.endLocation"
                   name="endLocation"
                   class="form-control"
                   :class="{ 'is-invalid': errors['endLocation'] }"
@@ -126,7 +126,7 @@
               </div>
               <div class="row">
                 <div class="form-group col-sm-6">
-                  <label>{{ $t('routes.starting_mileage') }}</label>
+                  <label>{{ $t('drives.starting_mileage') }}</label>
                   <input
                     min="0"
                     onkeypress="return event.key === 'Enter'
@@ -134,14 +134,14 @@
                         && Number(event.key) <= 9
                         && event.target.value < 20000000)"
                     type="number"
-                    v-model="route.startMileage"
+                    v-model="drive.startMileage"
                     name="startMileage"
                     class="form-control"
                     :class="{ 'is-invalid': errors['startMileage'] }"
                   >
                 </div>
                 <div class="form-group col-sm-6">
-                  <label>{{ $t('routes.ending_mileage') }}</label>
+                  <label>{{ $t('drives.ending_mileage') }}</label>
                   <input
                     min="0"
                     onkeypress="return event.key === 'Enter'
@@ -149,7 +149,7 @@
                         && Number(event.key) <= 9
                         && event.target.value < 20000000)"
                     type="number"
-                    v-model="route.endMileage"
+                    v-model="drive.endMileage"
                     name="endMileage"
                     class="form-control"
                     :class="{ 'is-invalid': errors['endMileage'] }"
@@ -157,12 +157,12 @@
                 </div>
               </div>
               <div class="form-group col-xs-12">
-                {{ $t('routes.distance_traveled', { distance: distance }) }}
+                {{ $t('drives.distance_traveled', { distance: distance }) }}
               </div>
               <div class="form-group">
                 <button
                   class="btn btn-primary"
-                >{{ $t('routes.submit') }}</button>
+                >{{ $t('drives.submit') }}</button>
               </div>
             </form>
           </div>
@@ -193,13 +193,13 @@ const defaultFormState = {
 };
 
 export default {
-  name: 'RouteFormView',
+  name: 'DriveFormView',
   components: {
     MultiSelect,
   },
   data() {
     return {
-      route: { ...defaultFormState },
+      drive: { ...defaultFormState },
       errors: {},
       searchText: '',
       selectedPassengers: [],
@@ -216,7 +216,7 @@ export default {
     onPassengerSelect(passengers, lastSelectPassenger) {
       this.selectedPassengers = passengers;
       this.lastSelectPassenger = lastSelectPassenger;
-      this.route.passengers = passengers.map(i => i.value);
+      this.drive.passengers = passengers.map(i => i.value);
     },
     handleSubmit() {
       this.validateForm();
@@ -224,8 +224,8 @@ export default {
       this.confirmationOnline = false;
 
       if (!Object.keys(this.errors).length) {
-        this[actions.SUBMIT]({ form: { ...this.route, syncId: Math.floor(Date.now() / 1000) } });
-        this.route = { ...defaultFormState };
+        this[actions.SUBMIT]({ form: { ...this.drive, syncId: Math.floor(Date.now() / 1000) } });
+        this.drive = { ...defaultFormState };
         this.selectedPassengers = [];
         if (this.isOnline) {
           this.confirmationOnline = true;
@@ -239,7 +239,7 @@ export default {
       const makeErrorsPartial = makeErrors(this.$t.bind(this));
 
       const data =
-        Object.entries(this.route).reduce((acc, [key, value]) =>
+        Object.entries(this.drive).reduce((acc, [key, value]) =>
           ({
             ...acc,
             [key]: stringFields.includes(key)
@@ -252,7 +252,7 @@ export default {
         .reduce(makeErrorsPartial, {});
 
       if (!data.passengers || !data.passengers.length) {
-        this.errors.passengers = this.$t('routes.passengers_error');
+        this.errors.passengers = this.$t('drives.passengers_error');
       }
 
       const { startMileage, endMileage } = data;
@@ -287,7 +287,7 @@ export default {
     }),
     ...mapGetters([IS_ONLINE]),
     distance() {
-      const distance = this.route.endMileage - this.route.startMileage;
+      const distance = this.drive.endMileage - this.drive.startMileage;
       return distance > 0 ? distance : 0;
     },
   },
