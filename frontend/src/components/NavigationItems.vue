@@ -50,13 +50,8 @@ export default {
   },
   computed: {
     ...mapState([USER]),
-  },
-  methods: {
-    ...mapActions([actions.LOGOUT]),
-  },
-  data() {
-    return {
-      links: [
+    links() {
+      return [
         {
           text: this.$t('common.new_drive'),
           to: driveCreateRoute.path,
@@ -65,10 +60,12 @@ export default {
           text: this.$t('common.drives'),
           to: driveListRoute.path,
         },
-      ],
-    };
+      ];
+    },
   },
-
+  methods: {
+    ...mapActions([actions.LOGOUT]),
+  },
 };
 </script>
 
