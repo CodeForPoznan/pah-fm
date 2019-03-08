@@ -20,18 +20,18 @@
       "date": "Дата:",
       "description": "Опис:",
       "distance_traveled": "Відстань (km) яку проїхали",
-      "drive_added_offline_notification": "Drive will be added to database after restoring connection to the internet",
-      "drive_added_online_notification": "Drive was successfully added to database",
+      "drive_added_offline_notification": "Поїздка буде додана до бази даних  після підключення до інтернету",
+      "drive_added_online_notification": "Поїздка була успішно додана до бази даних",
       "ending_mileage": "Кінцеве значення вимірювального приладу",
       "end_location": "Кінцевий пункт поїздки",
       "end_mileage_error": "Стан кінцевого лічильника має неправильне значення",
       "fetching_cars_error": "Пошук автомобілів невдалий",
-      "no_project_message": "Project is required",
+      "no_project_message": "Необхідно вказати проект",
       "no_cars_message": "Немає вільних автомобілів",
       "passengers": "Пасажир",
       "passengers_error": "Вкажіть ім'я пасажира",
       "please_correct_errors": "Виправте помилку будь ласка",
-      "project": "Project",
+      "project": "Проект",
       "start_location": "Початковий пункт поїздки",
       "starting_mileage": "Початкове значення вимірювального приладу",
       "start_mileage_error":
@@ -44,8 +44,8 @@
       "from_to": "Від {from} до {destination} (Кінцевий пункт поїздки)",
       "no_driver_drives":
         "У базі даних не зберігається цього маршруту.Ви можете додати новий маршрут, вибравши опцію з меню.",
-      "synced_drives": "Previous drives",
-      "unsynced_drives": "Unsynchronized drives"
+      "synced_drives": "Минулі поїздки",
+      "unsynced_drives": "Не синхронізовані поїздки"
     },
     "header": {
       "polish_humanitarian_action": "Польська Гуманітарна Акція"
