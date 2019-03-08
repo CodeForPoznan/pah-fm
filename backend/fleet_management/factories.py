@@ -116,12 +116,31 @@ class PassengerFactory(factory.DjangoModelFactory):
     last_name = factory.Faker('last_name', locale='pl_PL')
 
 
+class ProjectFactory(factory.DjangoModelFactory):
+
+    class Meta:
+        model = Project
+
+    title = factory.Faker('sentence', nb_words=4)
+    description = factory.Faker('text', max_nb_chars=1000)
+
+    @factory.post_generation
+    def drives(self, create, extracted, **kwargs):
+        if not create:
+            return
+
+        if extracted:
+            for drive in extracted:
+                self.drives.add(drive)
+
+
 class DriveFactory(factory.DjangoModelFactory):
 
     class Meta:
         model = Drive
 
     driver = factory.SubFactory(UserFactory)
+    project = factory.SubFactory(ProjectFactory)
     car = factory.SubFactory(CarFactory)
     date = fuzzy.FuzzyDate((now() - timedelta(days=1000)).date())
     start_mileage = fuzzy.FuzzyInteger(1000000)
@@ -139,33 +158,6 @@ class DriveFactory(factory.DjangoModelFactory):
         if extracted:
             for passenger in extracted:
                 self.passengers.add(passenger)
-
-    @factory.post_generation
-    def project_set(self, create, extracted, **kwargs):
-        if not create:
-            return
-
-        if extracted:
-            for project in extracted:
-                self.project_set.add(project)
-
-
-class ProjectFactory(factory.DjangoModelFactory):
-
-    class Meta:
-        model = Project
-
-    title = factory.Faker('sentence', nb_words=4)
-    description = factory.Faker('text', max_nb_chars=1000)
-
-    @factory.post_generation
-    def drives(self, create, extracted, **kwargs):
-        if not create:
-            return
-
-        if extracted:
-            for drive in extracted:
-                self.drives.add(drive)
 
 
 class VerificationTokenFactory(factory.DjangoModelFactory):
