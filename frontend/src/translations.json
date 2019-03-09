@@ -41,10 +41,14 @@
     },
     "drives": {
       "car": "Автомобіль",
+      "description": "Опис:",
+      "ending_mileage": "Кінцеве значення вимірювального приладу",
       "from_to": "Від {from} до {destination} (Кінцевий пункт поїздки)",
       "no_driver_drives":
         "У базі даних не зберігається цього маршруту.Ви можете додати новий маршрут, вибравши опцію з меню.",
       "synced_drives": "Минулі поїздки",
+      "project": "Проект",
+      "starting_mileage": "Початкове значення вимірювального приладу",
       "unsynced_drives": "Не синхронізовані поїздки"
     },
     "header": {
@@ -111,10 +115,14 @@
     },
     "drives": {
       "car": "With car:",
+      "description": "Description:",
+      "ending_mileage": "Ending mileage:",
       "from_to": "From {from} to {destination}",
       "no_driver_drives":
         "You have no drives stored in database. You can add a new drive by choosing option from the menu.",
       "synced_drives": "Previous drives",
+      "project": "Project",
+      "starting_mileage": "Starting mileage:",
       "unsynced_drives": "Unsynchronized drives"
     },
     "header": {
@@ -181,10 +189,14 @@
     },
     "drives": {
       "car": "Samochodem:",
+      "description": "Opis trasy:",
+      "ending_mileage": "Końcowy stan licznika:",
       "from_to": "Z {from} do {destination}",
       "no_driver_drives":
         "Nie masz żadnych tras zapisanych w bazie danych. Możesz dodać nową trasę, wybierając opcję z menu.",
       "synced_drives": "Poprzednie przejazdy",
+      "project": "Projekt",
+      "starting_mileage": "Początkowy stan licznika:",
       "unsynced_drives": "Przejazdy niezsynchronizowane"
     },
     "login": {
