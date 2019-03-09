@@ -41,6 +41,7 @@ import { mapState, mapActions } from 'vuex';
 import * as actions from '../store/actions';
 import { USER } from '../store';
 import Language from './Language.vue';
+import { driveCreateRoute, driveListRoute } from '../router/index';
 
 export default {
   name: 'NavigationItems',
@@ -49,16 +50,22 @@ export default {
   },
   computed: {
     ...mapState([USER]),
+    links() {
+      return [
+        {
+          text: this.$t('common.new_drive'),
+          to: driveCreateRoute.path,
+        },
+        {
+          text: this.$t('common.drives'),
+          to: driveListRoute.path,
+        },
+      ];
+    },
   },
   methods: {
     ...mapActions([actions.LOGOUT]),
   },
-  data() {
-    return {
-      links: this.navigation,
-    };
-  },
-
 };
 </script>
 

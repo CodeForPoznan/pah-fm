@@ -7,7 +7,7 @@ import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
 import App from './App.vue';
 import './registerServiceWorker';
-import router, { driveCreateRoute, driveListRoute } from './router/index';
+import router from './router/index';
 import messages from './translations.json';
 
 Vue.use(FlagIcon);
@@ -38,23 +38,9 @@ export const i18n = new VueI18n({
   messages,
 });
 
-
-const navigation = [
-  {
-    text: i18n.tc('common.new_drive'),
-    to: driveCreateRoute.path,
-  },
-  {
-    text: i18n.tc('common.drives'),
-    to: driveListRoute.path,
-  },
-];
-
 Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);
-
-Vue.prototype.navigation = navigation;
 
 new Vue({
   render: h => h(App),
