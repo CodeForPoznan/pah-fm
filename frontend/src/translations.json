@@ -1,50 +1,198 @@
 {
-  "pl": {
+  "ua": {
     "common": {
-      "error": "Błąd",
+      "about": "Про",
+      "error": "Помилка",
+      "home": "Домашня сторінка",
+      "intro": "Польська Гуманітарна Акція - це Польська Неурядова Організація, яка працює у Польщі та інших країнах. Її завдання \"зробити світ кращим місцем шляхом полегшення людських страждань та просування гуманітарних цінностей\".",
+      "loading": "Завантаження",
+      "login": "Логін",
+      "logout": "Вийти",
+      "new_drive": "Додати новий маршрут",
+      "no": "ні",
+      "page_not_found": "страница, которую вы ищете, не существует",
+      "drives":"Маршрути",
+      "unexpected_error": "Сталася несподівана помилка. Зверніться до адміністратора.",
+      "yes": "так"
+    },
+    "drive_form": {
+      "cars": "Автомобілі",
+      "date": "Дата:",
+      "description": "Опис:",
+      "distance_traveled": "Відстань (km) яку проїхали",
+      "drive_added_offline_notification": "Поїздка буде додана до бази даних  після підключення до інтернету",
+      "drive_added_online_notification": "Поїздка була успішно додана до бази даних",
+      "ending_mileage": "Кінцеве значення вимірювального приладу",
+      "end_location": "Кінцевий пункт поїздки",
+      "end_mileage_error": "Стан кінцевого лічильника має неправильне значення",
+      "fetching_cars_error": "Пошук автомобілів невдалий",
+      "no_project_message": "Необхідно вказати проект",
+      "no_cars_message": "Немає вільних автомобілів",
+      "passengers": "Пасажир",
+      "passengers_error": "Вкажіть ім'я пасажира",
+      "please_correct_errors": "Виправте помилку будь ласка",
+      "project": "Проект",
+      "start_location": "Початковий пункт поїздки",
+      "starting_mileage": "Початкове значення вимірювального приладу",
       "start_mileage_error":
-        "Początkowy stan licznika ma nieprawidłową wartość",
-      "end_mileage_error": "Końcowy stan licznika ma nieprawidłową wartość",
-      "about": "O nas",
-      "home": "Strona glowna",
-      "login": "Zaloguj",
-      "logout": "Wyloguj",
-      "new_drive": "Dodaj trase",
-      "drives": "Trasy",
-      "intro":
-        "Polska Akcja Humanitarna jest polską organizacją pozarządową działającą w Polsce i innych krajach. Jego misją jest \"jest uczynienie świata lepszym miejscem poprzez łagodzenie ludzkiego cierpienia i promowanie wartości humanitarnych\".",
-      "yes": "tag",
-      "no": "nie",
-      "submit": "Wyślij",
-      "unexpected_error": "Wystąpił nieoczekiwany błąd. Prosimy o kontakt z administratorem.",
-      "loading": "Ładowanie",
-      "pageNotFound": "Wyszukiwana strona nie istnieje."
+        "Початкове значення вимірювального приладу має неправильне значення",
+      "submit": "Надіслати",
+      "validation_error": "Потрібно заповнити {field}"
     },
     "drives": {
-      "distance_traveled": "Łącznie przejechano {distance} km",
-      "passengers": "Pasażerowie:",
-      "passengers_error": "Pasażerowie są wymagani",
-      "please_correct_errors": "Please correct the following error(s):",
-      "date": "Date:",
-      "description": "Description:",
-      "end_location": "End location:",
-      "start_location": "Start location:",
-      "starting_mileage": "Starting Mileage:",
-      "ending_mileage": "Ending Mileage:",
-      "submit": "Submit",
-      "validation_error": "{field} is required",
+      "car": "Автомобіль",
+      "from_to": "Від {from} до {destination} (Кінцевий пункт поїздки)",
       "no_driver_drives":
-        "Nie masz żadnych tras zapisanych w bazie danych. Możesz dodać nową trasę, wybierając opcję z menu.",
-      "from_to": "Z {from} do {destination}",
-      "drive_added_online_notification": "Przejazd został dodany do bazy i oczekuje na potwierdzenie",
-      "drive_added_offline_notification": "Przejazd zostanie dodany do bazy przy ponownym połączeniu z internetem"
+        "У базі даних не зберігається цього маршруту.Ви можете додати новий маршрут, вибравши опцію з меню.",
+      "synced_drives": "Минулі поїздки",
+      "unsynced_drives": "Не синхронізовані поїздки"
+    },
+    "header": {
+      "polish_humanitarian_action": "Польська Гуманітарна Акція"
     },
     "login": {
+      "login_error": "Помилка логіна",
+      "password": "Пароль",
+      "password_required": "Запит паролю",
+      "user": "Користувач: %{username}",
+      "username": "Ім'я користувача",
+      "username_required": "Запит імені користувача"
+    },
+    "refresh": {
+      "new_version": "Доступна нова версія вебсайту",
+      "reload": "Перезавантаження системи"
+    },
+    "confirmation": {
+      "comment_label": "Додайте коментар",
+      "drive_ok_label": "Чи був маршрут OK?",
+      "submission_success": "Ваше підтвердження надіслано. Дякую!",
+      "token_inactive": "Ваше посилання закінчилося або вже підтверджено. Дякую!"
+    }
+  },
+  "gb": {
+    "common": {
+      "about": "About",
+      "error": "Error",
+      "home": "Home",
+      "intro":
+        "The Polish Humanitarian Action is a Polish non-governmental organisation which operates in Poland and other countries. Its mission is \"to make the world a better place through alleviation of human suffering and promotion of humanitarian values\".",
+      "loading": "Loading",
+      "login": "Login",
+      "logout": "Logout",
+      "new_drive": "Add new drive",
+      "no": "no",
+      "page_not_found": "The page you're looking for does not exist.",
+      "drives": "Drives",
+      "unexpected_error": "Unexpected error occurred. Please contact the administrator.",
+      "yes": "yes"
+    },
+    "drive_form": {
+      "cars": "Choose a car:",
+      "date": "Date:",
+      "description": "Description:",
+      "distance_traveled": "{distance} km traveled",
+      "drive_added_offline_notification": "Drive will be added to database after restoring connection to the internet",
+      "drive_added_online_notification": "Drive was successfully added to database",
+      "ending_mileage": "Ending mileage:",
+      "end_location": "End location:",
+      "end_mileage_error": "End mileage is incorrect",
+      "fetching_cars_error": "Fetching cars unsuccessful",
+      "no_project_message": "Project is required",
+      "no_cars_message": "No cars available",
+      "passengers": "Passengers:",
+      "passengers_error": "Passengers are required",
+      "please_correct_errors": "Please correct the following error(s):",
+      "project": "Project",
+      "start_location": "Start location:",
+      "starting_mileage": "Starting mileage:",
+      "start_mileage_error": "Start mileage is incorrect",
+      "submit": "Submit",
+      "validation_error": "{field} is required"
+    },
+    "drives": {
+      "car": "With car:",
+      "from_to": "From {from} to {destination}",
+      "no_driver_drives":
+        "You have no drives stored in database. You can add a new drive by choosing option from the menu.",
+      "synced_drives": "Previous drives",
+      "unsynced_drives": "Unsynchronized drives"
+    },
+    "header": {
+      "polish_humanitarian_action": "Polish Humanitarian Action"
+    },
+    "login": {
+      "login_error": "Login unsuccessful",
+      "password": "Password",
+      "password_required": "Password is required",
+      "user": "User: %{username}",
+      "username": "Username",
+      "username_required": "Username is required"
+    },
+    "refresh": {
+      "new_version": "A new version of website is available.",
+      "reload": "Reload"
+    },
+    "confirmation": {
+      "comment_label": "Please add a comment.",
+      "drive_ok_label": "Was the drive OK?",
+      "submission_success": "Your confirmation was sent. Thank you!",
+      "token_inactive": "Your link expired or has already been confirmed. Thank you!"
+    }
+  },
+  "pl": {
+    "common": {
+      "about": "O nas",
+      "error": "Błąd",
+      "home": "Strona główna",
+      "intro":
+       "Polska Akcja Humanitarna jest polską organizacją pozarządową działającą w Polsce i innych krajach. Jego misją jest \"jest uczynienie świata lepszym miejscem poprzez łagodzenie ludzkiego cierpienia i promowanie wartości humanitarnych\".",
+      "loading": "Ładowanie",
+      "login": "Zaloguj",
+      "logout": "Wyloguj",
+      "new_drive": "Dodaj nową trasę",
+      "no": "nie",
+      "page_not_found": "Wyszukiwana strona nie istnieje.",
+      "drives": "Trasy",
+      "unexpected_error": "Wystąpił nieoczekiwany błąd. Prosimy o kontakt z administratorem.",
+      "yes": "tak"
+    },
+    "drive_form": {
+      "cars": "Wybierz samochód:",
+      "date": "Data:",
+      "description": "Opis trasy:",
+      "distance_traveled": "Łącznie przejechano {distance} km",
+      "drive_added_offline_notification": "Przejazd zostanie dodany do bazy przy ponownym połączeniu z internetem",
+      "drive_added_online_notification": "Przejazd został dodany do bazy i oczekuje na potwierdzenie",
+      "ending_mileage": "Końcowy stan licznika:",
+      "end_location": "Lokalizacja końcowa:",
+      "end_mileage_error": "Końcowy stan licznika jest niepoprawny",
+      "fetching_cars_error": "Pobranie aut nie powiodło się",
+      "no_project_message": "Projekt jest wymagany",
+      "no_cars_message": "Auta są niedostępne",
+      "passengers": "Pasażerowie:",
+      "passengers_error": "Pasażer jest wymagany",
+      "please_correct_errors": "Proszę poprawić następujące błędy:",
+      "project": "Projekt",
+      "start_location": "Lokalizacja początkowa:",
+      "starting_mileage": "Początkowy stan licznika:",
+      "start_mileage_error": "Stan licznika jest niepoprawny",
+      "submit": "Wyślij",
+      "validation_error": "Pole {field} jest wymagane"
+    },
+    "drives": {
+      "car": "Samochodem:",
+      "from_to": "Z {from} do {destination}",
+      "no_driver_drives":
+        "Nie masz żadnych tras zapisanych w bazie danych. Możesz dodać nową trasę, wybierając opcję z menu.",
+      "synced_drives": "Poprzednie przejazdy",
+      "unsynced_drives": "Przejazdy niezsynchronizowane"
+    },
+    "login": {
+      "password": "Hasło",
+      "password_required": "Hasło jest wymagane",
       "user": "Użytkownik: %{username}",
       "username": "Nazwa użytkownika",
-      "password": "Hasło",
-      "username_required": "Nazwa użytkownika jest wymagana",
-      "password_required": "Hasło jest wymagane"
+      "username_required": "Nazwa użytkownika jest wymagana"
     },
     "refresh": {
       "new_version": "Jest dostępna nowa wersja strony.",
@@ -54,123 +202,10 @@
       "polish_humanitarian_action": "Polska Akcja Humanitarna"
     },
     "confirmation": {
-      "drive_ok_label": "Czy przejazd był OK?",
       "comment_label": "Proszę dodać komentarz",
+      "drive_ok_label": "Czy przejazd był OK?",
       "submission_success": "Potwierdzenie zostało wysłane. Dziękujemy!",
       "token_inactive": "Link wygasł albo został już potwierdzony. Dziękujemy!"
-    }
-  },
-  "ua": {
-    "common": {
-      "start_mileage_error":
-        "Початкове значення вимірювального приладу має неправильне значення",
-      "end_mileage_error": "Стан кінцевого лічильника має неправильне значення",
-      "about": "Про",
-      "home": "Домашня сторінка",
-      "login": "Логін",
-      "logout": "Вийти",
-      "new_drive": "Додати новий маршрут",
-      "drives": "Маршрути",
-      "intro":
-        "Польська гуманітарна акція - це польська неурядова організація, яка працює у Польщі та інших країнах. Його завдання \"зробити світ кращим місцем шляхом полегшення людських страждань та просування гуманітарних цінностей\".",
-      "yes": "так",
-      "no": "ні",
-      "submit": "Надіслати",
-      "unexpected_error": "Сталася несподівана помилка. Зверніться до адміністратора.",
-      "loading": "Завантаження",
-      "pageNotFound": "страница, которую вы ищете, не существует"
-    },
-    "drives": {
-      "please_correct_errors": "Виправте наступні помилки:",
-      "date": "Дата:",
-      "description": "Опис:",
-      "from": "Від:",
-      "destination": "Місце призначення:",
-      "starting_mileage": "Початок пробігу:",
-      "ending_mileage": "Закінчення пробігу:",
-      "submit": "Відправити",
-      "validation_error": "{field} nнеобхідно",
-      "no_driver_drives":
-      "У вас немає маршрутів, що зберігаються в базі даних. Ви можете додати новий маршрут, вибравши опцію в меню.",
-      "from_to": "Від {from} до {destination}"
-    },
-    "header": {
-      "polish_humanitarian_action": "Польська гуманітарна акція"
-    },
-    "confirmation": {
-      "drive_ok_label": "Чи був маршрут OK?",
-      "comment_label": "Додайте коментар",
-      "submission_success": "Ваше підтвердження надіслано. Дякую!",
-      "token_inactive": "Ваше посилання закінчилося або вже підтверджено. Дякую!"
-    }
-  },
-  "gb": {
-    "common": {
-      "start_mileage_error": "Start mileage is incorrect",
-      "end_mileage_error": "End mileage is incorrect",
-      "error": "Error",
-      "about": "About",
-      "home": "Home",
-      "login": "Login",
-      "logout": "Logout",
-      "new_drive": "Add New Drive",
-      "drives": "Drives",
-      "intro":
-        "The Polish Humanitarian Action is a Polish non-governmental organisation which operates in Poland and other countries. Its mission is \"to make the world a better place through alleviation of human suffering and promotion of humanitarian values\".",
-      "yes": "yes",
-      "no": "no",
-      "submit": "Submit",
-      "unexpected_error": "Unexpected error occurred. Please contact the administrator.",
-      "loading": "Loading",
-      "pageNotFound": "The page you're looking for does not exist."
-    },
-    "drives": {
-      "project": "Project",
-      "no_project_message": "Project is required",
-      "distance_traveled": "{distance} km traveled",
-      "synced_drives": "Previous drives",
-      "unsynced_drives": "Unsynced drives",
-      "passengers": "Passengers:",
-      "passengers_error": "Passengers are required",
-      "please_correct_errors": "Please correct the following error(s):",
-      "date": "Date:",
-      "description": "Description:",
-      "end_location": "End location:",
-      "start_location": "Start location:",
-      "starting_mileage": "Starting Mileage:",
-      "ending_mileage": "Ending Mileage:",
-      "submit": "Submit",
-      "validation_error": "{field} is required",
-      "no_driver_drives":
-        "You have no drives stored in database. You can add a new route by choosing option from the menu.",
-      "from_to": "From {from} to {destination}",
-      "drive_added_online_notification": "Drive was successfully added to database",
-      "drive_added_offline_notification": "Drive will be added to database after restoring connection to the internet",
-      "cars": "Choose a car:",
-      "car": "With car:",
-      "fetching_cars_error": "Fetching cars unsuccessful",
-      "no_cars_message": "No cars available"
-    },
-    "header": {
-      "polish_humanitarian_action": "Polish Humanitarian Action"
-    },
-    "login": {
-      "user": "User: %{username}",
-      "username": "Username",
-      "password": "Password",
-      "username_required": "Username is required",
-      "password_required": "Password is required",
-      "login_error": "Login unsuccessful"
-    },
-    "refresh": {
-      "new_version": "A new version of website is available.",
-      "reload": "Reload"
-    },
-    "confirmation": {
-      "drive_ok_label": "Was the drive OK?",
-      "comment_label": "Please add a comment.",
-      "submission_success": "Your confirmation was sent. Thank you!",
-      "token_inactive": "Your link expired or has already been confirmed. Thank you!"
     }
   }
 }

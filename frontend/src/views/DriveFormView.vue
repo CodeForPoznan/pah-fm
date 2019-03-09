@@ -10,7 +10,7 @@
               :show="confirmationOnline"
               @dismissed="confirmationOnline=false"
             >
-              <b>{{ $t('drives.drive_added_online_notification') }}</b>
+              <b>{{ $t('drive_form.drive_added_online_notification') }}</b>
             </b-alert>
             <b-alert
               variant="secondary"
@@ -18,12 +18,12 @@
               :show="confirmationOffline"
               @dismissed="confirmationffline=false"
             >
-              <b>{{ $t('drives.drive_added_offline_notification') }}</b>
+              <b>{{ $t('drive_form.drive_added_offline_notification') }}</b>
             </b-alert>
             <div
               class="alert alert-danger errors"
               v-if="Object.keys(errors).length">
-              <b>{{ $t('drives.please_correct_errors') }}</b>
+              <b>{{ $t('drive_form.please_correct_errors') }}</b>
               <ul class="error-list">
                 <li
                   class="error"
@@ -35,7 +35,7 @@
             <form
               @submit.prevent="handleSubmit">
               <div class="form-group">
-                <label>{{ $t('drives.date') }}</label>
+                <label>{{ $t('drive_form.date') }}</label>
                 <input
                   type="date"
                   v-model="drive.date"
@@ -45,7 +45,7 @@
                 >
               </div>
               <div class="form-group">
-                <label>{{ $t('drives.project') }}</label>
+                <label>{{ $t('drive_form.project') }}</label>
                 <select
                   v-if="projects.data"
                   v-model="drive.project"
@@ -61,10 +61,10 @@
                 </select>
                 <p
                   class="font-weight-bold"
-                  v-if="!cars.data">{{ $t('drives.no_project_message') }}</p>
+                  v-if="!cars.data">{{ $t('drive_form.no_project_message') }}</p>
               </div>
               <div class="form-group">
-                <label>{{ $t('drives.cars') }}</label>
+                <label>{{ $t('drive_form.cars') }}</label>
                 <select
                   v-if="cars.data"
                   v-model="drive.car"
@@ -80,11 +80,11 @@
                 </select>
                 <p
                   class="font-weight-bold"
-                  v-if="!cars.data">{{ $t('drives.no_cars_message') }}</p>
+                  v-if="!cars.data">{{ $t('drive_form.no_cars_message') }}</p>
               </div>
 
               <div class="form-group">
-                <label>{{ $t('drives.passengers') }}</label>
+                <label>{{ $t('drive_form.passengers') }}</label>
                 <multi-select
                   :options="passengers"
                   :selected-options="selectedPassengers"
@@ -93,7 +93,7 @@
               </div>
 
               <div class="form-group">
-                <label>{{ $t('drives.description') }}</label>
+                <label>{{ $t('drive_form.description') }}</label>
                 <input
                   type="text"
                   v-model="drive.description"
@@ -103,7 +103,7 @@
                 >
               </div>
               <div class="form-group">
-                <label>{{ $t('drives.start_location') }}</label>
+                <label>{{ $t('drive_form.start_location') }}</label>
                 <input
                   type="text"
                   v-model="drive.startLocation"
@@ -114,7 +114,7 @@
                 >
               </div>
               <div class="form-group">
-                <label>{{ $t('drives.end_location') }}</label>
+                <label>{{ $t('drive_form.end_location') }}</label>
                 <input
                   type="text"
                   maxlength="100"
@@ -126,7 +126,7 @@
               </div>
               <div class="row">
                 <div class="form-group col-sm-6">
-                  <label>{{ $t('drives.starting_mileage') }}</label>
+                  <label>{{ $t('drive_form.starting_mileage') }}</label>
                   <input
                     min="0"
                     onkeypress="return event.key === 'Enter'
@@ -141,7 +141,7 @@
                   >
                 </div>
                 <div class="form-group col-sm-6">
-                  <label>{{ $t('drives.ending_mileage') }}</label>
+                  <label>{{ $t('drive_form.ending_mileage') }}</label>
                   <input
                     min="0"
                     onkeypress="return event.key === 'Enter'
@@ -157,12 +157,12 @@
                 </div>
               </div>
               <div class="form-group col-xs-12">
-                {{ $t('drives.distance_traveled', { distance: distance }) }}
+                {{ $t('drive_form.distance_traveled', { distance: distance }) }}
               </div>
               <div class="form-group">
                 <button
                   class="btn btn-primary"
-                >{{ $t('drives.submit') }}</button>
+                >{{ $t('drive_form.submit') }}</button>
               </div>
             </form>
           </div>
@@ -252,7 +252,7 @@ export default {
         .reduce(makeErrorsPartial, {});
 
       if (!data.passengers || !data.passengers.length) {
-        this.errors.passengers = this.$t('drives.passengers_error');
+        this.errors.passengers = this.$t('drive_form.passengers_error');
       }
 
       const { startMileage, endMileage } = data;
@@ -261,8 +261,8 @@ export default {
         && !!endMileage
         && parseInt(startMileage, 10) >= parseInt(endMileage, 10)
       ) {
-        this.errors.startMileage = this.$t('common.start_mileage_error');
-        this.errors.endMileage = this.$t('common.end_mileage_error');
+        this.errors.startMileage = this.$t('drive_form.start_mileage_error');
+        this.errors.endMileage = this.$t('drive_form.end_mileage_error');
       }
     },
   },
