@@ -1,5 +1,4 @@
 server {
-    listen 80;
     listen 443 default_server ssl;
 
     location ~ ^/(media|api|admin)/ {
@@ -15,4 +14,18 @@ server {
         root /var/www/pahfm/frontend/dist;
         try_files $uri $uri/ /index.html;
     }
+
+    server_name pahfm.codeforpoznan.pl; # managed by Certbot
+
+    ssl_certificate /etc/letsencrypt/live/pahfm.codeforpoznan.pl/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/pahfm.codeforpoznan.pl/privkey.pem; # managed by Certbot
+}
+
+server {
+    listen 80;
+    server_name pahfm.codeforpoznan.pl;
+
+    if ($host = pahfm.codeforpoznan.pl) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
 }
