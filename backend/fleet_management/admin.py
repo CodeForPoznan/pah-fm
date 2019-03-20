@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
 from .models import Car, Passenger, Drive, User, Project, VerificationToken
 
@@ -6,7 +7,7 @@ from .models import Car, Passenger, Drive, User, Project, VerificationToken
 admin.site.register(Car)
 admin.site.register(Passenger)
 admin.site.register(Drive)
-admin.site.register(User)
+admin.site.register(User, UserAdmin)
 admin.site.register(Project)
 
 
