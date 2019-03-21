@@ -54,14 +54,18 @@
           repo: https://github.com/CodeForPoznan/pah-fm.git
           dest: /var/www/pahfm
           update: yes
-        notify: restart nginx
+        notify:
+          - restart nginx
+          - restart uwsgi
 
       - name: setup python virtualenv
         pip:
           requirements: /var/www/pahfm/backend/requirements/base.txt
           virtualenv: /var/www/pahfm/backend/.venv
           virtualenv_python: python3.6
-        notify: restart nginx
+        notify:
+          - restart nginx
+          - restart uwsgi
 
       - name: run django migrations
         environment:
@@ -74,6 +78,8 @@
           app_path: /var/www/pahfm/backend
           command: migrate
           virtualenv: /var/www/pahfm/backend/.venv
+        notify: restart uwsgi
+
 
       - name: Install NVM
         shell: "wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | PROFILE=.bashrc bash"
@@ -104,13 +110,16 @@
           src: pah.ini.j2
           dest: /etc/uwsgi/sites/pah.ini
           mode: 0644
-        notify: restart nginx
+        notify:
+          - restart nginx
+          - restart uwsgi
 
       - name: configure uwsgi service
         template:
           src: uwsgi.service.j2
           dest: /etc/systemd/system/uwsgi.service
           mode: 0644
+        notify: restart uwsgi
 
       - name: ensure uwsgi started
         service:
@@ -142,4 +151,9 @@
       - name: restart nginx
         service:
           name: nginx
+          state: restarted
+
+      - name: restart uwsgi
+        service:
+          name: uwsgi
           state: restarted
