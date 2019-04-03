@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from rest_framework_jwt.views import obtain_jwt_token
 
@@ -38,4 +40,4 @@ urlpatterns = [
     path('api/projects', ProjectView.as_view(), name='projects'),
     path('api/verification-token/<uuid:token>',
          VerificationTokenView.as_view(), name='verification-token')
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
