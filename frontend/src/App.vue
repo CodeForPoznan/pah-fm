@@ -1,20 +1,18 @@
 <template>
   <div id="app">
     <Status />
-    <Header v-if="!isLogin" />
-    <Language class="language"/>
+    <Header />
     <ScaleRotate
       class="mobile-menu"
       v-if="!isLogin && !isConfirmationPage"
       right>
       <NavigationItems />
-      <Language class="language-mobile"/>
     </ScaleRotate>
     <div
       id="page-wrap"
-      class="container page-container page-wrap">
+      class="container">
       <div class="row">
-        <div class="col-sm-12">
+        <div class="col-xs-12 page">
           <transition
             name="fade"
             mode="out-in"
@@ -24,7 +22,6 @@
         </div>
       </div>
     </div>
-    <Footer />
     <Refresh />
   </div>
 </template>
@@ -33,9 +30,7 @@
 import { mapState, mapActions } from 'vuex';
 import { ScaleRotate } from 'vue-burger-menu';
 
-import Language from './components/Language.vue';
 import Header from './components/Header.vue';
-import Footer from './components/Footer.vue';
 import Refresh from './components/Refresh.vue';
 import Status from './components/Status.vue';
 import store, { LANGUAGE } from './store';
@@ -75,16 +70,9 @@ export default {
   components: {
     Refresh,
     Header,
-    Footer,
     Status,
-    Language,
     ScaleRotate,
     NavigationItems,
-  },
-  data() {
-    return {
-      links: this.navigation,
-    };
   },
 };
 </script>
@@ -98,39 +86,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   background: $white;
-}
-
-.page-container {
-  min-height: calc(100vh - #{$footer-height} - #{$header-height});
-
-  @include media-breakpoint-down (md) {
-    min-height: calc(100vh - #{$footer-height-mobile} - #{$header-height-mobile});
-  }
-}
-
-.language {
-  @include media-breakpoint-down (md) {
-    display: none;
-  }
-
-  position: absolute;
-  right: 1em;
-  top: 1em;
-}
-
-.language-mobile {
-  display: flex;
-  margin-top: 50px;
-
-  & .lang {
-    margin: 0 auto;
-    padding: 0 !important;
-
-    & li {
-      padding: 10px;
-      margin: 0;
-    }
-  }
+  min-height: 100vh;
 }
 
 .bm-item-list {
@@ -143,10 +99,6 @@ export default {
 }
 
 .mobile-menu {
-  @include media-breakpoint-up (lg) {
-    display: none;
-  }
-
   .bm-menu {
     background: $pah-color-3;
   }
@@ -170,5 +122,9 @@ export default {
 
 .is-invalid {
   border-color: red !important;
+}
+
+.page {
+  width: 100%;
 }
 </style>

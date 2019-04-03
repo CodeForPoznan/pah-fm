@@ -20,20 +20,20 @@ def send_emails_to_passengers(sender, **kwargs):
 
     passenger = Passenger.objects.get(id=kwargs['passenger_id'])
 
-    with get_connection() as connection:
-        message = template.render({
-            'driver': driver,
-            'drive': drive,
-            'passenger': passenger,
-            'verification_url': token.verification_url,
-        })
-        address = passenger.email
-        email = EmailMessage(
-            subject=subject,
-            body=message,
-            from_email=EMAIL_ADDRESS,
-            to=[address],
-            connection=connection,
-        )
-        email.content_subtype = 'html'
-        email.send()
+    # with get_connection() as connection:
+    #     message = template.render({
+    #         'driver': driver,
+    #         'drive': drive,
+    #         'passenger': passenger,
+    #         'verification_url': token.verification_url,
+    #     })
+    #     address = passenger.email
+    #     email = EmailMessage(
+    #         subject=subject,
+    #         body=message,
+    #         from_email=EMAIL_ADDRESS,
+    #         to=[address],
+    #         connection=connection,
+    #     )
+    #     email.content_subtype = 'html'
+    #     email.send()

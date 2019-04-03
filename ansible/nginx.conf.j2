@@ -1,0 +1,37 @@
+server {
+    listen 443 default_server ssl;
+
+    gzip            on;
+    gzip_min_length 1000;
+    gzip_types text/plain text/css text/xml text/javascript application/x-javascript application/xml application/javascript;
+    gzip_types      text/javascript text/css;
+    gzip_proxied any;
+
+    location ~ ^/(media|api|admin)/ {
+        include uwsgi_params;
+        uwsgi_pass unix:/run/uwsgi/pahfm.sock;
+    }
+
+    location /static {
+        alias /var/www/pahfm/backend/staticfiles;
+    }
+
+    location / {
+        root /var/www/pahfm/frontend/dist;
+        try_files $uri $uri/ /index.html;
+    }
+
+    server_name pahfm.codeforpoznan.pl; # managed by Certbot
+
+    ssl_certificate /etc/letsencrypt/live/pahfm.codeforpoznan.pl/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/pahfm.codeforpoznan.pl/privkey.pem; # managed by Certbot
+}
+
+server {
+    listen 80;
+    server_name pahfm.codeforpoznan.pl;
+
+    if ($host = pahfm.codeforpoznan.pl) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+}

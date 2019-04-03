@@ -2,7 +2,7 @@ import { get, patch, post } from '../services/api/http';
 import { login, saveToken, deleteToken } from '../services/api/auth';
 import { getMyself } from '../services/api/user';
 import * as mutations from './mutations';
-import { mapRoute } from './helpers';
+import { mapDrive } from './helpers';
 import { i18n } from '../main';
 import { actions as apiActions, namespaces, SYNC, SYNC_ITEM_SUCCESS } from './constants';
 
@@ -33,7 +33,7 @@ export const actions = {
       .then((token) => {
         commit(mutations.SET_LOGIN_ERROR, null);
         saveToken(token);
-        dispatch(FETCH_USER, { callback: () => window.location.replace('/') });
+        dispatch(FETCH_USER, { callback: () => window.location.replace('/drive') });
       })
       .catch(() => {
         commit(mutations.SET_LOGIN_ERROR, i18n.tc('login.login_error'));
@@ -48,7 +48,7 @@ export const actions = {
     window.location.replace(login.path);
   },
   [SUBMIT]({ commit, dispatch }, { form }) {
-    commit(mutations.ADD_ROUTE, form);
+    commit(mutations.ADD_DRIVE, form);
     dispatch(SYNC);
   },
   [SWITCH_LANGUAGE]({ commit }, language) {
@@ -72,16 +72,16 @@ export const actions = {
       .then(() => commit(mutations.SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS, false));
   },
   async [SYNC]({ dispatch, state, commit }) {
-    if (state.routes.length === 0 && state.user) {
+    if (state.unsyncedDrives.length === 0 && state.user) {
       dispatch(`${namespaces.drives}/${apiActions.fetchDrives}`);
       return;
     }
 
-    if (state.routes.length === 0 || !state.user || !navigator.onLine) {
+    if (state.unsyncedDrives.length === 0 || !state.user || !navigator.onLine) {
       return;
     }
 
-    const { syncId, ...mappedRoute } = mapRoute(state.routes[0]);
+    const { syncId, ...mappedRoute } = mapDrive(state.unsyncedDrives[0]);
 
     try {
       await post('drives', mappedRoute);

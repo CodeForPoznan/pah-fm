@@ -84,7 +84,7 @@ checkout:  ## Checkout to branch and start clean app, i.e. make checkout BRANCH=
 	docker-compose up -d
 	docker-compose exec backend wait-for-it localhost:8000
 	make populate-database
-	@echo "Complete! Go to localhost:8000 and work!"
+	@echo "Complete! Go to localhost:8080 and work!"
 
 checkout-pr:  ## Checkout to Pull Request, i.e. make checkout-pr PR=150
 	git fetch upstream pull/${PR}/head:${PR}

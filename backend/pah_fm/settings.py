@@ -37,6 +37,8 @@ else:
     ALLOWED_HOSTS = [
         'localhost',
         '127.0.0.1',
+        '52.232.62.212',
+        '.pahfm.codeforpoznan.pl',
     ]
 
 
@@ -52,6 +54,7 @@ INSTALLED_APPS = [
 
     # 3rd party apps
     'corsheaders',
+    'rest_framework',
 
     # local apps
     'fleet_management',
@@ -102,11 +105,11 @@ if not PRODUCTION:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'USER': os.environ.get('PAH-FM_DB_USER', 'pah-fm'),
-            'NAME': os.environ.get('PAH-FM_DB_NAME', 'pah-fm'),
-            'PASSWORD': os.environ.get('PAH-FM_DB_PASS', 'pah-fm'),
-            'HOST': os.environ.get('PAH-FM_DB_HOST', 'localhost'),
-            'PORT': os.environ.get('PAH-FM_DB_PORT', '5432'),
+            'USER': os.environ.get('PAH_FM_DB_USER', 'pah-fm'),
+            'NAME': os.environ.get('PAH_FM_DB_NAME', 'pah-fm'),
+            'PASSWORD': os.environ.get('PAH_FM_DB_PASS', 'pah-fm'),
+            'HOST': os.environ.get('PAH_FM_DB_HOST', 'localhost'),
+            'PORT': os.environ.get('PAH_FM_DB_PORT', '5432'),
         }
     }
 

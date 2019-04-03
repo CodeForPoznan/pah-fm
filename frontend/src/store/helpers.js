@@ -55,16 +55,16 @@ const makeFetchData = url => ({ commit }) => {
 
 const makeDomainItem = id => ({ id });
 
-const mapRoute = route => ({
-  ...route,
-  car: makeDomainItem(route.car),
-  project: makeDomainItem(route.project),
-  passengers: route.passengers.map(makeDomainItem),
+const mapDrive = drive => ({
+  ...drive,
+  car: makeDomainItem(drive.car),
+  project: makeDomainItem(drive.project),
+  passengers: drive.passengers.map(makeDomainItem),
 });
 
 
 export {
-  mapRoute,
+  mapDrive,
   makeDomainItem,
   makeModule,
   makeFetchData,

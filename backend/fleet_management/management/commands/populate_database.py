@@ -42,10 +42,11 @@ class Command(BaseCommand):
         all_users = list(User.objects.all())
         all_passengers = list(Passenger.objects.all())
         all_projects = list(Project.objects.all())
+
         for _ in tqdm(range(500)):
             DriveFactory.create(
                 passengers=random.sample(all_passengers, random.randint(1, 4)),
-                project_set=random.sample(all_projects, random.randint(1, 4)),
+                project=random.choice(all_projects),
                 driver=random.choice(all_users),
             )
 

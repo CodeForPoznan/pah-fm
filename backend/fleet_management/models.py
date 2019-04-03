@@ -65,6 +65,7 @@ class Drive(models.Model):
         return f'Drive from {self.start_location} to {self.end_location} (driver: {self.driver.name})'
 
 
+
 class VerificationToken(models.Model):
     """
     Keeps track of drives' verification statuses.
