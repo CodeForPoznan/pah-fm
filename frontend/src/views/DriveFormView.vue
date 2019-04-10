@@ -111,18 +111,18 @@
 
               <div class="form-group">
                 <label>{{ $t('drive_form.passenger') }}</label>
-                  <select
-                          v-model="drive.passenger"
-                          name="passenger"
-                          class="form-control"
-                          :class="{ 'is-invalid': errors['passenger'] }"
-                  >
-                      <option
-                              v-for="passenger in passengers"
-                              :key="passenger.value"
-                              :value="passenger.value"
-                      >{{ passenger.text }}</option>
-                  </select>
+                <select
+                  v-model="drive.passenger"
+                  name="passenger"
+                  class="form-control"
+                  :class="{ 'is-invalid': errors['passenger'] }"
+                >
+                  <option
+                    v-for="passenger in passengers"
+                    :key="passenger.value"
+                    :value="passenger.value"
+                  >{{ passenger.text }}</option>
+                </select>
               </div>
 
               <div class="form-group">
@@ -184,7 +184,7 @@ import { isErroring, makeErrors, stringFields } from './services';
 import { namespaces, actions as apiActions, IS_ONLINE } from '../store/constants';
 
 const defaultFormState = {
-  date: new Date().toISOString().slice(0,10),
+  date: new Date().toISOString().slice(0, 10),
   car: '',
   description: '',
   startMileage: '',
