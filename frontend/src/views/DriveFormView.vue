@@ -181,7 +181,7 @@ import { isErroring, makeErrors, stringFields } from './services';
 import { namespaces, actions as apiActions, IS_ONLINE } from '../store/constants';
 
 const defaultFormState = {
-  date: '',
+  date: new Date().toISOString().slice(0,10),
   car: '',
   description: '',
   startMileage: '',
