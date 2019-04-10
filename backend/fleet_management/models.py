@@ -62,8 +62,8 @@ class Drive(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'Drive from {self.start_location} to {self.end_location} (driver: {self.driver.name})'
-
+        return f"""Drive from {self.start_location} to
+                 {self.end_location} (driver: {self.driver.name})"""
 
 
 class VerificationToken(models.Model):
