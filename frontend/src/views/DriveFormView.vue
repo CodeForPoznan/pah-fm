@@ -110,12 +110,19 @@
               </div>
 
               <div class="form-group">
-                <label>{{ $t('drive_form.passengers') }}</label>
-                <multi-select
-                  :options="passengers"
-                  :selected-options="selectedPassengers"
-                  @select="onPassengerSelect"
-                  :class="{ 'is-invalid': errors['passengers']}" />
+                <label>{{ $t('drive_form.passenger') }}</label>
+                <select
+                  v-model="drive.passenger"
+                  name="passenger"
+                  class="form-control"
+                  :class="{ 'is-invalid': errors['passenger'] }"
+                >
+                  <option
+                    v-for="passenger in passengers"
+                    :key="passenger.value"
+                    :value="passenger.value"
+                  >{{ passenger.text }}</option>
+                </select>
               </div>
 
               <div class="form-group">
@@ -171,37 +178,30 @@
 </template>
 
 <script>
-import { MultiSelect } from 'vue-search-select';
-
 import { mapActions, mapGetters, mapState } from 'vuex';
 import * as actions from '../store/actions';
 import { isErroring, makeErrors, stringFields } from './services';
 import { namespaces, actions as apiActions, IS_ONLINE } from '../store/constants';
 
 const defaultFormState = {
-  date: new Date().toISOString().slice(0,10),
+  date: new Date().toISOString().slice(0, 10),
   car: '',
   description: '',
   startMileage: '',
   endMileage: '',
   project: '',
-  passengers: [],
+  passenger: '',
   startLocation: '',
   endLocation: '',
 };
 
 export default {
   name: 'DriveFormView',
-  components: {
-    MultiSelect,
-  },
   data() {
     return {
       drive: { ...defaultFormState },
       errors: {},
       searchText: '',
-      selectedPassengers: [],
-      lastSelectPassenger: {},
       confirmationOnline: false,
       confirmationOffline: false,
     };
@@ -211,20 +211,20 @@ export default {
     ...mapActions(namespaces.cars, [apiActions.fetchCars]),
     ...mapActions(namespaces.passengers, [apiActions.fetchPassengers]),
     ...mapActions(namespaces.projects, [apiActions.fetchProjects]),
-    onPassengerSelect(passengers, lastSelectPassenger) {
-      this.selectedPassengers = passengers;
-      this.lastSelectPassenger = lastSelectPassenger;
-      this.drive.passengers = passengers.map(i => i.value);
-    },
     handleSubmit() {
       this.validateForm();
       this.confirmationOffline = false;
       this.confirmationOnline = false;
 
       if (!Object.keys(this.errors).length) {
-        this[actions.SUBMIT]({ form: { ...this.drive, syncId: Math.floor(Date.now() / 1000) } });
+        this[actions.SUBMIT]({
+          form: {
+            ...this.drive,
+            passengers: [this.drive.passenger],
+            syncId: Math.floor(Date.now() / 1000),
+          },
+        });
         this.drive = { ...defaultFormState };
-        this.selectedPassengers = [];
         if (this.isOnline) {
           this.confirmationOnline = true;
         } else {
@@ -248,10 +248,6 @@ export default {
       this.errors = Object.keys(data)
         .filter(isErroring(data))
         .reduce(makeErrorsPartial, {});
-
-      if (!data.passengers || !data.passengers.length) {
-        this.errors.passengers = this.$t('drive_form.passengers_error');
-      }
 
       const { startMileage, endMileage } = data;
       if (

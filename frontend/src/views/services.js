@@ -6,6 +6,7 @@ const requiredFields = [
   'endMileage',
   'startLocation',
   'endLocation',
+  'passenger',
 ];
 
 const stringFields = requiredFields;
