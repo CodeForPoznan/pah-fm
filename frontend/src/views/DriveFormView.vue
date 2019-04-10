@@ -45,6 +45,32 @@
                 >
               </div>
               <div class="form-group">
+                <label>{{ $t('drive_form.start_location') }}</label>
+                <input
+                  type="text"
+                  v-model="drive.startLocation"
+                  name="startLocation"
+                  maxlength="100"
+                  class="form-control"
+                  :class="{ 'is-invalid': errors['startLocation'] }"
+                >
+              </div>
+              <div class="form-group">
+                <label>{{ $t('drive_form.starting_mileage') }}</label>
+                <input
+                  min="0"
+                  onkeypress="return event.key === 'Enter'
+                      || (Number(event.key) >= 0
+                      && Number(event.key) <= 9
+                      && event.target.value < 20000000)"
+                  type="number"
+                  v-model="drive.startMileage"
+                  name="startMileage"
+                  class="form-control"
+                  :class="{ 'is-invalid': errors['startMileage'] }"
+                >
+              </div>
+              <div class="form-group">
                 <label>{{ $t('drive_form.project') }}</label>
                 <select
                   v-if="projects.data"
@@ -103,17 +129,6 @@
                 >
               </div>
               <div class="form-group">
-                <label>{{ $t('drive_form.start_location') }}</label>
-                <input
-                  type="text"
-                  v-model="drive.startLocation"
-                  name="startLocation"
-                  maxlength="100"
-                  class="form-control"
-                  :class="{ 'is-invalid': errors['startLocation'] }"
-                >
-              </div>
-              <div class="form-group">
                 <label>{{ $t('drive_form.end_location') }}</label>
                 <input
                   type="text"
@@ -124,37 +139,20 @@
                   :class="{ 'is-invalid': errors['endLocation'] }"
                 >
               </div>
-              <div class="row">
-                <div class="form-group col-sm-6">
-                  <label>{{ $t('drive_form.starting_mileage') }}</label>
-                  <input
-                    min="0"
-                    onkeypress="return event.key === 'Enter'
-                        || (Number(event.key) >= 0
-                        && Number(event.key) <= 9
-                        && event.target.value < 20000000)"
-                    type="number"
-                    v-model="drive.startMileage"
-                    name="startMileage"
-                    class="form-control"
-                    :class="{ 'is-invalid': errors['startMileage'] }"
-                  >
-                </div>
-                <div class="form-group col-sm-6">
-                  <label>{{ $t('drive_form.ending_mileage') }}</label>
-                  <input
-                    min="0"
-                    onkeypress="return event.key === 'Enter'
-                        || (Number(event.key) >= 0
-                        && Number(event.key) <= 9
-                        && event.target.value < 20000000)"
-                    type="number"
-                    v-model="drive.endMileage"
-                    name="endMileage"
-                    class="form-control"
-                    :class="{ 'is-invalid': errors['endMileage'] }"
-                  >
-                </div>
+              <div class="form-group">
+                <label>{{ $t('drive_form.ending_mileage') }}</label>
+                <input
+                  min="0"
+                  onkeypress="return event.key === 'Enter'
+                      || (Number(event.key) >= 0
+                      && Number(event.key) <= 9
+                      && event.target.value < 20000000)"
+                  type="number"
+                  v-model="drive.endMileage"
+                  name="endMileage"
+                  class="form-control"
+                  :class="{ 'is-invalid': errors['endMileage'] }"
+                >
               </div>
               <div class="form-group col-xs-12">
                 {{ $t('drive_form.distance_traveled', { distance: distance }) }}
