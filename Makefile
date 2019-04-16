@@ -12,17 +12,17 @@ stop:  ## Stop project
 logs:  ## Attach to logs
 	docker-compose logs -f
 
-build-backend:
+build-backend:  ## Build backend
 	docker build ./backend -t codeforpoznan/pah-fm-backend
 
-build-frontend:
+build-frontend:  ## Build frontend
 	docker build ./frontend -t codeforpoznan/pah-fm-frontend
 
-build:
+build:  ## Build backend & frontend
 	make build-backend
 	make build-frontend
 
-rebuild:
+rebuild:  ## Rebuild whole project
 	@echo "Rebuilding frontend and backend..."
 	docker-compose stop backend frontend 2>/dev/null
 	docker-compose rm -fv backend frontend 2>/dev/null
@@ -30,48 +30,48 @@ rebuild:
 	make build-frontend
 	@echo "Complete! Run 'docker-compose up -d' to start containers!"
 
-lint-backend:
+lint-backend:  ## Run linters on backend
 	docker-compose run --rm --no-deps backend pycodestyle --exclude='fleet_management/migrations/*' .
 
-lint-frontend:
+lint-frontend:  ## Run linters on frontend
 	docker-compose run --rm --no-deps frontend npm run lint
 
 lint:   ## Run linters
 	make lint-frontend
 	make lint-backend
 
-test-backend:
+test-backend:  ## Run backend tests
 	make manage CMD=test
 
 test:  ## Run tests
 	make test-backend
 
-bash-backend:
+bash-backend:  ## Enter backend container
 	docker-compose exec -ti backend bash
 
 debug-backend:  ## Debug backend (Django)
 	docker attach `docker-compose ps -q backend`
 
-manage:
+manage:  ## Use manage.py
 	docker-compose run --rm --no-deps backend python3 manage.py ${CMD}
 
-populate-database:
+populate-database:  ## Populate database with factory based data
 	make manage CMD=populate_database
 
-manage-heroku:
+manage-heroku:  ## Use manage command on heroku
 	heroku run --remote heroku-backend python manage.py ${CMD}
 
-deploy-backend-heroku:
+deploy-backend-heroku:  ## Deploy backeond on heroku
 	git subtree push --prefix backend/ heroku-backend master
 
-deploy-backend-heroku-force:
+deploy-backend-heroku-force:  ## Deploy backend on heroku (with force)
 	git push heroku-backend `git subtree split --prefix backend ${BRANCH}`:master --force
 
-deploy-frontend-heroku:
+deploy-frontend-heroku:  ## Deploy frontend on heroku
 	docker-compose run --rm --no-deps frontend npm run build:heroku
 	cd ./frontend && npm run deploy:heroku
 
-send-test-email-heroku:
+send-test-email-heroku:  ## Send test email from heroku
 	make manage-heroku CMD="send_test_mail ${EMAIL}"
 
 checkout:  ## Checkout to branch and start clean app, i.e. make checkout BRANCH=master
