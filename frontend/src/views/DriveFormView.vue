@@ -40,6 +40,7 @@
                   type="date"
                   v-model="drive.date"
                   name="date"
+                  :max="currentDate"
                   class="form-control"
                   :class="{ 'is-invalid': errors['date'] }"
                 >
@@ -206,6 +207,7 @@ export default {
       lastSelectPassenger: {},
       confirmationOnline: false,
       confirmationOffline: false,
+      currentDate: new Date().toISOString().split('T')[0]
     };
   },
   methods: {
