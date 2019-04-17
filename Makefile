@@ -61,7 +61,7 @@ populate-database:  ## Populate database with factory based data
 manage-heroku:  ## Use manage command on heroku
 	heroku run --remote heroku-backend python manage.py ${CMD}
 
-deploy-backend-heroku:  ## Deploy backeond on heroku
+deploy-backend-heroku:  ## Deploy backend on heroku
 	git subtree push --prefix backend/ heroku-backend master
 
 deploy-backend-heroku-force:  ## Deploy backend on heroku (with force)
