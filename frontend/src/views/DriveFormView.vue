@@ -4,22 +4,6 @@
       <div class="row">
         <div class="col-lg-8 offset-lg-2">
           <div>
-            <b-alert
-              variant="success"
-              dismissible
-              :show="confirmationOnline"
-              @dismissed="confirmationOnline=false"
-            >
-              <b>{{ $t('drive_form.drive_added_online_notification') }}</b>
-            </b-alert>
-            <b-alert
-              variant="secondary"
-              dismissible
-              :show="confirmationOffline"
-              @dismissed="confirmationffline=false"
-            >
-              <b>{{ $t('drive_form.drive_added_offline_notification') }}</b>
-            </b-alert>
             <div
               class="alert alert-danger errors"
               v-if="Object.keys(errors).length">
@@ -44,6 +28,7 @@
                   :class="{ 'is-invalid': errors['date'] }"
                 >
               </div>
+
               <div class="form-group">
                 <label>{{ $t('drive_form.start_location') }}</label>
                 <input
@@ -89,6 +74,7 @@
                   class="font-weight-bold"
                   v-if="!cars.data">{{ $t('drive_form.no_project_message') }}</p>
               </div>
+
               <div class="form-group">
                 <label>{{ $t('drive_form.cars') }}</label>
                 <select
@@ -135,6 +121,7 @@
                   :class="{ 'is-invalid': errors['description']}"
                 >
               </div>
+
               <div class="form-group">
                 <label>{{ $t('drive_form.end_location') }}</label>
                 <input
@@ -164,11 +151,30 @@
               <div class="form-group col-xs-12">
                 {{ $t('drive_form.distance_traveled', { distance: distance }) }}
               </div>
+
+              <b-alert
+                class="col-xs-12"
+                variant="success"
+                dismissible
+                :show="confirmationOnline"
+                @dismissed="confirmationOnline=false">
+                <b>{{ $t('drive_form.drive_added_online_notification') }}</b>
+              </b-alert>
+              <b-alert
+                class="col-xs-12"
+                variant="secondary"
+                dismissible
+                :show="confirmationOffline"
+                @dismissed="confirmationffline=false">
+                <b>{{ $t('drive_form.drive_added_offline_notification') }}</b>
+              </b-alert>
+
               <div class="form-group">
                 <button
-                  class="btn btn-primary"
+                  class="btn btn-primary col-xs-3"
                 >{{ $t('drive_form.submit') }}</button>
               </div>
+
             </form>
           </div>
         </div>
