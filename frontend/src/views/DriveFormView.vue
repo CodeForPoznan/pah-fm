@@ -148,30 +148,31 @@
                   :class="{ 'is-invalid': errors['endMileage'] }"
                 >
               </div>
-              
               <div class="form-group col-xs-12">
                 {{ $t('drive_form.distance_traveled', { distance: distance }) }}
               </div>
 
-              <b-alert class="col-xs-12"
-                  variant="success"
-                  dismissible
-                  :show="confirmationOnline"
-                  @dismissed="confirmationOnline=false">
-                  <b>{{ $t('drive_form.drive_added_online_notification') }}</b>
+              <b-alert
+                class="col-xs-12"
+                variant="success"
+                dismissible
+                :show="confirmationOnline"
+                @dismissed="confirmationOnline=false">
+                <b>{{ $t('drive_form.drive_added_online_notification') }}</b>
               </b-alert>
-              <b-alert class="col-xs-12"
-                  variant="secondary"
-                  dismissible
-                  :show="confirmationOffline"
-                  @dismissed="confirmationffline=false">
-                  <b>{{ $t('drive_form.drive_added_offline_notification') }}</b>
+              <b-alert
+                class="col-xs-12"
+                variant="secondary"
+                dismissible
+                :show="confirmationOffline"
+                @dismissed="confirmationffline=false">
+                <b>{{ $t('drive_form.drive_added_offline_notification') }}</b>
               </b-alert>
 
               <div class="form-group">
                 <button
                   class="btn btn-primary col-xs-3"
-                  >{{ $t('drive_form.submit') }}</button>
+                >{{ $t('drive_form.submit') }}</button>
               </div>
 
             </form>
