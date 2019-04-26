@@ -19,7 +19,7 @@
       "cars": "Автомобілі",
       "date": "Дата:",
       "description": "Опис:",
-      "distance_traveled": "Відстань (km) яку проїхали",
+      "distance_traveled": "{distance} (km) яку проїхали",
       "drive_added_offline_notification": "Поїздка буде додана до бази даних  після підключення до інтернету",
       "drive_added_online_notification": "Поїздка була успішно додана до бази даних",
       "ending_mileage": "Кінцеве значення вимірювального приладу",
