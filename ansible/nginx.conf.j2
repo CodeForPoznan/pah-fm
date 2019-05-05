@@ -16,6 +16,13 @@ server {
         alias /var/www/pahfm/backend/staticfiles;
     }
 
+    # cache hashed JS and CSS files
+    location ~ ^/(js|css)/(app|chunk-vendors)\.([^.]+)\.(js|css)$ {
+       gzip_static on; # there's also a .gz of the asset
+       expires max;
+       root /var/www/pahfm/frontend/dist;
+    }
+
     location / {
         root /var/www/pahfm/frontend/dist;
         try_files $uri $uri/ /index.html;
