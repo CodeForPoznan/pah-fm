@@ -11,6 +11,9 @@ services:
       - asset-volume:/pah-fm/frontend/dist
     depends_on:
       - webserver
+    # For testing the production build locally
+#    environment:
+#      NODE_ENV: production
 
   backend:
     image: codeforpoznan/pah-fm-backend
