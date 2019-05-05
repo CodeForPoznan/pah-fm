@@ -77,6 +77,11 @@ router.beforeEach((to, _from, next) => {
     return next({ path: homeRoute.path });
   }
 
+  // Redirect home if logged-in user tries to access login route
+  if (to.name === loginRoute.name && getItem(tokenKey)) {
+    return next({ path: homeRoute.path });
+  }
+
   if (openRoutes.includes(to.name)) {
     return next();
   }
@@ -84,10 +89,6 @@ router.beforeEach((to, _from, next) => {
   // Redirect to login if user tries to access closed route without token
   if (!getItem(tokenKey) && !openRoutes.includes(to.name)) {
     return next({ path: loginRoute.path });
-  }
-  // Redirect home if logged-in user tries to access login route
-  if (to.name === loginRoute.name && getItem(tokenKey)) {
-    return next({ path: homeRoute.path });
   }
   return next();
 });
