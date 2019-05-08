@@ -13,7 +13,8 @@
       "page_not_found": "страница, которую вы ищете, не существует",
       "drives":"Маршрути",
       "unexpected_error": "Сталася несподівана помилка. Зверніться до адміністратора.",
-      "yes": "так"
+      "yes": "так",
+      "offline": "У вас немає доступу до Інтернету."
     },
     "drive_form": {
       "cars": "Автомобілі",
@@ -28,6 +29,7 @@
       "fetching_cars_error": "Пошук автомобілів невдалий",
       "no_project_message": "Необхідно вказати проект",
       "no_cars_message": "Немає вільних автомобілів",
+      "offline": "Your ride will be synchronised later.",
       "passenger": "Пасажир",
       "passenger_error": "Вкажіть ім'я пасажира",
       "please_correct_errors": "Виправте помилку будь ласка",
@@ -62,7 +64,7 @@
       "user": "Користувач: %{username}",
       "username": "Ім'я користувача",
       "username_required": "Запит імені користувача",
-      "offline": "У вас немає Інтернету. Ви не можете увійти."
+      "offline": "Ви не можете ввійти зараз."
     },
     "refresh": {
       "new_version": "Доступна нова версія вебсайту",
@@ -87,6 +89,7 @@
       "logout": "Logout",
       "new_drive": "Add new drive",
       "no": "no",
+      "offline": "You have no internet access.",
       "page_not_found": "The page you're looking for does not exist.",
       "drives": "Drives",
       "unexpected_error": "Unexpected error occurred. Please contact the administrator.",
@@ -105,6 +108,7 @@
       "fetching_cars_error": "Fetching cars unsuccessful",
       "no_project_message": "Project is required",
       "no_cars_message": "No cars available",
+      "offline": "Your drive will be synchronised later.",
       "passenger": "Passenger:",
       "passenger_error": "Passenger is required",
       "please_correct_errors": "Please correct the following error(s):",
@@ -138,7 +142,7 @@
       "user": "User: %{username}",
       "username": "Username",
       "username_required": "Username is required",
-      "offline": "You're offline, you can't log in."
+      "offline": "You can't log in now."
     },
     "refresh": {
       "new_version": "A new version of website is available.",
@@ -163,6 +167,7 @@
       "logout": "Wyloguj",
       "new_drive": "Dodaj nową trasę",
       "no": "nie",
+      "offline": "Nie masz dostępu do internetu.",
       "page_not_found": "Wyszukiwana strona nie istnieje.",
       "drives": "Trasy",
       "unexpected_error": "Wystąpił nieoczekiwany błąd. Prosimy o kontakt z administratorem.",
@@ -181,6 +186,7 @@
       "fetching_cars_error": "Pobranie aut nie powiodło się",
       "no_project_message": "Projekt jest wymagany",
       "no_cars_message": "Auta są niedostępne",
+      "offline": "Twój przejazd zostanie dodany później.",
       "passenger": "Pasażer",
       "passenger_error": "Pasażer jest wymagany",
       "please_correct_errors": "Proszę poprawić następujące błędy:",
@@ -210,7 +216,7 @@
       "user": "Użytkownik: %{username}",
       "username": "Nazwa użytkownika",
       "username_required": "Nazwa użytkownika jest wymagana",
-      "offline": "Nie masz internetu, nie możesz się zalogować."
+      "offline": "Nie możesz się teraz zalogować."
     },
     "refresh": {
       "new_version": "Jest dostępna nowa wersja strony.",
