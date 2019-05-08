@@ -30,6 +30,11 @@ Go to the directory with PAH website, eg.:
 
 1. ```cd codeforpoznan/pah_fm/pah_behave```
 
+# Create user for behave tests
+
+1. from the main repository (where Makefile is located)
+1. ```make init-behave```
+
 # Running behave tests
 
 Make sure, that virtual environment is active, so the prompt will look like:
