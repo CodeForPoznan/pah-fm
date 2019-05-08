@@ -26,6 +26,7 @@
       to="/logout"
       key="logout"
       class="username"
+      v-if="!!user"
     >
       {{ $t('common.logout') }}
       <p>
