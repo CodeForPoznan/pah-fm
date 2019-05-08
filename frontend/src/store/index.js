@@ -9,6 +9,7 @@ import { modules } from './modules';
 
 export const USER = 'user';
 export const UNSYNCRONISED_DRIVES = 'unsyncedDrives';
+export const UNSYNCRONISED_DRIVES_TOTAL_MILEAGE = 'unsyncedDrivesTotalMileage';
 export const CARS = 'cars';
 export const LANGUAGE = 'language';
 
@@ -39,6 +40,10 @@ const store = new Vuex.Store({
   getters: {
     [IS_ONLINE]: state => state.isOnline,
     [UNSYNCRONISED_DRIVES]: state => state.unsyncedDrives,
+    [UNSYNCRONISED_DRIVES_TOTAL_MILEAGE]: state => state.unsyncedDrives.reduce(
+      (total, current) => total + (current.endMileage - current.startMileage),
+      0,
+    ),
   },
 });
 
