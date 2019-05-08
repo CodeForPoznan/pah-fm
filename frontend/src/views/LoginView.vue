@@ -45,9 +45,14 @@
               <div class="form-group">
                 <button
                   class="btn btn-primary"
-                  :disabled="loginInProgress || !username || !password"
+                  :disabled="loginInProgress || !username || !password || !isOnline"
                 >{{ $t('common.login') }}
                 </button>
+              </div>
+              <div
+                v-if="!isOnline"
+                class="alert alert-warning"
+                role="alert">{{ $t('login.offline') }}
               </div>
             </form>
           </div>
@@ -78,7 +83,7 @@ export default {
     Language,
   },
   computed: {
-    ...mapState(['user', 'loginInProgress', 'loginError']),
+    ...mapState(['user', 'loginInProgress', 'loginError', 'isOnline']),
   },
   methods: {
     ...mapActions([actions.LOGIN]),

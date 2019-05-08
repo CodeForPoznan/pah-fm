@@ -61,7 +61,8 @@
       "password_required": "Запит паролю",
       "user": "Користувач: %{username}",
       "username": "Ім'я користувача",
-      "username_required": "Запит імені користувача"
+      "username_required": "Запит імені користувача",
+      "offline": "У вас немає Інтернету. Ви не можете увійти."
     },
     "refresh": {
       "new_version": "Доступна нова версія вебсайту",
@@ -136,7 +137,8 @@
       "password_required": "Password is required",
       "user": "User: %{username}",
       "username": "Username",
-      "username_required": "Username is required"
+      "username_required": "Username is required",
+      "offline": "You're offline, you can't log in."
     },
     "refresh": {
       "new_version": "A new version of website is available.",
@@ -207,7 +209,8 @@
       "password_required": "Hasło jest wymagane",
       "user": "Użytkownik: %{username}",
       "username": "Nazwa użytkownika",
-      "username_required": "Nazwa użytkownika jest wymagana"
+      "username_required": "Nazwa użytkownika jest wymagana",
+      "offline": "Nie masz internetu, nie możesz się zalogować."
     },
     "refresh": {
       "new_version": "Jest dostępna nowa wersja strony.",
