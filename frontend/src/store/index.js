@@ -6,10 +6,11 @@ import { actions } from './actions';
 import { VERIFICATION_TOKEN, SYNC, namespaces, IS_ONLINE } from './constants';
 import { mutations, SET_IS_CONNECTED } from './mutations';
 import { modules } from './modules';
+import { totalMileageReducer } from '../utils';
 
 export const USER = 'user';
-export const UNSYNCRONISED_DRIVES = 'unsyncedDrives';
-export const UNSYNCRONISED_DRIVES_TOTAL_MILEAGE = 'unsyncedDrivesTotalMileage';
+export const UNSYNCHRONISED_DRIVES = 'unsyncedDrives';
+export const UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE = 'unsyncedDrivesTotalMileage';
 export const CARS = 'cars';
 export const LANGUAGE = 'language';
 
@@ -19,7 +20,7 @@ Vue.use(Vuex);
 
 const initialState = {
   [USER]: null,
-  [UNSYNCRONISED_DRIVES]: [],
+  [UNSYNCHRONISED_DRIVES]: [],
   [LANGUAGE]: null,
   [IS_ONLINE]: navigator.onLine,
   [VERIFICATION_TOKEN]: null,
@@ -35,13 +36,13 @@ const store = new Vuex.Store({
   modules,
   mutations,
   plugins: [createPersistedState({
-    paths: [USER, UNSYNCRONISED_DRIVES, CARS, LANGUAGE, ...Object.values(namespaces)],
+    paths: [USER, UNSYNCHRONISED_DRIVES, CARS, LANGUAGE, ...Object.values(namespaces)],
   })],
   getters: {
     [IS_ONLINE]: state => state.isOnline,
-    [UNSYNCRONISED_DRIVES]: state => state.unsyncedDrives,
-    [UNSYNCRONISED_DRIVES_TOTAL_MILEAGE]: state => state.unsyncedDrives.reduce(
-      (total, current) => total + (current.endMileage - current.startMileage),
+    [UNSYNCHRONISED_DRIVES]: state => state.unsyncedDrives,
+    [UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE]: state => state.unsyncedDrives.reduce(
+      totalMileageReducer,
       0,
     ),
   },

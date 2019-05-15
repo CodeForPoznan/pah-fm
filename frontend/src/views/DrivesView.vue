@@ -114,7 +114,8 @@
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex';
 import { actions as apiActions, namespaces } from '../store/constants';
-import { UNSYNCRONISED_DRIVES, UNSYNCRONISED_DRIVES_TOTAL_MILEAGE } from '../store';
+import { UNSYNCHRONISED_DRIVES, UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE } from '../store';
+import { totalMileageReducer } from '../utils';
 
 export default {
   name: 'DrivesView',
@@ -130,11 +131,11 @@ export default {
     },
   },
   computed: {
-    ...mapGetters([UNSYNCRONISED_DRIVES, UNSYNCRONISED_DRIVES_TOTAL_MILEAGE]),
+    ...mapGetters([UNSYNCHRONISED_DRIVES, UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE]),
     ...mapState(namespaces.drives, {
       drives: state => state.data || [],
       totalKilometers: state => state.data.reduce(
-        (total, current) => total + (current.endMileage - current.startMileage),
+        totalMileageReducer,
         0,
       ),
     }),
