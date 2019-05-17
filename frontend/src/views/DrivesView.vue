@@ -1,7 +1,7 @@
 <template>
 
   <div
-    v-if="!drives.length && !drives.length"
+    v-if="!drives.length && !unsyncedDrives.length"
     class="alert alert-warning m-5"
     role="alert">
     {{ $t('drives.no_driver_drives') }}
@@ -15,6 +15,12 @@
     >
       {{ $t('drives.unsynced_drives') }}
     </h4>
+    <p
+      v-if="unsyncedDrives.length"
+      class="ml-3"
+    >
+      {{ $t('drives.total_mileage', { total: unsyncedDrivesTotalMileage }) }}
+    </p>
     <div
       class="card"
       v-for="drive in unsyncedDrives"
@@ -54,11 +60,17 @@
     </div>
 
     <h4
-      class="heading"
+      class="heading mt-3"
       v-if="drives.length"
     >
       {{ $t('drives.synced_drives') }}
     </h4>
+    <p
+      v-if="drives.length"
+      class="ml-3"
+    >
+      {{ $t('drives.total_mileage', { total: totalKilometers }) }}
+    </p>
     <div
       class="card"
       v-for="drive in drives"
@@ -102,7 +114,8 @@
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex';
 import { actions as apiActions, namespaces } from '../store/constants';
-import { UNSYNCRONISED_DRIVES } from '../store';
+import { UNSYNCHRONISED_DRIVES, UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE } from '../store';
+import { totalMileageReducer } from '../utils';
 
 export default {
   name: 'DrivesView',
@@ -114,13 +127,17 @@ export default {
   methods: {
     ...mapActions(namespaces.drives, [apiActions.fetchDrives]),
     showDrive(id) {
-      this.driveVisible = id;
+      this.driveVisible = this.driveVisible === id ? null : id;
     },
   },
   computed: {
-    ...mapGetters([UNSYNCRONISED_DRIVES]),
+    ...mapGetters([UNSYNCHRONISED_DRIVES, UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE]),
     ...mapState(namespaces.drives, {
       drives: state => state.data || [],
+      totalKilometers: state => state.data.reduce(
+        totalMileageReducer,
+        0,
+      ),
     }),
   },
   created() {

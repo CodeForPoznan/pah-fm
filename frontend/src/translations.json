@@ -49,7 +49,8 @@
       "synced_drives": "Минулі поїздки",
       "project": "Проект",
       "starting_mileage": "Початкове значення вимірювального приладу",
-      "unsynced_drives": "Не синхронізовані поїздки"
+      "unsynced_drives": "Не синхронізовані поїздки",
+      "total_mileage": "Total {total} km"
     },
     "header": {
       "polish_humanitarian_action": "Польська Гуманітарна Акція"
@@ -123,7 +124,8 @@
       "synced_drives": "Previous drives",
       "project": "Project",
       "starting_mileage": "Starting mileage:",
-      "unsynced_drives": "Unsynchronized drives"
+      "unsynced_drives": "Unsynchronized drives",
+      "total_mileage": "Total {total} km"
     },
     "header": {
       "polish_humanitarian_action": "Polish Humanitarian Action"
@@ -197,7 +199,8 @@
       "synced_drives": "Poprzednie przejazdy",
       "project": "Projekt",
       "starting_mileage": "Początkowy stan licznika:",
-      "unsynced_drives": "Przejazdy niezsynchronizowane"
+      "unsynced_drives": "Przejazdy niezsynchronizowane",
+      "total_mileage": "Razem {total} km"
     },
     "login": {
       "password": "Hasło",
