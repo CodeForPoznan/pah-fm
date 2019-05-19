@@ -4,7 +4,8 @@ import { getMyself } from '../services/api/user';
 import * as mutations from './mutations';
 import { mapDrive } from './helpers';
 import { i18n } from '../main';
-import { actions as apiActions, namespaces, SYNC, SYNC_ITEM_SUCCESS } from './constants';
+import { actions as apiActions, namespaces, SYNC, SYNC_ITEM_SUCCESS, SYNC_ITEM_FAILURE,
+  UNSYNCHRONISED_DRIVES } from './constants';
 
 export const FETCH_USER = 'FETCH_USER';
 export const LOGIN = 'LOGIN';
@@ -27,6 +28,7 @@ export const actions = {
       }
     });
   },
+
   [LOGIN]({ commit, dispatch }, { username, password }) {
     commit(mutations.SET_LOGIN_PROGRESS, true);
     login(username, password)
@@ -42,19 +44,23 @@ export const actions = {
         commit(mutations.SET_LOGIN_PROGRESS, false);
       });
   },
+
   [LOGOUT]({ commit }) {
     commit(mutations.SET_USER, null);
     deleteToken();
     window.location.replace(login.path);
   },
+
   [SUBMIT]({ commit, dispatch }, { form }) {
     commit(mutations.ADD_DRIVE, form);
     dispatch(SYNC);
   },
+
   [SWITCH_LANGUAGE]({ commit }, language) {
     commit(mutations.SET_LANG, language);
     i18n.locale = language;
   },
+
   [VERIFY_CONFIRMATION_TOKEN]({ commit }, token) {
     get(`verification-token/${token}`)
       .catch((err) => {
@@ -65,30 +71,34 @@ export const actions = {
       .then(isActive => commit(mutations.SET_VERIFICATION_TOKEN_ACTIVE, { token, isActive }))
       .catch(() => console.debug(`Token ${token} not found.`));
   },
+
   [SUBMIT_CONFIRMATION_TOKEN]({ commit }, { payload, token }) {
     return patch(`verification-token/${token}`, payload, false)
       .then(resp => resp.isActive)
       .then(isActive => commit(mutations.SET_VERIFICATION_TOKEN_ACTIVE, { token, isActive }))
       .then(() => commit(mutations.SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS, false));
   },
+
   async [SYNC]({ dispatch, state, commit }) {
-    if (state.unsyncedDrives.length === 0 && state.user) {
+    if (state[UNSYNCHRONISED_DRIVES].length === 0 && state.user) {
       dispatch(`${namespaces.drives}/${apiActions.fetchDrives}`);
       return;
     }
 
-    if (state.unsyncedDrives.length === 0 || !state.user || !navigator.onLine) {
+    if (state[UNSYNCHRONISED_DRIVES].length === 0 || !state.user || !navigator.onLine) {
       return;
     }
 
-    const { syncId, ...mappedRoute } = mapDrive(state.unsyncedDrives[0]);
+    const { syncId, ...mappedRoute } = mapDrive(state[UNSYNCHRONISED_DRIVES][0]);
 
     try {
       await post('drives', mappedRoute);
       commit(SYNC_ITEM_SUCCESS, syncId);
-      dispatch(SYNC);
     } catch (e) {
-      console.error(e);
+      if (e.response && e.response.status === 400) {
+        commit(SYNC_ITEM_FAILURE, syncId);
+      }
     }
+    dispatch(SYNC);
   },
 };

@@ -1,5 +1,4 @@
 <template>
-
   <div
     v-if="!drives.length && !unsyncedDrives.length"
     class="alert alert-warning m-5"
@@ -113,8 +112,7 @@
 </template>
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex';
-import { actions as apiActions, namespaces } from '../store/constants';
-import { UNSYNCHRONISED_DRIVES, UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE } from '../store';
+import { actions as apiActions, namespaces, UNSYNCHRONISED_DRIVES, UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE } from '../store/constants';
 import { totalMileageReducer } from '../utils';
 
 export default {
@@ -131,7 +129,10 @@ export default {
     },
   },
   computed: {
-    ...mapGetters([UNSYNCHRONISED_DRIVES, UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE]),
+    ...mapGetters({
+      unsyncedDrives: UNSYNCHRONISED_DRIVES,
+      unsyncedDrivesTotalMileage: UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE,
+    }),
     ...mapState(namespaces.drives, {
       drives: state => state.data || [],
       totalKilometers: state => state.data.reduce(
