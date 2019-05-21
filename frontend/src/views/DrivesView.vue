@@ -27,13 +27,13 @@
       :key="drive.id">
       <div
         class="card-header"
-        @click="showDrive(drive.id)">
+        @click="showDrive(drive.syncId)">
         <h5 class="mb-0">
           <span class="font-weight-bold">{{ drive.date }}</span>
           {{ $t('drives.from_to', { from: drive.startLocation, destination: drive.endLocation}) }}
         </h5>
       </div>
-      <div :class="['collapse', { show: driveVisible === drive.id }]">
+      <div :class="['collapse', { show: visibleDrive === drive.syncId }]">
         <div class="card-body">
           <p>
             <span class="font-weight-bold mr-1">{{ $t('drives.description') }}</span>
@@ -83,7 +83,7 @@
           {{ $t('drives.from_to', { from: drive.startLocation, destination: drive.endLocation}) }}
         </h5>
       </div>
-      <div :class="['collapse', { show: driveVisible === drive.id }]">
+      <div :class="['collapse', { show: visibleDrive === drive.id }]">
         <div class="card-body">
           <p>
             <span class="font-weight-bold mr-1">{{ $t('drives.description') }}</span>
@@ -121,13 +121,13 @@ export default {
   name: 'DrivesView',
   data() {
     return {
-      driveVisible: null,
+      visibleDrive: null,
     };
   },
   methods: {
     ...mapActions(namespaces.drives, [apiActions.fetchDrives]),
     showDrive(id) {
-      this.driveVisible = this.driveVisible === id ? null : id;
+      this.visibleDrive = this.visibleDrive === id ? null : id;
     },
   },
   computed: {
