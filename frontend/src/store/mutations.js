@@ -1,4 +1,6 @@
-import { SYNC_ITEM_SUCCESS, VERIFICATION_TOKEN } from './constants';
+import {
+  INCORRECT_DRIVE_ENTRIES, SYNC_ITEM_SUCCESS, VERIFICATION_TOKEN,
+  SYNC_ITEM_FAILURE, UNSYNCHRONISED_DRIVES } from './constants';
 
 export const SET_USER = 'SET_USER';
 export const SET_LOGIN_PROGRESS = 'SET_LOGIN_PROGRESS';
@@ -13,7 +15,20 @@ export const SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS = 'SET_VERIFICATION_TOKE
 export const mutations = {
   [SYNC_ITEM_SUCCESS](state, syncId) {
     Object.assign(state, {
-      unsyncedDrives: state.unsyncedDrives.filter(drive => drive.syncId !== syncId),
+      [UNSYNCHRONISED_DRIVES]: state[UNSYNCHRONISED_DRIVES]
+        .filter(drive => drive.syncId !== syncId),
+    });
+  },
+  [SYNC_ITEM_FAILURE](state, syncId) {
+    const newIncorrectEntries = [
+      ...state[INCORRECT_DRIVE_ENTRIES],
+      state[UNSYNCHRONISED_DRIVES].find(drive => drive.syncId === syncId),
+    ];
+
+    Object.assign(state, {
+      [INCORRECT_DRIVE_ENTRIES]: newIncorrectEntries,
+      [UNSYNCHRONISED_DRIVES]: state[UNSYNCHRONISED_DRIVES]
+        .filter(drive => drive.syncId !== syncId),
     });
   },
   [SET_USER](state, user) {
@@ -26,7 +41,13 @@ export const mutations = {
     Object.assign(state, { loginError });
   },
   [ADD_DRIVE](state, drive) {
-    Object.assign(state, { unsyncedDrives: [...state.unsyncedDrives, Object.assign({}, drive)] });
+    Object.assign(
+      state,
+      {
+        [UNSYNCHRONISED_DRIVES]: [...state[UNSYNCHRONISED_DRIVES],
+          Object.assign({}, drive)],
+      },
+    );
   },
   [SET_UPDATE_READY](state, isReady) {
     Object.assign(state, { updateReady: isReady });

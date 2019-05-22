@@ -9,11 +9,12 @@ module.exports = {
     '@vue/airbnb',
   ],
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-console': 0,
+    'no-debugger': 'warn',
     'import/prefer-default-export': 'off',
     'object-curly-newline': 0,
-    'comma-dangle': 2,
+    'comma-dangle': 'warn',
+    semi: 'warn',
   },
   parserOptions: {
     parser: 'babel-eslint',
