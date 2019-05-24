@@ -17,8 +17,9 @@
             </div>
             <div
               class="alert alert-warning"
-              v-if="!isOnline">
-                {{ $t('common.offline') }} {{ $t('drive_form.offline') }}
+              v-if="!isOnline"
+            >
+              {{ $t('common.offline') }} {{ $t('drive_form.offline') }}
             </div>
             <h2>{{ $t('common.new_drive') }}</h2>
             <form

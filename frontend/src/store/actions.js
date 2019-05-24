@@ -6,6 +6,7 @@ import { mapDrive } from './helpers';
 import { i18n } from '../main';
 import { actions as apiActions, namespaces, SYNC, SYNC_ITEM_SUCCESS, SYNC_ITEM_FAILURE,
   UNSYNCHRONISED_DRIVES } from './constants';
+import { loginRoute } from '../router';
 
 export const FETCH_USER = 'FETCH_USER';
 export const LOGIN = 'LOGIN';
