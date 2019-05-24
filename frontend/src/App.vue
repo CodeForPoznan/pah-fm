@@ -22,7 +22,6 @@
         </div>
       </div>
     </div>
-    <Refresh />
   </div>
 </template>
 
@@ -31,7 +30,6 @@ import { mapState, mapActions } from 'vuex';
 import { ScaleRotate } from 'vue-burger-menu';
 
 import Header from './components/Header.vue';
-import Refresh from './components/Refresh.vue';
 import Status from './components/Status.vue';
 import store, { LANGUAGE } from './store';
 import NavigationItems from './components/NavigationItems.vue';
@@ -68,7 +66,6 @@ export default {
     }
   },
   components: {
-    Refresh,
     Header,
     Status,
     ScaleRotate,

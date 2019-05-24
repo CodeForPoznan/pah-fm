@@ -6,7 +6,6 @@ import VueI18n from 'vue-i18n';
 import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
 import App from './App.vue';
-import './registerServiceWorker';
 import router from './router/index';
 import messages from './translations.json';
 

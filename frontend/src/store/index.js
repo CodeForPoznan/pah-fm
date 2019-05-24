@@ -26,7 +26,6 @@ const initialState = {
   [VERIFICATION_TOKEN]: null,
   loginInProgress: false,
   loginError: null,
-  updateReady: false,
 };
 
 const store = new Vuex.Store({
