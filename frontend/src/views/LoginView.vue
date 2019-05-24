@@ -52,7 +52,7 @@
               <div
                 v-if="!isOnline"
                 class="alert alert-warning"
-                role="alert">{{ $t('login.offline') }}
+                role="alert">{{ $t('common.offline') }} {{ $t('login.offline') }}
               </div>
             </form>
           </div>
