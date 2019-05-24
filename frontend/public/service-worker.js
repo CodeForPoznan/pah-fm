@@ -14,12 +14,16 @@ const cachedUrls = [
 ];
 
 self.addEventListener('install', (event) => {
-  self.skipWaiting();
+  event.waitUntil(self.skipWaiting()); // Activate worker immediately
   event.waitUntil(
     caches.open('assets').then((cache) => {
       return cache.addAll(cachedUrls);
     }),
   );
+});
+
+self.addEventListener('activate', function(event) {
+  event.waitUntil(self.clients.claim()); // Become available to all pages
 });
 
 self.addEventListener('fetch', (event) => {
