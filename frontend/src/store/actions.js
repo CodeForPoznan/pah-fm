@@ -48,8 +48,8 @@ export const actions = {
   [LOGOUT]({ commit }) {
     commit(mutations.SET_USER, null);
     deleteToken();
+    window.location.replace(loginRoute.path);
     navigator.serviceWorker.controller.postMessage('LOGOUT');
-    window.location.replace(login.path);
   },
 
   [SUBMIT]({ commit, dispatch }, { form }) {
