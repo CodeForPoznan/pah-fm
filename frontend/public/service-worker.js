@@ -43,11 +43,10 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  const requestEndsWith = (suffix) => event.request.url.endsWith(suffix);
+
   // For cached URLs, try to fetch first and fallback to cache
-  if (
-    cachedUrls.some(url => event.request.url.endsWith(url))
-    || cachedApiEndpoints.some(url => event.request.url.endsWith(url))
-  ) {
+  if ([...cachedUrls, ...cachedApiEndpoints].some(requestEndsWith)) {
     event.respondWith(
       fetch(event.request)
         .catch((err) => {
