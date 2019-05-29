@@ -58,22 +58,6 @@ manage:  ## Use manage.py
 populate-database:  ## Populate database with factory based data
 	make manage CMD=populate_database
 
-manage-heroku:  ## Use manage command on heroku
-	heroku run --remote heroku-backend python manage.py ${CMD}
-
-deploy-backend-heroku:  ## Deploy backend on heroku
-	git subtree push --prefix backend/ heroku-backend master
-
-deploy-backend-heroku-force:  ## Deploy backend on heroku (with force)
-	git push heroku-backend `git subtree split --prefix backend ${BRANCH}`:master --force
-
-deploy-frontend-heroku:  ## Deploy frontend on heroku
-	docker-compose run --rm --no-deps frontend npm run build:heroku
-	cd ./frontend && npm run deploy:heroku
-
-send-test-email-heroku:  ## Send test email from heroku
-	make manage-heroku CMD="send_test_mail ${EMAIL}"
-
 init-behave:
 	cat pah_behave/pah_behave/features/data/fixtures.sql| docker-compose exec -T db psql -U pah-fm
 
