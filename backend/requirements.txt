@@ -3,3 +3,4 @@
 django-heroku==0.3.1
 gunicorn==19.9.0
 whitenoise[brotli]==4.1.2
+django-import-export==1.2.0

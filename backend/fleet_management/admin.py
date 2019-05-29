@@ -1,12 +1,21 @@
+from import_export import resources
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from import_export.admin import ImportExportModelAdmin
 
 from .models import Car, Passenger, Drive, User, Project, VerificationToken
 
+class DriveResource(resources.ModelResource):
+    class Meta:
+        model = Drive
+        fields = ("id", "driver__username")
+
+class DriveAdmin(ImportExportModelAdmin):
+    resource_class = DriveResource
 
 admin.site.register(Car)
 admin.site.register(Passenger)
-admin.site.register(Drive)
+admin.site.register(Drive, DriveAdmin)
 admin.site.register(User, UserAdmin)
 admin.site.register(Project)
 
