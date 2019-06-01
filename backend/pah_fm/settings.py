@@ -39,6 +39,7 @@ else:
         '127.0.0.1',
         '52.232.62.212',
         '.pahfm.codeforpoznan.pl',
+        'lemik.pl',
     ]
 
 
