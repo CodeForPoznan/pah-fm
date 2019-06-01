@@ -8,7 +8,19 @@ from .models import Car, Passenger, Drive, User, Project, VerificationToken
 class DriveResource(resources.ModelResource):
     class Meta:
         model = Drive
-        fields = ("id", "driver__username")
+        fields = (
+            "id",
+            "driver__username",
+            "car__plates",
+            # passengers
+            "date",
+            "start_mileage",
+            "end_mileage",
+            "description",
+            "start_location",
+            "end_location"
+            "project__title"
+        )
 
 class DriveAdmin(ImportExportModelAdmin):
     resource_class = DriveResource
