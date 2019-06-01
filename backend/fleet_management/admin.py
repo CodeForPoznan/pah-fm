@@ -18,7 +18,7 @@ class DriveResource(resources.ModelResource):
             "end_mileage",
             "description",
             "start_location",
-            "end_location"
+            "end_location",
             "project__title"
         )
 
