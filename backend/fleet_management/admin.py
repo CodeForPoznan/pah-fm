@@ -2,17 +2,22 @@ from import_export import resources
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from import_export.admin import ImportExportModelAdmin
+# from import_export.widgets import ManyToManyWidget
 
 from .models import Car, Passenger, Drive, User, Project, VerificationToken
 
 class DriveResource(resources.ModelResource):
+    # passengers = ManyToManyWidget(Passenger, field='email')
+    # foo = fields.Field(attribute='passengers', column_name='Name')
+
+
     class Meta:
         model = Drive
         fields = (
             "id",
             "driver__username",
             "car__plates",
-            # passengers
+            "passengers",
             "date",
             "start_mileage",
             "end_mileage",
