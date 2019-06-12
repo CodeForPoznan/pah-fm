@@ -7,9 +7,10 @@ from import_export.admin import ImportExportModelAdmin
 from .models import Car, Passenger, Drive, User, Project, VerificationToken
 
 class DriveResource(resources.ModelResource):
-    # passengers = ManyToManyWidget(Passenger, field='email')
-    # foo = fields.Field(attribute='passengers', column_name='Name')
-
+    def dehydrate_passengers(self, drive):
+        return "/".join("{} {}".format(
+            p.first_name, p.last_name) for p in drive.passengers.all()
+        )
 
     class Meta:
         model = Drive
