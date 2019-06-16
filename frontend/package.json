@@ -5,8 +5,6 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:heroku": "vue-cli-service build --dest ./dist-heroku --mode heroku",
-    "deploy:heroku": "firebase deploy",
     "http:server": "http-server dist -c-1",
     "stylelint": "stylelint src/**/*.vue src/**/*.scss --syntax scss --cache",
     "lint:fix": "vue-cli-service lint",
