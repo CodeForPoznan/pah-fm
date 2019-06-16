@@ -5,6 +5,7 @@ from import_export.admin import ImportExportModelAdmin
 
 from .models import Car, Passenger, Drive, User, Project, VerificationToken
 
+
 class DriveResource(resources.ModelResource):
     def dehydrate_passengers(self, drive):
         return "/".join("{} {}".format(
@@ -27,8 +28,10 @@ class DriveResource(resources.ModelResource):
             "project__title"
         )
 
+
 class DriveAdmin(ImportExportModelAdmin):
     resource_class = DriveResource
+
 
 admin.site.register(Car)
 admin.site.register(Passenger)
