@@ -32,6 +32,7 @@ ALLOWED_HOSTS = [
         '127.0.0.1',
         '52.232.62.212',
         '.pahfm.codeforpoznan.pl',
+        '.lemik.pl',
     ]
 
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'import_export',
 
     # 3rd party apps
     'corsheaders',
