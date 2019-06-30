@@ -113,7 +113,7 @@
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex';
 import { actions as apiActions, namespaces, UNSYNCHRONISED_DRIVES, UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE } from '../store/constants';
-import { totalMileageReducer } from '../utils';
+import { totalMileageReducer, totalMileageFilter } from '../utils';
 
 export default {
   name: 'DrivesView',
@@ -135,7 +135,10 @@ export default {
     }),
     ...mapState(namespaces.drives, {
       drives: state => state.data || [],
-      totalKilometers: state => state.data.reduce(
+      totalKilometers: state => state.data.filter(
+        totalMileageFilter,
+        )
+        .reduce(
         totalMileageReducer,
         0,
       ),
