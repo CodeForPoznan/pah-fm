@@ -80,6 +80,14 @@
           virtualenv: /var/www/pahfm/backend/.venv
         notify: restart uwsgi
 
+      - name: run django collectstatic
+        environment:
+          SECRET_KEY: "{{ django_secret_key }}"
+        django_manage:
+          app_path: /var/www/pahfm/backend
+          command: collectstatic
+          virtualenv:  /var/www/pahfm/backend/.venv
+        notify: restart nginx
 
       - name: Install NVM
         shell: "wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | PROFILE=.bashrc bash"
