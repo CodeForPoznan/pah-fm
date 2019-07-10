@@ -10,6 +10,7 @@ from fleet_management.models import (
     Car, Drive, Passenger, Project, User, VerificationToken,
 )
 
+COUNTRIES = ('UA', 'SS')
 
 class UserFactory(factory.DjangoModelFactory):
 
@@ -20,6 +21,7 @@ class UserFactory(factory.DjangoModelFactory):
     last_name = factory.Faker('last_name', locale='uk_UA')
     email = factory.Faker('email', locale='uk_UA')
     username = factory.LazyAttribute(lambda obj: obj.email)
+    country = fuzzy.FuzzyChoice(COUNTRIES)
 
     is_active = True
     password = 'pass123'

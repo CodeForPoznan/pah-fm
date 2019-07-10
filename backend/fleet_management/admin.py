@@ -1,7 +1,8 @@
-from import_export import resources
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.utils.translation import gettext_lazy as _
 from import_export.admin import ImportExportModelAdmin
+from import_export import resources
 
 from .models import Car, Passenger, Drive, User, Project, VerificationToken
 
@@ -33,10 +34,21 @@ class DriveAdmin(ImportExportModelAdmin):
     resource_class = DriveResource
 
 
+class CustomUserAdmin(UserAdmin):
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email', 'country')}),
+        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
+                                       'groups', 'user_permissions')}),
+        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+    )
+
+
+
 admin.site.register(Car)
 admin.site.register(Passenger)
 admin.site.register(Drive, DriveAdmin)
-admin.site.register(User, UserAdmin)
+admin.site.register(User, CustomUserAdmin)
 admin.site.register(Project)
 
 
