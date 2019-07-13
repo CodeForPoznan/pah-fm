@@ -16,7 +16,8 @@ class DriveResource(resources.ModelResource):
         model = Drive
         fields = (
             "id",
-            "driver__username",
+            "driver__first_name",
+            "driver__last_name",
             "car__plates",
             "passengers",
             "date",
