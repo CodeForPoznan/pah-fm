@@ -18,7 +18,10 @@ script:
   - npm run lint
   - cd ..
 after_success:
-  - if [ "$TRAVIS_BRANCH" == "develop" ] && [ "$TRAVIS_PULL_REQUEST" = false ]; then
+  - if [ "$TRAVIS_REPO_SLUG" == "codeforpoznan/pah-fm"] && \
+       [ "$TRAVIS_BRANCH" == "develop" ] && \
+       [ "$TRAVIS_PULL_REQUEST" = false ]
+    then
       docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD;
       cd backend;
       docker build -f Dockerfile -t codeforpoznan/pah-fm-backend:latest .;
