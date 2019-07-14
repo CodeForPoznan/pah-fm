@@ -7,6 +7,10 @@ from .models import Car, Passenger, Drive, User, Project, VerificationToken
 
 
 class DriveResource(resources.ModelResource):
+
+    def dehydrate_driver(self, drive):
+        return f"{drive.driver.first_name} {drive.driver.last_name}"
+
     def dehydrate_passengers(self, drive):
         return "/".join("{} {}".format(
             p.first_name, p.last_name) for p in drive.passengers.all()
@@ -16,8 +20,7 @@ class DriveResource(resources.ModelResource):
         model = Drive
         fields = (
             "id",
-            "driver__first_name",
-            "driver__last_name",
+            "driver",
             "car__plates",
             "passengers",
             "date",
