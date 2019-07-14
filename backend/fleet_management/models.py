@@ -63,7 +63,7 @@ class Drive(models.Model):
 
     def __str__(self):
         return f"""Drive from {self.start_location} to
-                 {self.end_location} (driver: {self.driver.username})"""
+                 {self.end_location} (driver: {self.driver.first_name} {self.driver.last_name})"""
 
 
 class VerificationToken(models.Model):
