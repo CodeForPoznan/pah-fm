@@ -67,7 +67,7 @@ const openRoutes = [loginRoute.name, confirmationRoute.name];
 
 router.beforeEach((to, _from, next) => {
   // 404 if not route matches
-  if (to.name === pageNotFoundRoute) {
+  if (to.name === pageNotFoundRoute.name) {
     return next();
   }
 
