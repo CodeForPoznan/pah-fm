@@ -7,7 +7,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITransactionTestCase
 
-from fleet_management.models import Car, Drive, Passenger, VerificationToken
+from fleet_management.models import Car, Drive, Passenger, Project, VerificationToken
 
 
 class DrivesApiTest(APITransactionTestCase):
@@ -30,6 +30,10 @@ class DrivesApiTest(APITransactionTestCase):
             mileage_unit=Car.KILOMETERS,
             fuel_consumption=8.2,
         )
+        self.project = Project.objects.create(
+            title='Project title',
+            description='Project description',
+        )
 
         self.driver = get_user_model().objects.create_user(
             username='Admin',
@@ -48,6 +52,7 @@ class DrivesApiTest(APITransactionTestCase):
                 description='',
                 start_location='Poznan',
                 end_location='Warsaw',
+                project=self.project,
             )
         ]
         self.drives[0].passengers.set(self.passengers)
@@ -95,6 +100,11 @@ class DrivesApiTest(APITransactionTestCase):
                 },
                 'startLocation': 'Poznan',
                 'endLocation': 'Warsaw',
+                'project': {
+                    'id': self.project.id,
+                    'title': self.project.title,
+                    'description': self.project.description,
+                },
             }
         )
 
@@ -115,6 +125,7 @@ class DrivesApiTest(APITransactionTestCase):
             description='',
             start_location='Poznan',
             end_location='Warsaw',
+            project=self.project,
         )
 
         self.client.force_login(self.driver)
@@ -142,6 +153,9 @@ class DrivesApiTest(APITransactionTestCase):
             'description': '',
             'startLocation': 'Warsaw',
             'endLocation': 'Poznan',
+            'project': {
+                'id': self.project.id,
+            },
         }
 
         self.client.force_login(self.driver)
