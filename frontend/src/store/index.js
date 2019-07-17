@@ -7,7 +7,7 @@ import { VERIFICATION_TOKEN, SYNC, namespaces, IS_ONLINE, INCORRECT_DRIVE_ENTRIE
   UNSYNCHRONISED_DRIVES, UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE } from './constants';
 import { mutations, SET_IS_CONNECTED } from './mutations';
 import { modules } from './modules';
-import { totalMileageReducer } from '../utils';
+import { totalMileageReducer, totalMileageFilter } from '../utils';
 
 export const USER = 'user';
 export const CARS = 'cars';
@@ -42,10 +42,12 @@ const store = new Vuex.Store({
   getters: {
     [IS_ONLINE]: state => state.isOnline,
     [UNSYNCHRONISED_DRIVES]: state => state.unsyncedDrives,
-    [UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE]: state => state.unsyncedDrives.reduce(
-      totalMileageReducer,
-      0,
-    ),
+    [UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE]: state => state.unsyncedDrives
+      .filter(totalMileageFilter)
+      .reduce(
+        totalMileageReducer,
+        0,
+      ),
   },
 });
 
