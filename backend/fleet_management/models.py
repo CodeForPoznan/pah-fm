@@ -65,6 +65,12 @@ class Drive(models.Model):
         return f"""Drive from {self.start_location} to
                  {self.end_location} (driver: {self.driver.first_name} {self.driver.last_name})"""
 
+    @property
+    def fuel_consumption_per_drive(self):
+        distance = self.end_mileage - self.start_mileage
+        fuel_consumption = (distance * float(self.car.fuel_consumption)) / 100
+        return round(fuel_consumption, 2)
+
 
 class VerificationToken(models.Model):
     """

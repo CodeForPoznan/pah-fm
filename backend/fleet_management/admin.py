@@ -2,6 +2,8 @@ from import_export import resources
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from import_export.admin import ImportExportModelAdmin
+from import_export.fields import Field
+
 
 from .models import Car, Passenger, Drive, User, Project, VerificationToken
 
@@ -12,22 +14,27 @@ class DriveResource(resources.ModelResource):
             p.first_name, p.last_name) for p in drive.passengers.all()
         )
 
+    fuel_consumption_per_drive = Field(attribute='fuel_consumption_per_drive')
+
     class Meta:
         model = Drive
         fields = (
             "id",
-            "driver__first_name",
-            "driver__last_name",
-            "car__plates",
             "passengers",
             "date",
             "start_mileage",
             "end_mileage",
+            "fuel_consumption_per_drive",
             "description",
             "start_location",
             "end_location",
-            "project__title"
+            "driver__first_name",
+            "driver__last_name",
+            "car__plates",
+            "project__title",
         )
+
+        export_order = fields
 
 
 class DriveAdmin(ImportExportModelAdmin):
