@@ -12,6 +12,7 @@ from fleet_management.models import (
 
 COUNTRIES = ('UA', 'SS')
 
+
 class UserFactory(factory.DjangoModelFactory):
 
     class Meta:
