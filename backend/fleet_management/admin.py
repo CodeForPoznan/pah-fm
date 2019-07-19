@@ -1,7 +1,8 @@
-from import_export import resources
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.utils.translation import gettext_lazy as _
 from import_export.admin import ImportExportModelAdmin
+from import_export import resources
 
 from .models import Car, Passenger, Drive, User, Project, VerificationToken
 
@@ -12,8 +13,9 @@ class DriveResource(resources.ModelResource):
         return f"{drive.driver.first_name} {drive.driver.last_name}"
 
     def dehydrate_passengers(self, drive):
-        return "/".join("{} {}".format(
-            p.first_name, p.last_name) for p in drive.passengers.all()
+        return "/".join(
+            "{} {}".format(passanger.first_name, passanger.last_name)
+            for passanger in drive.passengers.all()
         )
 
     class Meta:
@@ -29,7 +31,7 @@ class DriveResource(resources.ModelResource):
             "description",
             "start_location",
             "end_location",
-            "project__title"
+            "project__title",
         )
 
 
@@ -37,16 +39,38 @@ class DriveAdmin(ImportExportModelAdmin):
     resource_class = DriveResource
 
 
+class CustomUserAdmin(UserAdmin):
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        (
+            _('Personal info'),
+            {'fields': ('first_name', 'last_name', 'email', 'country')},
+        ),
+        (
+            _('Permissions'),
+            {
+                'fields': (
+                    'is_active',
+                    'is_staff',
+                    'is_superuser',
+                    'groups',
+                    'user_permissions',
+                )
+            },
+        ),
+        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+    )
+
+
 admin.site.register(Car)
 admin.site.register(Passenger)
 admin.site.register(Drive, DriveAdmin)
-admin.site.register(User, UserAdmin)
+admin.site.register(User, CustomUserAdmin)
 admin.site.register(Project)
 
 
 @admin.register(VerificationToken)
 class VerificationTokenAdmin(admin.ModelAdmin):
-
     def is_active(self, instance):
         return instance.is_active
 
@@ -55,6 +79,13 @@ class VerificationTokenAdmin(admin.ModelAdmin):
 
     is_active.boolean = True
 
-    readonly_fields = ('token', )
-    list_display = ('passenger', 'driver', 'is_confirmed', 'is_ok', 'is_active', 'created_at')
+    readonly_fields = ('token',)
+    list_display = (
+        'passenger',
+        'driver',
+        'is_confirmed',
+        'is_ok',
+        'is_active',
+        'created_at',
+    )
     ordering = ('created_at',)
