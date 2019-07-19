@@ -172,6 +172,7 @@
 
               <div class="form-group">
                 <button
+                  :disabled="isSubmitting"
                   class="btn btn-primary col-xs-3"
                 >{{ $t('drive_form.submit') }}</button>
               </div>
@@ -212,6 +213,7 @@ export default {
       confirmationOnline: false,
       confirmationOffline: false,
       currentDate: new Date().toISOString().split('T')[0],
+      isSubmitting: false,
     };
   },
   methods: {
@@ -219,7 +221,11 @@ export default {
     ...mapActions(namespaces.cars, [apiActions.fetchCars]),
     ...mapActions(namespaces.passengers, [apiActions.fetchPassengers]),
     ...mapActions(namespaces.projects, [apiActions.fetchProjects]),
+    setIsSubmitting(isSubmitting) {
+      this.isSubmitting = isSubmitting;
+    },
     handleSubmit() {
+      this.setIsSubmitting(true);
       this.validateForm();
       this.confirmationOffline = false;
       this.confirmationOnline = false;
@@ -233,12 +239,15 @@ export default {
           },
         });
         this.drive = { ...defaultFormState };
+
         if (this.isOnline) {
           this.confirmationOnline = true;
         } else {
           this.confirmationOffline = true;
         }
       }
+
+      this.setIsSubmitting(false);
     },
 
     validateForm() {
@@ -268,6 +277,7 @@ export default {
       }
     },
   },
+
   created() {
     this[apiActions.fetchCars]();
     this[apiActions.fetchPassengers]();

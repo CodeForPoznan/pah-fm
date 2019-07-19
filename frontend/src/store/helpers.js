@@ -62,7 +62,6 @@ const mapDrive = drive => ({
   passengers: drive.passengers.map(makeDomainItem),
 });
 
-
 export {
   mapDrive,
   makeDomainItem,
