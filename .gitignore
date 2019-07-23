@@ -6,6 +6,9 @@ dist
 .env.local
 .env.*.local
 
+# local settings
+docker-compose.override.yml
+
 # Log files
 npm-debug.log*
 yarn-debug.log*
