@@ -35,10 +35,13 @@ class PassengerListView(generics.ListAPIView):
 class CarListView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = CarSerializer
-    queryset = Car.objects.all()
+#    queryset = Car.objects.all()
     search_fields = ('plates',)
     filter_backends = (filters.OrderingFilter, filters.SearchFilter)
     ordering = ('plates',)
+
+    def get_queryset(self):
+        return Car.objects.filter(country=self.request.user.country)
 
 
 class DriveView(generics.ListCreateAPIView):
