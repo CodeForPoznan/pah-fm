@@ -186,8 +186,8 @@ class DrivesApiTest(APITransactionTestCase):
         self.assertSetEqual({token.is_confirmed for token in tokens}, {False, False})
         self.assertSetEqual({token.is_ok for token in tokens}, {None, None})
 
-    def test_fuel_consumption_per_drive_is_valid(self):
+    def test_fuel_consumption_is_valid(self):
         drive = self.drives[0]
         drive.start_mileage = 100300
         drive.end_mileage = 100500
-        self.assertEqual(drive.fuel_consumption_per_drive, 16.40)
+        self.assertEqual(drive.fuel_consumption, 16.40)

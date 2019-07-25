@@ -18,7 +18,7 @@ class DriveResource(resources.ModelResource):
             for passanger in drive.passengers.all()
         )
 
-    fuel_consumption_per_drive = Field(attribute='fuel_consumption_per_drive')
+    fuel_consumption = Field(attribute='fuel_consumption')
 
     class Meta:
         model = Drive
@@ -32,7 +32,7 @@ class DriveResource(resources.ModelResource):
             "start_location",
             "end_location",
             "driver",
-            "fuel_consumption_per_drive",
+            "fuel_consumption",
             "car__plates",
             "project__title",
         )

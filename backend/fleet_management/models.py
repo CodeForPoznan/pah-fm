@@ -68,7 +68,7 @@ class Drive(models.Model):
                  {self.end_location} (driver: {self.driver.first_name} {self.driver.last_name})"""
 
     @property
-    def fuel_consumption_per_drive(self):
+    def fuel_consumption(self):
         distance = self.end_mileage - self.start_mileage
         fuel_consumption = (distance * float(self.car.fuel_consumption)) / 100
         return round(fuel_consumption, 2)
