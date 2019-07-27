@@ -1,3 +1,5 @@
+import random
+
 import pytz
 import uuid
 from datetime import datetime, timedelta
@@ -61,7 +63,11 @@ class Drive(models.Model):
     description = models.CharField(max_length=1000, blank=True)
     start_location = models.CharField(max_length=100, blank=False)
     end_location = models.CharField(max_length=100, blank=False)
+    timestamp = models.IntegerField(blank=False, default=random.randint(1, 999999999))
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = [('end_mileage', 'start_mileage', 'timestamp', 'start_location', 'end_location')]
 
     def __str__(self):
         return f"""Drive from {self.start_location} to

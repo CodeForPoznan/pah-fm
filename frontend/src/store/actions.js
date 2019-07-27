@@ -89,13 +89,23 @@ export const actions = {
       return;
     }
 
-    const { syncId, ...mappedRoute } = mapDrive(state[UNSYNCHRONISED_DRIVES][0]);
+    const { syncId, ...mappedDrive } = mapDrive(state[UNSYNCHRONISED_DRIVES][0]);
+    console.log(syncId, mappedDrive);
 
     try {
-      await post('drives', mappedRoute);
+      await post('drives', mappedDrive);
       commit(SYNC_ITEM_SUCCESS, syncId);
     } catch (e) {
-      if (e.response && e.response.status === 400) {
+      if (e.response &&
+          e.response.status === 400
+          && e.message
+          && e.message.nonFieldErrors
+          && Array.isArray(e.message.nonFieldErrors)
+          && e.message.nonFieldErrors[0]
+          && e.message.nonFieldErrors[0].indexOf('must make a unique set.') > 0) {
+        // was synced before
+        commit(SYNC_ITEM_SUCCESS, syncId);
+      } else if (e.response && e.response.status === 400) {
         commit(SYNC_ITEM_FAILURE, syncId);
       }
     }
