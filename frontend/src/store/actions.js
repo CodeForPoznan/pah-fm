@@ -90,7 +90,6 @@ export const actions = {
     }
 
     const { syncId, ...mappedDrive } = mapDrive(state[UNSYNCHRONISED_DRIVES][0]);
-    console.log(syncId, mappedDrive);
 
     try {
       await post('drives', mappedDrive);
