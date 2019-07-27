@@ -26,13 +26,13 @@
       :key="drive.id">
       <div
         class="card-header"
-        @click="showDrive(drive.syncId)">
+        @click="showDrive(drive.timestamp)">
         <h5 class="mb-0">
           <span class="font-weight-bold">{{ drive.date }}</span>
           {{ $t('drives.from_to', { from: drive.startLocation, destination: drive.endLocation}) }}
         </h5>
       </div>
-      <div :class="['collapse', { show: visibleDrive === drive.syncId }]">
+      <div :class="['collapse', { show: visibleDrive === drive.timestamp }]">
         <div class="card-body">
           <p>
             <span class="font-weight-bold mr-1">{{ $t('drives.description') }}</span>

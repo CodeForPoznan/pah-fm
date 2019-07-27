@@ -89,11 +89,12 @@ export const actions = {
       return;
     }
 
-    const { syncId, ...mappedDrive } = mapDrive(state[UNSYNCHRONISED_DRIVES][0]);
+    const mappedDrive = mapDrive(state[UNSYNCHRONISED_DRIVES][0]);
+    const { timestamp } = mappedDrive;
 
     try {
       await post('drives', mappedDrive);
-      commit(SYNC_ITEM_SUCCESS, syncId);
+      commit(SYNC_ITEM_SUCCESS, timestamp);
     } catch (e) {
       if (e.response &&
           e.response.status === 400
@@ -103,9 +104,9 @@ export const actions = {
           && e.message.nonFieldErrors[0]
           && e.message.nonFieldErrors[0].indexOf('must make a unique set.') > 0) {
         // was synced before
-        commit(SYNC_ITEM_SUCCESS, syncId);
+        commit(SYNC_ITEM_SUCCESS, timestamp);
       } else if (e.response && e.response.status === 400) {
-        commit(SYNC_ITEM_FAILURE, syncId);
+        commit(SYNC_ITEM_FAILURE, timestamp);
       }
     }
     dispatch(SYNC);
