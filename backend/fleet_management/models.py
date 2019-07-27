@@ -1,5 +1,3 @@
-import random
-
 import pytz
 import uuid
 from datetime import datetime, timedelta
@@ -63,7 +61,7 @@ class Drive(models.Model):
     description = models.CharField(max_length=1000, blank=True)
     start_location = models.CharField(max_length=100, blank=False)
     end_location = models.CharField(max_length=100, blank=False)
-    timestamp = models.IntegerField(blank=False, default=random.randint(1, 999999999))
+    timestamp = models.IntegerField(blank=False)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     class Meta:
