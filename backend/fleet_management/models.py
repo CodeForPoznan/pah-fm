@@ -65,12 +65,9 @@ class Drive(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = [('end_mileage',
-                            'start_mileage',
-                            'timestamp',
-                            'start_location',
-                            'end_location'
-                            )]
+        unique_together = [
+            ('end_mileage', 'start_mileage', 'timestamp', 'start_location', 'end_location')
+        ]
 
     def __str__(self):
         return f"""Drive from {self.start_location} to
