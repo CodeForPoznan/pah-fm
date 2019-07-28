@@ -1,6 +1,8 @@
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import FlagIcon from 'vue-flag-icon';
+import * as Sentry from '@sentry/browser';
+import * as Integrations from '@sentry/integrations';
 
 import VueI18n from 'vue-i18n';
 import Vue from 'vue';
@@ -41,6 +43,14 @@ export const i18n = new VueI18n({
 Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);
+
+
+if (process.env.NODE_ENV === 'production') {
+  Sentry.init({
+    dsn: 'https://c09cea51a0b44371bc77137627641db2@sentry.io/1515416',
+    integrations: [new Integrations.Vue({ Vue, attachProps: true })],
+  });
+}
 
 new Vue({
   render: h => h(App),
