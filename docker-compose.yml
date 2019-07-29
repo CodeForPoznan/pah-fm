@@ -3,6 +3,8 @@ services:
 
   frontend:
     image: codeforpoznan/pah-fm-frontend
+    environment:
+    #  NODE_ENV: production
     # build: frontend
     command: bash docker-entrypoint.sh
     # command: tail -f /dev/null
