@@ -29,6 +29,7 @@ class Car(models.Model):
         choices=UNITS, max_length=11, default='kilometers',
     )
     fuel_consumption = models.FloatField(null=False, default=0)
+    country = CountryField(blank_label='(select country)', null=False)
 
     def __str__(self):
         return self.plates
