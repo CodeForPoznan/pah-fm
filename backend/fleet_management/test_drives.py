@@ -10,6 +10,7 @@ from rest_framework.test import APITransactionTestCase
 from fleet_management.models import Car, Drive, Passenger, Project, VerificationToken
 from fleet_management.factories import DriveFactory
 
+
 class DrivesApiTest(APITransactionTestCase):
 
     def create_passenger(self, first_name, last_name, email):
