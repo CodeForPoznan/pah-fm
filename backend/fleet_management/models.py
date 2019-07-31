@@ -1,6 +1,8 @@
 import pytz
 import uuid
 from datetime import datetime, timedelta
+import calendar
+import time
 
 from django.db import models
 from django.conf import settings
@@ -62,7 +64,7 @@ class Drive(models.Model):
     description = models.CharField(max_length=1000, blank=True)
     start_location = models.CharField(max_length=100, blank=False)
     end_location = models.CharField(max_length=100, blank=False)
-    timestamp = models.IntegerField(blank=False)
+    timestamp = models.IntegerField(blank=False, default=calendar.timegm(time.gmtime()))
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     class Meta:
