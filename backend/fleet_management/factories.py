@@ -3,6 +3,7 @@ import string
 from datetime import timedelta
 
 import factory
+import random
 from django.utils.timezone import now
 from factory import fuzzy
 
@@ -149,6 +150,7 @@ class DriveFactory(factory.DjangoModelFactory):
     date = fuzzy.FuzzyDate((now() - timedelta(days=1000)).date())
     start_mileage = fuzzy.FuzzyInteger(1000000)
     description = factory.Faker('text', max_nb_chars=1000)
+    timestamp = random.randint(1, 999999999)
 
     @factory.lazy_attribute
     def end_mileage(self):

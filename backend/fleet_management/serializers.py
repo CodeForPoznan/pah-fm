@@ -58,7 +58,7 @@ class DriveSerializer(serializers.ModelSerializer):
             'id',
             'driver', 'car', 'passengers',  'project',
             'date', 'start_mileage', 'end_mileage', 'description',
-            'start_location', 'end_location'
+            'start_location', 'end_location', 'timestamp'
         )
 
     def create(self, validated_data):

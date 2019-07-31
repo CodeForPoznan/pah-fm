@@ -3,15 +3,15 @@ import { getAuthHeader } from './auth';
 export const apiUrl = process.env.VUE_APP_API_URL;
 const CONTENT_TYPE_JSON = 'application/json; charset=utf-8';
 
-function handleResponse(response) {
+async function handleResponse(response) {
+  const message = await response.json();
+
   if (response.status >= 200 && response.status < 300) {
-    return response.json();
+    return message;
   }
 
-  const error = new Error(response.statusText || response.status);
-  error.response = response;
-
-  return Promise.reject(error);
+  // eslint-disable-next-line
+  return Promise.reject({ message, response });
 }
 
 function setAuthData(requestOptions, auth) {

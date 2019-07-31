@@ -229,7 +229,7 @@ export default {
           form: {
             ...this.drive,
             passengers: [this.drive.passenger],
-            syncId: Math.floor(Date.now() / 1000),
+            timestamp: Math.floor(Date.now() / 1000),
           },
         });
         this.drive = { ...defaultFormState };
