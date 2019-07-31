@@ -5,8 +5,6 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:heroku": "vue-cli-service build --dest ./dist-heroku --mode heroku",
-    "deploy:heroku": "firebase deploy",
     "http:server": "http-server dist -c-1",
     "stylelint": "stylelint src/**/*.vue src/**/*.scss --syntax scss --cache",
     "lint:fix": "vue-cli-service lint",
@@ -15,6 +13,8 @@
   },
   "dependencies": {
     "@7ninjas/scss-mixins": "^1.0.1",
+    "@sentry/browser": "5.5.0",
+    "@sentry/integrations": "5.5.0",
     "bootstrap": "4.1.3",
     "bootstrap-vue": "2.0.0-rc.11",
     "jwt-decode": "^2.2.0",
@@ -25,7 +25,8 @@
     "vue-i18n": "^8.3.2",
     "vue-router": "3.0.1",
     "vuex": "^3.0.1",
-    "vuex-persistedstate": "^2.5.4"
+    "vuex-persistedstate": "^2.5.4",
+    "date-fns": "1.28.5"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "3.0.5",

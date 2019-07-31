@@ -27,18 +27,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', '0') == '1'
 
-PRODUCTION = os.environ.get('ENVIRONMENT') == 'heroku'
-
-if PRODUCTION:
-    ALLOWED_HOSTS = [
-        'pah-backend.herokuapp.com',
-    ]
-else:
-    ALLOWED_HOSTS = [
+ALLOWED_HOSTS = [
         'localhost',
         '127.0.0.1',
         '52.232.62.212',
         '.pahfm.codeforpoznan.pl',
+        '.lemik.pl',
     ]
 
 
@@ -51,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'import_export',
 
     # 3rd party apps
     'corsheaders',
@@ -72,7 +67,6 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = (
-    'pah-fm.firebaseapp.com',
     'localhost:8080',
     '127.0.0.1:8080'
 )
@@ -101,17 +95,16 @@ WSGI_APPLICATION = 'pah_fm.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-if not PRODUCTION:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'USER': os.environ.get('PAH_FM_DB_USER', 'pah-fm'),
-            'NAME': os.environ.get('PAH_FM_DB_NAME', 'pah-fm'),
-            'PASSWORD': os.environ.get('PAH_FM_DB_PASS', 'pah-fm'),
-            'HOST': os.environ.get('PAH_FM_DB_HOST', 'localhost'),
-            'PORT': os.environ.get('PAH_FM_DB_PORT', '5432'),
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'USER': os.environ.get('PAH_FM_DB_USER', 'pah-fm'),
+        'NAME': os.environ.get('PAH_FM_DB_NAME', 'pah-fm'),
+        'PASSWORD': os.environ.get('PAH_FM_DB_PASS', 'pah-fm'),
+        'HOST': os.environ.get('PAH_FM_DB_HOST', 'localhost'),
+        'PORT': os.environ.get('PAH_FM_DB_PORT', '5432'),
     }
+}
 
 
 # DRF settings
@@ -134,6 +127,7 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
+    'EXCEPTION_HANDLER': 'fleet_management.utils.custom_exception_handler'
 }
 
 
@@ -182,12 +176,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'pah_fm/static')
 ]
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 # Email settings
 EMAIL_HOST = 'localhost'
@@ -212,20 +205,3 @@ SYSTEM_DOMAIN = 'localhost'
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=30),
 }
-
-FRONTEND_URL = 'http://localhost:8080'
-
-if PRODUCTION:
-    import django_heroku
-
-    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
-    django_heroku.settings(locals())
-    DEBUG_PROPAGATE_EXCEPTIONS = True
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-    EMAIL_PORT = os.environ.get('MAILGUN_SMTP_PORT')
-    EMAIL_HOST = os.environ.get('MAILGUN_SMTP_SERVER')
-    EMAIL_HOST_USER = os.environ.get('MAILGUN_SMTP_LOGIN')
-    EMAIL_HOST_PASSWORD = os.environ.get('MAILGUN_SMTP_PASSWORD')
-    EMAIL_ADDRESS = 'no-reply@pah-backend.herokuapp.com'
-    FRONTEND_URL = 'https://pah-fm.firebaseapp.com'

@@ -26,13 +26,13 @@
       :key="drive.id">
       <div
         class="card-header"
-        @click="showDrive(drive.syncId)">
+        @click="showDrive(drive.timestamp)">
         <h5 class="mb-0">
           <span class="font-weight-bold">{{ drive.date }}</span>
           {{ $t('drives.from_to', { from: drive.startLocation, destination: drive.endLocation}) }}
         </h5>
       </div>
-      <div :class="['collapse', { show: visibleDrive === drive.syncId }]">
+      <div :class="['collapse', { show: visibleDrive === drive.timestamp }]">
         <div class="card-body">
           <p>
             <span class="font-weight-bold mr-1">{{ $t('drives.description') }}</span>
@@ -113,7 +113,7 @@
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex';
 import { actions as apiActions, namespaces, UNSYNCHRONISED_DRIVES, UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE } from '../store/constants';
-import { totalMileageReducer } from '../utils';
+import { totalMileageReducer, totalMileageFilter } from '../utils';
 
 export default {
   name: 'DrivesView',
@@ -135,10 +135,12 @@ export default {
     }),
     ...mapState(namespaces.drives, {
       drives: state => state.data || [],
-      totalKilometers: state => state.data.reduce(
-        totalMileageReducer,
-        0,
-      ),
+      totalKilometers: state => state.data
+        .filter(totalMileageFilter)
+        .reduce(
+          totalMileageReducer,
+          0,
+        ),
     }),
   },
   created() {

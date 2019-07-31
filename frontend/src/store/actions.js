@@ -89,14 +89,18 @@ export const actions = {
       return;
     }
 
-    const { syncId, ...mappedRoute } = mapDrive(state[UNSYNCHRONISED_DRIVES][0]);
+    const mappedDrive = mapDrive(state[UNSYNCHRONISED_DRIVES][0]);
+    const { timestamp } = mappedDrive;
 
     try {
-      await post('drives', mappedRoute);
-      commit(SYNC_ITEM_SUCCESS, syncId);
+      await post('drives', mappedDrive);
+      commit(SYNC_ITEM_SUCCESS, timestamp);
     } catch (e) {
-      if (e.response && e.response.status === 400) {
-        commit(SYNC_ITEM_FAILURE, syncId);
+      if (e.response && e.response.status === 422) {
+        // was synced before
+        commit(SYNC_ITEM_SUCCESS, timestamp);
+      } else if (e.response && e.response.status === 400) {
+        commit(SYNC_ITEM_FAILURE, timestamp);
       }
     }
     dispatch(SYNC);

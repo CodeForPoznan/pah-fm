@@ -1,12 +1,13 @@
 .DS_Store
 node_modules
 dist
-dist-heroku
-.firebase
 
 # local env files
 .env.local
 .env.*.local
+
+# local settings
+docker-compose.override.yml
 
 # Log files
 npm-debug.log*
@@ -27,6 +28,7 @@ env
 venv/
 chromedriver
 
-backend/emails
+backend/emails/
+backend/static/
 
 *.retry

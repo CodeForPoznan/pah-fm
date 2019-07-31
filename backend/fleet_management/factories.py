@@ -3,12 +3,15 @@ import string
 from datetime import timedelta
 
 import factory
+import random
 from django.utils.timezone import now
 from factory import fuzzy
 
 from fleet_management.models import (
     Car, Drive, Passenger, Project, User, VerificationToken,
 )
+
+COUNTRIES = ('UA', 'SS')
 
 
 class UserFactory(factory.DjangoModelFactory):
@@ -20,6 +23,7 @@ class UserFactory(factory.DjangoModelFactory):
     last_name = factory.Faker('last_name', locale='uk_UA')
     email = factory.Faker('email', locale='uk_UA')
     username = factory.LazyAttribute(lambda obj: obj.email)
+    country = fuzzy.FuzzyChoice(COUNTRIES)
 
     is_active = True
     password = 'pass123'
@@ -83,6 +87,7 @@ class CarFactory(factory.DjangoModelFactory):
 
     mileage_unit = fuzzy.FuzzyChoice(k for k, _ in Car.UNITS)
     fuel_consumption = fuzzy.FuzzyFloat(3, 10)
+    country = fuzzy.FuzzyChoice(COUNTRIES)
 
     class Meta:
         model = Car
@@ -145,6 +150,7 @@ class DriveFactory(factory.DjangoModelFactory):
     date = fuzzy.FuzzyDate((now() - timedelta(days=1000)).date())
     start_mileage = fuzzy.FuzzyInteger(1000000)
     description = factory.Faker('text', max_nb_chars=1000)
+    timestamp = random.randint(1, 999999999)
 
     @factory.lazy_attribute
     def end_mileage(self):

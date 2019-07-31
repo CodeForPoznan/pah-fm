@@ -1,14 +1,18 @@
 import pytz
 import uuid
 from datetime import datetime, timedelta
+import calendar
+import time
 
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.utils.timezone import now
+from django_countries.fields import CountryField
 
 
 class User(AbstractUser):
+    country = CountryField(blank_label='(select country)', null=False)
 
     def __str__(self):
         return self.username
@@ -27,6 +31,7 @@ class Car(models.Model):
         choices=UNITS, max_length=11, default='kilometers',
     )
     fuel_consumption = models.FloatField(null=False, default=0)
+    country = CountryField(blank_label='(select country)', null=False)
 
     def __str__(self):
         return self.plates
@@ -59,11 +64,23 @@ class Drive(models.Model):
     description = models.CharField(max_length=1000, blank=True)
     start_location = models.CharField(max_length=100, blank=False)
     end_location = models.CharField(max_length=100, blank=False)
+    timestamp = models.IntegerField(blank=False, default=calendar.timegm(time.gmtime()))
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = [
+            ('end_mileage', 'start_mileage', 'timestamp', 'start_location', 'end_location')
+        ]
 
     def __str__(self):
         return f"""Drive from {self.start_location} to
-                 {self.end_location} (driver: {self.driver.username})"""
+                 {self.end_location} (driver: {self.driver.first_name} {self.driver.last_name})"""
+
+    @property
+    def fuel_consumption(self):
+        distance = self.end_mileage - self.start_mileage
+        fuel_consumption = (distance * float(self.car.fuel_consumption)) / 100
+        return round(fuel_consumption, 2)
 
 
 class VerificationToken(models.Model):

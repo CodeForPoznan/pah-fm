@@ -26,6 +26,7 @@
       to="/logout"
       key="logout"
       class="username"
+      :class="{ offline: !isOnline }"
     >
       {{ $t('common.logout') }}
       <p>
@@ -37,9 +38,10 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 import * as actions from '../store/actions';
 import { USER } from '../store';
+import { IS_ONLINE } from '../store/constants';
 import Language from './Language.vue';
 import { driveCreateRoute, driveListRoute } from '../router/index';
 
@@ -50,6 +52,7 @@ export default {
   },
   computed: {
     ...mapState([USER]),
+    ...mapGetters([IS_ONLINE]),
     links() {
       return [
         {
@@ -89,5 +92,11 @@ export default {
 .out-link-image {
   width: 100%;
   height: 100%;
+}
+
+.offline {
+  cursor: default;
+  pointer-events: none;
+  text-decoration: none;
 }
 </style>
