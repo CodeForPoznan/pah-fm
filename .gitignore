@@ -28,6 +28,7 @@ env
 venv/
 chromedriver
 
-backend/emails
+backend/emails/
+backend/static/
 
 *.retry
