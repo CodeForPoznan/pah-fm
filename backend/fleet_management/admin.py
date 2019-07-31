@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 from import_export.admin import ImportExportModelAdmin
+from import_export.fields import Field
 from import_export import resources
-
 from .models import Car, Passenger, Drive, User, Project, VerificationToken
 
 
@@ -18,12 +18,12 @@ class DriveResource(resources.ModelResource):
             for passanger in drive.passengers.all()
         )
 
+    fuel_consumption = Field(attribute='fuel_consumption')
+
     class Meta:
         model = Drive
         fields = (
             "id",
-            "driver",
-            "car__plates",
             "passengers",
             "date",
             "start_mileage",
@@ -31,8 +31,13 @@ class DriveResource(resources.ModelResource):
             "description",
             "start_location",
             "end_location",
+            "driver",
+            "fuel_consumption",
+            "car__plates",
             "project__title",
         )
+
+        export_order = fields
 
 
 class DriveAdmin(ImportExportModelAdmin):
