@@ -47,7 +47,7 @@ Vue.use(BootstrapVue);
 
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({
-    dsn: 'https://c09cea51a0b44371bc77137627641db2@sentry.io/1515416',
+    dsn: 'https://d4ec1a8095964813a55529d873eae0e6@sentry.io/1518607',
     integrations: [new Integrations.Vue({ Vue, attachProps: true })],
   });
 }
