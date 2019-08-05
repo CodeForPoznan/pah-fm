@@ -1,9 +1,10 @@
 from rest_framework import generics, filters, permissions, views
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 
-from fleet_management.models import VerificationToken
-from fleet_management.serializers import VerificationTokenSerializer
+from .models import VerificationToken
+from .serializers import VerificationTokenSerializer
+
+from .permissions import GroupPermission, all_driver_methods
 from .models import Car, Drive, Passenger, Project
 from .serializers import (
     CarSerializer,
@@ -15,6 +16,7 @@ from .serializers import (
 
 
 class CurrentUserRetrieveView(views.APIView):
+
     def get(self, request):
         return Response(
             UserSerializer(request.user).data
@@ -22,6 +24,8 @@ class CurrentUserRetrieveView(views.APIView):
 
 
 class PassengerListView(generics.ListAPIView):
+    permission_classes = [GroupPermission]
+    required_groups = all_driver_methods
     serializer_class = PassengerSerializer
     queryset = Passenger.objects.all()
     filter_backends = (filters.OrderingFilter, filters.SearchFilter)
@@ -33,7 +37,8 @@ class PassengerListView(generics.ListAPIView):
 
 
 class CarListView(generics.ListAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = [GroupPermission]
+    required_groups = all_driver_methods
     serializer_class = CarSerializer
     search_fields = ('plates',)
     filter_backends = (filters.OrderingFilter, filters.SearchFilter)
@@ -46,7 +51,8 @@ class CarListView(generics.ListAPIView):
 
 
 class DriveView(generics.ListCreateAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = [GroupPermission]
+    required_groups = all_driver_methods
     serializer_class = DriveSerializer
     filter_backends = (filters.OrderingFilter,)
     ordering = ('-date',)
@@ -61,7 +67,9 @@ class DriveView(generics.ListCreateAPIView):
 
 
 class ProjectView(generics.ListAPIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = [GroupPermission]
+    required_groups = all_driver_methods
+
     serializer_class = ProjectSerializer
     queryset = Project.objects.all()
 

@@ -34,10 +34,18 @@ services:
 
   db:
     image: postgres:9.5
+    ports:
+      - 5432:5432
     environment:
       POSTGRES_DB: pah-fm
       POSTGRES_USER: pah-fm
       POSTGRES_PASSWORD: pah-fm
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
 
   webserver:
     image: nginx
