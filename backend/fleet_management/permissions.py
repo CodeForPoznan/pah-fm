@@ -16,7 +16,14 @@ class GroupPermission(permissions.BasePermission):
 
         required_groups = required_groups_mapping.get(request.method, [])
 
-        return all([is_in_group(request.user, group_name) if group_name != "__all__" else True for group_name in required_groups])
+        return all(
+            [
+                is_in_group(request.user, group_name)
+                if group_name != "__all__"
+                else True
+                for group_name in required_groups
+            ]
+        )
 
 
 all_passenger_methods = {
