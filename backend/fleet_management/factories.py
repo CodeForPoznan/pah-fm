@@ -151,7 +151,7 @@ class DriveFactory(factory.DjangoModelFactory):
     date = fuzzy.FuzzyDate((now() - timedelta(days=1000)).date())
     start_mileage = fuzzy.FuzzyInteger(1000000)
     description = factory.Faker('text', max_nb_chars=1000)
-    timestamp = random.randint(1, 999999999)
+    timestamp = fuzzy.FuzzyInteger(1, 999999999)
     start_location = fuzzy.FuzzyChoice(CITIES)
     end_location = fuzzy.FuzzyChoice(CITIES)
 
