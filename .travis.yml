@@ -18,6 +18,9 @@ script:
   - npm run lint
   - cd ..
 after_success:
+  - echo $TRAVIS_REPO_SLUG
+  - echo $TRAVIS_BRANCH
+  - echo $TRAVIS_PULL_REQUEST
   - if [ "$TRAVIS_REPO_SLUG" == "codeforpoznan/pah-fm" ] && \
        [ "$TRAVIS_BRANCH" == "develop" ] && \
        [ "$TRAVIS_PULL_REQUEST" == "false" ];
