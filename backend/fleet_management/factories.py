@@ -6,11 +6,13 @@ import random
 from django.utils.timezone import now
 from factory import fuzzy
 
-from fleet_management.models import (
+from .models import (
     Car, Drive, Passenger, Project, User, VerificationToken,
 )
 
 COUNTRIES = ('UA', 'SS')
+CITIES = ('Warsaw', 'Poznań', 'Kraków')
+
 
 
 class UserFactory(factory.DjangoModelFactory):
@@ -150,6 +152,8 @@ class DriveFactory(factory.DjangoModelFactory):
     start_mileage = fuzzy.FuzzyInteger(1000000)
     description = factory.Faker('text', max_nb_chars=1000)
     timestamp = random.randint(1, 999999999)
+    start_location = fuzzy.FuzzyChoice(CITIES)
+    end_location = fuzzy.FuzzyChoice(CITIES)
 
     @factory.lazy_attribute
     def end_mileage(self):
