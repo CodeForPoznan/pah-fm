@@ -7,7 +7,7 @@ server {
     gzip_types      text/javascript text/css;
     gzip_proxied any;
 
-    location ~ ^/(media|api|admin)/ {
+    location ~ ^/(media|api|admin) {
         include uwsgi_params;
         uwsgi_pass unix:/run/uwsgi/pahfm.sock;
     }
