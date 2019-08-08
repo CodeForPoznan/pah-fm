@@ -127,7 +127,6 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
-    'EXCEPTION_HANDLER': 'fleet_management.utils.custom_exception_handler'
 }
 
 

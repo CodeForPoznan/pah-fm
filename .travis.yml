@@ -18,9 +18,10 @@ script:
   - npm run lint
   - cd ..
 after_success:
-  - if [ "$TRAVIS_REPO_SLUG" == "CodeForPoznan/pah-fm" ] && \
-       [ "$TRAVIS_BRANCH" == "develop" ] && \
-       [ "$TRAVIS_PULL_REQUEST" == "false" ];
+  - |
+    if [ "$TRAVIS_REPO_SLUG" == "CodeForPoznan/pah-fm" ] &&
+       [ "$TRAVIS_BRANCH" == "develop" ] &&
+       [ "$TRAVIS_PULL_REQUEST" = false ];
     then
       docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD;
       cd backend;

@@ -1,5 +1,6 @@
 from django.db import transaction
-from rest_framework import fields, serializers
+from rest_framework import fields, serializers, status
+from rest_framework.exceptions import ValidationError
 
 from .models import Car, Drive, Passenger, User, Project, VerificationToken
 from .signals import drive_created
@@ -56,7 +57,7 @@ class DriveSerializer(serializers.ModelSerializer):
         model = Drive
         fields = (
             'id',
-            'driver', 'car', 'passengers',  'project',
+            'driver', 'car', 'passengers', 'project',
             'date', 'start_mileage', 'end_mileage', 'description',
             'start_location', 'end_location', 'timestamp'
         )
@@ -94,6 +95,15 @@ class DriveSerializer(serializers.ModelSerializer):
                     token_id=token.id,
                 )
             return drive
+
+    def is_valid(self, raise_exception=False):
+        try:
+            return super().is_valid(raise_exception=raise_exception)
+        except ValidationError as err:
+            err_codes = err.get_codes()
+            if "non_field_errors" in err_codes and "unique" in err_codes["non_field_errors"]:
+                err.status_code = status.HTTP_409_CONFLICT
+            raise err
 
 
 class VerificationTokenSerializer(serializers.ModelSerializer):
