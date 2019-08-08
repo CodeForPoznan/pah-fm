@@ -3,7 +3,8 @@ from datetime import timedelta
 
 import random
 from django.utils.timezone import now
-from factory import fuzzy, DjangoModelFactory, Faker, LazyAttribute, lazy_attribute, post_generation, SubFactory
+from factory import fuzzy, DjangoModelFactory, Faker, LazyAttribute, lazy_attribute, \
+    post_generation, SubFactory
 
 from .models import (
     Car, Drive, Passenger, Project, User, VerificationToken,
