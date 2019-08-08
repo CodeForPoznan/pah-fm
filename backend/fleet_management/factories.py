@@ -14,7 +14,6 @@ COUNTRIES = ('UA', 'SS')
 CITIES = ('Warsaw', 'Poznań', 'Kraków')
 
 
-
 class UserFactory(factory.DjangoModelFactory):
 
     class Meta:
