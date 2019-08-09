@@ -19,26 +19,6 @@ class Command(BaseCommand):
     help = "Populates database with fake items."
 
     def handle(self, *args, **options):
-        superuser = User()
-        superuser.is_active = True
-        superuser.is_superuser = True
-        superuser.is_staff = True
-        superuser.username = 'hello@codeforpoznan.pl'
-        superuser.email = 'hello@codeforpoznan.pl'
-        superuser.set_password('cfp123')
-        superuser.country = 'UA'
-        superuser.save()
-
-        superuser = User()
-        superuser.is_active = True
-        superuser.is_superuser = False
-        superuser.is_staff = False
-        superuser.username = 'ola@pah.org.pl'
-        superuser.email = 'ola@pah.org.pl'
-        superuser.set_password('pah123')
-        superuser.country = 'UA'
-        superuser.save()
-
         self.stdout.write(self.style.SUCCESS('Creating 5 cars'))
         for _ in tqdm(range(5)):
             CarFactory.create()
