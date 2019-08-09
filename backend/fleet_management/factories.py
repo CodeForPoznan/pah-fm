@@ -11,7 +11,6 @@ from .models import (
 )
 
 COUNTRIES = ('UA', 'SS')
-CITIES = ('Warsaw', 'Poznań', 'Kraków')
 
 
 class UserFactory(DjangoModelFactory):
@@ -151,8 +150,8 @@ class DriveFactory(DjangoModelFactory):
     start_mileage = fuzzy.FuzzyInteger(1000000)
     description = Faker('text', max_nb_chars=1000)
     timestamp = fuzzy.FuzzyInteger(1, 999999999)
-    start_location = fuzzy.FuzzyChoice(CITIES)
-    end_location = fuzzy.FuzzyChoice(CITIES)
+    start_location = Faker("city", locale="uk_UA")
+    end_location = Faker("city", locale="uk_UA")
 
     @lazy_attribute
     def end_mileage(self):
