@@ -9,8 +9,8 @@ from ..constants import Groups
 
 def create_groups(apps, schema_editor):
     with connections['default'].cursor() as cursor:
-        cursor.execute(f"INSERT INTO auth_group (\"name\") values ('{Groups.Passenger.name}')")
-        cursor.execute(f"INSERT INTO auth_group (\"name\") values ('{Groups.Driver.name}')")
+        Group.objects.create(name=Groups.Passenger.name)
+        Group.objects.create(name=Groups.Driver.name)
 
 
 def insert_to_groups(apps, schema_editor):
