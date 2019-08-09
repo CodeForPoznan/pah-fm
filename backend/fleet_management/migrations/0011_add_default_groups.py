@@ -8,9 +8,8 @@ from ..constants import Groups
 
 
 def create_groups(apps, schema_editor):
-    with connections['default'].cursor() as cursor:
-        Group.objects.create(name=Groups.Passenger.name)
-        Group.objects.create(name=Groups.Driver.name)
+    Group.objects.create(name=Groups.Passenger.name)
+    Group.objects.create(name=Groups.Driver.name)
 
 
 def insert_to_groups(apps, schema_editor):
