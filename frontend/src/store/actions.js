@@ -1,5 +1,6 @@
 import { get, patch, post } from '../services/api/http';
 import { login, saveToken, deleteToken } from '../services/api/auth';
+import { successfulLogoutRoute } from '../router/index';
 import { getMyself } from '../services/api/user';
 import * as mutations from './mutations';
 import { mapDrive } from './helpers';
@@ -48,7 +49,7 @@ export const actions = {
   [LOGOUT]({ commit }) {
     commit(mutations.SET_USER, null);
     deleteToken();
-    window.location.replace(login.path);
+    window.location.replace(successfulLogoutRoute.path);
   },
 
   [SUBMIT]({ commit, dispatch }, { form }) {

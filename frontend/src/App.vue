@@ -4,7 +4,7 @@
     <Header />
     <ScaleRotate
       class="mobile-menu"
-      v-if="!isLogin && !isConfirmationPage"
+      v-if="!isLogin && !isConfirmationPage && !isLogout"
       right>
       <NavigationItems />
     </ScaleRotate>
@@ -35,7 +35,7 @@ import Refresh from './components/Refresh.vue';
 import Status from './components/Status.vue';
 import store, { LANGUAGE } from './store';
 import NavigationItems from './components/NavigationItems.vue';
-import { confirmationRoute, loginRoute } from './router';
+import { confirmationRoute, loginRoute, logoutRoute, successfulLogoutRoute } from './router';
 import { SYNC } from './store/constants';
 import { FETCH_USER } from './store/actions';
 
@@ -46,6 +46,10 @@ export default {
     ...mapState([LANGUAGE]),
     isLogin() {
       return this.$router.currentRoute.path === loginRoute.path;
+    },
+    isLogout() {
+      return this.$router.currentRoute.path === successfulLogoutRoute.path ||
+             this.$router.currentRoute.path === logoutRoute.path;
     },
     isConfirmationPage() {
       return this.$route.name === confirmationRoute.name;
