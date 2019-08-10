@@ -119,6 +119,7 @@ class PassengerFactory(factory.DjangoModelFactory):
 
     first_name = factory.Faker('first_name', locale='pl_PL')
     last_name = factory.Faker('last_name', locale='pl_PL')
+    country = fuzzy.FuzzyChoice(COUNTRIES)
 
 
 class ProjectFactory(factory.DjangoModelFactory):

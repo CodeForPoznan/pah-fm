@@ -23,13 +23,17 @@ class CurrentUserRetrieveView(views.APIView):
 
 class PassengerListView(generics.ListAPIView):
     serializer_class = PassengerSerializer
-    queryset = Passenger.objects.all()
     filter_backends = (filters.OrderingFilter, filters.SearchFilter)
     search_fields = (
         'first_name',
         'last_name',
     )
     ordering = ('first_name', 'last_name')
+
+    def get_queryset(self):
+        return Passenger.objects.filter(
+            country=self.request.user.country
+        ) | Passenger.objects.filter(country='')
 
 
 class CarListView(generics.ListAPIView):
