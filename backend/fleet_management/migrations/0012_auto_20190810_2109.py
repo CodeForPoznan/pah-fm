@@ -2,6 +2,14 @@
 
 from django.db import migrations, models
 
+from ..models import Drive
+
+
+def default_is_verified(apps, schema_editor):
+    drives = Drive.objects.all()
+    for drive in drives:
+        drive.isVerified=True
+
 
 class Migration(migrations.Migration):
 
@@ -13,6 +21,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='drive',
             name='isVerified',
-            field=models.BooleanField(default=True),
-        )
+            field=models.BooleanField(default=False),
+        ),
+        migrations.RunPython(default_is_verified),
+
     ]
