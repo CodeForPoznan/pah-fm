@@ -6,7 +6,7 @@ import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import DriveFormView from '../views/DriveFormView.vue';
 import DrivesView from '../views/DrivesView.vue';
-import SuccessfulLogout from '../views/SuccessfulLogout.vue';
+import SuccessfulLogoutView from '../views/SuccessfulLogoutView.vue';
 import { getItem } from '../services/localStore';
 import store from '../store';
 import * as mutations from '../store/mutations';
@@ -47,7 +47,7 @@ export const logoutRoute = {
 export const successfulLogoutRoute = {
   path: '/logout_success',
   name: 'SuccesfulLogout',
-  component: SuccessfulLogout,
+  component: SuccessfulLogoutView,
 };
 export const pageNotFoundRoute = {
   path: '*',

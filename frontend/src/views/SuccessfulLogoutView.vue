@@ -8,6 +8,6 @@
 
 <script>
 export default {
-  name: 'SuccessfulLogout',
+  name: 'SuccessfulLogoutView',
 };
 </script>
