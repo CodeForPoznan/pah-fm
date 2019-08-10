@@ -73,11 +73,11 @@ class DriveSerializer(serializers.ModelSerializer):
             id__in=[p['id'] for p in passengers_data],
         ).all()
 
-        validated_data.isVerified = True
-
         with transaction.atomic():
             drive = Drive.objects.create(
                 **validated_data,
+                # TODO Awaiting validation
+                isVerified=True,
                 driver=self.context['driver'],
                 car=car,
                 project=project
