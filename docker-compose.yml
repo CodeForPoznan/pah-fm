@@ -34,6 +34,8 @@ services:
 
   db:
     image: postgres:9.5
+    ports:
+      - 6866:5432
     environment:
       POSTGRES_DB: pah-fm
       POSTGRES_USER: pah-fm
