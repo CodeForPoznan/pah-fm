@@ -11,7 +11,7 @@ install:
   - cd frontend && npm install && cd -
 script:
   - cd backend
-  - flake8 . --max-line-length=100 --exclude=migrations
+  - flake8 . --config=./backend/.flake8
   - cd ..
 
   - cd frontend
