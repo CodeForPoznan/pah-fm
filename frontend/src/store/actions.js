@@ -96,7 +96,7 @@ export const actions = {
       await post('drives', mappedDrive);
       commit(SYNC_ITEM_SUCCESS, timestamp);
     } catch (e) {
-      if (e.response && e.response.status === 422) {
+      if (e.response && e.response.status === 409) {
         // was synced before
         commit(SYNC_ITEM_SUCCESS, timestamp);
       } else if (e.response && e.response.status === 400) {
