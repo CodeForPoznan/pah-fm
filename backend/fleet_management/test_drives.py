@@ -28,7 +28,6 @@ class DrivesApiTest(APITransactionTestCase):
         ]
         self.car = Car.objects.create(
             plates='FOO 129338',
-            mileage_unit=Car.KILOMETERS,
             fuel_consumption=8.2,
         )
         self.project = Project.objects.create(
