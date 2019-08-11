@@ -10,7 +10,7 @@ import {
   SYNC,
   SYNC_ITEM_SUCCESS,
   SYNC_ITEM_FAILURE,
-  UNSYNCHRONISED_DRIVES
+  UNSYNCHRONISED_DRIVES,
 } from './constants';
 
 export const FETCH_USER = 'FETCH_USER';
@@ -23,7 +23,7 @@ export const SUBMIT_CONFIRMATION_TOKEN = 'SUBMIT_CONFIRMATION_TOKEN';
 
 export const actions = {
   [FETCH_USER]({ dispatch, commit }, { callback } = {}) {
-    getMyself().then(user => {
+    getMyself().then((user) => {
       commit(mutations.SET_USER, user);
       dispatch(`${namespaces.passengers}/${apiActions.fetchPassengers}`);
       dispatch(`${namespaces.cars}/${apiActions.fetchCars}`);
@@ -38,11 +38,11 @@ export const actions = {
   [LOGIN]({ commit, dispatch }, { username, password }) {
     commit(mutations.SET_LOGIN_PROGRESS, true);
     login(username, password)
-      .then(token => {
+      .then((token) => {
         commit(mutations.SET_LOGIN_ERROR, null);
         saveToken(token);
         dispatch(FETCH_USER, {
-          callback: () => window.location.replace('/drive')
+          callback: () => window.location.replace('/drive'),
         });
       })
       .catch(() => {
@@ -71,17 +71,16 @@ export const actions = {
 
   [VERIFY_CONFIRMATION_TOKEN]({ commit }, token) {
     get(`verification-token/${token}`)
-      .catch(err => {
+      .catch((err) => {
         commit(mutations.SET_VERIFICATION_TOKEN_ACTIVE, {
           token,
-          isActive: false
+          isActive: false,
         });
         throw err;
       })
       .then(resp => resp.isActive)
       .then(isActive =>
-        commit(mutations.SET_VERIFICATION_TOKEN_ACTIVE, { token, isActive })
-      )
+        commit(mutations.SET_VERIFICATION_TOKEN_ACTIVE, { token, isActive }))
       .catch(() => console.debug(`Token ${token} not found.`));
   },
 
@@ -89,11 +88,9 @@ export const actions = {
     return patch(`verification-token/${token}`, payload, false)
       .then(resp => resp.isActive)
       .then(isActive =>
-        commit(mutations.SET_VERIFICATION_TOKEN_ACTIVE, { token, isActive })
-      )
+        commit(mutations.SET_VERIFICATION_TOKEN_ACTIVE, { token, isActive }))
       .then(() =>
-        commit(mutations.SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS, false)
-      );
+        commit(mutations.SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS, false));
   },
 
   async [SYNC]({ dispatch, state, commit }) {
@@ -125,5 +122,5 @@ export const actions = {
       }
     }
     dispatch(SYNC);
-  }
+  },
 };
