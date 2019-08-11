@@ -99,7 +99,7 @@ export const actions = {
       if (e.response && e.response.status === 409) {
         // was synced previously
         commit(SYNC_ITEM_SUCCESS, timestamp);
-      } else if (e.response && (e.response.status === 400 || e.response.status = 500)) {
+      } else if (e.response && (e.response.status === 400 || e.response.status === 500)) {
         commit(SYNC_ITEM_FAILURE, timestamp);
       }
     }
