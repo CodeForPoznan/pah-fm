@@ -12,26 +12,21 @@ from django_countries.fields import CountryField
 
 
 class User(AbstractUser):
-    country = CountryField(blank_label='(select country)', null=False)
+    country = CountryField(blank_label="(select country)", null=False)
 
     def __str__(self):
-        return self.username
+        return f"{self.first_name} {self.last_name}"
 
 
 class Car(models.Model):
-    KILOMETERS = 'kilometers'
-    MILES = 'miles'
-    UNITS = (
-        (KILOMETERS, KILOMETERS),
-        (MILES, MILES),
-    )
+    KILOMETERS = "kilometers"
+    MILES = "miles"
+    UNITS = ((KILOMETERS, KILOMETERS), (MILES, MILES))
     plates = models.CharField(max_length=10, blank=False, unique=True)
     description = models.CharField(max_length=500, blank=True)
-    mileage_unit = models.CharField(
-        choices=UNITS, max_length=11, default=KILOMETERS,
-    )
+    mileage_unit = models.CharField(choices=UNITS, max_length=11, default=KILOMETERS)
     fuel_consumption = models.FloatField(null=False, default=0)
-    country = CountryField(blank_label='(select country)', null=False)
+    country = CountryField(blank_label="(select country)", null=False)
 
     def __str__(self):
         return self.plates
@@ -43,7 +38,7 @@ class Passenger(models.Model):
     email = models.EmailField(blank=False)
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        return f"{self.first_name} {self.last_name}"
 
 
 class Project(models.Model):
@@ -69,12 +64,17 @@ class Drive(models.Model):
 
     class Meta:
         unique_together = [
-            ('end_mileage', 'start_mileage', 'timestamp', 'start_location', 'end_location')
+            (
+                "end_mileage",
+                "start_mileage",
+                "timestamp",
+                "start_location",
+                "end_location",
+            )
         ]
 
     def __str__(self):
-        return f"""Drive from {self.start_location} to
-                 {self.end_location} (driver: {self.driver.first_name} {self.driver.last_name})"""
+        return f"""Drive from {self.start_location} to {self.end_location} (driver: {self.driver})"""
 
     @property
     def fuel_consumption(self):
@@ -87,6 +87,7 @@ class VerificationToken(models.Model):
     """
     Keeps track of drives' verification statuses.
     """
+
     EXPIRATION_DELTA = timedelta(days=7)
     COMMENT_MAX_LENGTH = 2000
 
@@ -109,7 +110,7 @@ class VerificationToken(models.Model):
 
     @property
     def verification_url(self):
-        return f'{settings.FRONTEND_URL}/confirmation/{self.token}'
+        return f"{settings.FRONTEND_URL}/confirmation/{self.token}"
 
     def __str__(self):
         return str(self.token)
