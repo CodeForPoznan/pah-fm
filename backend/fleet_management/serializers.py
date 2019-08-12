@@ -3,13 +3,12 @@ from rest_framework import fields, serializers, status
 from rest_framework.exceptions import ValidationError
 
 from .models import Car, Drive, Passenger, User, Project, VerificationToken
-from .signals import drive_created
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username')
+        fields = ('id', 'username', 'groups')
 
 
 class PassengerSerializer(serializers.ModelSerializer):
@@ -82,18 +81,6 @@ class DriveSerializer(serializers.ModelSerializer):
             drive.passengers.set(passengers)
             drive.save()
 
-            for passenger in passengers:
-                token = VerificationToken.objects.create(
-                    drive=drive,
-                    passenger=passenger,
-                )
-                drive_created.send(
-                    self.__class__,
-                    drive_id=drive.id,
-                    driver_id=self.context['driver'].id,
-                    passenger_id=passenger.id,
-                    token_id=token.id,
-                )
             return drive
 
     def is_valid(self, raise_exception=False):
