@@ -9,7 +9,10 @@ from .models import Car, Passenger, Drive, User, Project, VerificationToken
 
 class DriveResource(resources.ModelResource):
     def dehydrate_passengers(self, drive):
-        return " / ".join(passenger for passenger in drive.passengers.all())
+        return " / ".join(str(passenger) for passenger in drive.passengers.all())
+
+    def dehydrate_driver(self, drive):
+        return str(drive.driver)  # required, because import-export prints PK by default
 
     fuel_consumption = Field(attribute="fuel_consumption")
 
