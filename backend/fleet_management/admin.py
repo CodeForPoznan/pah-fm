@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from import_export.admin import ImportExportModelAdmin
 from import_export.fields import Field
 from import_export import resources
-from .models import Car, Passenger, Drive, User, Project, VerificationToken
+from .models import Car, Passenger, Drive, User, Project
 
 
 class DriveResource(resources.ModelResource):
@@ -72,25 +72,3 @@ admin.site.register(Passenger)
 admin.site.register(Drive, DriveAdmin)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Project)
-
-
-@admin.register(VerificationToken)
-class VerificationTokenAdmin(admin.ModelAdmin):
-    def is_active(self, instance):
-        return instance.is_active
-
-    def driver(self, instance):
-        return instance.drive.driver.get_full_name()
-
-    is_active.boolean = True
-
-    readonly_fields = ('token',)
-    list_display = (
-        'passenger',
-        'driver',
-        'is_confirmed',
-        'is_ok',
-        'is_active',
-        'created_at',
-    )
-    ordering = ('created_at',)

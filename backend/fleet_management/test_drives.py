@@ -7,12 +7,11 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITransactionTestCase
 
-from fleet_management.models import Car, Drive, Passenger, Project, VerificationToken
+from fleet_management.models import Car, Drive, Passenger, Project
 from fleet_management.factories import DriveFactory
 
 
 class DrivesApiTest(APITransactionTestCase):
-
     def create_passenger(self, first_name, last_name, email):
         return Passenger.objects.create(
             first_name=first_name,
@@ -176,16 +175,6 @@ class DrivesApiTest(APITransactionTestCase):
         self.assertEqual(drive.description, res.data['description'])
         self.assertEqual(drive.start_location, res.data['start_location'])
         self.assertEqual(drive.end_location, res.data['end_location'])
-
-        tokens = VerificationToken.objects.filter(drive=drive).all()
-
-        self.assertEqual(len(tokens), 2)
-        self.assertSetEqual(
-            {token.passenger.id for token in tokens},
-            {self.passengers[0].id, self.passengers[1].id},
-        )
-        self.assertSetEqual({token.is_confirmed for token in tokens}, {False, False})
-        self.assertSetEqual({token.is_ok for token in tokens}, {None, None})
 
     def test_fuel_consumption_is_valid(self):
         drive = DriveFactory(start_mileage=100300, end_mileage=100500)

@@ -1,11 +1,7 @@
-import pytz
-import uuid
-from datetime import datetime, timedelta
 import calendar
 import time
 
 from django.db import models
-from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.utils.timezone import now
 from django_countries.fields import CountryField
@@ -81,35 +77,3 @@ class Drive(models.Model):
         distance = self.end_mileage - self.start_mileage
         fuel_consumption = (distance * float(self.car.fuel_consumption)) / 100
         return round(fuel_consumption, 2)
-
-
-class VerificationToken(models.Model):
-    """
-    Keeps track of drives' verification statuses.
-    """
-    EXPIRATION_DELTA = timedelta(days=7)
-    COMMENT_MAX_LENGTH = 2000
-
-    comment = models.CharField(max_length=COMMENT_MAX_LENGTH, blank=True)
-    is_confirmed = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    drive = models.ForeignKey(Drive, on_delete=models.CASCADE)
-    is_ok = models.NullBooleanField()
-    passenger = models.ForeignKey(Passenger, on_delete=models.CASCADE)
-    token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-
-    @property
-    def is_expired(self):
-        utc_now = pytz.utc.localize(datetime.utcnow())
-        return utc_now > self.created_at + self.EXPIRATION_DELTA
-
-    @property
-    def is_active(self):
-        return not self.is_confirmed and not self.is_expired
-
-    @property
-    def verification_url(self):
-        return f'{settings.FRONTEND_URL}/confirmation/{self.token}'
-
-    def __str__(self):
-        return str(self.token)
