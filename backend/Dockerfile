@@ -1,23 +1,11 @@
-FROM ubuntu:18.04
+FROM python:3.7
 
-# Expose network ports
 EXPOSE 8000
 
-# Docker-based quirks
-ENV LANG C.UTF-8
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
-
-# System-based package installation
-RUN apt-get update -y && apt-get install -y python3-pip libpq-dev && apt-get autoremove
-
-# Setup wait-for-it for docker-compose
 ADD wait-for-it.sh /usr/bin/wait-for-it
 RUN chmod a+x /usr/bin/wait-for-it
 
-# Backend setup
-RUN pip3 install --upgrade pip
-
-# Add build-time directories
+RUN mv /usr/local/lib/python3.7/site-packages /usr/local/lib/python3.7/site-packages-backup
 ADD . /pah-fm/backend
+
 WORKDIR /pah-fm/backend
-RUN pip3 install -r requirements/dev.txt

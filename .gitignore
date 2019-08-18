@@ -30,5 +30,6 @@ chromedriver
 
 backend/emails/
 backend/static/
+backend/pip-modules
 
 *.retry

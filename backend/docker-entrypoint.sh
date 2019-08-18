@@ -2,6 +2,8 @@
 
 bash wait-for-it db:5432
 
+mv /usr/local/lib/python3.7/site-packages-backup/* /usr/local/lib/python3.7/site-packages
+pip install -r requirements/dev.txt
 python3 manage.py migrate
 python3 manage.py create_admin hello@codeforpoznan.pl cfp123 --django-admin
 python3 manage.py create_admin ola@pah.org.pl pah123
