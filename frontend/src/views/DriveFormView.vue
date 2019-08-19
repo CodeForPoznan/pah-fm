@@ -22,6 +22,7 @@
                 <label>{{ $t('drive_form.date') }}</label>
                 <input
                   type="date"
+                  @change="syncToLocalStorage"
                   v-model="drive.date"
                   name="date"
                   :max="currentDate"
@@ -35,6 +36,7 @@
                 <input
                   type="text"
                   v-model="drive.startLocation"
+                  @input="syncToLocalStorage"
                   name="startLocation"
                   maxlength="100"
                   class="form-control"
@@ -52,6 +54,7 @@
                   type="number"
                   v-model="drive.startMileage"
                   name="startMileage"
+                  @input="syncToLocalStorage"
                   class="form-control"
                   :class="{ 'is-invalid': errors['startMileage'] }"
                 >
@@ -60,6 +63,7 @@
                 <label>{{ $t('drive_form.project') }}</label>
                 <select
                   v-if="projects.data"
+                  @change="syncToLocalStorage"
                   v-model="drive.project"
                   name="car"
                   class="form-control"
@@ -81,6 +85,7 @@
                 <select
                   v-if="cars.data"
                   v-model="drive.car"
+                  @change="syncToLocalStorage"
                   name="car"
                   class="form-control"
                   :class="{ 'is-invalid': errors['car'] }"
@@ -101,6 +106,7 @@
                 <select
                   v-model="drive.passenger"
                   name="passenger"
+                  @change="syncToLocalStorage"
                   class="form-control"
                   :class="{ 'is-invalid': errors['passenger'] }"
                 >
@@ -117,6 +123,7 @@
                 <input
                   type="text"
                   v-model="drive.description"
+                  @input="syncToLocalStorage"
                   name="description"
                   class="form-control"
                   :class="{ 'is-invalid': errors['description']}"
@@ -128,6 +135,7 @@
                 <input
                   type="text"
                   maxlength="100"
+                  @input="syncToLocalStorage"
                   v-model="drive.endLocation"
                   name="endLocation"
                   class="form-control"
@@ -144,6 +152,7 @@
                       && event.target.value < 20000000)"
                   type="number"
                   v-model="drive.endMileage"
+                  @input="syncToLocalStorage"
                   name="endMileage"
                   class="form-control"
                   :class="{ 'is-invalid': errors['endMileage'] }"
@@ -189,6 +198,7 @@ import { mapActions, mapGetters, mapState } from 'vuex';
 import * as actions from '../store/actions';
 import { isErroring, makeErrors, stringFields } from './services';
 import { namespaces, actions as apiActions, IS_ONLINE } from '../store/constants';
+import { FORM_STATE } from '../constants/form';
 
 const defaultFormState = {
   date: new Date().toISOString().slice(0, 10),
@@ -206,7 +216,9 @@ export default {
   name: 'DriveFormView',
   data() {
     return {
-      drive: { ...defaultFormState },
+      drive: localStorage.getItem(FORM_STATE)
+        ? JSON.parse(localStorage.getItem(FORM_STATE))
+        : { ...defaultFormState },
       errors: {},
       searchText: '',
       confirmationOnline: false,
@@ -233,12 +245,17 @@ export default {
           },
         });
         this.drive = { ...defaultFormState };
+        localStorage.removeItem(FORM_STATE);
+
         if (this.isOnline) {
           this.confirmationOnline = true;
         } else {
           this.confirmationOffline = true;
         }
       }
+    },
+    syncToLocalStorage() {
+      localStorage.setItem(FORM_STATE, JSON.stringify(this.drive));
     },
 
     validateForm() {
