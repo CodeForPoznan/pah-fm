@@ -41,7 +41,7 @@ class Passenger(models.Model):
     first_name = models.CharField(max_length=60, blank=False)
     last_name = models.CharField(max_length=60, blank=False)
     email = models.EmailField(blank=False)
-    country = CountryField(blank_label='(select country)', null=False, default='')
+    country = CountryField(blank_label='(select country)', null=True, default=None)
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'

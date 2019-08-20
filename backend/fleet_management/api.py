@@ -37,7 +37,7 @@ class PassengerListView(generics.ListAPIView):
     def get_queryset(self):
         return Passenger.objects.filter(
             country=self.request.user.country
-        ) | Passenger.objects.filter(country='')
+        ) | Passenger.objects.filter(country=None)
 
 
 class CarListView(generics.ListAPIView):
