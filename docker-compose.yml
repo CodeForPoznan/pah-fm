@@ -23,7 +23,6 @@ services:
     environment:
       BASE_URL: http://localhost:8080
       PAH_FM_DB_HOST: db
-      PAH_FM_DB_PASS: pah-fm
       SECRET_KEY: pah-fm
       DEBUG: 1
       DJANGO_LOG_LEVEL: 'DEBUG'
