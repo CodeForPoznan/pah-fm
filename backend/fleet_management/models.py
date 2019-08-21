@@ -8,26 +8,17 @@ from django_countries.fields import CountryField
 
 
 class User(AbstractUser):
-    country = CountryField(blank_label='(select country)', null=False)
+    country = CountryField(blank_label="(select country)", null=False)
 
     def __str__(self):
-        return self.username
+        return f"{self.first_name} {self.last_name}"
 
 
 class Car(models.Model):
-    KILOMETERS = 'kilometers'
-    MILES = 'miles'
-    UNITS = (
-        (KILOMETERS, KILOMETERS),
-        (MILES, MILES),
-    )
     plates = models.CharField(max_length=10, blank=False, unique=True)
     description = models.CharField(max_length=500, blank=True)
-    mileage_unit = models.CharField(
-        choices=UNITS, max_length=11, default=KILOMETERS,
-    )
     fuel_consumption = models.FloatField(null=False, default=0)
-    country = CountryField(blank_label='(select country)', null=False)
+    country = CountryField(blank_label="(select country)", null=False)
 
     def __str__(self):
         return self.plates
@@ -37,9 +28,10 @@ class Passenger(models.Model):
     first_name = models.CharField(max_length=60, blank=False)
     last_name = models.CharField(max_length=60, blank=False)
     email = models.EmailField(blank=False)
+    country = CountryField(blank_label='(select country)', null=True, default=None)
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        return f"{self.first_name} {self.last_name}"
 
 
 class Project(models.Model):
@@ -62,15 +54,21 @@ class Drive(models.Model):
     end_location = models.CharField(max_length=100, blank=False)
     timestamp = models.IntegerField(blank=False, default=calendar.timegm(time.gmtime()))
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    isVerified = models.BooleanField(default=False)
 
     class Meta:
         unique_together = [
-            ('end_mileage', 'start_mileage', 'timestamp', 'start_location', 'end_location')
+            (
+                "end_mileage",
+                "start_mileage",
+                "timestamp",
+                "start_location",
+                "end_location",
+            )
         ]
 
     def __str__(self):
-        return f"""Drive from {self.start_location} to
-                 {self.end_location} (driver: {self.driver.first_name} {self.driver.last_name})"""
+        return f"Drive from {self.start_location} to {self.end_location} (driver: {self.driver})"
 
     @property
     def fuel_consumption(self):

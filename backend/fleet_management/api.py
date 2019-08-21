@@ -24,13 +24,17 @@ class PassengerListView(generics.ListAPIView):
     permission_classes = [GroupPermission]
     required_groups = all_driver_methods
     serializer_class = PassengerSerializer
-    queryset = Passenger.objects.all()
     filter_backends = (filters.OrderingFilter, filters.SearchFilter)
     search_fields = (
         'first_name',
         'last_name',
     )
     ordering = ('first_name', 'last_name')
+
+    def get_queryset(self):
+        return Passenger.objects.filter(
+            country=self.request.user.country
+        ) | Passenger.objects.filter(country=None)
 
 
 class CarListView(generics.ListAPIView):
