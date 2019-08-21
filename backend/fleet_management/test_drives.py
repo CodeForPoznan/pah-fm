@@ -127,7 +127,7 @@ class DrivesApiTest(APITestCase):
             driver=other_driver,
             date=date.today(),
             start_mileage=200,
-            end_mileage=12123,
+            end_mileage=23234,
             description='',
             start_location='Warsaw',
             end_location='Poznań',
