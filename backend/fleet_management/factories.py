@@ -6,8 +6,9 @@ from django.utils.timezone import now
 from factory import fuzzy, DjangoModelFactory, Faker, LazyAttribute, lazy_attribute, \
     post_generation, SubFactory
 
-from .models import (
-    Car, Drive, Passenger, Project, User, VerificationToken,
+
+from fleet_management.models import (
+    Car, Drive, Passenger, Project, User
 )
 
 COUNTRIES = ('UA', 'SS')
@@ -84,7 +85,6 @@ class CarFactory(DjangoModelFactory):
                        'Saveiro', 'Transporter', 'Crafter'),
     }
 
-    mileage_unit = fuzzy.FuzzyChoice(k for k, _ in Car.UNITS)
     fuel_consumption = fuzzy.FuzzyFloat(3, 10)
     country = fuzzy.FuzzyChoice(COUNTRIES)
 
@@ -116,8 +116,9 @@ class PassengerFactory(DjangoModelFactory):
     class Meta:
         model = Passenger
 
-    first_name = Faker('first_name', locale='pl_PL')
-    last_name = Faker('last_name', locale='pl_PL')
+    first_name = factory.Faker('first_name', locale='pl_PL')
+    last_name = factory.Faker('last_name', locale='pl_PL')
+    country = fuzzy.FuzzyChoice(COUNTRIES)
 
 
 class ProjectFactory(DjangoModelFactory):
@@ -152,6 +153,7 @@ class DriveFactory(DjangoModelFactory):
     timestamp = fuzzy.FuzzyInteger(1, 999999999)
     start_location = Faker("city", locale="uk_UA")
     end_location = Faker("city", locale="uk_UA")
+    isVerified = True
 
     @lazy_attribute
     def end_mileage(self):
@@ -165,14 +167,3 @@ class DriveFactory(DjangoModelFactory):
         if extracted:
             for passenger in extracted:
                 self.passengers.add(passenger)
-
-
-class VerificationTokenFactory(DjangoModelFactory):
-
-    comment = Faker(
-        'text', max_nb_chars=VerificationToken.COMMENT_MAX_LENGTH,
-    )
-    token = Faker('uuid4')
-
-    class Meta:
-        model = VerificationToken

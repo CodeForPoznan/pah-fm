@@ -3,7 +3,11 @@ import random
 from django.core.management.base import BaseCommand
 from tqdm import tqdm
 
-from ...factories import (
+from django.contrib.auth.models import Group
+from ...constants import Groups
+
+
+from fleet_management.factories import (
     CarFactory,
     DriveFactory,
     PassengerFactory,
@@ -59,3 +63,10 @@ class Command(BaseCommand):
                 index=index,
                 username=username,
             )))
+
+        default_user = User.objects.filter(email='hello@codeforpoznan.pl').first()
+
+        driver_group = Group.objects.get(name=Groups.Driver.name)
+        driver_group.user_set.add(default_user)
+        passenger_group = Group.objects.get(name=Groups.Passenger.name)
+        passenger_group.user_set.add(default_user)

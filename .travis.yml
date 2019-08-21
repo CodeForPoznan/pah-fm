@@ -11,16 +11,17 @@ install:
   - cd frontend && npm install && cd -
 script:
   - cd backend
-  - pycodestyle --exclude='fleet_management/migrations/*' .
+  - flake8 backend --config=backend/.flake8
   - cd ..
 
   - cd frontend
   - npm run lint
   - cd ..
 after_success:
-  - if [ "$TRAVIS_REPO_SLUG" == "codeforpoznan/pah-fm" ] && \
-       [ "$TRAVIS_BRANCH" == "develop" ] && \
-       [ "$TRAVIS_PULL_REQUEST" = false ]
+  - |
+    if [ "$TRAVIS_REPO_SLUG" == "CodeForPoznan/pah-fm" ] &&
+       [ "$TRAVIS_BRANCH" == "develop" ] &&
+       [ "$TRAVIS_PULL_REQUEST" = false ];
     then
       docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD;
       cd backend;
