@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from import_export.admin import ImportExportModelAdmin
 from import_export.fields import Field
 from import_export import resources
-from .models import Car, Passenger, Drive, User, Project, VerificationToken
+from .models import Car, Passenger, Drive, User, Project
 
 
 class DriveResource(resources.ModelResource):

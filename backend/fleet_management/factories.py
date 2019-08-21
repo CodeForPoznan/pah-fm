@@ -7,7 +7,7 @@ from django.utils.timezone import now
 from factory import fuzzy
 
 from fleet_management.models import (
-    Car, Drive, Passenger, Project, User, VerificationToken,
+    Car, Drive, Passenger, Project, User
 )
 
 COUNTRIES = ('UA', 'SS')
@@ -164,14 +164,3 @@ class DriveFactory(factory.DjangoModelFactory):
         if extracted:
             for passenger in extracted:
                 self.passengers.add(passenger)
-
-
-class VerificationTokenFactory(factory.DjangoModelFactory):
-
-    comment = factory.Faker(
-        'text', max_nb_chars=VerificationToken.COMMENT_MAX_LENGTH,
-    )
-    token = factory.Faker('uuid4')
-
-    class Meta:
-        model = VerificationToken
