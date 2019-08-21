@@ -28,7 +28,6 @@ class DrivesApiTest(APITransactionTestCase):
         ]
         self.car = Car.objects.create(
             plates='FOO 129338',
-            mileage_unit=Car.KILOMETERS,
             fuel_consumption=8.2,
         )
         self.project = Project.objects.create(
@@ -106,6 +105,7 @@ class DrivesApiTest(APITransactionTestCase):
                     'title': self.project.title,
                     'description': self.project.description,
                 },
+                'timestamp': self.drives[0].timestamp,
             }
         )
 
@@ -122,7 +122,7 @@ class DrivesApiTest(APITransactionTestCase):
             driver=other_driver,
             date=date.today(),
             start_mileage=200,
-            end_mileage=12123,
+            end_mileage=23234,
             description='',
             start_location='Poznan',
             end_location='Warsaw',

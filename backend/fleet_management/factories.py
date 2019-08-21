@@ -1,4 +1,3 @@
-import random
 import string
 from datetime import timedelta
 
@@ -85,7 +84,6 @@ class CarFactory(factory.DjangoModelFactory):
                        'Saveiro', 'Transporter', 'Crafter'),
     }
 
-    mileage_unit = fuzzy.FuzzyChoice(k for k, _ in Car.UNITS)
     fuel_consumption = fuzzy.FuzzyFloat(3, 10)
     country = fuzzy.FuzzyChoice(COUNTRIES)
 
@@ -151,6 +149,7 @@ class DriveFactory(factory.DjangoModelFactory):
     start_mileage = fuzzy.FuzzyInteger(1000000)
     description = factory.Faker('text', max_nb_chars=1000)
     timestamp = fuzzy.FuzzyInteger(1, 999999999)
+    isVerified = True
 
     @factory.lazy_attribute
     def end_mileage(self):

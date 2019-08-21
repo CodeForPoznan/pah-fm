@@ -3,7 +3,6 @@ from rest_framework import fields, serializers, status
 from rest_framework.exceptions import ValidationError
 
 from .models import Car, Drive, Passenger, User, Project, VerificationToken
-from .signals import drive_created
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -61,6 +60,7 @@ class DriveSerializer(serializers.ModelSerializer):
             'date', 'start_mileage', 'end_mileage', 'description',
             'start_location', 'end_location', 'timestamp'
         )
+        read_only_fields = ('isVerified',)
 
     def create(self, validated_data):
         passengers_data = validated_data.pop('passengers')
@@ -75,6 +75,8 @@ class DriveSerializer(serializers.ModelSerializer):
         with transaction.atomic():
             drive = Drive.objects.create(
                 **validated_data,
+                # TODO Awaiting validation
+                isVerified=True,
                 driver=self.context['driver'],
                 car=car,
                 project=project
@@ -82,18 +84,6 @@ class DriveSerializer(serializers.ModelSerializer):
             drive.passengers.set(passengers)
             drive.save()
 
-            for passenger in passengers:
-                token = VerificationToken.objects.create(
-                    drive=drive,
-                    passenger=passenger,
-                )
-                drive_created.send(
-                    self.__class__,
-                    drive_id=drive.id,
-                    driver_id=self.context['driver'].id,
-                    passenger_id=passenger.id,
-                    token_id=token.id,
-                )
             return drive
 
     def is_valid(self, raise_exception=False):

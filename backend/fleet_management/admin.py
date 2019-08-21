@@ -14,7 +14,16 @@ class DriveResource(resources.ModelResource):
     def dehydrate_driver(self, drive):
         return str(drive.driver)  # required, because import-export prints PK by default
 
-    fuel_consumption = Field(attribute="fuel_consumption")
+    def dehydrate_passengers(self, drive):
+        return "/".join(
+            "{} {}".format(passanger.first_name, passanger.last_name)
+            for passanger in drive.passengers.all()
+        )
+
+    def dehydrate_driver__country(self, drive):
+        return drive.driver.country.name
+
+    fuel_consumption = Field(attribute='fuel_consumption')
 
     class Meta:
         model = Drive
@@ -28,6 +37,7 @@ class DriveResource(resources.ModelResource):
             "start_location",
             "end_location",
             "driver",
+            "driver__country",
             "fuel_consumption",
             "car__plates",
             "project__title",

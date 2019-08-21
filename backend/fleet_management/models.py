@@ -19,12 +19,8 @@ class User(AbstractUser):
 
 
 class Car(models.Model):
-    KILOMETERS = "kilometers"
-    MILES = "miles"
-    UNITS = ((KILOMETERS, KILOMETERS), (MILES, MILES))
     plates = models.CharField(max_length=10, blank=False, unique=True)
     description = models.CharField(max_length=500, blank=True)
-    mileage_unit = models.CharField(choices=UNITS, max_length=11, default=KILOMETERS)
     fuel_consumption = models.FloatField(null=False, default=0)
     country = CountryField(blank_label="(select country)", null=False)
 
@@ -61,6 +57,7 @@ class Drive(models.Model):
     end_location = models.CharField(max_length=100, blank=False)
     timestamp = models.IntegerField(blank=False, default=calendar.timegm(time.gmtime()))
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    isVerified = models.BooleanField(default=False)
 
     class Meta:
         unique_together = [
