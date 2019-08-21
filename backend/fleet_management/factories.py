@@ -153,7 +153,7 @@ class DriveFactory(DjangoModelFactory):
     timestamp = fuzzy.FuzzyInteger(1, 999999999)
     start_location = Faker("city", locale="uk_UA")
     end_location = Faker("city", locale="uk_UA")
-    isVerified = True
+    is_verified = True
 
     @lazy_attribute
     def end_mileage(self):

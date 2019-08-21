@@ -8,7 +8,7 @@ from ..models import Drive
 def default_is_verified(apps, schema_editor):
     drives = Drive.objects.all()
     for drive in drives:
-        drive.isVerified=True
+        drive.is_verified=True
 
 
 class Migration(migrations.Migration):
@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='drive',
-            name='isVerified',
+            name='is_verified',
             field=models.BooleanField(default=False),
         ),
         migrations.RunPython(default_is_verified),
