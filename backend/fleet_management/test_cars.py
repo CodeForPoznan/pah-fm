@@ -15,12 +15,10 @@ class CarsApiTest(APITransactionTestCase):
         self.cars = [
             Car.objects.create(
                 plates='FOO 129338',
-                mileage_unit=Car.KILOMETERS,
                 fuel_consumption=8.2,
             ),
             Car.objects.create(
                 plates='BAR 119922',
-                mileage_unit=Car.MILES,
                 fuel_consumption=15.0,
                 description='A big and comfortable car - великий '
                             'і комфортний автомобіль',

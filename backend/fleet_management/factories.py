@@ -84,7 +84,6 @@ class CarFactory(factory.DjangoModelFactory):
                        'Saveiro', 'Transporter', 'Crafter'),
     }
 
-    mileage_unit = fuzzy.FuzzyChoice(k for k, _ in Car.UNITS)
     fuel_consumption = fuzzy.FuzzyFloat(3, 10)
     country = fuzzy.FuzzyChoice(COUNTRIES)
 
