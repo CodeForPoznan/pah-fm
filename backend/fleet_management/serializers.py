@@ -60,6 +60,7 @@ class DriveSerializer(serializers.ModelSerializer):
             'date', 'start_mileage', 'end_mileage', 'description',
             'start_location', 'end_location', 'timestamp'
         )
+        read_only_fields = ('isVerified',)
 
     def create(self, validated_data):
         passengers_data = validated_data.pop('passengers')
@@ -74,6 +75,8 @@ class DriveSerializer(serializers.ModelSerializer):
         with transaction.atomic():
             drive = Drive.objects.create(
                 **validated_data,
+                # TODO Awaiting validation
+                isVerified=True,
                 driver=self.context['driver'],
                 car=car,
                 project=project

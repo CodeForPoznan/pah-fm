@@ -66,6 +66,7 @@ class Drive(models.Model):
     end_location = models.CharField(max_length=100, blank=False)
     timestamp = models.IntegerField(blank=False, default=calendar.timegm(time.gmtime()))
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    isVerified = models.BooleanField(default=False)
 
     class Meta:
         unique_together = [

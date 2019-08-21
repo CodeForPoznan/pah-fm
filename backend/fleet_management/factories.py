@@ -150,6 +150,7 @@ class DriveFactory(factory.DjangoModelFactory):
     start_mileage = fuzzy.FuzzyInteger(1000000)
     description = factory.Faker('text', max_nb_chars=1000)
     timestamp = fuzzy.FuzzyInteger(1, 999999999)
+    isVerified = True
 
     @factory.lazy_attribute
     def end_mileage(self):
