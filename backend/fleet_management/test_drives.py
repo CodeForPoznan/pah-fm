@@ -106,6 +106,7 @@ class DrivesApiTest(APITransactionTestCase):
                     'title': self.project.title,
                     'description': self.project.description,
                 },
+                'timestamp': self.drives[0].timestamp,
             }
         )
 
@@ -122,7 +123,7 @@ class DrivesApiTest(APITransactionTestCase):
             driver=other_driver,
             date=date.today(),
             start_mileage=200,
-            end_mileage=12123,
+            end_mileage=23234,
             description='',
             start_location='Poznan',
             end_location='Warsaw',
