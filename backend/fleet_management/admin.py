@@ -18,6 +18,9 @@ class DriveResource(resources.ModelResource):
             for passanger in drive.passengers.all()
         )
 
+    def dehydrate_driver__country(self, drive):
+        return drive.driver.country.name
+
     fuel_consumption = Field(attribute='fuel_consumption')
 
     class Meta:
@@ -32,6 +35,7 @@ class DriveResource(resources.ModelResource):
             "start_location",
             "end_location",
             "driver",
+            "driver__country",
             "fuel_consumption",
             "car__plates",
             "project__title",
