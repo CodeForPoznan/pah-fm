@@ -7,6 +7,10 @@ from django.utils.timezone import now
 from django_countries.fields import CountryField
 
 
+def get_current_timestamp_in_gmt():
+    return calendar.timegm(time.gmtime())
+
+
 class User(AbstractUser):
     country = CountryField(blank_label="(select country)", null=False)
 
@@ -52,9 +56,9 @@ class Drive(models.Model):
     description = models.CharField(max_length=1000, blank=True)
     start_location = models.CharField(max_length=100, blank=False)
     end_location = models.CharField(max_length=100, blank=False)
-    timestamp = models.IntegerField(blank=False, default=calendar.timegm(time.gmtime()))
+    timestamp = models.IntegerField(blank=False, default=get_current_timestamp_in_gmt)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    isVerified = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
 
     class Meta:
         unique_together = [

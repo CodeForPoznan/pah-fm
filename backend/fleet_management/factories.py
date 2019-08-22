@@ -116,8 +116,8 @@ class PassengerFactory(DjangoModelFactory):
     class Meta:
         model = Passenger
 
-    first_name = factory.Faker('first_name', locale='pl_PL')
-    last_name = factory.Faker('last_name', locale='pl_PL')
+    first_name = Faker('first_name', locale='pl_PL')
+    last_name = Faker('last_name', locale='pl_PL')
     country = fuzzy.FuzzyChoice(COUNTRIES)
 
 
@@ -153,7 +153,7 @@ class DriveFactory(DjangoModelFactory):
     timestamp = fuzzy.FuzzyInteger(1, 999999999)
     start_location = Faker("city", locale="uk_UA")
     end_location = Faker("city", locale="uk_UA")
-    isVerified = True
+    is_verified = True
 
     @lazy_attribute
     def end_mileage(self):
