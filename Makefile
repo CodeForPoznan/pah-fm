@@ -19,7 +19,7 @@ remove:  ## Stop and remove backend & frontend containers
 	make remove-frontend
 
 rebuild:  ## Rebuid application
-    docker-compose down
+	docker-compose down
 	make build
 	make start
 
