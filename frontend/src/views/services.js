@@ -1,5 +1,6 @@
 import { FORM_STATE } from '../constants/form';
 import { getItem } from '../services/localStore';
+import { getToday } from '../services/time';
 
 export const requiredFields = [
   'date',
@@ -28,7 +29,7 @@ export const makeErrors = t => (acc, field) => ({
 });
 
 export const makeDefaultFormState = () => ({
-  date: new Date().toISOString().slice(0, 10),
+  date: getToday(),
   car: '',
   description: '',
   startMileage: '',
@@ -39,5 +40,15 @@ export const makeDefaultFormState = () => ({
   endLocation: '',
 });
 
+const makeStoredFormState = () => {
+  const storageState = getItem(FORM_STATE);
+  if (storageState && !storageState.date) {
+    return {
+      ...storageState,
+      date: getToday(),
+    };
+  }
+  return storageState;
+};
 
-export const makeFormState = () => getItem(FORM_STATE) || makeDefaultFormState();
+export const makeFormState = () => makeStoredFormState() || makeDefaultFormState();
