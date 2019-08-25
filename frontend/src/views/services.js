@@ -1,4 +1,7 @@
-const requiredFields = [
+import { FORM_STATE } from '../constants/form';
+import { getItem } from '../services/localStore';
+
+export const requiredFields = [
   'date',
   'car',
   'project',
@@ -9,19 +12,32 @@ const requiredFields = [
   'passenger',
 ];
 
-const stringFields = requiredFields;
+export const stringFields = requiredFields;
 
-const isErroring = route => key =>
+export const isErroring = route => key =>
   requiredFields.includes(key) && !route[key].trim();
 
-const splitCamelCase = label => label.replace(/([A-Z])/g, ' $1');
+export const splitCamelCase = label => label.replace(/([A-Z])/g, ' $1');
 
-const makeErrorMessage = t => field =>
+export const makeErrorMessage = t => field =>
   t('drive_form.validation_error', { field: splitCamelCase(field) });
 
-const makeErrors = t => (acc, field) => ({
+export const makeErrors = t => (acc, field) => ({
   ...acc,
   [field]: makeErrorMessage(t)(field),
 });
 
-export { isErroring, makeErrorMessage, makeErrors, stringFields };
+export const makeDefaultFormState = () => ({
+  date: new Date().toISOString().slice(0, 10),
+  car: '',
+  description: '',
+  startMileage: '',
+  endMileage: '',
+  project: '',
+  passenger: '',
+  startLocation: '',
+  endLocation: '',
+});
+
+
+export const makeFormState = () => getItem(FORM_STATE) || makeDefaultFormState();

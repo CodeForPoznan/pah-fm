@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode';
 
 import { post } from './http';
-import { setItem, getItem, removeItem } from '../localStore';
+import { setItem, getItem, clearStorage } from '../localStore';
 
 export const tokenKey = 'jwt';
 const vuex = 'vuex';
@@ -15,11 +15,10 @@ export function saveToken(token) {
   setItem(tokenKey, token);
 }
 
-export function deleteToken() {
+export function deleteStorageData() {
   const localData = getItem(vuex);
   const lang = localData.language;
-  removeItem(tokenKey);
-  removeItem(localData);
+  clearStorage();
   setItem(vuex, {
     language: lang,
   });
@@ -32,7 +31,7 @@ export function getToken(decoded = false) {
     const token = jwtDecode(raw);
     if (token.exp < now) {
       console.debug('Expired token.');
-      deleteToken();
+      deleteStorageData();
       return null;
     }
     if (decoded) {
