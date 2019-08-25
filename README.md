@@ -41,4 +41,4 @@ pip3 install -r requirements/dev.txt
 
 Now pip modules are located in `backend/.venv/lib/python3.7/site-packages`. 
 
-You can use them to check what is available in sources modules, and add it to your ide.
+You can use them to check what is available in sources, and add it to your IDE for module resolution.
