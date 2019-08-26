@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 
 from rest_framework.exceptions import ValidationError
 
-from .models import Car, Drive, Passenger, User, Project
+from .models import Car, Drive, User, Project
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -21,15 +21,10 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'groups')
 
 
-class PassengerSerializer(serializers.ModelSerializer):
-    id = fields.IntegerField(required=True)
+class PassengerSerializer(UserSerializer):
 
     first_name = fields.CharField(read_only=True)
     last_name = fields.CharField(read_only=True)
-
-    class Meta:
-        model = Passenger
-        fields = ('id', 'first_name', 'last_name')
 
 
 class CarSerializer(serializers.ModelSerializer):

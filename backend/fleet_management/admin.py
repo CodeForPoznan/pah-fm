@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from import_export.admin import ImportExportModelAdmin
 from import_export.fields import Field
 from import_export import resources
-from .models import Car, Passenger, Drive, User, Project
+from .models import Car, Drive, User, Project
 
 
 class DriveResource(resources.ModelResource):
@@ -13,12 +13,6 @@ class DriveResource(resources.ModelResource):
 
     def dehydrate_driver(self, drive):
         return str(drive.driver)  # required, because import-export prints PK by default
-
-    def dehydrate_passengers(self, drive):
-        return "/".join(
-            "{} {}".format(passanger.first_name, passanger.last_name)
-            for passanger in drive.passengers.all()
-        )
 
     def dehydrate_driver__country(self, drive):
         return drive.driver.country.name
@@ -73,7 +67,6 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.register(Car)
-admin.site.register(Passenger)
 admin.site.register(Drive, DriveAdmin)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Project)

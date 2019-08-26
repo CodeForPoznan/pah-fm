@@ -1,8 +1,9 @@
+from fleet_management.constants import Groups
 from rest_framework import generics, filters, views
 from rest_framework.response import Response
 
 from .permissions import GroupPermission, all_driver_methods
-from .models import Car, Drive, Passenger, Project
+from .models import Car, Drive, Project, User
 from .serializers import (
     CarSerializer,
     DriveSerializer,
@@ -32,9 +33,9 @@ class PassengerListView(generics.ListAPIView):
     ordering = ('first_name', 'last_name')
 
     def get_queryset(self):
-        return Passenger.objects.filter(
-            country=self.request.user.country
-        ) | Passenger.objects.filter(country=None)
+        return User.objects.filter(
+            country=self.request.user.country, groups=Groups.Passenger.name
+        ) | User.objects.filter(country=None, groups=Groups.Passenger.name)
 
 
 class CarListView(generics.ListAPIView):
