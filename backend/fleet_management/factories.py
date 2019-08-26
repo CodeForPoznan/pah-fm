@@ -3,12 +3,14 @@ from datetime import timedelta
 
 import random
 from django.utils.timezone import now
+from django.contrib.auth.models import Group
 from factory import fuzzy, DjangoModelFactory, Faker, LazyAttribute, lazy_attribute, \
     post_generation, SubFactory
 
+from fleet_management.constants import Groups
 
 from fleet_management.models import (
-    Car, Drive, Passenger, Project, User
+    Car, Drive, Project, User
 )
 
 COUNTRIES = ('UA', 'SS')
@@ -111,14 +113,11 @@ class CarFactory(DjangoModelFactory):
         )
 
 
-class PassengerFactory(DjangoModelFactory):
-
-    class Meta:
-        model = Passenger
-
-    first_name = Faker('first_name', locale='pl_PL')
-    last_name = Faker('last_name', locale='pl_PL')
-    country = fuzzy.FuzzyChoice(COUNTRIES)
+class PassengerFactory(UserFactory):
+    @post_generation
+    def groups(self, create, extracted, **kwargs):
+        g = Group.objects.get(name=Groups.Passenger.name)
+        g.user_set.add(self)
 
 
 class ProjectFactory(DjangoModelFactory):

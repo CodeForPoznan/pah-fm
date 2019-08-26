@@ -18,8 +18,6 @@ from ...models import Passenger, Project, User
 
 
 class Command(BaseCommand):
-    """Populate database with fake items."""
-
     help = "Populates database with fake items."
 
     def handle(self, *args, **options):
@@ -28,11 +26,11 @@ class Command(BaseCommand):
             CarFactory.create()
 
         self.stdout.write(self.style.SUCCESS('Creating 5 users'))
-        usernames = []
         for _ in tqdm(range(5)):
-            usernames.append(UserFactory.create().username)
+            UserFactory.create()
 
         self.stdout.write(self.style.SUCCESS('Creating 10 passengers'))
+
         for _ in tqdm(range(10)):
             PassengerFactory.create()
 
@@ -42,7 +40,7 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS('Creating 50 drives'))
         all_users = list(User.objects.all())
-        all_passengers = list(Passenger.objects.all())
+        all_passengers = list(User.objects.filter(groups__name=Groups.Passenger.name))
         all_projects = list(Project.objects.all())
 
         for _ in tqdm(range(50)):
@@ -57,12 +55,6 @@ class Command(BaseCommand):
         )
 
         self.stdout.write('=' * 50)
-        self.stdout.write(self.style.SUCCESS('Newly created users:'))
-        for index, username in enumerate(usernames):
-            self.stdout.write(self.style.SUCCESS('{index}. {username}'.format(
-                index=index,
-                username=username,
-            )))
 
         default_user = User.objects.filter(email='hello@codeforpoznan.pl').first()
 

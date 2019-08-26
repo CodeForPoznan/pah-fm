@@ -1,5 +1,5 @@
 
-from django.db import migrations, connections
+from django.db import migrations
 from django.contrib.auth.models import Group
 from ..models import User
 
