@@ -8,7 +8,8 @@ from ..models import Drive
 def default_is_verified(apps, schema_editor):
     drives = Drive.objects.all()
     for drive in drives:
-        drive.is_verified=True
+        drive.is_verified = True
+        drive.save()
 
 
 class Migration(migrations.Migration):
