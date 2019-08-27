@@ -5,6 +5,9 @@ from django.db import migrations, models
 import django.db.models.deletion
 
 
+passengers = []
+
+
 def create_users_from_passengers():
     # todo: convert passengers to users
     # todo: create hash map of which drive user belonged to
