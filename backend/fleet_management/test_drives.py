@@ -34,6 +34,7 @@ class DrivesApiTest(APITestCase):
         self.project = Project.objects.create(
             title='Project title',
             description='Project description',
+            country="UA",
         )
 
         self.driver = get_user_model().objects.create_user(
@@ -99,7 +100,7 @@ class DrivesApiTest(APITestCase):
                 'driver': {
                     'id': self.driver.id,
                     'username': self.driver.username,
-                    'groups': list(self.driver.groups.all().values_list('id', flat=True)),
+                    'groups': [{'name': 'Driver'}],
                 },
                 'startLocation': 'Poznan',
                 'endLocation': 'Warsaw',
