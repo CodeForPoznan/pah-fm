@@ -11,7 +11,7 @@
       "new_drive": "Додати новий маршрут",
       "no": "ні",
       "page_not_found": "страница, которую вы ищете, не существует",
-      "drives":"Маршрути",
+      "drives": "Маршрути",
       "unexpected_error": "Сталася несподівана помилка. Зверніться до адміністратора.",
       "yes": "так"
     },
@@ -34,8 +34,7 @@
       "project": "Проект",
       "start_location": "Початковий пункт поїздки",
       "starting_mileage": "Початкове значення вимірювального приладу",
-      "start_mileage_error":
-        "Початкове значення вимірювального приладу має неправильне значення",
+      "start_mileage_error": "Початкове значення вимірювального приладу має неправильне значення",
       "submit": "Надіслати",
       "validation_error": "Потрібно заповнити {field}"
     },
@@ -44,8 +43,7 @@
       "description": "Опис:",
       "ending_mileage": "Кінцеве значення вимірювального приладу",
       "from_to": "Від {from} до {destination} (Кінцевий пункт поїздки)",
-      "no_driver_drives":
-        "У базі даних не зберігається цього маршруту.Ви можете додати новий маршрут, вибравши опцію з меню.",
+      "no_driver_drives": "У базі даних не зберігається цього маршруту.Ви можете додати новий маршрут, вибравши опцію з меню.",
       "synced_drives": "Минулі поїздки",
       "project": "Проект",
       "starting_mileage": "Початкове значення вимірювального приладу",
@@ -63,6 +61,11 @@
       "username": "Ім'я користувача",
       "username_required": "Запит імені користувача"
     },
+    "logout": {
+      "thank_you": "Thank you!",
+      "successfully_logged_out": "Successfully logged out.",
+      "login_again": "Login again"
+    },
     "refresh": {
       "new_version": "Доступна нова версія вебсайту",
       "reload": "Перезавантаження системи"
@@ -79,8 +82,7 @@
       "about": "About",
       "error": "Error",
       "home": "Home",
-      "intro":
-        "The Polish Humanitarian Action is a Polish non-governmental organisation which operates in Poland and other countries. Its mission is \"to make the world a better place through alleviation of human suffering and promotion of humanitarian values\".",
+      "intro": "The Polish Humanitarian Action is a Polish non-governmental organisation which operates in Poland and other countries. Its mission is \"to make the world a better place through alleviation of human suffering and promotion of humanitarian values\".",
       "loading": "Loading",
       "login": "Login",
       "logout": "Logout",
@@ -119,8 +121,7 @@
       "description": "Description:",
       "ending_mileage": "Ending mileage:",
       "from_to": "From {from} to {destination}",
-      "no_driver_drives":
-        "You have no drives stored in database. You can add a new drive by choosing option from the menu.",
+      "no_driver_drives": "You have no drives stored in database. You can add a new drive by choosing option from the menu.",
       "synced_drives": "Previous drives",
       "project": "Project",
       "starting_mileage": "Starting mileage:",
@@ -138,6 +139,11 @@
       "username": "Username",
       "username_required": "Username is required"
     },
+    "logout": {
+      "thank_you": "Thank you!",
+      "successfully_logged_out": "Successfully logged out.",
+      "login_again": "Login again"
+    },
     "refresh": {
       "new_version": "A new version of website is available.",
       "reload": "Reload"
@@ -154,8 +160,7 @@
       "about": "O nas",
       "error": "Błąd",
       "home": "Strona główna",
-      "intro":
-       "Polska Akcja Humanitarna jest polską organizacją pozarządową działającą w Polsce i innych krajach. Jego misją jest \"jest uczynienie świata lepszym miejscem poprzez łagodzenie ludzkiego cierpienia i promowanie wartości humanitarnych\".",
+      "intro": "Polska Akcja Humanitarna jest polską organizacją pozarządową działającą w Polsce i innych krajach. Jego misją jest \"jest uczynienie świata lepszym miejscem poprzez łagodzenie ludzkiego cierpienia i promowanie wartości humanitarnych\".",
       "loading": "Ładowanie",
       "login": "Zaloguj",
       "logout": "Wyloguj",
@@ -194,8 +199,7 @@
       "description": "Opis trasy:",
       "ending_mileage": "Końcowy stan licznika:",
       "from_to": "Z {from} do {destination}",
-      "no_driver_drives":
-        "Nie masz żadnych tras zapisanych w bazie danych. Możesz dodać nową trasę, wybierając opcję z menu.",
+      "no_driver_drives": "Nie masz żadnych tras zapisanych w bazie danych. Możesz dodać nową trasę, wybierając opcję z menu.",
       "synced_drives": "Poprzednie przejazdy",
       "project": "Projekt",
       "starting_mileage": "Początkowy stan licznika:",
@@ -208,6 +212,11 @@
       "user": "Użytkownik: %{username}",
       "username": "Nazwa użytkownika",
       "username_required": "Nazwa użytkownika jest wymagana"
+    },
+    "logout": {
+      "thank_you": "Dziękujemy!",
+      "successfully_logged_out": "Wylogowano pomyślnie.",
+      "login_again": "Zaloguj się ponownie"
     },
     "refresh": {
       "new_version": "Jest dostępna nowa wersja strony.",

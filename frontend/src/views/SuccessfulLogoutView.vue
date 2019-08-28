@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1>Thank you!</h1>
-    <p>Succesfully logged out.</p>
-    <a href="/login">Login again</a>
+    <h1>{{ $t('logout.thank_you') }}</h1>
+    <p>{{ $t('logout.successfully_logged_out') }}</p>
+    <a href="/login">{{ $t('logout.login_again') }}</a>
   </div>
 </template>
 
