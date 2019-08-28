@@ -18,7 +18,14 @@ remove:  ## Stop and remove backend & frontend containers
 	make remove-backend
 	make remove-frontend
 
-rebuild:  ## Rebuid backend & frontend containers
+rebuild:  ## Rebuid application
+	docker-compose down
+	make remove-backend
+	make remove-frontend
+	make build
+	make start
+
+rebuild-docker-images:  ## Rebuid backend & frontend containers
 	make remove
 	make build
 
@@ -50,7 +57,7 @@ remove-frontend:  ## Stop and remove frontend container
 	docker-compose rm -v --stop --force frontend
 
 lint-backend:  ## Run linters on backend container
-	docker-compose run --rm --no-deps backend pycodestyle --exclude='fleet_management/migrations/*' .
+	docker-compose run --rm --no-deps backend flake8 .
 
 lint-frontend:  ## Run linters on frontend container
 	docker-compose run --rm --no-deps frontend npm run lint

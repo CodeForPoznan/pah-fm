@@ -13,6 +13,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('username', type=str)
         parser.add_argument('password', type=str)
+        parser.add_argument('country', type=str)
         parser.add_argument(
             '--django-admin',
             action='store_true',
@@ -28,7 +29,8 @@ class Command(BaseCommand):
                 password=options['password'],
                 is_superuser=options['django_admin'],
                 is_staff=options['django_admin'],
-                is_active=True,
+                country=options['country'],
+                is_active=True
             )
         except IntegrityError:
             self.stdout.write(self.style.ERROR('User already exists'))

@@ -1,15 +1,24 @@
 from django.db import transaction
 from rest_framework import fields, serializers, status
+from django.contrib.auth.models import Group
+
 from rest_framework.exceptions import ValidationError
 
-from .models import Car, Drive, Passenger, User, Project, VerificationToken
-from .signals import drive_created
+from .models import Car, Drive, Passenger, User, Project
+
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ('name',)
 
 
 class UserSerializer(serializers.ModelSerializer):
+    groups = GroupSerializer(many=True)
+
     class Meta:
         model = User
-        fields = ('id', 'username')
+        fields = ('id', 'username', 'groups')
 
 
 class PassengerSerializer(serializers.ModelSerializer):
@@ -61,6 +70,7 @@ class DriveSerializer(serializers.ModelSerializer):
             'date', 'start_mileage', 'end_mileage', 'description',
             'start_location', 'end_location', 'timestamp'
         )
+        read_only_fields = ('is_verified',)
 
     def create(self, validated_data):
         passengers_data = validated_data.pop('passengers')
@@ -75,6 +85,8 @@ class DriveSerializer(serializers.ModelSerializer):
         with transaction.atomic():
             drive = Drive.objects.create(
                 **validated_data,
+                # TODO Awaiting validation
+                is_verified=True,
                 driver=self.context['driver'],
                 car=car,
                 project=project
@@ -82,18 +94,6 @@ class DriveSerializer(serializers.ModelSerializer):
             drive.passengers.set(passengers)
             drive.save()
 
-            for passenger in passengers:
-                token = VerificationToken.objects.create(
-                    drive=drive,
-                    passenger=passenger,
-                )
-                drive_created.send(
-                    self.__class__,
-                    drive_id=drive.id,
-                    driver_id=self.context['driver'].id,
-                    passenger_id=passenger.id,
-                    token_id=token.id,
-                )
             return drive
 
     def is_valid(self, raise_exception=False):
@@ -104,25 +104,3 @@ class DriveSerializer(serializers.ModelSerializer):
             if "non_field_errors" in err_codes and "unique" in err_codes["non_field_errors"]:
                 err.status_code = status.HTTP_409_CONFLICT
             raise err
-
-
-class VerificationTokenSerializer(serializers.ModelSerializer):
-    is_active = fields.BooleanField(read_only=True)
-
-    comment = fields.CharField(
-        max_length=VerificationToken.COMMENT_MAX_LENGTH,
-        write_only=True,
-    )
-    is_ok = fields.NullBooleanField(write_only=True)
-
-    class Meta:
-        model = VerificationToken
-        fields = ['comment', 'is_ok', 'is_active']
-
-    def update(self, instance, validated_data):
-        instance.comment = validated_data['comment']
-        instance.is_ok = validated_data['is_ok']
-        instance.is_confirmed = True
-        instance.save()
-
-        return instance

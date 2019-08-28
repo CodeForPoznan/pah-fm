@@ -26,8 +26,7 @@ from fleet_management.api import (
     CurrentUserRetrieveView,
     DriveView,
     PassengerListView,
-    ProjectView,
-    VerificationTokenView,
+    ProjectView
 )
 
 
@@ -40,6 +39,4 @@ urlpatterns = [
     path('api/cars', CarListView.as_view(), name='cars'),
     path('api/drives', DriveView.as_view(), name='drives'),
     path('api/projects', ProjectView.as_view(), name='projects'),
-    path('api/verification-token/<uuid:token>',
-         VerificationTokenView.as_view(), name='verification-token')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

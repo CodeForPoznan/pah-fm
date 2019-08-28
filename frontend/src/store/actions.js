@@ -1,4 +1,4 @@
-import { get, patch, post } from '../services/api/http';
+import { post } from '../services/api/http';
 import { login, saveToken, deleteToken } from '../services/api/auth';
 import { getMyself } from '../services/api/user';
 import * as mutations from './mutations';
@@ -18,8 +18,6 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const SUBMIT = 'SUBMIT';
 export const SWITCH_LANGUAGE = 'SWITCH_LANGUAGE';
-export const VERIFY_CONFIRMATION_TOKEN = 'VERIFY_CONFIRMATION_TOKEN';
-export const SUBMIT_CONFIRMATION_TOKEN = 'SUBMIT_CONFIRMATION_TOKEN';
 
 export const actions = {
   [FETCH_USER]({ dispatch, commit }, { callback } = {}) {
@@ -115,9 +113,9 @@ export const actions = {
       commit(SYNC_ITEM_SUCCESS, timestamp);
     } catch (e) {
       if (e.response && e.response.status === 409) {
-        // was synced before
+        // was synced previously
         commit(SYNC_ITEM_SUCCESS, timestamp);
-      } else if (e.response && e.response.status === 400) {
+      } else if (e.response && (e.response.status === 400 || e.response.status === 500)) {
         commit(SYNC_ITEM_FAILURE, timestamp);
       }
     }

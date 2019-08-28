@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import ConfirmationView from '../views/ConfirmationView.vue';
 import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import DriveFormView from '../views/DriveFormView.vue';
@@ -30,11 +29,7 @@ export const driveListRoute = {
   name: 'Drives',
   component: DrivesView,
 };
-export const confirmationRoute = {
-  path: '/confirmation/:token',
-  name: 'Confirmation',
-  component: ConfirmationView,
-};
+
 export const homeRoute = {
   path: '/',
   name: 'Home',
@@ -62,7 +57,6 @@ const router = new Router({
     loginRoute,
     driveCreateRoute,
     driveListRoute,
-    confirmationRoute,
     homeRoute,
     pageNotFoundRoute,
     logoutRoute,
@@ -70,7 +64,7 @@ const router = new Router({
   ],
 });
 
-const openRoutes = [loginRoute.name, confirmationRoute.name, successfulLogoutRoute.name];
+const openRoutes = [loginRoute.name, successfulLogoutRoute.name];
 
 router.beforeEach((to, _from, next) => {
   const userLoggedIn = getItem(tokenKey);

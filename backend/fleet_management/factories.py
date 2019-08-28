@@ -1,28 +1,28 @@
-import random
 import string
 from datetime import timedelta
 
-import factory
 import random
 from django.utils.timezone import now
-from factory import fuzzy
+from factory import fuzzy, DjangoModelFactory, Faker, LazyAttribute, lazy_attribute, \
+    post_generation, SubFactory
+
 
 from fleet_management.models import (
-    Car, Drive, Passenger, Project, User, VerificationToken,
+    Car, Drive, Passenger, Project, User
 )
 
 COUNTRIES = ('UA', 'SS')
 
 
-class UserFactory(factory.DjangoModelFactory):
+class UserFactory(DjangoModelFactory):
 
     class Meta:
         model = User
 
-    first_name = factory.Faker('first_name', locale='uk_UA')
-    last_name = factory.Faker('last_name', locale='uk_UA')
-    email = factory.Faker('email', locale='uk_UA')
-    username = factory.LazyAttribute(lambda obj: obj.email)
+    first_name = Faker('first_name', locale='uk_UA')
+    last_name = Faker('last_name', locale='uk_UA')
+    email = Faker('email', locale='uk_UA')
+    username = LazyAttribute(lambda obj: obj.email)
     country = fuzzy.FuzzyChoice(COUNTRIES)
 
     is_active = True
@@ -34,7 +34,7 @@ class UserFactory(factory.DjangoModelFactory):
         return manager.create_user(*args, **kwargs)
 
 
-class CarFactory(factory.DjangoModelFactory):
+class CarFactory(DjangoModelFactory):
 
     REGIONAL_PREFIXES = ('AA', 'KA', 'AB', 'KB', 'AC', 'KC', 'AE', 'KE', 'AH',
                          'KH', 'AI', 'KI', 'AK', 'KK', 'AM', 'KM', 'AO', 'KO',
@@ -85,7 +85,6 @@ class CarFactory(factory.DjangoModelFactory):
                        'Saveiro', 'Transporter', 'Crafter'),
     }
 
-    mileage_unit = fuzzy.FuzzyChoice(k for k, _ in Car.UNITS)
     fuel_consumption = fuzzy.FuzzyFloat(3, 10)
     country = fuzzy.FuzzyChoice(COUNTRIES)
 
@@ -93,7 +92,7 @@ class CarFactory(factory.DjangoModelFactory):
         model = Car
         exclude = ('REGIONAL_PREFIXES', 'COLORS', 'MODELS')
 
-    @factory.lazy_attribute
+    @lazy_attribute
     def plates(self):
         return '{regional_prefix}{four_digits}{two_letters}'.format(
             regional_prefix=random.choice(self.REGIONAL_PREFIXES),
@@ -101,7 +100,7 @@ class CarFactory(factory.DjangoModelFactory):
             two_letters=''.join(random.choices('ABEIKMHOPCTX', k=2)),
         )
 
-    @factory.lazy_attribute
+    @lazy_attribute
     def description(self):
         manufacturer = random.choice(list(self.MODELS.keys()))
         return '{color} {manufacturer} {model} {year}'.format(
@@ -112,24 +111,26 @@ class CarFactory(factory.DjangoModelFactory):
         )
 
 
-class PassengerFactory(factory.DjangoModelFactory):
+class PassengerFactory(DjangoModelFactory):
 
     class Meta:
         model = Passenger
 
-    first_name = factory.Faker('first_name', locale='pl_PL')
-    last_name = factory.Faker('last_name', locale='pl_PL')
+    first_name = Faker('first_name', locale='pl_PL')
+    last_name = Faker('last_name', locale='pl_PL')
+    country = fuzzy.FuzzyChoice(COUNTRIES)
 
 
-class ProjectFactory(factory.DjangoModelFactory):
+class ProjectFactory(DjangoModelFactory):
 
     class Meta:
         model = Project
 
-    title = factory.Faker('sentence', nb_words=4)
-    description = factory.Faker('text', max_nb_chars=1000)
+    title = Faker('sentence', nb_words=4)
+    description = Faker('text', max_nb_chars=1000)
+    country = fuzzy.FuzzyChoice(COUNTRIES)
 
-    @factory.post_generation
+    @post_generation
     def drives(self, create, extracted, **kwargs):
         if not create:
             return
@@ -139,24 +140,27 @@ class ProjectFactory(factory.DjangoModelFactory):
                 self.drives.add(drive)
 
 
-class DriveFactory(factory.DjangoModelFactory):
+class DriveFactory(DjangoModelFactory):
 
     class Meta:
         model = Drive
 
-    driver = factory.SubFactory(UserFactory)
-    project = factory.SubFactory(ProjectFactory)
-    car = factory.SubFactory(CarFactory)
+    driver = SubFactory(UserFactory)
+    project = SubFactory(ProjectFactory)
+    car = SubFactory(CarFactory)
     date = fuzzy.FuzzyDate((now() - timedelta(days=1000)).date())
     start_mileage = fuzzy.FuzzyInteger(1000000)
-    description = factory.Faker('text', max_nb_chars=1000)
+    description = Faker('text', max_nb_chars=1000)
     timestamp = fuzzy.FuzzyInteger(1, 999999999)
+    start_location = Faker("city", locale="uk_UA")
+    end_location = Faker("city", locale="uk_UA")
+    is_verified = True
 
-    @factory.lazy_attribute
+    @lazy_attribute
     def end_mileage(self):
         return random.randint(self.start_mileage, 1000000)
 
-    @factory.post_generation
+    @post_generation
     def passengers(self, create, extracted, **kwargs):
         if not create:
             return
@@ -164,14 +168,3 @@ class DriveFactory(factory.DjangoModelFactory):
         if extracted:
             for passenger in extracted:
                 self.passengers.add(passenger)
-
-
-class VerificationTokenFactory(factory.DjangoModelFactory):
-
-    comment = factory.Faker(
-        'text', max_nb_chars=VerificationToken.COMMENT_MAX_LENGTH,
-    )
-    token = factory.Faker('uuid4')
-
-    class Meta:
-        model = VerificationToken

@@ -35,7 +35,9 @@ import Refresh from './components/Refresh.vue';
 import Status from './components/Status.vue';
 import store, { LANGUAGE } from './store';
 import NavigationItems from './components/NavigationItems.vue';
+
 import { confirmationRoute, loginRoute, logoutRoute, successfulLogoutRoute } from './router';
+
 import { SYNC } from './store/constants';
 import { FETCH_USER } from './store/actions';
 
