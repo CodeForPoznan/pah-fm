@@ -17,7 +17,7 @@ def create_users_from_passengers():
         fake = Faker()
         password = fake.password()
 
-        email = passenger.email or f"no-email@pah{index}"
+        email = passenger.email or f"no-email{index}@pah.org.pl"
 
         user = User.objects.create_user(
             username=email,
@@ -31,12 +31,17 @@ def create_users_from_passengers():
             last_name=passenger.last_name
         )
 
+        user.save()
+
         passenger_group.user_set.add(user)
 
-        # todo add user to drive
-        # drive = Drive.filter()
+        drives = Drive.objects.filter(passengers=passenger.id)
 
-        print(f"{email}: {password}")
+        for drive in drives:
+            drive.passenger = user
+            drive.save()
+
+        print(f"\n{email}: {password}")
 
 
 class Migration(migrations.Migration):
