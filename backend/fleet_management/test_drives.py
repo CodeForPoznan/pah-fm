@@ -2,16 +2,18 @@ from datetime import date
 import json
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.test import override_settings
 from django.urls import reverse
 from rest_framework import status
-from rest_framework.test import APITransactionTestCase
+from rest_framework.test import APITestCase
 
-from fleet_management.models import Car, Drive, Passenger, Project
+from fleet_management.constants import Groups
 from fleet_management.factories import DriveFactory
+from fleet_management.models import Car, Drive, Passenger, Project
 
 
-class DrivesApiTest(APITransactionTestCase):
+class DrivesApiTest(APITestCase):
     def create_passenger(self, first_name, last_name, email):
         return Passenger.objects.create(
             first_name=first_name,
@@ -32,6 +34,7 @@ class DrivesApiTest(APITransactionTestCase):
         self.project = Project.objects.create(
             title='Project title',
             description='Project description',
+            country="UA",
         )
 
         self.driver = get_user_model().objects.create_user(
@@ -41,6 +44,7 @@ class DrivesApiTest(APITransactionTestCase):
             email='me@me.com',
             password='XXXXXXXXXXX',
         )
+        self.driver.groups.set(Group.objects.filter(name=Groups.Driver.name))
         self.drives = [
             Drive.objects.create(
                 car=self.car,
@@ -96,6 +100,7 @@ class DrivesApiTest(APITransactionTestCase):
                 'driver': {
                     'id': self.driver.id,
                     'username': self.driver.username,
+                    'groups': [{'name': 'Driver'}],
                 },
                 'startLocation': 'Poznan',
                 'endLocation': 'Warsaw',
@@ -104,7 +109,7 @@ class DrivesApiTest(APITransactionTestCase):
                     'title': self.project.title,
                     'description': self.project.description,
                 },
-                'timestamp': self.drives[0].timestamp,
+                "timestamp": self.drives[0].timestamp,
             }
         )
 
@@ -123,8 +128,8 @@ class DrivesApiTest(APITransactionTestCase):
             start_mileage=200,
             end_mileage=23234,
             description='',
-            start_location='Poznan',
-            end_location='Warsaw',
+            start_location='Warsaw',
+            end_location='Poznań',
             project=self.project,
         )
 
@@ -160,7 +165,6 @@ class DrivesApiTest(APITransactionTestCase):
 
         self.client.force_login(self.driver)
         res = self.client.post(self.url, data=payload, format='json')
-
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
         drive = Drive.objects.get(pk=res.data['id'])
