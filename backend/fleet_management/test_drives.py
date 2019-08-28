@@ -14,7 +14,6 @@ from fleet_management.models import Car, Drive, Passenger, Project
 
 
 class DrivesApiTest(APITestCase):
-
     def create_passenger(self, first_name, last_name, email):
         return Passenger.objects.create(
             first_name=first_name,
@@ -30,7 +29,6 @@ class DrivesApiTest(APITestCase):
         ]
         self.car = Car.objects.create(
             plates='FOO 129338',
-            mileage_unit=Car.KILOMETERS,
             fuel_consumption=8.2,
         )
         self.project = Project.objects.create(

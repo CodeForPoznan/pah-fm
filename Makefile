@@ -18,7 +18,14 @@ remove:  ## Stop and remove backend & frontend containers
 	make remove-backend
 	make remove-frontend
 
-rebuild:  ## Rebuid backend & frontend containers
+rebuild:  ## Rebuid application
+	docker-compose down
+	make remove-backend
+	make remove-frontend
+	make build
+	make start
+
+rebuild-docker-images:  ## Rebuid backend & frontend containers
 	make remove
 	make build
 
