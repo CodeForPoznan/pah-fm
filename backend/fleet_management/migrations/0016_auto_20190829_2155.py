@@ -15,7 +15,7 @@ def create_users_from_passengers(apps, schema_editor):
         fake = Faker()
         password = fake.password()
 
-        email = passenger.email or f"no-email{index}@pah.org.pl" + 'a'
+        email = passenger.email or f"no-email{index}@pah.org.pl"
 
         user = User.objects.create_user(
             username=email,
