@@ -22,9 +22,12 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class PassengerSerializer(UserSerializer):
-
     first_name = fields.CharField(read_only=True)
     last_name = fields.CharField(read_only=True)
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'groups', 'first_name', 'last_name')
 
 
 class CarSerializer(serializers.ModelSerializer):
@@ -54,28 +57,27 @@ class ProjectSerializer(serializers.ModelSerializer):
 class DriveSerializer(serializers.ModelSerializer):
     driver = UserSerializer(read_only=True)
     car = CarSerializer()
-    passengers = PassengerSerializer(many=True)
+    passenger = UserSerializer()
     project = ProjectSerializer()
 
     class Meta:
         model = Drive
         fields = (
             'id',
-            'driver', 'car', 'passengers', 'project',
+            'driver', 'car', 'passenger', 'project',
             'date', 'start_mileage', 'end_mileage', 'description',
             'start_location', 'end_location', 'timestamp'
         )
         read_only_fields = ('is_verified',)
 
     def create(self, validated_data):
-        passengers_data = validated_data.pop('passengers')
+        passenger_data = validated_data.pop('passenger')
         car_data = validated_data.pop('car')
+
         car = Car.objects.get(pk=car_data['id'])
         project_data = validated_data.pop('project')
         project = Project.objects.get(pk=project_data['id'])
-        passengers = Passenger.objects.filter(
-            id__in=[p['id'] for p in passengers_data],
-        ).all()
+        passenger = User.objects.get(pk=passenger_data['id'])
 
         with transaction.atomic():
             drive = Drive.objects.create(
@@ -84,9 +86,9 @@ class DriveSerializer(serializers.ModelSerializer):
                 is_verified=True,
                 driver=self.context['driver'],
                 car=car,
-                project=project
+                project=project,
+                passenger=passenger
             )
-            drive.passengers.set(passengers)
             drive.save()
 
             return drive

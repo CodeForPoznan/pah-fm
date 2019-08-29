@@ -1,4 +1,5 @@
 from fleet_management.constants import Groups
+from django.contrib.auth.models import Group
 from rest_framework import generics, filters, views
 from rest_framework.response import Response
 
@@ -33,9 +34,12 @@ class PassengerListView(generics.ListAPIView):
     ordering = ('first_name', 'last_name')
 
     def get_queryset(self):
+
+        passenger_group = Group.objects.get(name=Groups.Passenger.name)
+
         return User.objects.filter(
-            country=self.request.user.country, groups=Groups.Passenger.name
-        ) | User.objects.filter(country=None, groups=Groups.Passenger.name)
+            country=self.request.user.country, groups=passenger_group.id
+        ) | User.objects.filter(country=None, groups=passenger_group.id)
 
 
 class CarListView(generics.ListAPIView):
