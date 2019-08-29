@@ -240,7 +240,6 @@ export default {
         this[actions.SUBMIT]({
           form: {
             ...this.drive,
-            passengers: [this.drive.passenger],
             timestamp: Math.floor(Date.now() / 1000),
           },
         });
