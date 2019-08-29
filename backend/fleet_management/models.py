@@ -36,10 +36,14 @@ class Project(models.Model):
         return self.title
 
 
+class Passenger(models.Model):
+    pass
+
+
 class Drive(models.Model):
     driver = models.ForeignKey(User, on_delete=models.CASCADE)
     car = models.ForeignKey(Car, null=False, on_delete=models.CASCADE)
-    passengers = models.ForeignKey(User, related_name='%(class)s_passengers', null=True, on_delete=models.CASCADE)
+    passenger = models.ForeignKey(User, related_name='%(class)s_passengers', null=True, on_delete=models.CASCADE)
     date = models.DateField(default=now, blank=False)
     start_mileage = models.IntegerField(null=False)
     end_mileage = models.IntegerField(null=False)
