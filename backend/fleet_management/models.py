@@ -36,10 +36,6 @@ class Project(models.Model):
         return self.title
 
 
-class Passenger(models.Model):
-    pass
-
-
 class Drive(models.Model):
     driver = models.ForeignKey(User, on_delete=models.CASCADE)
     car = models.ForeignKey(Car, null=False, on_delete=models.CASCADE)

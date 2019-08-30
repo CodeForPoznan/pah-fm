@@ -3,7 +3,11 @@ from django.contrib.auth.models import Group
 from faker import Faker
 
 from fleet_management.constants import Groups
-from ..models import User, Passenger, Drive
+from ..models import User, Drive
+
+
+class Passenger():
+    pass
 
 
 def create_users_from_passengers(apps, schema_editor):
