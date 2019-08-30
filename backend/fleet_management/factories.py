@@ -144,6 +144,7 @@ class DriveFactory(DjangoModelFactory):
         model = Drive
 
     driver = SubFactory(UserFactory)
+    passenger = SubFactory(PassengerFactory)
     project = SubFactory(ProjectFactory)
     car = SubFactory(CarFactory)
     date = fuzzy.FuzzyDate((now() - timedelta(days=1000)).date())
@@ -158,11 +159,3 @@ class DriveFactory(DjangoModelFactory):
     def end_mileage(self):
         return random.randint(self.start_mileage, 1000000)
 
-    @post_generation
-    def passengers(self, create, extracted, **kwargs):
-        if not create:
-            return
-
-        if extracted:
-            for passenger in extracted:
-                self.passengers.add(passenger)

@@ -45,7 +45,7 @@ class Command(BaseCommand):
 
         for _ in tqdm(range(50)):
             DriveFactory.create(
-                passengers=random.sample(all_passengers, random.randint(1, 4)),
+                passenger=random.choice(all_passengers),
                 project=random.choice(all_projects),
                 driver=random.choice(all_users),
             )
