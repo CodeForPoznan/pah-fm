@@ -21,13 +21,12 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'groups')
 
 
-class PassengerSerializer(UserSerializer):
-    first_name = fields.CharField(read_only=True)
-    last_name = fields.CharField(read_only=True)
+class PassengerSerializer(serializers.ModelSerializer):
+    id = fields.IntegerField(required=True)
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'groups', 'first_name', 'last_name')
+        fields = ('id', 'first_name', 'last_name')
 
 
 class CarSerializer(serializers.ModelSerializer):
@@ -57,7 +56,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 class DriveSerializer(serializers.ModelSerializer):
     driver = UserSerializer(read_only=True)
     car = CarSerializer()
-    passenger = UserSerializer()
+    passenger = PassengerSerializer()
     project = ProjectSerializer()
 
     class Meta:
@@ -73,9 +72,9 @@ class DriveSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         passenger_data = validated_data.pop('passenger')
         car_data = validated_data.pop('car')
+        project_data = validated_data.pop('project')
 
         car = Car.objects.get(pk=car_data['id'])
-        project_data = validated_data.pop('project')
         project = Project.objects.get(pk=project_data['id'])
         passenger = User.objects.get(pk=passenger_data['id'])
 
