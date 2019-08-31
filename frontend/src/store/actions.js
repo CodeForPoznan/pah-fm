@@ -67,30 +67,6 @@ export const actions = {
     i18n.locale = language;
   },
 
-  [VERIFY_CONFIRMATION_TOKEN]({ commit }, token) {
-    get(`verification-token/${token}`)
-      .catch((err) => {
-        commit(mutations.SET_VERIFICATION_TOKEN_ACTIVE, {
-          token,
-          isActive: false,
-        });
-        throw err;
-      })
-      .then(resp => resp.isActive)
-      .then(isActive =>
-        commit(mutations.SET_VERIFICATION_TOKEN_ACTIVE, { token, isActive }))
-      .catch(() => console.debug(`Token ${token} not found.`));
-  },
-
-  [SUBMIT_CONFIRMATION_TOKEN]({ commit }, { payload, token }) {
-    return patch(`verification-token/${token}`, payload, false)
-      .then(resp => resp.isActive)
-      .then(isActive =>
-        commit(mutations.SET_VERIFICATION_TOKEN_ACTIVE, { token, isActive }))
-      .then(() =>
-        commit(mutations.SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS, false));
-  },
-
   async [SYNC]({ dispatch, state, commit }) {
     if (state[UNSYNCHRONISED_DRIVES].length === 0 && state.user) {
       dispatch(`${namespaces.drives}/${apiActions.fetchDrives}`);
@@ -115,7 +91,10 @@ export const actions = {
       if (e.response && e.response.status === 409) {
         // was synced previously
         commit(SYNC_ITEM_SUCCESS, timestamp);
-      } else if (e.response && (e.response.status === 400 || e.response.status === 500)) {
+      } else if (
+        e.response &&
+        (e.response.status === 400 || e.response.status === 500)
+      ) {
         commit(SYNC_ITEM_FAILURE, timestamp);
       }
     }
