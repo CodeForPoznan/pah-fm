@@ -62,9 +62,9 @@
       "username_required": "Запит імені користувача"
     },
     "logout": {
-      "thank_you": "Thank you!",
-      "successfully_logged_out": "Successfully logged out.",
-      "login_again": "Login again"
+      "thank_you": "спасибі!",
+      "successfully_logged_out": "Вийшли з системи.",
+      "login_again": "Вхід знову"
     },
     "refresh": {
       "new_version": "Доступна нова версія вебсайту",
