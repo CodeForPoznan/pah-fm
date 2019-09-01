@@ -2,13 +2,21 @@
   <div id="app">
     <Status />
     <Header />
-    <ScaleRotate class="mobile-menu" v-if="!isLogin && !isLogout" right>
+    <ScaleRotate
+      class="mobile-menu"
+      v-if="!isLogin && !isLogout"
+      right>
       <NavigationItems />
     </ScaleRotate>
-    <div id="page-wrap" class="container">
+    <div
+      id="page-wrap"
+      class="container">
       <div class="row">
         <div class="col-xs-12 page">
-          <transition name="fade" mode="out-in" appear>
+          <transition
+            name="fade"
+            mode="out-in"
+            appear>
             <router-view />
           </transition>
         </div>

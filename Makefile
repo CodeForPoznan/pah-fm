@@ -60,7 +60,7 @@ lint-backend:  ## Run linters on backend container
 	docker-compose run --rm --no-deps backend flake8 .
 
 lint-frontend:  ## Run linters on frontend container
-	docker-compose run --rm --no-deps frontend npm run lint
+	docker-compose run --rm --no-deps frontend npm run lint:fix
 
 test-backend:  ## Run tests on backend container
 	make manage CMD=test

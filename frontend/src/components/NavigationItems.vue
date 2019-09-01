@@ -1,12 +1,20 @@
 
 <template>
   <b-nav fill>
-    <b-nav-item v-for="link in links" :to="link.to" :key="link.text">{{ link.text }}</b-nav-item>
+    <b-nav-item
+      v-for="link in links"
+      :to="link.to"
+      :key="link.text">{{ link.text }}</b-nav-item>
 
     <Language />
 
-    <a class="out-link" href="http://codeforpoznan.pl" target="_blank">
-      <img class="out-link-image" src="../assets/logo_codeforpoznan.svg" />
+    <a
+      class="out-link"
+      href="http://codeforpoznan.pl"
+      target="_blank">
+      <img
+        class="out-link-image"
+        src="../assets/logo_codeforpoznan.svg" >
     </a>
 
     <b-nav-item
