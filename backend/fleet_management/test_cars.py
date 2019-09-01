@@ -1,26 +1,26 @@
 from urllib.parse import urlencode
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.urls import reverse
 from rest_framework import status
-from rest_framework.test import APITransactionTestCase
+from rest_framework.test import APITestCase
 
+from fleet_management.constants import Groups
 from fleet_management.models import Car
 
 
-class CarsApiTest(APITransactionTestCase):
+class CarsApiTest(APITestCase):
 
     def setUp(self):
         self.url = reverse('cars')
         self.cars = [
             Car.objects.create(
                 plates='FOO 129338',
-                mileage_unit=Car.KILOMETERS,
                 fuel_consumption=8.2,
             ),
             Car.objects.create(
                 plates='BAR 119922',
-                mileage_unit=Car.MILES,
                 fuel_consumption=15.0,
                 description='A big and comfortable car - великий '
                             'і комфортний автомобіль',
@@ -34,6 +34,7 @@ class CarsApiTest(APITransactionTestCase):
             email='me@me.com',
             password=self.password,
         )
+        self.user.groups.set(Group.objects.filter(name=Groups.Driver.name))
 
     def test_401_for_unlogged_user(self):
         res = self.client.get(self.url)

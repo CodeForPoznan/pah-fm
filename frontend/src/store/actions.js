@@ -1,4 +1,4 @@
-import { get, patch, post } from '../services/api/http';
+import { post } from '../services/api/http';
 import { login, saveToken, deleteToken } from '../services/api/auth';
 import { getMyself } from '../services/api/user';
 import * as mutations from './mutations';
@@ -12,8 +12,6 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const SUBMIT = 'SUBMIT';
 export const SWITCH_LANGUAGE = 'SWITCH_LANGUAGE';
-export const VERIFY_CONFIRMATION_TOKEN = 'VERIFY_CONFIRMATION_TOKEN';
-export const SUBMIT_CONFIRMATION_TOKEN = 'SUBMIT_CONFIRMATION_TOKEN';
 
 export const actions = {
   [FETCH_USER]({ dispatch, commit }, { callback } = {}) {
@@ -61,24 +59,6 @@ export const actions = {
     i18n.locale = language;
   },
 
-  [VERIFY_CONFIRMATION_TOKEN]({ commit }, token) {
-    get(`verification-token/${token}`)
-      .catch((err) => {
-        commit(mutations.SET_VERIFICATION_TOKEN_ACTIVE, { token, isActive: false });
-        throw err;
-      })
-      .then(resp => resp.isActive)
-      .then(isActive => commit(mutations.SET_VERIFICATION_TOKEN_ACTIVE, { token, isActive }))
-      .catch(() => console.debug(`Token ${token} not found.`));
-  },
-
-  [SUBMIT_CONFIRMATION_TOKEN]({ commit }, { payload, token }) {
-    return patch(`verification-token/${token}`, payload, false)
-      .then(resp => resp.isActive)
-      .then(isActive => commit(mutations.SET_VERIFICATION_TOKEN_ACTIVE, { token, isActive }))
-      .then(() => commit(mutations.SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS, false));
-  },
-
   async [SYNC]({ dispatch, state, commit }) {
     if (state[UNSYNCHRONISED_DRIVES].length === 0 && state.user) {
       dispatch(`${namespaces.drives}/${apiActions.fetchDrives}`);
@@ -96,10 +76,10 @@ export const actions = {
       await post('drives', mappedDrive);
       commit(SYNC_ITEM_SUCCESS, timestamp);
     } catch (e) {
-      if (e.response && e.response.status === 422) {
-        // was synced before
+      if (e.response && e.response.status === 409) {
+        // was synced previously
         commit(SYNC_ITEM_SUCCESS, timestamp);
-      } else if (e.response && e.response.status === 400) {
+      } else if (e.response && (e.response.status === 400 || e.response.status === 500)) {
         commit(SYNC_ITEM_FAILURE, timestamp);
       }
     }

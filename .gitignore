@@ -32,3 +32,4 @@ backend/emails/
 backend/static/
 
 *.retry
+.venv

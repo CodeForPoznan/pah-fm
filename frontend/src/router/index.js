@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import ConfirmationView from '../views/ConfirmationView.vue';
 import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import DriveFormView from '../views/DriveFormView.vue';
@@ -29,11 +28,7 @@ export const driveListRoute = {
   name: 'Drives',
   component: DrivesView,
 };
-export const confirmationRoute = {
-  path: '/confirmation/:token',
-  name: 'Confirmation',
-  component: ConfirmationView,
-};
+
 export const homeRoute = {
   path: '/',
   name: 'Home',
@@ -56,14 +51,13 @@ const router = new Router({
     loginRoute,
     driveCreateRoute,
     driveListRoute,
-    confirmationRoute,
     homeRoute,
     pageNotFoundRoute,
     logoutRoute,
   ],
 });
 
-const openRoutes = [loginRoute.name, confirmationRoute.name];
+const openRoutes = [loginRoute.name];
 
 router.beforeEach((to, _from, next) => {
   // 404 if not route matches
@@ -81,11 +75,14 @@ router.beforeEach((to, _from, next) => {
     return next();
   }
 
-  // Redirect to login if user tries to access closed route without token
   if (!getItem(tokenKey) && !openRoutes.includes(to.name)) {
     return next({ path: loginRoute.path });
   }
-  // Redirect home if logged-in user tries to access login route
+
+  if (to.name === loginRoute.name && getItem(tokenKey)) {
+    return next({ path: homeRoute.path });
+  }
+
   if (to.name === loginRoute.name && getItem(tokenKey)) {
     return next({ path: homeRoute.path });
   }

@@ -7,6 +7,7 @@ module.exports = {
     workboxOptions: {
       skipWaiting: true,
       navigateFallback: '/index.html',
+      navigateFallbackBlacklist: [/admin/],
     },
   },
 };
