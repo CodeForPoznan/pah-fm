@@ -2,22 +2,14 @@
   <div id="app">
     <Status />
     <Header />
-    <ScaleRotate
-      class="mobile-menu"
-      v-if="!isLogin && !isConfirmationPage && !isLogout"
-      right>
+    <ScaleRotate class="mobile-menu" v-if="!isLogin && !isLogout" right>
       <NavigationItems />
     </ScaleRotate>
-    <div
-      id="page-wrap"
-      class="container">
+    <div id="page-wrap" class="container">
       <div class="row">
         <div class="col-xs-12 page">
-          <transition
-            name="fade"
-            mode="out-in"
-            appear>
-            <router-view/>
+          <transition name="fade" mode="out-in" appear>
+            <router-view />
           </transition>
         </div>
       </div>
@@ -36,7 +28,7 @@ import Status from './components/Status.vue';
 import store, { LANGUAGE } from './store';
 import NavigationItems from './components/NavigationItems.vue';
 
-import { confirmationRoute, loginRoute, logoutRoute, successfulLogoutRoute } from './router';
+import { loginRoute, logoutRoute, successfulLogoutRoute } from './router';
 
 import { SYNC } from './store/constants';
 import { FETCH_USER } from './store/actions';
@@ -50,11 +42,10 @@ export default {
       return this.$router.currentRoute.path === loginRoute.path;
     },
     isLogout() {
-      return this.$router.currentRoute.path === successfulLogoutRoute.path ||
-             this.$router.currentRoute.path === logoutRoute.path;
-    },
-    isConfirmationPage() {
-      return this.$route.name === confirmationRoute.name;
+      return (
+        this.$router.currentRoute.path === successfulLogoutRoute.path ||
+        this.$router.currentRoute.path === logoutRoute.path
+      );
     },
   },
   methods: {
