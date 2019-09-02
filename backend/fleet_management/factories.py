@@ -159,4 +159,3 @@ class DriveFactory(DjangoModelFactory):
     @lazy_attribute
     def end_mileage(self):
         return random.randint(self.start_mileage, 1000000)
-

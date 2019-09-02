@@ -42,7 +42,6 @@ class Drive(models.Model):
     car = models.ForeignKey(Car, null=False, on_delete=models.CASCADE)
     passenger = models.ForeignKey(User, related_name='%(class)s_passengers',
                                   null=True, on_delete=models.CASCADE)
-    passengers = models.ManyToManyField(Passenger)
     date = models.DateField(default=now, blank=False)
     start_mileage = models.IntegerField(null=False)
     end_mileage = models.IntegerField(null=False)
