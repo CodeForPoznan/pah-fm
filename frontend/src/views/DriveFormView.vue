@@ -196,29 +196,17 @@
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex';
 import * as actions from '../store/actions';
-import { isErroring, makeErrors, stringFields } from './services';
+import { isErroring, makeErrors, stringFields, makeFormState } from './services';
 import { namespaces, actions as apiActions, IS_ONLINE } from '../store/constants';
 import { FORM_STATE } from '../constants/form';
+import { setItem, removeItem } from '../services/localStore';
 
-const defaultFormState = {
-  date: new Date().toISOString().slice(0, 10),
-  car: '',
-  description: '',
-  startMileage: '',
-  endMileage: '',
-  project: '',
-  passenger: '',
-  startLocation: '',
-  endLocation: '',
-};
 
 export default {
   name: 'DriveFormView',
   data() {
     return {
-      drive: localStorage.getItem(FORM_STATE)
-        ? JSON.parse(localStorage.getItem(FORM_STATE))
-        : { ...defaultFormState },
+      drive: makeFormState(),
       errors: {},
       searchText: '',
       confirmationOnline: false,
@@ -244,8 +232,9 @@ export default {
             timestamp: Math.floor(Date.now() / 1000),
           },
         });
-        this.drive = { ...defaultFormState };
-        localStorage.removeItem(FORM_STATE);
+        removeItem(FORM_STATE);
+        setItem(FORM_STATE, { car: this.drive.car });
+        this.drive = makeFormState();
 
         if (this.isOnline) {
           this.confirmationOnline = true;

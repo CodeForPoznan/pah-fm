@@ -1,5 +1,5 @@
 import { post } from '../services/api/http';
-import { login, saveToken, deleteToken } from '../services/api/auth';
+import { login, saveToken, deleteStorageData } from '../services/api/auth';
 import { getMyself } from '../services/api/user';
 import * as mutations from './mutations';
 import { mapDrive } from './helpers';
@@ -53,7 +53,7 @@ export const actions = {
 
   [LOGOUT]({ commit }) {
     commit(mutations.SET_USER, null);
-    deleteToken();
+    deleteStorageData();
     window.location.replace('/logout_success');
   },
 

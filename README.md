@@ -31,3 +31,14 @@ ola@pah.org.pl         | pah123   | no
 ## API documentation
 Available at `/api/docs/` URL.
 Documentation is available only to logged-in users (DRF quirk).
+
+## Install python modules locally
+```bash
+python3 -m venv ./backend/.venv
+source ./backend/.venv/bin/activate
+pip3 install -r requirements/dev.txt
+```
+
+Now pip modules are located in `backend/.venv/lib/python3.7/site-packages`. 
+
+You can use them to check what is available in sources, and add it to your IDE for module resolution.

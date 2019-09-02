@@ -9,7 +9,7 @@ import SuccessfulLogoutView from '../views/SuccessfulLogoutView.vue';
 import { getItem } from '../services/localStore';
 import store from '../store';
 import * as mutations from '../store/mutations';
-import { tokenKey, deleteToken } from '../services/api/auth';
+import { tokenKey, deleteStorageData } from '../services/api/auth';
 
 
 Vue.use(Router);
@@ -76,7 +76,7 @@ router.beforeEach((to, _from, next) => {
 
   if (to.name === logoutRoute.name) {
     store.commit(mutations.SET_USER, null);
-    deleteToken();
+    deleteStorageData();
     return next(successfulLogoutRoute.path);
   }
 

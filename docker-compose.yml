@@ -1,12 +1,13 @@
-version: "3"
+version: "3.5"
 services:
 
   frontend:
+    networks: [pah]
     image: codeforpoznan/pah-fm-frontend
-    #environment:
+    # used for local frontend build (enables service worker etc)
+    # environment:
     #  NODE_ENV: production
     command: bash docker-entrypoint.sh
-    # command: tail -f /dev/null
     volumes:
       - ./frontend:/pah-fm/frontend
       - asset-volume:/pah-fm/frontend/dist
@@ -14,16 +15,14 @@ services:
       - webserver
 
   backend:
+    networks: [pah]
     image: codeforpoznan/pah-fm-backend
-    # build: backend
     command: bash docker-entrypoint.sh
-    # command: tail -f /dev/null
     stdin_open: true
     tty: true
     environment:
       BASE_URL: http://localhost:8080
       PAH_FM_DB_HOST: db
-      PAH_FM_DB_PASS: pah-fm
       SECRET_KEY: pah-fm
       DEBUG: 1
       DJANGO_LOG_LEVEL: 'DEBUG'
@@ -33,6 +32,7 @@ services:
       - ./backend:/pah-fm/backend
 
   db:
+    networks: [pah]
     image: postgres:9.5
     ports:
       - 6866:5432
@@ -42,6 +42,7 @@ services:
       POSTGRES_PASSWORD: pah-fm
 
   webserver:
+    networks: [pah]
     image: nginx
     volumes:
       - ./pah-fm.conf:/etc/nginx/nginx.conf
@@ -53,3 +54,7 @@ services:
 
 volumes:
   asset-volume:
+
+networks:
+  pah:
+    name: pah
