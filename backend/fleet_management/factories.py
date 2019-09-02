@@ -127,6 +127,7 @@ class ProjectFactory(DjangoModelFactory):
 
     title = Faker('sentence', nb_words=4)
     description = Faker('text', max_nb_chars=1000)
+    country = fuzzy.FuzzyChoice(COUNTRIES)
 
     @post_generation
     def drives(self, create, extracted, **kwargs):

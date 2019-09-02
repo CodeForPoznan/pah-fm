@@ -1,14 +1,15 @@
-const getItem = (item) => {
+export const getItem = (item) => {
   const result = localStorage.getItem(item);
-  return result ? JSON.parse(result) : result;
+  try {
+    return JSON.parse(result);
+  } catch (_e) {
+    return result;
+  }
 };
 
-const setItem = (key, item) => localStorage.setItem(key, JSON.stringify(item));
+export const setItem = (key, item) => localStorage.setItem(key, JSON.stringify(item));
 
-const removeItem = item => localStorage.removeItem(item);
+export const removeItem = item => localStorage.removeItem(item);
 
-export {
-  setItem,
-  getItem,
-  removeItem,
-};
+export const clearStorage = () => localStorage.clear();
+

@@ -77,4 +77,8 @@ class ProjectView(generics.ListAPIView):
     required_groups = all_driver_methods
 
     serializer_class = ProjectSerializer
-    queryset = Project.objects.all()
+
+    def get_queryset(self):
+        return Project.objects.filter(
+            country=self.request.user.country,
+        )

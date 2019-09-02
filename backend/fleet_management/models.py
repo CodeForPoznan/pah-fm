@@ -31,6 +31,7 @@ class Car(models.Model):
 class Project(models.Model):
     title = models.CharField(max_length=50, blank=False)
     description = models.CharField(max_length=1000, blank=False)
+    country = CountryField(blank_label='(select country)', default=None)
 
     def __str__(self):
         return self.title

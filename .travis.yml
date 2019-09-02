@@ -1,17 +1,25 @@
 sudo: required
 services:
   - docker
+addons:
+  postgresql: "9.5"
 language: python
 python:
-  - 3.5
+  - 3.6
+env:
+  - SECRET_KEY="TRAVIS-SECRET-KEY"
 install:
   - pip install -r backend/requirements/dev.txt
 
   - nvm install 8.12.0
   - cd frontend && npm install && cd -
+before_script:
+  - psql -c "CREATE USER \"pah-fm\" WITH PASSWORD 'pah-fm';" -U postgres
+  - psql -c "ALTER USER \"pah-fm\" CREATEDB;" -U postgres
 script:
   - cd backend
   - flake8 backend --config=backend/.flake8
+  - python manage.py test
   - cd ..
 
   - cd frontend

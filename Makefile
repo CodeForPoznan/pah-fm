@@ -14,6 +14,9 @@ build:  ## Build backend & frontend containers
 	make build-backend
 	make build-frontend
 
+adminer: ## run database adminer
+	docker run -d -p 8082:8080 --network="pah" adminer
+
 remove:  ## Stop and remove backend & frontend containers
 	make remove-backend
 	make remove-frontend
