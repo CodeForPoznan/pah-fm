@@ -45,9 +45,10 @@ def create_users_from_passengers(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0015_drive_passenger'),
+        ('fleet_management', '0017_auto_20190902_2105'),
     ]
 
     operations = [
         migrations.RunPython(create_users_from_passengers),
     ]
+
