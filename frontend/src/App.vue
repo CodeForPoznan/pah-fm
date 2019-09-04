@@ -100,6 +100,15 @@ export default {
     background: $pah-color-3;
   }
 
+  .bm-cross {
+    height: 30px !important;
+  }
+
+  .cross-style {
+    top: 36px !important;
+    right: 36px !important;
+  }
+
   & .nav-item a {
     color: $white;
   }
