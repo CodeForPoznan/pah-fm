@@ -21,6 +21,10 @@ class Command(BaseCommand):
     help = "Populates database with fake items."
 
     def handle(self, *args, **options):
+
+        Group.objects.create(name=Groups.Passenger.name)
+        Group.objects.create(name=Groups.Driver.name)
+
         self.stdout.write(self.style.SUCCESS('Creating 5 cars'))
         for _ in tqdm(range(5)):
             CarFactory.create()
