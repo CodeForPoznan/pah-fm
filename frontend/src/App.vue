@@ -36,7 +36,7 @@ import Status from './components/Status.vue';
 import store, { LANGUAGE } from './store';
 import NavigationItems from './components/NavigationItems.vue';
 
-import { loginRoute, logoutRoute, successfulLogoutRoute } from './router';
+import { loginRoute, logoutRoute } from './router';
 
 import { SYNC } from './store/constants';
 import { FETCH_USER } from './store/actions';
@@ -50,10 +50,7 @@ export default {
       return this.$router.currentRoute.path === loginRoute.path;
     },
     isLogout() {
-      return (
-        this.$router.currentRoute.path === successfulLogoutRoute.path ||
-        this.$router.currentRoute.path === logoutRoute.path
-      );
+      return this.$router.currentRoute.path === logoutRoute.path;
     },
   },
   methods: {

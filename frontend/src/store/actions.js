@@ -12,6 +12,7 @@ import {
   SYNC_ITEM_FAILURE,
   UNSYNCHRONISED_DRIVES,
 } from './constants';
+import store from '.';
 
 export const FETCH_USER = 'FETCH_USER';
 export const LOGIN = 'LOGIN';
@@ -54,7 +55,7 @@ export const actions = {
   [LOGOUT]({ commit }) {
     commit(mutations.SET_USER, null);
     deleteStorageData();
-    window.location.replace('/logout_success');
+    commit(mutations.SET_LOGOUT_PROGRESS, true);
   },
 
   [SUBMIT]({ commit, dispatch }, { form }) {

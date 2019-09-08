@@ -11,7 +11,6 @@ import store from '../store';
 import * as mutations from '../store/mutations';
 import { tokenKey, deleteStorageData } from '../services/api/auth';
 
-
 Vue.use(Router);
 
 export const loginRoute = {
@@ -38,10 +37,6 @@ export const homeRoute = {
 export const logoutRoute = {
   path: '/logout',
   name: 'Logout',
-};
-export const successfulLogoutRoute = {
-  path: '/logout_success',
-  name: 'SuccesfulLogout',
   component: SuccessfulLogoutView,
 };
 export const pageNotFoundRoute = {
@@ -60,11 +55,10 @@ const router = new Router({
     homeRoute,
     pageNotFoundRoute,
     logoutRoute,
-    successfulLogoutRoute,
   ],
 });
 
-const openRoutes = [loginRoute.name, successfulLogoutRoute.name];
+const openRoutes = [loginRoute.name];
 
 router.beforeEach((to, _from, next) => {
   const userLoggedIn = getItem(tokenKey);
@@ -74,10 +68,16 @@ router.beforeEach((to, _from, next) => {
     return next({ path: homeRoute.path });
   }
 
-  if (to.name === logoutRoute.name) {
+  if (userLoggedIn && to.name === logoutRoute.name) {
     store.commit(mutations.SET_USER, null);
     deleteStorageData();
-    return next(successfulLogoutRoute.path);
+    store.commit(mutations.SET_LOGOUT_PROGRESS, true);
+    return next();
+  }
+
+  if (store.state.logoutInProgress && to.name === logoutRoute.name) {
+    store.commit(mutations.SET_LOGOUT_PROGRESS, false);
+    return next();
   }
 
   if (openRoutes.includes(to.name)) {
@@ -89,7 +89,7 @@ router.beforeEach((to, _from, next) => {
     return next({ path: loginRoute.path });
   }
   // Redirect home if logged-in user tries to access login route
-  if (userLoggedIn && (to.name === loginRoute.name || to.name === successfulLogoutRoute.name)) {
+  if (userLoggedIn && to.name === loginRoute.name) {
     return next({ path: homeRoute.path });
   }
   return next();

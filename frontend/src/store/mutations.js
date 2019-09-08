@@ -4,6 +4,7 @@ import {
 
 export const SET_USER = 'SET_USER';
 export const SET_LOGIN_PROGRESS = 'SET_LOGIN_PROGRESS';
+export const SET_LOGOUT_PROGRESS = 'SET_LOGOUT_PROGRESS';
 export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
 export const ADD_DRIVE = 'ADD_DRIVE';
 export const SET_UPDATE_READY = 'SET_UPDATE_READY';
@@ -36,6 +37,9 @@ export const mutations = {
   },
   [SET_LOGIN_PROGRESS](state, loginInProgress) {
     Object.assign(state, { loginInProgress });
+  },
+  [SET_LOGOUT_PROGRESS](state, logoutInProgress) {
+    Object.assign(state, { logoutInProgress });
   },
   [SET_LOGIN_ERROR](state, loginError) {
     Object.assign(state, { loginError });

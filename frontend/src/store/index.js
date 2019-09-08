@@ -25,6 +25,7 @@ const initialState = {
   [IS_ONLINE]: navigator.onLine,
   [VERIFICATION_TOKEN]: null,
   loginInProgress: false,
+  logoutInProgress: false,
   loginError: null,
   updateReady: false,
 };
