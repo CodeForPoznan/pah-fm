@@ -4,7 +4,7 @@
     <Header />
     <ScaleRotate
       class="mobile-menu"
-      v-if="!isLogin && !isLogout"
+      v-if="showMenu && !isLogin && !isLogout"
       right>
       <NavigationItems />
     </ScaleRotate>
@@ -17,7 +17,7 @@
             name="fade"
             mode="out-in"
             appear>
-            <router-view />
+            <router-view @hide-menu="showMenu = false" />
           </transition>
         </div>
       </div>
@@ -44,6 +44,11 @@ import { FETCH_USER } from './store/actions';
 export default {
   name: 'App',
   store,
+  data() {
+    return {
+      showMenu: true,
+    };
+  },
   computed: {
     ...mapState([LANGUAGE]),
     isLogin() {

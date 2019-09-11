@@ -9,6 +9,9 @@
 <script>
 export default {
   name: 'SuccessfulLogoutView',
+  mounted() {
+    this.$emit('hide-menu');
+  },
 };
 </script>
 
