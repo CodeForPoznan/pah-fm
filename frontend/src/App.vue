@@ -4,7 +4,7 @@
     <Header />
     <ScaleRotate
       class="mobile-menu"
-      v-if="showMenu && !isLogin && !isLogout"
+      v-if="showMenu && isUserLoggedIn"
       right>
       <NavigationItems />
     </ScaleRotate>
@@ -36,7 +36,7 @@ import Status from './components/Status.vue';
 import store, { LANGUAGE } from './store';
 import NavigationItems from './components/NavigationItems.vue';
 
-import { loginRoute, logoutRoute } from './router';
+import { isUserLoggedIn } from './services/api/user';
 
 import { SYNC } from './store/constants';
 import { FETCH_USER } from './store/actions';
@@ -51,12 +51,7 @@ export default {
   },
   computed: {
     ...mapState([LANGUAGE]),
-    isLogin() {
-      return this.$router.currentRoute.path === loginRoute.path;
-    },
-    isLogout() {
-      return this.$router.currentRoute.path === logoutRoute.path;
-    },
+    isUserLoggedIn,
   },
   methods: {
     ...mapActions({
@@ -69,7 +64,7 @@ export default {
       /* eslint-disable-next-line no-underscore-dangle */
       this._i18n.locale = this.language;
     }
-    if (!this.isLogin) {
+    if (this.isUserLoggedIn) {
       this.sync();
       this.fetchUser();
     }

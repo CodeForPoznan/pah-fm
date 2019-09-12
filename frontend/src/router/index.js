@@ -6,10 +6,10 @@ import LoginView from '../views/LoginView.vue';
 import DriveFormView from '../views/DriveFormView.vue';
 import DrivesView from '../views/DrivesView.vue';
 import SuccessfulLogoutView from '../views/SuccessfulLogoutView.vue';
-import { getItem } from '../services/localStore';
 import store from '../store';
 import * as mutations from '../store/mutations';
-import { tokenKey, deleteStorageData } from '../services/api/auth';
+import { deleteStorageData } from '../services/api/auth';
+import { isUserLoggedIn } from '../services/api/user';
 
 Vue.use(Router);
 
@@ -61,7 +61,7 @@ const router = new Router({
 const openRoutes = [loginRoute.name];
 
 router.beforeEach((to, _from, next) => {
-  const userLoggedIn = getItem(tokenKey);
+  const userLoggedIn = isUserLoggedIn();
 
   // 404 if not route matches
   if (to.name === pageNotFoundRoute.name) {
