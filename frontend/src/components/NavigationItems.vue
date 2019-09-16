@@ -1,13 +1,10 @@
 
 <template>
-  <b-nav fill >
+  <b-nav fill>
     <b-nav-item
       v-for="link in links"
       :to="link.to"
-      :key="link.text"
-    >
-      {{ link.text }}
-    </b-nav-item>
+      :key="link.text">{{ link.text }}</b-nav-item>
 
     <Language />
 
@@ -17,11 +14,11 @@
       target="_blank">
       <img
         class="out-link-image"
-        src="../assets/logo_codeforpoznan.svg"
-      >
+        src="../assets/logo_codeforpoznan.svg" >
     </a>
 
     <b-nav-item
+      v-if="user"
       @click="LOGOUT"
       to="/logout"
       key="logout"
@@ -29,10 +26,7 @@
       :class="{ offline: !isOnline }"
     >
       {{ $t('common.logout') }}
-      <p>
-        {{ user.username }}
-      </p>
-
+      <p>{{ user.username }}</p>
     </b-nav-item>
   </b-nav>
 </template>

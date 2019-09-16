@@ -5,11 +5,11 @@ import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import DriveFormView from '../views/DriveFormView.vue';
 import DrivesView from '../views/DrivesView.vue';
-import { getItem } from '../services/localStore';
+import SuccessfulLogoutView from '../views/SuccessfulLogoutView.vue';
 import store from '../store';
 import * as mutations from '../store/mutations';
-import { tokenKey, deleteStorageData } from '../services/api/auth';
-
+import { deleteStorageData } from '../services/api/auth';
+import { isUserLoggedIn } from '../services/api/user';
 
 Vue.use(Router);
 
@@ -37,6 +37,7 @@ export const homeRoute = {
 export const logoutRoute = {
   path: '/logout',
   name: 'Logout',
+  component: SuccessfulLogoutView,
 };
 export const pageNotFoundRoute = {
   path: '*',
@@ -60,30 +61,35 @@ const router = new Router({
 const openRoutes = [loginRoute.name];
 
 router.beforeEach((to, _from, next) => {
+  const userLoggedIn = isUserLoggedIn();
+
   // 404 if not route matches
   if (to.name === pageNotFoundRoute.name) {
     return next({ path: homeRoute.path });
   }
 
-  if (to.name === logoutRoute.name) {
+  if (userLoggedIn && to.name === logoutRoute.name) {
     store.commit(mutations.SET_USER, null);
     deleteStorageData();
-    return next({ path: homeRoute.path });
+    store.commit(mutations.SET_LOGOUT_PROGRESS, true);
+    return next();
+  }
+
+  if (store.state.logoutInProgress && to.name === logoutRoute.name) {
+    store.commit(mutations.SET_LOGOUT_PROGRESS, false);
+    return next();
   }
 
   if (openRoutes.includes(to.name)) {
     return next();
   }
 
-  if (!getItem(tokenKey) && !openRoutes.includes(to.name)) {
+  // Redirect to login if user tries to access closed route without token
+  if (!userLoggedIn && !openRoutes.includes(to.name)) {
     return next({ path: loginRoute.path });
   }
-
-  if (to.name === loginRoute.name && getItem(tokenKey)) {
-    return next({ path: homeRoute.path });
-  }
-
-  if (to.name === loginRoute.name && getItem(tokenKey)) {
+  // Redirect home if logged-in user tries to access login route
+  if (userLoggedIn && to.name === loginRoute.name) {
     return next({ path: homeRoute.path });
   }
   return next();
