@@ -4,8 +4,14 @@ import { getMyself } from '../services/api/user';
 import * as mutations from './mutations';
 import { mapDrive } from './helpers';
 import { i18n } from '../main';
-import { actions as apiActions, namespaces, SYNC, SYNC_ITEM_SUCCESS, SYNC_ITEM_FAILURE,
-  UNSYNCHRONISED_DRIVES } from './constants';
+import {
+  actions as apiActions,
+  namespaces,
+  SYNC,
+  SYNC_ITEM_SUCCESS,
+  SYNC_ITEM_FAILURE,
+  UNSYNCHRONISED_DRIVES,
+} from './constants';
 
 export const FETCH_USER = 'FETCH_USER';
 export const LOGIN = 'LOGIN';
@@ -33,7 +39,9 @@ export const actions = {
       .then((token) => {
         commit(mutations.SET_LOGIN_ERROR, null);
         saveToken(token);
-        dispatch(FETCH_USER, { callback: () => window.location.replace('/drive') });
+        dispatch(FETCH_USER, {
+          callback: () => window.location.replace('/drive'),
+        });
       })
       .catch(() => {
         commit(mutations.SET_LOGIN_ERROR, i18n.tc('login.login_error'));
@@ -46,7 +54,7 @@ export const actions = {
   [LOGOUT]({ commit }) {
     commit(mutations.SET_USER, null);
     deleteStorageData();
-    window.location.replace(login.path);
+    commit(mutations.SET_LOGOUT_PROGRESS, true);
   },
 
   [SUBMIT]({ commit, dispatch }, { form }) {
@@ -65,7 +73,11 @@ export const actions = {
       return;
     }
 
-    if (state[UNSYNCHRONISED_DRIVES].length === 0 || !state.user || !navigator.onLine) {
+    if (
+      state[UNSYNCHRONISED_DRIVES].length === 0 ||
+      !state.user ||
+      !navigator.onLine
+    ) {
       return;
     }
 
@@ -79,7 +91,10 @@ export const actions = {
       if (e.response && e.response.status === 409) {
         // was synced previously
         commit(SYNC_ITEM_SUCCESS, timestamp);
-      } else if (e.response && (e.response.status === 400 || e.response.status === 500)) {
+      } else if (
+        e.response &&
+        (e.response.status === 400 || e.response.status === 500)
+      ) {
         commit(SYNC_ITEM_FAILURE, timestamp);
       }
     }

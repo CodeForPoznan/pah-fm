@@ -4,7 +4,7 @@
     <Header />
     <ScaleRotate
       class="mobile-menu"
-      v-if="!isLogin"
+      v-if="showMenu && isUserLoggedIn"
       right>
       <NavigationItems />
     </ScaleRotate>
@@ -17,7 +17,7 @@
             name="fade"
             mode="out-in"
             appear>
-            <router-view/>
+            <router-view @hide-menu="showMenu = false" />
           </transition>
         </div>
       </div>
@@ -35,18 +35,23 @@ import Refresh from './components/Refresh.vue';
 import Status from './components/Status.vue';
 import store, { LANGUAGE } from './store';
 import NavigationItems from './components/NavigationItems.vue';
-import { loginRoute } from './router';
+
+import { isUserLoggedIn } from './services/api/user';
+
 import { SYNC } from './store/constants';
 import { FETCH_USER } from './store/actions';
 
 export default {
   name: 'App',
   store,
+  data() {
+    return {
+      showMenu: true,
+    };
+  },
   computed: {
     ...mapState([LANGUAGE]),
-    isLogin() {
-      return this.$router.currentRoute.path === loginRoute.path;
-    },
+    isUserLoggedIn,
   },
   methods: {
     ...mapActions({
@@ -59,7 +64,7 @@ export default {
       /* eslint-disable-next-line no-underscore-dangle */
       this._i18n.locale = this.language;
     }
-    if (!this.isLogin) {
+    if (this.isUserLoggedIn) {
       this.sync();
       this.fetchUser();
     }
@@ -98,6 +103,15 @@ export default {
 .mobile-menu {
   .bm-menu {
     background: $pah-color-3;
+  }
+
+  .bm-cross {
+    height: 30px !important;
+  }
+
+  .cross-style {
+    top: 36px !important;
+    right: 36px !important;
   }
 
   & .nav-item a {
