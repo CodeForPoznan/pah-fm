@@ -56,7 +56,7 @@ class DriveView(generics.ListCreateAPIView):
     required_groups = all_driver_methods
     serializer_class = DriveSerializer
     filter_backends = (filters.OrderingFilter,)
-    ordering = ('-date',)
+    ordering = ('-date', 'id',)
 
     def get_serializer_context(self):
         return {'driver': self.request.user}
