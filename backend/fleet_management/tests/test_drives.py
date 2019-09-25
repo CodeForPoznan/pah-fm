@@ -58,9 +58,7 @@ class DrivesApiTest(APITestCase):
 
     def test_can_retrieve_only_my_drives(self):
         new_driver = UserFactory()
-
         new_driver.groups.set(Group.objects.filter(name=Groups.Driver.name))
-
         new_drive = [
             DriveFactory(
                 car=self.car, driver=new_driver, date=date.today(), project=self.project

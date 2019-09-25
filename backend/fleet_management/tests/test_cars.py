@@ -37,7 +37,7 @@ class CarsApiTest(APITestCase):
         self.client.force_login(self.user)
         url_params = urlencode({"search": "BB73847KB"})
         res = self.client.get(f"{self.url}?{url_params}")
-        cars = res.json()
+        cars = res.data
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(len(cars), 1)
         self.assertEqual(cars[0]["id"], self.cars[0].id)
