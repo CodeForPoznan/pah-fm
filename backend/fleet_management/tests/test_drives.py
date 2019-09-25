@@ -53,8 +53,8 @@ class DrivesApiTest(APITestCase):
         }
 
     def test_401_for_unlogged_user(self):
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        res = self.client.get(self.url)
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_can_retrieve_only_my_drives(self):
         new_driver = UserFactory()
@@ -66,9 +66,9 @@ class DrivesApiTest(APITestCase):
         ]
 
         self.client.force_login(new_driver)
-        response = self.client.get(self.url)
-        drives = response.data
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        res = self.client.get(self.url)
+        drives = res.data
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(len(drives), 1)
         self.assertEqual(drives[0]["id"], new_drive[0].id)
 
