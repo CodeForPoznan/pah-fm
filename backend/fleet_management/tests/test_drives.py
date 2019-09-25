@@ -57,13 +57,7 @@ class DrivesApiTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_can_retrieve_only_my_drives(self):
-        new_driver = UserFactory(
-            username="JessicaDownson",
-            first_name="Jessica",
-            last_name="Downson",
-            email="crazy_jess@gmail.com",
-            password="XXXXXXXXXXX",
-        )
+        new_driver = UserFactory()
 
         new_driver.groups.set(Group.objects.filter(name=Groups.Driver.name))
 
