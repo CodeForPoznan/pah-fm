@@ -12,12 +12,12 @@
                 <li
                   class="error"
                   v-for="error in Object.keys(errors)"
-                  :key="error">{{ errors[error] }}</li>
+                  :key="error"
+                >{{ errors[error] }}</li>
               </ul>
             </div>
             <h2>{{ $t('common.new_drive') }}</h2>
-            <form
-              @submit.prevent="handleSubmit">
+            <form @submit.prevent="handleSubmit">
               <div class="form-group">
                 <label>{{ $t('drive_form.date') }}</label>
                 <input
@@ -77,7 +77,8 @@
                 </select>
                 <p
                   class="font-weight-bold"
-                  v-if="!cars.data">{{ $t('drive_form.no_project_message') }}</p>
+                  v-if="!cars.data"
+                >{{ $t('drive_form.no_project_message') }}</p>
               </div>
 
               <div class="form-group">
@@ -93,8 +94,7 @@
                   <option
                     v-for="car in cars.data"
                     :key="car.id"
-                    :value="car.id"
-                  >{{ car.plates }}</option>
+                    :value="car.id">{{ car.plates }}</option>
                 </select>
                 <p
                   class="font-weight-bold"
@@ -103,19 +103,16 @@
 
               <div class="form-group">
                 <label>{{ $t('drive_form.passenger') }}</label>
-                <select
+                <v-select
                   v-model="drive.passenger"
                   name="passenger"
                   @change="syncToLocalStorage"
-                  class="form-control"
+                  class="select"
                   :class="{ 'is-invalid': errors['passenger'] }"
-                >
-                  <option
-                    v-for="passenger in passengers"
-                    :key="passenger.value"
-                    :value="passenger.value"
-                  >{{ passenger.text }}</option>
-                </select>
+                  label="text"
+                  :reduce="passenger => String(passenger.value)"
+                  :options="passengers"
+                />
               </div>
 
               <div class="form-group">
@@ -158,16 +155,17 @@
                   :class="{ 'is-invalid': errors['endMileage'] }"
                 >
               </div>
-              <div class="form-group col-xs-12">
-                {{ $t('drive_form.distance_traveled', { distance: distance }) }}
-              </div>
+              <div
+                class="form-group col-xs-12"
+              >{{ $t('drive_form.distance_traveled', { distance: distance }) }}</div>
 
               <b-alert
                 class="col-xs-12"
                 variant="success"
                 dismissible
                 :show="confirmationOnline"
-                @dismissed="confirmationOnline=false">
+                @dismissed="confirmationOnline=false"
+              >
                 <b>{{ $t('drive_form.drive_added_online_notification') }}</b>
               </b-alert>
               <b-alert
@@ -175,16 +173,14 @@
                 variant="secondary"
                 dismissible
                 :show="confirmationOffline"
-                @dismissed="confirmationffline=false">
+                @dismissed="confirmationffline=false"
+              >
                 <b>{{ $t('drive_form.drive_added_offline_notification') }}</b>
               </b-alert>
 
               <div class="form-group">
-                <button
-                  class="btn btn-primary col-xs-3"
-                >{{ $t('drive_form.submit') }}</button>
+                <button class="btn btn-primary col-xs-3">{{ $t('drive_form.submit') }}</button>
               </div>
-
             </form>
           </div>
         </div>
@@ -195,15 +191,28 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex';
+import vSelect from 'vue-select';
+
+import 'vue-select/dist/vue-select.css';
+
 import * as actions from '../store/actions';
-import { isErroring, makeErrors, stringFields, makeFormState } from './services';
-import { namespaces, actions as apiActions, IS_ONLINE } from '../store/constants';
+import {
+  isErroring,
+  makeErrors,
+  stringFields,
+  makeFormState,
+} from './services';
+import {
+  namespaces,
+  actions as apiActions,
+  IS_ONLINE,
+} from '../store/constants';
 import { FORM_STATE } from '../constants/form';
 import { setItem, removeItem } from '../services/localStore';
 
-
 export default {
   name: 'DriveFormView',
+  components: { vSelect },
   data() {
     return {
       drive: makeFormState(),
@@ -250,14 +259,13 @@ export default {
     validateForm() {
       const makeErrorsPartial = makeErrors(this.$t.bind(this));
 
-      const data =
-        Object.entries(this.drive).reduce((acc, [key, value]) =>
-          ({
-            ...acc,
-            [key]: stringFields.includes(key)
-              ? String(value).trim()
-              : value,
-          }), {});
+      const data = Object.entries(this.drive).reduce(
+        (acc, [key, value]) => ({
+          ...acc,
+          [key]: stringFields.includes(key) ? String(value).trim() : value,
+        }),
+        {},
+      );
 
       this.errors = Object.keys(data)
         .filter(isErroring(data))
@@ -265,9 +273,9 @@ export default {
 
       const { startMileage, endMileage } = data;
       if (
-        !!startMileage
-        && !!endMileage
-        && parseInt(startMileage, 10) >= parseInt(endMileage, 10)
+        !!startMileage &&
+        !!endMileage &&
+        parseInt(startMileage, 10) >= parseInt(endMileage, 10)
       ) {
         this.errors.startMileage = this.$t('drive_form.start_mileage_error');
         this.errors.endMileage = this.$t('drive_form.end_mileage_error');
@@ -288,10 +296,11 @@ export default {
       projects: state => state,
     }),
     ...mapState(namespaces.passengers, {
-      passengers: state => (state.data || []).map(p => ({
-        value: p.id,
-        text: [p.firstName, p.lastName].join(' '),
-      })),
+      passengers: state =>
+        (state.data || []).map(p => ({
+          value: p.id,
+          text: [p.firstName, p.lastName].join(' '),
+        })),
     }),
     ...mapGetters([IS_ONLINE]),
     distance() {
@@ -303,7 +312,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../scss/base";
+@import '../scss/base';
 
 .error::first-letter {
   text-transform: capitalize;
@@ -311,5 +320,23 @@ export default {
 
 .wrapper {
   @include m(2);
+}
+
+.select {
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border-radius: 0.25rem;
+  -webkit-transition: border-color 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
 }
 </style>
