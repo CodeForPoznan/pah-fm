@@ -8,7 +8,7 @@ from factory import fuzzy, DjangoModelFactory, Faker, LazyAttribute, lazy_attrib
 
 
 from fleet_management.models import (
-    Car, Drive, Passenger, Project, User
+    Car, Drive, Project, User
 )
 
 COUNTRIES = ('UA', 'SS')
@@ -31,7 +31,11 @@ class UserFactory(DjangoModelFactory):
     @classmethod
     def _create(cls, model_class, *args, **kwargs):
         manager = cls._get_manager(model_class)
-        return manager.create_user(*args, **kwargs)
+        groups = kwargs.pop("groups", [])
+        user = manager.create_user(*args, **kwargs)
+        for g in groups:
+            user.groups.add(g)
+        return user
 
 
 class CarFactory(DjangoModelFactory):
@@ -137,6 +141,7 @@ class DriveFactory(DjangoModelFactory):
 
     driver = SubFactory(UserFactory)
     project = SubFactory(ProjectFactory)
+    passenger = SubFactory(UserFactory)
     car = SubFactory(CarFactory)
     date = fuzzy.FuzzyDate((now() - timedelta(days=1000)).date())
     start_mileage = fuzzy.FuzzyInteger(1000000)
@@ -150,11 +155,3 @@ class DriveFactory(DjangoModelFactory):
     def end_mileage(self):
         return random.randint(self.start_mileage, 1000000)
 
-    @post_generation
-    def passengers(self, create, extracted, **kwargs):
-        if not create:
-            return
-
-        if extracted:
-            for passenger in extracted:
-                self.passengers.add(passenger)

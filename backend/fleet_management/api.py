@@ -2,7 +2,7 @@ from rest_framework import generics, filters, views
 from rest_framework.response import Response
 
 from .permissions import GroupPermission, all_driver_methods
-from .models import User, Car, Drive, Passenger, Project
+from .models import User, Car, Drive, Project
 from .serializers import (
     CarSerializer,
     DriveSerializer,
