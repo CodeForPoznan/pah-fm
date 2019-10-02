@@ -48,7 +48,7 @@ class Project(models.Model):
 
 
 class Drive(models.Model):
-    driver = models.ForeignKey(User, on_delete=models.CASCADE)
+    driver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="drives_driven")
     car = models.ForeignKey(Car, null=False, on_delete=models.CASCADE)
     passengers = models.ManyToManyField(Passenger)
     date = models.DateField(default=now, blank=False)
@@ -60,6 +60,7 @@ class Drive(models.Model):
     timestamp = models.IntegerField(blank=False, default=get_current_timestamp_in_gmt)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     is_verified = models.BooleanField(default=False)
+    passenger = models.ForeignKey(User, on_delete=models.CASCADE, related_name="drives_taken", null=True, blank=True)
 
     class Meta:
         unique_together = [

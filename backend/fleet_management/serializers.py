@@ -28,7 +28,7 @@ class PassengerSerializer(serializers.ModelSerializer):
     last_name = fields.CharField(read_only=True)
 
     class Meta:
-        model = Passenger
+        model = User
         fields = ('id', 'first_name', 'last_name')
 
 

@@ -111,16 +111,6 @@ class CarFactory(DjangoModelFactory):
         )
 
 
-class PassengerFactory(DjangoModelFactory):
-
-    class Meta:
-        model = Passenger
-
-    first_name = Faker('first_name', locale='pl_PL')
-    last_name = Faker('last_name', locale='pl_PL')
-    country = fuzzy.FuzzyChoice(COUNTRIES)
-
-
 class ProjectFactory(DjangoModelFactory):
 
     class Meta:

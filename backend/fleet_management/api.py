@@ -2,7 +2,7 @@ from rest_framework import generics, filters, views
 from rest_framework.response import Response
 
 from .permissions import GroupPermission, all_driver_methods
-from .models import Car, Drive, Passenger, Project
+from .models import User, Car, Drive, Passenger, Project
 from .serializers import (
     CarSerializer,
     DriveSerializer,
@@ -10,7 +10,7 @@ from .serializers import (
     UserSerializer,
     ProjectSerializer,
 )
-
+from .constants import Groups
 
 class CurrentUserRetrieveView(views.APIView):
 
@@ -32,9 +32,10 @@ class PassengerListView(generics.ListAPIView):
     ordering = ('first_name', 'last_name')
 
     def get_queryset(self):
-        return Passenger.objects.filter(
+        return User.objects.filter(
+            groups__name=Groups.Passenger.name,
             country=self.request.user.country
-        ) | Passenger.objects.filter(country=None)
+        ) | User.objects.filter(country=None, groups__name=Groups.Passenger.name)
 
 
 class CarListView(generics.ListAPIView):

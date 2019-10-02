@@ -10,7 +10,6 @@ from ...constants import Groups
 from fleet_management.factories import (
     CarFactory,
     DriveFactory,
-    PassengerFactory,
     ProjectFactory,
     UserFactory,
 )
@@ -34,7 +33,7 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS('Creating 10 passengers'))
         for _ in tqdm(range(10)):
-            PassengerFactory.create()
+            UserFactory.create()
 
         self.stdout.write(self.style.SUCCESS('Creating 5 projects'))
         for _ in tqdm(range(5)):
@@ -47,7 +46,7 @@ class Command(BaseCommand):
 
         for _ in tqdm(range(50)):
             DriveFactory.create(
-                passengers=random.sample(all_passengers, random.randint(1, 4)),
+                passengers=[random.choice(all_passengers)],
                 project=random.choice(all_projects),
                 driver=random.choice(all_users),
             )
