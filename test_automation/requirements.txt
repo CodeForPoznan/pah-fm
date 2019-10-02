@@ -1,0 +1,3 @@
+behave==1.2.6
+behave_webdriver==0.3.0
+selenium==3.141.0
