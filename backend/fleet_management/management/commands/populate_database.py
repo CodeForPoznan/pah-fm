@@ -13,7 +13,7 @@ from fleet_management.factories import (
     ProjectFactory,
     UserFactory,
 )
-from ...models import Passenger, Project, User
+from ...models import Project, User
 
 
 class Command(BaseCommand):
