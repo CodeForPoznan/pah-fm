@@ -148,7 +148,7 @@ class DriveFactory(DjangoModelFactory):
     driver = SubFactory(UserFactory)
     project = SubFactory(ProjectFactory)
     car = SubFactory(CarFactory)
-    date = fuzzy.FuzzyDate((now() - timedelta(days=1000)).date(), now().date())
+    date = fuzzy.FuzzyDate((now() - timedelta(days=1000)).date())
     start_mileage = fuzzy.FuzzyInteger(1000000)
     description = Faker('text', max_nb_chars=1000)
     timestamp = fuzzy.FuzzyInteger(1, 999999999)

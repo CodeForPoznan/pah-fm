@@ -13,7 +13,7 @@ from fleet_management.serializers import CarSerializer
 class CarsApiTest(APITestCase):
     def setUp(self):
         self.url = reverse("cars")
-        self.user = UserFactory(username="Admin")
+        self.user = UserFactory()
         self.user.groups.set(Group.objects.filter(name=Groups.Driver.name))
         self.cars = [
             CarFactory(country=self.user.country, plates="BB73847KB"),
@@ -30,7 +30,6 @@ class CarsApiTest(APITestCase):
         res = self.client.get(self.url)
         cars = res.data
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(cars), 3)
         self.assertEqual(CarSerializer(self.cars, many=True).data, cars)
 
     def test_search_by_plate(self):

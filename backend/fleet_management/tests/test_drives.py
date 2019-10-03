@@ -15,7 +15,6 @@ from fleet_management.factories import (
     UserFactory,
 )
 from fleet_management.models import Drive
-from fleet_management.serializers import DriveSerializer
 
 
 class DrivesApiTest(APITestCase):
@@ -79,7 +78,17 @@ class DrivesApiTest(APITestCase):
         res = self.client.post(self.url, data=self.payload, format="json")
         drive = Drive.objects.get(pk=res.data["id"])
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(DriveSerializer(drive).data, res.data)
+        self.assertSetEqual(
+            {p.id for p in drive.passengers.all()},
+            {p.id for p in self.passengers[0:2]}
+        )
+        self.assertEqual(drive.car.id, self.car.id)
+        self.assertEqual(drive.date.isoformat(), res.data["date"])
+        self.assertEqual(drive.start_mileage, res.data["start_mileage"])
+        self.assertEqual(drive.end_mileage, res.data["end_mileage"])
+        self.assertEqual(drive.description, res.data["description"])
+        self.assertEqual(drive.start_location, res.data["start_location"])
+        self.assertEqual(drive.end_location, res.data["end_location"])
 
     def test_fuel_consumption_is_valid(self):
         drive = DriveFactory(start_mileage=100300, end_mileage=100500)
