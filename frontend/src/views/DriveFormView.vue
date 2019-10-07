@@ -106,8 +106,8 @@
                 <v-select
                   v-model="drive.passenger"
                   name="passenger"
-                  @change="syncToLocalStorage"
-                  class="select"
+                  @input="syncToLocalStorage"
+                  class="form-control select"
                   :class="{ 'is-invalid': errors['passenger'] }"
                   label="text"
                   :reduce="passenger => String(passenger.value)"
@@ -323,26 +323,9 @@ export default {
 }
 
 .select {
-  display: block;
-  width: 100%;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
-  background-clip: padding-box;
+  border: none;
+  height: initial;
+  padding: 0;
   border-radius: 0.25rem;
-  -webkit-transition:
-    border-color 0.15s ease-in-out,
-    -webkit-box-shadow 0.15s ease-in-out;
-  transition:
-    border-color 0.15s ease-in-out,
-    -webkit-box-shadow 0.15s ease-in-out;
-  transition:
-    border-color 0.15s ease-in-out,
-    box-shadow 0.15s ease-in-out;
-  transition:
-    border-color 0.15s ease-in-out,
-    box-shadow 0.15s ease-in-out,
-    -webkit-box-shadow 0.15s ease-in-out;
 }
 </style>
