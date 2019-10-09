@@ -59,29 +59,26 @@ class ProjectSerializer(serializers.ModelSerializer):
 class DriveSerializer(serializers.ModelSerializer):
     driver = UserSerializer(read_only=True)
     car = CarSerializer()
-    passengers = serializers.SerializerMethodField()
+    passenger = PassengerSerializer()
     project = ProjectSerializer()
 
     class Meta:
         model = Drive
         fields = (
             'id',
-            'driver', 'car', 'passengers', 'project',
+            'driver', 'car', 'passenger', 'project',
             'date', 'start_mileage', 'end_mileage', 'description',
             'start_location', 'end_location', 'timestamp'
         )
         read_only_fields = ('is_verified',)
 
-    def get_passengers(self, drive):
-        return [PassengerSerializer(drive.passenger).data]
-
     def create(self, validated_data):
-        passengers_data = validated_data.pop('passengers')
+        passenger_data = validated_data.pop('passenger')
         car_data = validated_data.pop('car')
         car = Car.objects.get(pk=car_data['id'])
         project_data = validated_data.pop('project')
         project = Project.objects.get(pk=project_data['id'])
-        passenger = User.objects.get(passengers_data[0]['id'])
+        passenger = User.objects.get(pk=passenger_data['id'])
 
         with transaction.atomic():
             drive = Drive.objects.create(
