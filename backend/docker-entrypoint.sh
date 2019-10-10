@@ -19,7 +19,7 @@ python3 manage.py create_user               \
     --last_name  PAH                        \
     --password   pah123                     \
     --country    UA                         \
-    --is_admin   True                       \
+    --is_admin   False                      \
 
 python3 manage.py create_user               \
     --username   driver@codeforpoznan.pl    \
@@ -28,6 +28,7 @@ python3 manage.py create_user               \
     --last_name  Kubica                     \
     --country    PL                         \
     --group      Driver                     \
+    --is_admin   False                      \
 
 python3 manage.py create_user               \
     --username   passenger@codeforpoznan.pl \
@@ -36,6 +37,7 @@ python3 manage.py create_user               \
     --password   cfp123                     \
     --country    UA                         \
     --group      Passenger                  \
+    --is_admin   False                      \
 
 # start the app
 python3 manage.py runserver 0.0.0.0:8000
