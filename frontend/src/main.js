@@ -1,11 +1,12 @@
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import FlagIcon from 'vue-flag-icon';
 import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
 
-import VueI18n from 'vue-i18n';
 import Vue from 'vue';
+
+import FlagIcon from 'vue-flag-icon';
+import VueI18n from 'vue-i18n';
 import BootstrapVue from 'bootstrap-vue';
 import App from './App.vue';
 import './registerServiceWorker';
@@ -25,11 +26,7 @@ export const languages = {
   [UA]: 'ua',
 };
 
-export const languagesOrder = [
-  'pl',
-  'gb',
-  'ua',
-];
+export const languagesOrder = ['pl', 'gb', 'ua'];
 
 const locale = languages[GB];
 const fallbackLocale = languages[GB];
@@ -43,7 +40,6 @@ export const i18n = new VueI18n({
 Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);
-
 
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({
