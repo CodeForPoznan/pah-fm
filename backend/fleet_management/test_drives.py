@@ -9,29 +9,14 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from fleet_management.constants import Groups
-from fleet_management.factories import DriveFactory
-from fleet_management.models import Car, Drive, Project, User
+from fleet_management.factories import DriveFactory, UserFactory
+from fleet_management.models import Car, Drive, Project
 
 
 class DrivesApiTest(APITestCase):
-    def create_passenger(self, first_name, last_name, email):
-        user = User.objects.create(
-            username=f"user{first_name}.{last_name}",
-            email=email,
-            is_superuser=False,
-            is_staff=False,
-            country="UA",
-            is_active=True,
-            first_name=first_name,
-            last_name=last_name,
-        )
-        g = Group.objects.get(name="Passenger")
-        g.user_set.add(user)
-        return user
-
     def setUp(self):
         self.url = reverse('drives')
-        self.passenger = self.create_passenger('Mike', 'Melnik', 'mike@melnik.com')
+        self.passenger = UserFactory.create(groups=[Group.objects.get(name="Passenger")])
         self.car = Car.objects.create(
             plates='FOO 129338',
             fuel_consumption=8.2,
