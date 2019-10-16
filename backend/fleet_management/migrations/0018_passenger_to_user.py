@@ -12,7 +12,7 @@ def migrate_passenger_to_user(apps, schema_editor):
     passengers = Passenger.objects.all()
     for p in passengers:
         u = User.objects.create(
-            username=f"pass_{p.id}@pah.org.pl",
+            username=p.email,
             email=p.email,
             is_superuser=False,
             is_staff=False,
