@@ -56,17 +56,25 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = ('title', 'description', 'id')
 
 
+class PassengersField(serializers.Field):
+    def to_representation(self, value):
+        return [PassengerSerializer(value).data]
+
+    def to_internal_value(self, data):
+        return data[0]
+
+
 class DriveSerializer(serializers.ModelSerializer):
     driver = UserSerializer(read_only=True)
     car = CarSerializer()
-    passenger = PassengerSerializer()
+    passengers = PassengersField(source="passenger")
     project = ProjectSerializer()
 
     class Meta:
         model = Drive
         fields = (
             'id',
-            'driver', 'car', 'passenger', 'project',
+            'driver', 'car', 'passengers', 'project',
             'date', 'start_mileage', 'end_mileage', 'description',
             'start_location', 'end_location', 'timestamp'
         )

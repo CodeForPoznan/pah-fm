@@ -72,11 +72,13 @@ class DrivesApiTest(APITestCase):
                     'fuelConsumption': self.car.fuel_consumption,
                     'description': self.car.description,
                 },
-                'passenger': {
-                    'id': self.passenger.id,
-                    'lastName': self.passenger.last_name,
-                    'firstName': self.passenger.first_name,
-                },
+                'passengers': [
+                    {
+                        'id': self.passenger.id,
+                        'lastName': self.passenger.last_name,
+                        'firstName': self.passenger.first_name,
+                    },
+                ],
                 'driver': {
                     'id': self.driver.id,
                     'username': self.driver.username,
@@ -131,9 +133,9 @@ class DrivesApiTest(APITestCase):
             'car': {
                 'id': self.car.id,
             },
-            'passenger': {
-                'id': self.passenger.id,
-            },
+            'passengers': [
+                {'id': self.passenger.id},
+            ],
             'date': date.today().isoformat(),
             'startMileage': 180000,
             'endMileage': 180250,
