@@ -6,6 +6,8 @@ import LoginView from '../views/LoginView.vue';
 import DriveFormView from '../views/DriveFormView.vue';
 import DrivesView from '../views/DrivesView.vue';
 import SuccessfulLogoutView from '../views/SuccessfulLogoutView.vue';
+import PassengerView from '../views/PassengerView.vue';
+
 import store from '../store';
 import * as mutations from '../store/mutations';
 import { deleteStorageData } from '../services/api/auth';
@@ -28,7 +30,11 @@ export const driveListRoute = {
   name: 'Drives',
   component: DrivesView,
 };
-
+export const passengerRoute = {
+  path: '/passenger',
+  name: 'Passenger',
+  component: PassengerView,
+};
 export const homeRoute = {
   path: '/',
   name: 'Home',
@@ -55,6 +61,7 @@ const router = new Router({
     homeRoute,
     pageNotFoundRoute,
     logoutRoute,
+    passengerRoute,
   ],
 });
 

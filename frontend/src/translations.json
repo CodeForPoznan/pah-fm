@@ -11,6 +11,7 @@
       "new_drive": "Додати новий маршрут",
       "no": "ні",
       "page_not_found": "страница, которую вы ищете, не существует",
+      "please_correct_errors": "Виправте помилку будь ласка",
       "drives": "Маршрути",
       "unexpected_error": "Сталася несподівана помилка. Зверніться до адміністратора.",
       "yes": "так"
@@ -30,7 +31,6 @@
       "no_cars_message": "Немає вільних автомобілів",
       "passenger": "Пасажир",
       "passenger_error": "Вкажіть ім'я пасажира",
-      "please_correct_errors": "Виправте помилку будь ласка",
       "project": "Проект",
       "start_location": "Початковий пункт поїздки",
       "starting_mileage": "Початкове значення вимірювального приладу",
@@ -89,6 +89,7 @@
       "new_drive": "Add new drive",
       "no": "no",
       "page_not_found": "The page you're looking for does not exist.",
+      "please_correct_errors": "Please correct the following error(s):",
       "drives": "Drives",
       "unexpected_error": "Unexpected error occurred. Please contact the administrator.",
       "yes": "yes"
@@ -108,7 +109,6 @@
       "no_cars_message": "No cars available",
       "passenger": "Passenger:",
       "passenger_error": "Passenger is required",
-      "please_correct_errors": "Please correct the following error(s):",
       "project": "Project",
       "start_location": "Start location:",
       "starting_mileage": "Starting mileage:",
@@ -167,6 +167,7 @@
       "new_drive": "Dodaj nową trasę",
       "no": "nie",
       "page_not_found": "Wyszukiwana strona nie istnieje.",
+      "please_correct_errors": "Proszę poprawić następujące błędy:",
       "drives": "Trasy",
       "unexpected_error": "Wystąpił nieoczekiwany błąd. Prosimy o kontakt z administratorem.",
       "yes": "tak"
@@ -186,7 +187,6 @@
       "no_cars_message": "Auta są niedostępne",
       "passenger": "Pasażer",
       "passenger_error": "Pasażer jest wymagany",
-      "please_correct_errors": "Proszę poprawić następujące błędy:",
       "project": "Projekt",
       "start_location": "Lokalizacja początkowa:",
       "starting_mileage": "Początkowy stan licznika:",
