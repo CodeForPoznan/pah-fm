@@ -74,7 +74,7 @@ const roleBasedRoutes = {
 const allRoleBasedRoutes = [
   ...roleBasedRoutes.driver,
   ...roleBasedRoutes.passenger,
-];
+].map(route => route.name);
 
 router.beforeEach((to, _from, next) => {
   const userLoggedIn = isUserLoggedIn();
