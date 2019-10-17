@@ -4,7 +4,9 @@
       <div class="row">
         <div class="col-lg-8 offset-lg-2">
           <div>
-            <error-list v-if="errors.length" :errors="errors" />
+            <error-list
+              v-if="errors.length"
+              :errors="errors" />
             <h2>Confirm drive</h2>
             <form @submit.prevent="handleSubmit">
               <div class="form-group">
@@ -20,7 +22,13 @@
                   maxlength="6"
                   class="form-control"
                   :class="{ 'is-invalid': errors['hash'] }"
-                />
+                >
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary col-xs-3">
+                  {{ //TODO
+                  $t('.submit') }}
+                </button>
               </div>
             </form>
           </div>
@@ -31,23 +39,24 @@
 </template>
 
 <script>
-import ErrorList from '../components/ErrorList';
-
-import FORM_STATE from '../constants/form';
+import ErrorList from '../components/ErrorList.vue';
 
 export default {
   name: 'PassengerView',
   components: { ErrorList },
   data() {
     return {
+      formId: 'passengerForm',
       form: {},
       errors: {},
     };
   },
   methods: {
     syncToLocalStorage() {
-      localStorage.setItem(FORM_STATE, JSON.stringify(this.form));
+      localStorage.setItem(this.formId, JSON.stringify(this.form));
     },
+    handleSubmit() {},
+    validateForm() {},
   },
 };
 </script>

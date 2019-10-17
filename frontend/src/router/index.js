@@ -58,14 +58,23 @@ const router = new Router({
     loginRoute,
     driveCreateRoute,
     driveListRoute,
+    passengerRoute,
     homeRoute,
     pageNotFoundRoute,
     logoutRoute,
-    passengerRoute,
   ],
 });
 
 const openRoutes = [loginRoute.name];
+
+const roleBasedRoutes = {
+  driver: [driveCreateRoute, driveListRoute],
+  passenger: [passengerRoute],
+};
+const allRoleBasedRoutes = [
+  ...roleBasedRoutes.driver,
+  ...roleBasedRoutes.passenger,
+];
 
 router.beforeEach((to, _from, next) => {
   const userLoggedIn = isUserLoggedIn();
@@ -75,6 +84,7 @@ router.beforeEach((to, _from, next) => {
     return next({ path: homeRoute.path });
   }
 
+  // user is going to log out
   if (userLoggedIn && to.name === logoutRoute.name) {
     store.commit(mutations.SET_USER, null);
     deleteStorageData();
@@ -82,11 +92,13 @@ router.beforeEach((to, _from, next) => {
     return next();
   }
 
+  // user logged out
   if (store.state.logoutInProgress && to.name === logoutRoute.name) {
     store.commit(mutations.SET_LOGOUT_PROGRESS, false);
     return next();
   }
 
+  // route is open
   if (openRoutes.includes(to.name)) {
     return next();
   }
@@ -99,6 +111,17 @@ router.beforeEach((to, _from, next) => {
   if (userLoggedIn && to.name === loginRoute.name) {
     return next({ path: homeRoute.path });
   }
+
+  if (userLoggedIn && allRoleBasedRoutes.includes(to.name)) {
+    if (store.state.user.role) {
+      const availableRoutes = roleBasedRoutes[store.state.user.role].map(route => route.name);
+
+      if (!availableRoutes.includes(to.name)) {
+        return next({ path: availableRoutes[0].path });
+      }
+    }
+  }
+
   return next();
 });
 
