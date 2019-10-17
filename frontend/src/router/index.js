@@ -113,12 +113,17 @@ router.beforeEach((to, _from, next) => {
   }
 
   if (userLoggedIn && allRoleBasedRoutes.includes(to.name)) {
-    if (store.state.user.role) {
-      const availableRoutes = roleBasedRoutes[store.state.user.role].map(route => route.name);
+    const availableRoutes = store.state.user.groups.reduce(
+      (acc, group) => [...acc, ...roleBasedRoutes[group.name.toLowerCase()]],
+      [],
+    );
 
-      if (!availableRoutes.includes(to.name)) {
-        return next({ path: availableRoutes[0].path });
-      }
+    const routeAccessible = availableRoutes
+      .map(route => route.name)
+      .includes(to.name);
+
+    if (!routeAccessible) {
+      return next({ path: availableRoutes[0].path });
     }
   }
 

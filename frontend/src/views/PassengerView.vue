@@ -60,3 +60,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '../scss/base';
+
+.wrapper {
+  @include m(2);
+}
+</style>
