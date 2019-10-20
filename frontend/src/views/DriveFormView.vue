@@ -2,8 +2,7 @@
   <main-form
     @submit="handleSubmit"
     :title="$t('common.new_drive')"
-    :list-of-errors="Object.entries(errors).map(([key, value]) => value)"
-  >
+    :list-of-errors="listOfErrors">
     <div class="form-group">
       <label>{{ $t('drive_form.date') }}</label>
       <input
@@ -13,7 +12,7 @@
         name="date"
         :max="currentDate"
         class="form-control"
-        :class="{ 'is-invalid': errors['date'] }"
+        :class="{ 'is-invalid': isInvalid['date'] }"
       >
     </div>
 
@@ -26,7 +25,7 @@
         name="startLocation"
         maxlength="100"
         class="form-control"
-        :class="{ 'is-invalid': errors['startLocation'] }"
+        :class="{ 'is-invalid': isInvalid['startLocation'] }"
       >
     </div>
     <div class="form-group">
@@ -42,7 +41,7 @@
         name="startMileage"
         @input="syncToLocalStorage"
         class="form-control"
-        :class="{ 'is-invalid': errors['startMileage'] }"
+        :class="{ 'is-invalid': isInvalid['startMileage'] }"
       >
     </div>
     <div class="form-group">
@@ -53,7 +52,7 @@
         v-model="form.project"
         name="car"
         class="form-control"
-        :class="{ 'is-invalid': errors['project'] }"
+        :class="{ 'is-invalid': isInvalid['project'] }"
       >
         <option
           v-for="project in projects.data"
@@ -74,7 +73,7 @@
         @change="syncToLocalStorage"
         name="car"
         class="form-control"
-        :class="{ 'is-invalid': errors['car'] }"
+        :class="{ 'is-invalid': isInvalid['car'] }"
       >
         <option
           v-for="car in cars.data"
@@ -93,7 +92,7 @@
         name="passenger"
         @input="syncToLocalStorage"
         class="form-control select"
-        :class="{ 'is-invalid': errors['passenger'] }"
+        :class="{ 'is-invalid': isInvalid['passenger'] }"
         label="text"
         :reduce="passenger => String(passenger.value)"
         :options="passengers"
@@ -108,7 +107,7 @@
         @input="syncToLocalStorage"
         name="description"
         class="form-control"
-        :class="{ 'is-invalid': errors['description']}"
+        :class="{ 'is-invalid': isInvalid['description']}"
       >
     </div>
 
@@ -121,7 +120,7 @@
         v-model="form.endLocation"
         name="endLocation"
         class="form-control"
-        :class="{ 'is-invalid': errors['endLocation'] }"
+        :class="{ 'is-invalid': isInvalid['endLocation'] }"
       >
     </div>
     <div class="form-group">
@@ -137,7 +136,7 @@
         @input="syncToLocalStorage"
         name="endMileage"
         class="form-control"
-        :class="{ 'is-invalid': errors['endMileage'] }"
+        :class="{ 'is-invalid': isInvalid['endMileage'] }"
       >
     </div>
     <div
@@ -175,30 +174,51 @@ import MainForm from '../components/MainForm.vue';
 import FormMixin from '../mixins/FormMixin';
 
 import * as actions from '../store/actions';
-import {
-  isErroring,
-  makeErrors,
-  stringFields,
-  makeFormState,
-} from './services';
+
 import {
   namespaces,
   actions as apiActions,
   IS_ONLINE,
 } from '../store/constants';
 import { FORM_STATE } from '../constants/form';
-import { setItem, removeItem } from '../services/localStore';
+import { setItem } from '../services/localStore';
+import { getToday } from '../services/time';
+
+const initialFormData = {
+  date: getToday(),
+  car: '',
+  description: '',
+  startMileage: '',
+  endMileage: '',
+  project: '',
+  passenger: '',
+  startLocation: '',
+  endLocation: '',
+};
+
+const requiredFields = [
+  'date',
+  'car',
+  'project',
+  'startMileage',
+  'endMileage',
+  'startLocation',
+  'endLocation',
+  'passenger',
+];
 
 export default {
   name: 'DriveFormView',
   components: { vSelect, MainForm },
   mixins: [FormMixin],
+  mounted() {
+    this.loadFormData(initialFormData);
+  },
   data() {
     return {
       formId: FORM_STATE,
-      form: makeFormState(),
+      requiredFields,
       errors: {},
-      searchText: '',
       confirmationOnline: false,
       confirmationOffline: false,
       currentDate: new Date().toISOString().split('T')[0],
@@ -210,11 +230,11 @@ export default {
     ...mapActions(namespaces.passengers, [apiActions.fetchPassengers]),
     ...mapActions(namespaces.projects, [apiActions.fetchProjects]),
     handleSubmit() {
-      this.validateForm();
+      this.validateForm(this.validator);
       this.confirmationOffline = false;
       this.confirmationOnline = false;
 
-      if (!Object.keys(this.errors).length) {
+      if (this.listOfErrors.length === 0) {
         this[actions.SUBMIT]({
           form: {
             ...this.form,
@@ -222,9 +242,9 @@ export default {
             timestamp: Math.floor(Date.now() / 1000),
           },
         });
-        removeItem(FORM_STATE);
+        this.clearStorage();
         setItem(FORM_STATE, { car: this.form.car });
-        this.form = makeFormState();
+        this.loadFormData(initialFormData);
 
         if (this.isOnline) {
           this.confirmationOnline = true;
@@ -233,31 +253,18 @@ export default {
         }
       }
     },
-
-    validateForm() {
-      const makeErrorsPartial = makeErrors(this.$t.bind(this));
-
-      const data = Object.entries(this.form).reduce(
-        (acc, [key, value]) => ({
-          ...acc,
-          [key]: stringFields.includes(key) ? String(value).trim() : value,
-        }),
-        {},
-      );
-
-      this.errors = Object.keys(data)
-        .filter(isErroring(data))
-        .reduce(makeErrorsPartial, {});
-
+    validator(data) {
       const { startMileage, endMileage } = data;
       if (
         !!startMileage &&
         !!endMileage &&
         parseInt(startMileage, 10) >= parseInt(endMileage, 10)
       ) {
-        this.errors.startMileage = this.$t('drive_form.start_mileage_error');
-        this.errors.endMileage = this.$t('drive_form.end_mileage_error');
+        const errorStartMileage = this.$t('drive_form.start_mileage_error');
+        const errorEndMileage = this.$t('drive_form.end_mileage_error');
+        return [errorStartMileage, errorEndMileage];
       }
+      return [];
     },
   },
   created() {
@@ -290,16 +297,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../scss/base';
-
-.error::first-letter {
-  text-transform: capitalize;
-}
-
-.wrapper {
-  @include m(2);
-}
-
 .select {
   border: none;
   height: initial;

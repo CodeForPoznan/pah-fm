@@ -14,14 +14,13 @@
         maxlength="6"
         class="form-control"
         :class="{ 'is-invalid': isInvalid.hash }"
-      />
+      >
     </div>
   </main-form>
 </template>
 
 <script>
 import FormMixin from '../mixins/FormMixin';
-
 import MainForm from '../components/MainForm.vue';
 
 const initialFormData = {
@@ -44,6 +43,13 @@ export default {
   methods: {
     handleSubmit() {
       this.validateForm();
+
+      if (this.listOfErrors === 0) {
+        // submit
+
+        this.clearStorage();
+        this.loadFormData(initialFormData);
+      }
     },
   },
 };
