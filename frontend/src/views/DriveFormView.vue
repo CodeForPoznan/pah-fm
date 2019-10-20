@@ -6,7 +6,8 @@
           <div>
             <error-list
               v-if="Object.keys(errors).length"
-              :errors="errors" />
+              :errors="Object.entries(errors).map(([key, value]) => value)"
+            />
             <h2>{{ $t('common.new_drive') }}</h2>
             <form @submit.prevent="handleSubmit">
               <div class="form-group">
@@ -14,25 +15,25 @@
                 <input
                   type="date"
                   @change="syncToLocalStorage"
-                  v-model="drive.date"
+                  v-model="form.date"
                   name="date"
                   :max="currentDate"
                   class="form-control"
                   :class="{ 'is-invalid': errors['date'] }"
-                >
+                />
               </div>
 
               <div class="form-group">
                 <label>{{ $t('drive_form.start_location') }}</label>
                 <input
                   type="text"
-                  v-model="drive.startLocation"
+                  v-model="form.startLocation"
                   @input="syncToLocalStorage"
                   name="startLocation"
                   maxlength="100"
                   class="form-control"
                   :class="{ 'is-invalid': errors['startLocation'] }"
-                >
+                />
               </div>
               <div class="form-group">
                 <label>{{ $t('drive_form.starting_mileage') }}</label>
@@ -43,19 +44,19 @@
                       && Number(event.key) <= 9
                       && event.target.value < 20000000)"
                   type="number"
-                  v-model="drive.startMileage"
+                  v-model="form.startMileage"
                   name="startMileage"
                   @input="syncToLocalStorage"
                   class="form-control"
                   :class="{ 'is-invalid': errors['startMileage'] }"
-                >
+                />
               </div>
               <div class="form-group">
                 <label>{{ $t('drive_form.project') }}</label>
                 <select
                   v-if="projects.data"
                   @change="syncToLocalStorage"
-                  v-model="drive.project"
+                  v-model="form.project"
                   name="car"
                   class="form-control"
                   :class="{ 'is-invalid': errors['project'] }"
@@ -76,26 +77,21 @@
                 <label>{{ $t('drive_form.cars') }}</label>
                 <select
                   v-if="cars.data"
-                  v-model="drive.car"
+                  v-model="form.car"
                   @change="syncToLocalStorage"
                   name="car"
                   class="form-control"
                   :class="{ 'is-invalid': errors['car'] }"
                 >
-                  <option
-                    v-for="car in cars.data"
-                    :key="car.id"
-                    :value="car.id">{{ car.plates }}</option>
+                  <option v-for="car in cars.data" :key="car.id" :value="car.id">{{ car.plates }}</option>
                 </select>
-                <p
-                  class="font-weight-bold"
-                  v-if="!cars.data">{{ $t('drive_form.no_cars_message') }}</p>
+                <p class="font-weight-bold" v-if="!cars.data">{{ $t('drive_form.no_cars_message') }}</p>
               </div>
 
               <div class="form-group">
                 <label>{{ $t('drive_form.passenger') }}</label>
                 <v-select
-                  v-model="drive.passenger"
+                  v-model="form.passenger"
                   name="passenger"
                   @input="syncToLocalStorage"
                   class="form-control select"
@@ -110,12 +106,12 @@
                 <label>{{ $t('drive_form.description') }}</label>
                 <input
                   type="text"
-                  v-model="drive.description"
+                  v-model="form.description"
                   @input="syncToLocalStorage"
                   name="description"
                   class="form-control"
                   :class="{ 'is-invalid': errors['description']}"
-                >
+                />
               </div>
 
               <div class="form-group">
@@ -124,11 +120,11 @@
                   type="text"
                   maxlength="100"
                   @input="syncToLocalStorage"
-                  v-model="drive.endLocation"
+                  v-model="form.endLocation"
                   name="endLocation"
                   class="form-control"
                   :class="{ 'is-invalid': errors['endLocation'] }"
-                >
+                />
               </div>
               <div class="form-group">
                 <label>{{ $t('drive_form.ending_mileage') }}</label>
@@ -139,12 +135,12 @@
                       && Number(event.key) <= 9
                       && event.target.value < 20000000)"
                   type="number"
-                  v-model="drive.endMileage"
+                  v-model="form.endMileage"
                   @input="syncToLocalStorage"
                   name="endMileage"
                   class="form-control"
                   :class="{ 'is-invalid': errors['endMileage'] }"
-                >
+                />
               </div>
               <div
                 class="form-group col-xs-12"
@@ -187,6 +183,7 @@ import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 
 import ErrorList from '../components/ErrorList.vue';
+import FormMixin from '../mixins/FormMixin';
 
 import * as actions from '../store/actions';
 import {
@@ -206,9 +203,11 @@ import { setItem, removeItem } from '../services/localStore';
 export default {
   name: 'DriveFormView',
   components: { vSelect, ErrorList },
+  mixins: [FormMixin],
   data() {
     return {
-      drive: makeFormState(),
+      formId: FORM_STATE,
+      form: makeFormState(),
       errors: {},
       searchText: '',
       confirmationOnline: false,
@@ -229,14 +228,14 @@ export default {
       if (!Object.keys(this.errors).length) {
         this[actions.SUBMIT]({
           form: {
-            ...this.drive,
-            passengers: [this.drive.passenger],
+            ...this.form,
+            passengers: [this.form.passenger],
             timestamp: Math.floor(Date.now() / 1000),
           },
         });
         removeItem(FORM_STATE);
-        setItem(FORM_STATE, { car: this.drive.car });
-        this.drive = makeFormState();
+        setItem(FORM_STATE, { car: this.form.car });
+        this.form = makeFormState();
 
         if (this.isOnline) {
           this.confirmationOnline = true;
@@ -245,19 +244,16 @@ export default {
         }
       }
     },
-    syncToLocalStorage() {
-      localStorage.setItem(FORM_STATE, JSON.stringify(this.drive));
-    },
 
     validateForm() {
       const makeErrorsPartial = makeErrors(this.$t.bind(this));
 
-      const data = Object.entries(this.drive).reduce(
+      const data = Object.entries(this.form).reduce(
         (acc, [key, value]) => ({
           ...acc,
           [key]: stringFields.includes(key) ? String(value).trim() : value,
         }),
-        {},
+        {}
       );
 
       this.errors = Object.keys(data)
@@ -283,21 +279,21 @@ export default {
 
   computed: {
     ...mapState(namespaces.cars, {
-      cars: state => state,
+      cars: (state) => state,
     }),
     ...mapState(namespaces.projects, {
-      projects: state => state,
+      projects: (state) => state,
     }),
     ...mapState(namespaces.passengers, {
-      passengers: state =>
-        (state.data || []).map(p => ({
+      passengers: (state) =>
+        (state.data || []).map((p) => ({
           value: p.id,
           text: [p.firstName, p.lastName].join(' '),
         })),
     }),
     ...mapGetters([IS_ONLINE]),
     distance() {
-      const distance = this.drive.endMileage - this.drive.startMileage;
+      const distance = this.form.endMileage - this.form.startMileage;
       return distance > 0 ? distance : 0;
     },
   },

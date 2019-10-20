@@ -4,8 +4,8 @@
     <ul class="error-list">
       <li
         class="error"
-        v-for="error in Object.keys(errors)"
-        :key="error">{{ errors[error] }}</li>
+        v-for="(error, index) in errors"
+        :key="index">{{ error }}</li>
     </ul>
   </div>
 </template>
@@ -15,7 +15,7 @@ export default {
   name: 'ErrorList',
   props: {
     errors: {
-      type: Object,
+      type: Array,
       required: true,
     },
   },
