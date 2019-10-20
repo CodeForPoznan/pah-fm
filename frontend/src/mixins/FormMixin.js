@@ -1,10 +1,13 @@
 import { splitCamelCase } from '../services/splitCamelCase';
+import { getToday } from '../services/time';
+import { getItem } from '../services/localStore';
 
 export default {
   data() {
     return {
       isInvalid: {},
       listOfErrors: [],
+      form: {},
     };
   },
   methods: {
@@ -30,6 +33,22 @@ export default {
 
         return isInvalid ? [...acc, this.getErrorMessage(field)] : acc;
       }, []);
+    },
+    loadFormData(initialData) {
+      this.form = this.loadStateFromStorage() || {
+        ...initialData,
+        date: getToday(),
+      };
+    },
+    loadStateFromStorage() {
+      const storageState = getItem(this.formId);
+      if (storageState && !storageState.date) {
+        return {
+          ...storageState,
+          date: getToday(),
+        };
+      }
+      return storageState;
     },
   },
 };

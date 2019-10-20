@@ -14,7 +14,7 @@
         maxlength="6"
         class="form-control"
         :class="{ 'is-invalid': isInvalid.hash }"
-      >
+      />
     </div>
   </main-form>
 </template>
@@ -24,18 +24,20 @@ import FormMixin from '../mixins/FormMixin';
 
 import MainForm from '../components/MainForm.vue';
 
-const makeFormState = () => ({
+const initialFormData = {
   hash: '',
-});
+};
 
 export default {
   name: 'PassengerView',
   mixins: [FormMixin],
   components: { MainForm },
+  mounted() {
+    this.loadFormData(initialFormData);
+  },
   data() {
     return {
       formId: 'passengerForm',
-      form: makeFormState(),
       requiredFields: ['hash'],
     };
   },
