@@ -1,15 +1,11 @@
 <template>
-  <validation-form
-    :id="formId"
-    :requiredFields="requiredFields"
-    :isInvalid="isInvalid"
-    v-model="form"
+  <main-form
+    :title="$t('common.confirm_drive')"
+    :list-of-errors="listOfErrors"
+    @submit="handleSubmit"
   >
     <div class="form-group">
-      <label>
-        {{ //TODO
-        $t('') }}
-      </label>
+      <label>{{ $t('passenger_form.hash') }}</label>
       <input
         type="text"
         @change="syncToLocalStorage"
@@ -18,15 +14,15 @@
         maxlength="6"
         class="form-control"
         :class="{ 'is-invalid': isInvalid.hash }"
-      />
+      >
     </div>
-  </validation-form>
+  </main-form>
 </template>
 
 <script>
 import FormMixin from '../mixins/FormMixin';
 
-import ValidationForm from '../components/ValidationForm.vue';
+import MainForm from '../components/MainForm.vue';
 
 const makeFormState = () => ({
   hash: '',
@@ -35,14 +31,18 @@ const makeFormState = () => ({
 export default {
   name: 'PassengerView',
   mixins: [FormMixin],
-  components: { ValidationForm },
+  components: { MainForm },
   data() {
     return {
       formId: 'passengerForm',
       form: makeFormState(),
       requiredFields: ['hash'],
-      isInvalid: {},
     };
+  },
+  methods: {
+    handleSubmit() {
+      this.validateForm();
+    },
   },
 };
 </script>

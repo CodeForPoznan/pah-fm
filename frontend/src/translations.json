@@ -9,6 +9,7 @@
       "login": "Логін",
       "logout": "Вийти",
       "new_drive": "Додати новий маршрут",
+      "confirm_drive": "підтвердити їзду",
       "no": "ні",
       "page_not_found": "страница, которую вы ищете, не существует",
       "please_correct_errors": "Виправте помилку будь ласка",
@@ -37,6 +38,9 @@
       "start_mileage_error": "Початкове значення вимірювального приладу має неправильне значення",
       "submit": "Надіслати",
       "validation_error": "Потрібно заповнити {field}"
+    },
+    "passenger_form": {
+      "hash": "код драйвера"
     },
     "drives": {
       "car": "Автомобіль",
@@ -87,6 +91,7 @@
       "login": "Login",
       "logout": "Logout",
       "new_drive": "Add new drive",
+      "confirm_drive": "Confirm drive",
       "no": "no",
       "page_not_found": "The page you're looking for does not exist.",
       "please_correct_errors": "Please correct the following error(s):",
@@ -115,6 +120,9 @@
       "start_mileage_error": "Start mileage is incorrect",
       "submit": "Submit",
       "validation_error": "{field} is required"
+    },
+    "passenger_form": {
+      "hash": "Driver code"
     },
     "drives": {
       "car": "With car:",
@@ -165,6 +173,7 @@
       "login": "Zaloguj",
       "logout": "Wyloguj",
       "new_drive": "Dodaj nową trasę",
+      "confirm_drive": "Potwierdź przejazd",
       "no": "nie",
       "page_not_found": "Wyszukiwana strona nie istnieje.",
       "please_correct_errors": "Proszę poprawić następujące błędy:",
@@ -193,6 +202,9 @@
       "start_mileage_error": "Stan licznika jest niepoprawny",
       "submit": "Wyślij",
       "validation_error": "Pole {field} jest wymagane"
+    },
+    "passenger_form": {
+      "hash": "Kod kierowcy"
     },
     "drives": {
       "car": "Samochodem:",
