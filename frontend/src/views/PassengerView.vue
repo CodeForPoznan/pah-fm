@@ -14,7 +14,7 @@
         maxlength="6"
         class="form-control"
         :class="{ 'is-invalid': isInvalid.hash }"
-      >
+      />
     </div>
   </main-form>
 </template>
@@ -42,14 +42,22 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.validateForm();
+      this.validateForm(this.validator);
 
-      if (this.listOfErrors === 0) {
+      if (this.listOfErrors.length === 0) {
         // submit
+        console.log('run hash generation');
 
         this.clearStorage();
         this.loadFormData(initialFormData);
       }
+    },
+    validator() {
+      if (this.form.hash.length !== 6) {
+        this.isInvalid.hash = true;
+        return [this.$t('passenger_form.lenght_should_be_6')];
+      }
+      return [];
     },
   },
 };
