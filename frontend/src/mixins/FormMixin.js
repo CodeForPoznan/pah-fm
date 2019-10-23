@@ -18,7 +18,7 @@ export default {
       return (
         this.requiredFields.includes(field) &&
         this.form[field] &&
-        !this.form[field].trim()
+        !!this.form[field].trim()
       );
     },
     getErrorMessage(field) {
@@ -38,7 +38,9 @@ export default {
         return isInvalid ? [...acc, this.getErrorMessage(field)] : acc;
       }, []);
 
-      if (!validator) this.listOfErrors.push(...validator(this.form));
+      if (validator) {
+        this.listOfErrors.push(...validator(this.form));
+      }
     },
     loadFormData(initialData) {
       this.form = this.loadStateFromStorage() || initialData;

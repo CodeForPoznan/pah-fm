@@ -42,14 +42,22 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.validateForm();
+      this.validateForm(this.validator);
 
-      if (this.listOfErrors === 0) {
+      if (this.listOfErrors.length === 0) {
         // submit
+        console.log('run hash generation');
 
         this.clearStorage();
         this.loadFormData(initialFormData);
       }
+    },
+    validator() {
+      if (this.form.hash.length !== 6) {
+        this.isInvalid.hash = true;
+        return ['Hash should be of length 6'];
+      }
+      return [];
     },
   },
 };
