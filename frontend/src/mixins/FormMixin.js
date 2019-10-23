@@ -2,6 +2,27 @@ import { splitCamelCase } from '../services/splitCamelCase';
 import { getToday } from '../services/time';
 import { getItem, removeItem } from '../services/localStore';
 
+function isValid(requiredFields, form, field) {
+  return requiredFields.includes(field) && form[field] && !!form[field].trim();
+}
+
+function getErrorMessage(t, field) {
+  return t('drive_form.validation_error', {
+    field: splitCamelCase(field),
+  });
+}
+
+function loadStateFromStorage(formId) {
+  const storageState = getItem(formId);
+  if (storageState && !storageState.date) {
+    return {
+      ...storageState,
+      date: getToday(),
+    };
+  }
+  return storageState;
+}
+
 export default {
   data() {
     return {
@@ -14,28 +35,16 @@ export default {
     syncToLocalStorage() {
       localStorage.setItem(this.formId, JSON.stringify(this.form));
     },
-    isValid(field) {
-      return (
-        this.requiredFields.includes(field) &&
-        this.form[field] &&
-        !!this.form[field].trim()
-      );
-    },
-    getErrorMessage(field) {
-      return this.$t('drive_form.validation_error', {
-        field: splitCamelCase(field),
-      });
-    },
     validateForm(validator = undefined) {
       this.isInvalid = {};
       this.listOfErrors = [];
 
       this.listOfErrors = this.requiredFields.reduce((acc, field) => {
-        const isInvalid = !this.isValid(field);
+        const isInvalid = !isValid(this.requiredFields, this.form, field);
 
         this.isInvalid[field] = isInvalid;
 
-        return isInvalid ? [...acc, this.getErrorMessage(field)] : acc;
+        return isInvalid ? [...acc, getErrorMessage(this.$t, field)] : acc;
       }, []);
 
       if (validator) {
@@ -43,17 +52,7 @@ export default {
       }
     },
     loadFormData(initialData) {
-      this.form = this.loadStateFromStorage() || initialData;
-    },
-    loadStateFromStorage() {
-      const storageState = getItem(this.formId);
-      if (storageState && !storageState.date) {
-        return {
-          ...storageState,
-          date: getToday(),
-        };
-      }
-      return storageState;
+      this.form = loadStateFromStorage(this.formId) || initialData;
     },
     clearStorage() {
       removeItem(this.formId);
