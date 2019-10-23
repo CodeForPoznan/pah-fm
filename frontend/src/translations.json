@@ -40,7 +40,8 @@
       "validation_error": "Потрібно заповнити {field}"
     },
     "passenger_form": {
-      "hash": "код драйвера"
+      "hash": "код драйвера",
+      "lenght_should_be_6": "Код драйвера повинен бути довжиною 6"
     },
     "drives": {
       "car": "Автомобіль",
@@ -122,7 +123,8 @@
       "validation_error": "{field} is required"
     },
     "passenger_form": {
-      "hash": "Driver code"
+      "hash": "Driver code",
+      "lenght_should_be_6": "Driver code should be of length 6"
     },
     "drives": {
       "car": "With car:",
@@ -204,7 +206,8 @@
       "validation_error": "Pole {field} jest wymagane"
     },
     "passenger_form": {
-      "hash": "Kod kierowcy"
+      "hash": "Kod kierowcy",
+      "lenght_should_be_6": "Kod kierowcy powiniem mieć długość 6"
     },
     "drives": {
       "car": "Samochodem:",
