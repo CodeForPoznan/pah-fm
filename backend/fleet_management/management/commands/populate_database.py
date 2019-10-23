@@ -10,11 +10,10 @@ from ...constants import Groups
 from fleet_management.factories import (
     CarFactory,
     DriveFactory,
-    PassengerFactory,
     ProjectFactory,
     UserFactory,
 )
-from ...models import Passenger, Project, User
+from ...models import Project, User
 
 
 class Command(BaseCommand):
@@ -23,33 +22,37 @@ class Command(BaseCommand):
     help = "Populates database with fake items."
 
     def handle(self, *args, **options):
+        driver_group = Group.objects.get(name=Groups.Driver.name)
+        passenger_group = Group.objects.get(name=Groups.Passenger.name)
+
         self.stdout.write(self.style.SUCCESS('Creating 5 cars'))
         for _ in tqdm(range(5)):
             CarFactory.create()
 
-        self.stdout.write(self.style.SUCCESS('Creating 5 users'))
-        usernames = []
+        self.stdout.write(self.style.SUCCESS('Creating 5 drivers'))
+        drivers = []
         for _ in tqdm(range(5)):
-            usernames.append(UserFactory.create().username)
+            drivers.append(UserFactory.create(groups=[driver_group]).username)
 
+        passengers = []
         self.stdout.write(self.style.SUCCESS('Creating 10 passengers'))
         for _ in tqdm(range(10)):
-            PassengerFactory.create()
+            passengers.append(UserFactory.create(groups=[passenger_group]).username)
 
         self.stdout.write(self.style.SUCCESS('Creating 5 projects'))
         for _ in tqdm(range(5)):
             ProjectFactory.create()
 
         self.stdout.write(self.style.SUCCESS('Creating 50 drives'))
-        all_users = list(User.objects.all())
-        all_passengers = list(Passenger.objects.all())
+        all_drivers = list(User.objects.filter(groups=driver_group))
+        all_passengers = list(User.objects.filter(groups=passenger_group))
         all_projects = list(Project.objects.all())
 
         for _ in tqdm(range(50)):
             DriveFactory.create(
-                passengers=random.sample(all_passengers, random.randint(1, 4)),
+                passenger=random.choice(all_passengers),
                 project=random.choice(all_projects),
-                driver=random.choice(all_users),
+                driver=random.choice(all_drivers),
             )
 
         self.stdout.write(
@@ -57,8 +60,15 @@ class Command(BaseCommand):
         )
 
         self.stdout.write('=' * 50)
-        self.stdout.write(self.style.SUCCESS('Newly created users:'))
-        for index, username in enumerate(usernames):
+        self.stdout.write(self.style.SUCCESS('Newly created drivers:'))
+        for index, username in enumerate(drivers):
+            self.stdout.write(self.style.SUCCESS('{index}. {username}'.format(
+                index=index,
+                username=username,
+            )))
+
+        self.stdout.write(self.style.SUCCESS('Newly created passengers:'))
+        for index, username in enumerate(passengers):
             self.stdout.write(self.style.SUCCESS('{index}. {username}'.format(
                 index=index,
                 username=username,
@@ -66,7 +76,5 @@ class Command(BaseCommand):
 
         default_user = User.objects.filter(email='hello@codeforpoznan.pl').first()
 
-        driver_group = Group.objects.get(name=Groups.Driver.name)
         driver_group.user_set.add(default_user)
-        passenger_group = Group.objects.get(name=Groups.Passenger.name)
         passenger_group.user_set.add(default_user)

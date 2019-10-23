@@ -1,8 +1,8 @@
 from django.db import migrations
-from ..models import Project
 
 
 def default_country_to_project(apps, schema_editor):
+    Project = apps.get_model("fleet_management", "Project")
     projects = Project.objects.all()
     for project in projects:
         project.country = 'UA'
