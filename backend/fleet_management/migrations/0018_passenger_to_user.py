@@ -11,15 +11,17 @@ def migrate_passenger_to_user(apps, schema_editor):
     g = Group.objects.get(name="Passenger")
     passengers = Passenger.objects.all()
     for p in passengers:
-        u = User.objects.create(
+        u, created = User.objects.get_or_create(
             username=p.email,
-            email=p.email,
-            is_superuser=False,
-            is_staff=False,
-            country=p.country,
-            is_active=True,
-            first_name=p.first_name,
-            last_name=p.last_name
+            defaults={
+                'email': p.email,
+                'is_superuser': False,
+                'is_staff': False,
+                'country': p.country,
+                'is_active': True,
+                'first_name': p.first_name,
+                'last_name': p.last_name
+            }
         )
         u.save()
         g.user_set.add(u)
