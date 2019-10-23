@@ -5,7 +5,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.timezone import now
 from django_countries.fields import CountryField
-
+from django.core.validators import MinLengthValidator
 
 def get_current_timestamp_in_gmt():
     return calendar.timegm(time.gmtime())
@@ -13,6 +13,9 @@ def get_current_timestamp_in_gmt():
 
 class User(AbstractUser):
     country = CountryField(blank_label="(select country)", null=False)
+    rsa_modulus_n = models.CharField(max_length=6, validators=[MinLengthValidator(6)], null=False, default='')
+    rsa_pub_e = models.CharField(max_length=6, validators=[MinLengthValidator(6)], null=False, default='')
+    rsa_priv_d = models.CharField(max_length=6, validators=[MinLengthValidator(6)], null=False, default='')
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
