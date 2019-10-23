@@ -9,24 +9,14 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from fleet_management.constants import Groups
-from fleet_management.factories import DriveFactory
-from fleet_management.models import Car, Drive, Passenger, Project
+from fleet_management.factories import DriveFactory, UserFactory
+from fleet_management.models import Car, Drive, Project
 
 
 class DrivesApiTest(APITestCase):
-    def create_passenger(self, first_name, last_name, email):
-        return Passenger.objects.create(
-            first_name=first_name,
-            last_name=last_name,
-            email=email,
-        )
-
     def setUp(self):
         self.url = reverse('drives')
-        self.passengers = [
-            self.create_passenger('Mike', 'Melnik', 'mike@melnik.com'),
-            self.create_passenger('Mykhailo', 'Возняк', 'mik@bo.uk'),
-        ]
+        self.passenger = UserFactory.create(groups=[Group.objects.get(name="Passenger")])
         self.car = Car.objects.create(
             plates='FOO 129338',
             fuel_consumption=8.2,
@@ -36,7 +26,6 @@ class DrivesApiTest(APITestCase):
             description='Project description',
             country="UA",
         )
-
         self.driver = get_user_model().objects.create_user(
             username='Admin',
             first_name='John',
@@ -49,6 +38,7 @@ class DrivesApiTest(APITestCase):
             Drive.objects.create(
                 car=self.car,
                 driver=self.driver,
+                passenger=self.passenger,
                 date=date.today(),
                 start_mileage=200,
                 end_mileage=12123,
@@ -58,7 +48,6 @@ class DrivesApiTest(APITestCase):
                 project=self.project,
             )
         ]
-        self.drives[0].passengers.set(self.passengers)
         self.drives[0].save()
 
     def test_401_for_unlogged_user(self):
@@ -71,9 +60,7 @@ class DrivesApiTest(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
         drives = json.loads(res.content)
-        self.assertEqual(
-            drives[0],
-            {
+        expected_drive = {
                 'id': self.drives[0].id,
                 'date': self.drives[0].date.isoformat(),
                 'startMileage': self.drives[0].start_mileage,
@@ -87,14 +74,9 @@ class DrivesApiTest(APITestCase):
                 },
                 'passengers': [
                     {
-                        'id': self.passengers[0].id,
-                        'lastName': self.passengers[0].last_name,
-                        'firstName': self.passengers[0].first_name,
-                    },
-                    {
-                        'id': self.passengers[1].id,
-                        'lastName': self.passengers[1].last_name,
-                        'firstName': self.passengers[1].first_name,
+                        'id': self.passenger.id,
+                        'lastName': self.passenger.last_name,
+                        'firstName': self.passenger.first_name,
                     },
                 ],
                 'driver': {
@@ -111,6 +93,9 @@ class DrivesApiTest(APITestCase):
                 },
                 "timestamp": self.drives[0].timestamp,
             }
+        self.assertEqual(
+            drives[0],
+            expected_drive
         )
 
     def test_can_retrieve_only_my_drives(self):
@@ -149,8 +134,7 @@ class DrivesApiTest(APITestCase):
                 'id': self.car.id,
             },
             'passengers': [
-                {'id': self.passengers[0].id},
-                {'id': self.passengers[1].id},
+                {'id': self.passenger.id},
             ],
             'date': date.today().isoformat(),
             'startMileage': 180000,
@@ -168,10 +152,7 @@ class DrivesApiTest(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
         drive = Drive.objects.get(pk=res.data['id'])
-        self.assertSetEqual(
-            {p.id for p in drive.passengers.all()},
-            {p.id for p in self.passengers},
-        )
+        self.assertEqual(drive.passenger.id, self.passenger.id)
         self.assertEqual(drive.car.id, self.car.id)
         self.assertEqual(drive.date.isoformat(), res.data['date'])
         self.assertEqual(drive.start_mileage, res.data['start_mileage'])
