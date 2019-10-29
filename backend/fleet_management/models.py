@@ -5,7 +5,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.timezone import now
 from django_countries.fields import CountryField
-
+from django.core.validators import MinLengthValidator
 
 def get_current_timestamp_in_gmt():
     return calendar.timegm(time.gmtime())
@@ -13,6 +13,9 @@ def get_current_timestamp_in_gmt():
 
 class User(AbstractUser):
     country = CountryField(blank_label="(select country)", null=False)
+    rsa_modulus_n = models.CharField(max_length=6, validators=[MinLengthValidator(6)], null=False, default='')
+    rsa_pub_e = models.CharField(max_length=6, validators=[MinLengthValidator(6)], null=False, default='')
+    rsa_priv_d = models.CharField(max_length=6, validators=[MinLengthValidator(6)], null=False, default='')
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -28,16 +31,6 @@ class Car(models.Model):
         return self.plates
 
 
-class Passenger(models.Model):
-    first_name = models.CharField(max_length=60, blank=False)
-    last_name = models.CharField(max_length=60, blank=False)
-    email = models.EmailField(blank=False)
-    country = CountryField(blank_label='(select country)', null=True, default=None)
-
-    def __str__(self):
-        return f"{self.first_name} {self.last_name}"
-
-
 class Project(models.Model):
     title = models.CharField(max_length=50, blank=False)
     description = models.CharField(max_length=1000, blank=False)
@@ -48,9 +41,8 @@ class Project(models.Model):
 
 
 class Drive(models.Model):
-    driver = models.ForeignKey(User, on_delete=models.CASCADE)
+    driver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="drives_driven")
     car = models.ForeignKey(Car, null=False, on_delete=models.CASCADE)
-    passengers = models.ManyToManyField(Passenger)
     date = models.DateField(default=now, blank=False)
     start_mileage = models.IntegerField(null=False)
     end_mileage = models.IntegerField(null=False)
@@ -60,6 +52,7 @@ class Drive(models.Model):
     timestamp = models.IntegerField(blank=False, default=get_current_timestamp_in_gmt)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     is_verified = models.BooleanField(default=False)
+    passenger = models.ForeignKey(User, on_delete=models.CASCADE, related_name="drives_taken", null=True, blank=True)
 
     class Meta:
         unique_together = [

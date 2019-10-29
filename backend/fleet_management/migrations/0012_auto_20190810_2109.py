@@ -2,10 +2,9 @@
 
 from django.db import migrations, models
 
-from ..models import Drive
-
 
 def default_is_verified(apps, schema_editor):
+    Drive = apps.get_model("fleet_management", "Drive")
     drives = Drive.objects.all()
     for drive in drives:
         drive.is_verified = True
