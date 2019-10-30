@@ -7,6 +7,7 @@ import DriveFormView from '../views/DriveFormView.vue';
 import DrivesView from '../views/DrivesView.vue';
 import SuccessfulLogoutView from '../views/SuccessfulLogoutView.vue';
 import PassengerView from '../views/PassengerView.vue';
+import PassengerSubmitView from '../views/PassengerSubmitView.vue';
 
 import store from '../store';
 import * as mutations from '../store/mutations';
@@ -35,6 +36,11 @@ export const passengerRoute = {
   name: 'Passenger',
   component: PassengerView,
 };
+export const passengerSubmitRoute = {
+  path: '/confirm',
+  name: 'Confirm',
+  component: PassengerSubmitView,
+};
 export const homeRoute = {
   path: '/',
   name: 'Home',
@@ -59,6 +65,7 @@ const router = new Router({
     driveCreateRoute,
     driveListRoute,
     passengerRoute,
+    passengerSubmitRoute,
     homeRoute,
     pageNotFoundRoute,
     logoutRoute,

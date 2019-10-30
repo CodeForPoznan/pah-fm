@@ -49,7 +49,7 @@ export default {
         console.log('run hash generation');
 
         this.clearStorage();
-        this.loadFormData(initialFormData);
+        this.$router.push('/confirm');
       }
     },
     validator() {
