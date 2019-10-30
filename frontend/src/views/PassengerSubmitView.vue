@@ -11,6 +11,7 @@
                 name="code"
                 id="code"
                 :value="code"
+                class="form-control"
                 readonly >
             </div>
           </div>

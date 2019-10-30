@@ -3,7 +3,11 @@ import { getToday } from '../services/time';
 import { getItem, removeItem } from '../services/localStore';
 
 function isValid(requiredFields, form, field) {
-  return requiredFields.includes(field) && form[field] && !!form[field].trim();
+  return (
+    requiredFields.includes(field) &&
+    form[field] &&
+    !!String(form[field]).trim()
+  );
 }
 
 function loadStateFromStorage(formId) {
