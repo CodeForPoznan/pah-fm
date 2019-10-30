@@ -14,7 +14,7 @@
         maxlength="6"
         class="form-control"
         :class="{ 'is-invalid': isInvalid.hash }"
-      />
+      >
     </div>
   </main-form>
 </template>
