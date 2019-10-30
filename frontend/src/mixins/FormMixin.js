@@ -6,12 +6,6 @@ function isValid(requiredFields, form, field) {
   return requiredFields.includes(field) && form[field] && !!form[field].trim();
 }
 
-function getErrorMessage(t, field) {
-  return t('drive_form.validation_error', {
-    field: splitCamelCase(field),
-  });
-}
-
 function loadStateFromStorage(formId) {
   const storageState = getItem(formId);
   if (storageState && !storageState.date) {
@@ -32,6 +26,11 @@ export default {
     };
   },
   methods: {
+    getErrorMessage(field) {
+      return this.$t('drive_form.validation_error', {
+        field: splitCamelCase(field),
+      });
+    },
     syncToLocalStorage() {
       localStorage.setItem(this.formId, JSON.stringify(this.form));
     },
@@ -44,7 +43,7 @@ export default {
 
         this.isInvalid[field] = isInvalid;
 
-        return isInvalid ? [...acc, getErrorMessage(this.$t, field)] : acc;
+        return isInvalid ? [...acc, this.getErrorMessage(field)] : acc;
       }, []);
 
       if (validator) {
