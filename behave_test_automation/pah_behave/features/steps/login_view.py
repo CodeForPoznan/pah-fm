@@ -1,4 +1,4 @@
-from behave import given, then, when, step
+from behave import then, when, step
 import features.steps.selectors as selector
 from features.steps.common_steps import short_wait
 
@@ -39,7 +39,7 @@ def input_password(context, password) -> None:
     password_field.send_keys(password)
 
 
-@then("User is on add new drive page")
+@then("User is logged in successfully")
 def new_drive_page(context) -> None:
     short_wait(context.driver, selector.hamburger_menu)
     assert context.driver.execute_script("return window.localStorage.jwt") is not None
@@ -49,3 +49,9 @@ def new_drive_page(context) -> None:
 def click_login(context) -> None:
     login_button_enabled = context.driver.find_element(*selector.login_button_enabled)
     login_button_enabled.click()
+
+
+@step("User is on add new drive page")
+def click_login(context) -> None:
+    driver_page = context.driver.current_url
+    assert driver_page == 'http://localhost:8080/drive'

@@ -10,8 +10,9 @@ Feature: Login view
        And User sees three flags: polish, english, ukrainian, in the right side, at top of the page
 
     # Positive scenario (passing valid login and password)
-    Scenario: User logins to pah-fm system
+    Scenario: User successfully logs in to pah-fm system with valid credentials
       And User inputs "hello@codeforpoznan.pl" username
       And User inputs "cfp123" password
       When User clicks login button
-      Then User is on add new drive page
+      Then User is logged in successfully
+      And User is on add new drive page
