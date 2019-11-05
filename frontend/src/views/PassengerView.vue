@@ -55,7 +55,7 @@ export default {
     validator() {
       if (this.form.hash.length !== 6) {
         this.isInvalid.hash = true;
-        return [this.$t('passenger_form.lenght_should_be_6')];
+        return [this.$t('passenger_form.length_should_be_6')];
       }
       return [];
     },
