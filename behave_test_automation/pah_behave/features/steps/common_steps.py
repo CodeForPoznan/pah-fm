@@ -3,8 +3,8 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
 
-@given(u'User opens pah-fm website')
-def step_impl(context):
+@given('User opens pah-fm website')
+def open_main_url(context):
     context.driver.get('http://localhost:8080/login')
 
 
