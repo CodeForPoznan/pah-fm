@@ -155,6 +155,14 @@
                   :class="{ 'is-invalid': errors['endMileage'] }"
                 >
               </div>
+              <div class="form-group">
+                <label for="driverHash">{{ $t('drive_form.driver_hash') }}</label>
+                <input
+                  :value="user.rsaPubE"
+                  class="form-control"
+                  type="text"
+                  readonly >
+              </div>
               <div
                 class="form-group col-xs-12"
               >{{ $t('drive_form.distance_traveled', { distance: distance }) }}</div>
@@ -195,6 +203,7 @@ import vSelect from 'vue-select';
 
 import 'vue-select/dist/vue-select.css';
 
+import { USER } from '../store';
 import * as actions from '../store/actions';
 import {
   isErroring,
@@ -302,6 +311,7 @@ export default {
           text: [p.firstName, p.lastName].join(' '),
         })),
     }),
+    ...mapState([USER]),
     ...mapGetters([IS_ONLINE]),
     distance() {
       const distance = this.drive.endMileage - this.drive.startMileage;

@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'groups')
+        fields = ('id', 'username', 'groups', 'rsa_pub_e')
 
 
 class PassengerSerializer(serializers.ModelSerializer):
