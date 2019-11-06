@@ -37,11 +37,7 @@ import * as actions from '../store/actions';
 import { USER } from '../store';
 import { IS_ONLINE } from '../store/constants';
 import Language from './Language.vue';
-import {
-  driveCreateRoute,
-  driveListRoute,
-  passengerRoute,
-} from '../router/index';
+import { navigationRoutes } from '../router/index';
 
 export default {
   name: 'NavigationItems',
@@ -51,31 +47,11 @@ export default {
   computed: {
     ...mapState([USER]),
     ...mapGetters([IS_ONLINE]),
-    links() {
-      const routes = {
-        Driver: [
-          {
-            text: this.$t('common.new_drive'),
-            to: driveCreateRoute.path,
-          },
-          {
-            text: this.$t('common.drives'),
-            to: driveListRoute.path,
-          },
-        ],
-        Passenger: [
-          {
-            text: this.$t('common.confirm_drive'),
-            to: passengerRoute.path,
-          },
-        ],
-      };
-
-      return this.user.groups.reduce(
-        (acc, { name }) => [...acc, ...routes[name]],
+    links: () =>
+      this.user.groups.reduce(
+        (acc, { name }) => [...acc, ...navigationRoutes[name.toLowerCase()]],
         [],
-      );
-    },
+      ),
   },
   methods: {
     ...mapActions([actions.LOGOUT]),

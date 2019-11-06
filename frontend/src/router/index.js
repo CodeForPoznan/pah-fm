@@ -72,16 +72,31 @@ const router = new Router({
   ],
 });
 
-const openRoutes = [loginRoute.name];
-
-const roleBasedRoutes = {
-  driver: [driveCreateRoute, driveListRoute],
-  passenger: [passengerRoute],
+export const navigationRoutes = {
+  driver: [
+    {
+      text: this.$t('common.new_drive'),
+      to: driveCreateRoute.path,
+    },
+    {
+      text: this.$t('common.drives'),
+      to: driveListRoute.path,
+    },
+  ],
+  passenger: [
+    {
+      text: this.$t('common.confirm_drive'),
+      to: passengerRoute.path,
+    },
+  ],
 };
+
 const allRoleBasedRoutes = [
-  ...roleBasedRoutes.driver,
-  ...roleBasedRoutes.passenger,
-].map(route => route.name);
+  ...navigationRoutes.driver,
+  ...navigationRoutes.passenger,
+].map(route => route.to.name);
+
+const openRoutes = [loginRoute.name];
 
 router.beforeEach((to, _from, next) => {
   const userLoggedIn = isUserLoggedIn();
@@ -120,14 +135,14 @@ router.beforeEach((to, _from, next) => {
   }
 
   if (userLoggedIn && allRoleBasedRoutes.includes(to.name)) {
-    const availableRoutes = store.state.user.groups.reduce(
-      (acc, group) => [...acc, ...roleBasedRoutes[group.name.toLowerCase()]],
-      [],
-    );
+    const availableRoutes = store.state.user.groups
+      .reduce(
+        (acc, group) => [...acc, ...navigationRoutes[group.name.toLowerCase()]],
+        [],
+      )
+      .map(route => route.to.name);
 
-    const routeAccessible = availableRoutes
-      .map(route => route.name)
-      .includes(to.name);
+    const routeAccessible = availableRoutes.includes(to.name);
 
     if (!routeAccessible) {
       return next({ path: availableRoutes[0].path });
