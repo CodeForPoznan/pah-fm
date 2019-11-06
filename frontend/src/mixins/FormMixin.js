@@ -41,8 +41,8 @@ export default {
     validateForm(validator = undefined) {
       /**
        * In validator argument you should pass a function that takes `this.form` as argument and
-       * returns an array of errors (strings). In that function you also have access to `this.isInvalid`
-       * object, in which you can control highlighting of field.
+       * returns an array of errors (strings). In that function you also have access to
+       * `this.isInvalid` object, in which you can control highlighting of field.
        */
       this.isInvalid = {};
       this.listOfErrors = [];
