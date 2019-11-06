@@ -14,7 +14,7 @@
         maxlength="6"
         class="form-control"
         :class="{ 'is-invalid': isInvalid.hash }"
-      >
+      />
     </div>
   </main-form>
 </template>
@@ -45,7 +45,7 @@ export default {
       this.validateForm(this.validator);
 
       if (this.listOfErrors.length === 0) {
-        // submit
+        // TODO: hash generation
         console.log('run hash generation');
 
         this.clearStorage();
