@@ -37,7 +37,7 @@ import * as actions from '../store/actions';
 import { USER } from '../store';
 import { IS_ONLINE } from '../store/constants';
 import Language from './Language.vue';
-import { navigationRoutes } from '../router/index';
+import { groupBasedRoutes } from '../router/index';
 
 export default {
   name: 'NavigationItems',
@@ -49,7 +49,7 @@ export default {
     ...mapGetters([IS_ONLINE]),
     links: () =>
       this.user.groups.reduce(
-        (acc, { name }) => [...acc, ...navigationRoutes[name.toLowerCase()]],
+        (acc, { name }) => [...acc, ...groupBasedRoutes[name.toLowerCase()]],
         [],
       ),
   },

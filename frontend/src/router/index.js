@@ -72,7 +72,7 @@ const router = new Router({
   ],
 });
 
-export const navigationRoutes = {
+export const groupBasedRoutes = {
   driver: [
     {
       text: this.$t('common.new_drive'),
@@ -91,9 +91,9 @@ export const navigationRoutes = {
   ],
 };
 
-const allRoleBasedRoutes = [
-  ...navigationRoutes.driver,
-  ...navigationRoutes.passenger,
+const allGroupBasedRoutes = [
+  ...groupBasedRoutes.driver,
+  ...groupBasedRoutes.passenger,
 ].map(route => route.to.name);
 
 const openRoutes = [loginRoute.name];
@@ -134,10 +134,11 @@ router.beforeEach((to, _from, next) => {
     return next({ path: homeRoute.path });
   }
 
-  if (userLoggedIn && allRoleBasedRoutes.includes(to.name)) {
+  // Guard routes based on groups
+  if (userLoggedIn && allGroupBasedRoutes.includes(to.name)) {
     const availableRoutes = store.state.user.groups
       .reduce(
-        (acc, group) => [...acc, ...navigationRoutes[group.name.toLowerCase()]],
+        (acc, group) => [...acc, ...groupBasedRoutes[group.name.toLowerCase()]],
         [],
       )
       .map(route => route.to.name);
