@@ -4,7 +4,7 @@
     <b-nav-item
       v-for="link in links"
       :to="link.to"
-      :key="link.text">{{ link.text }}</b-nav-item>
+      :key="link.text">{{ $t(link.text) }}</b-nav-item>
 
     <Language />
 

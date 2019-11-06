@@ -75,17 +75,17 @@ const router = new Router({
 export const groupBasedRoutes = {
   driver: [
     {
-      text: this.$t('common.new_drive'),
+      text: 'common.new_drive',
       to: driveCreateRoute.path,
     },
     {
-      text: this.$t('common.drives'),
+      text: 'common.drives',
       to: driveListRoute.path,
     },
   ],
   passenger: [
     {
-      text: this.$t('common.confirm_drive'),
+      text: 'common.confirm_drive',
       to: passengerRoute.path,
     },
   ],
