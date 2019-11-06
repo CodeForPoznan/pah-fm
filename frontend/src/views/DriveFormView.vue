@@ -4,9 +4,7 @@
       <div class="row">
         <div class="col-lg-8 offset-lg-2">
           <div>
-            <div
-              class="alert alert-danger errors"
-              v-if="Object.keys(errors).length">
+            <div class="alert alert-danger errors" v-if="Object.keys(errors).length">
               <b>{{ $t('drive_form.please_correct_errors') }}</b>
               <ul class="error-list">
                 <li
@@ -28,7 +26,7 @@
                   :max="currentDate"
                   class="form-control"
                   :class="{ 'is-invalid': errors['date'] }"
-                >
+                />
               </div>
 
               <div class="form-group">
@@ -41,7 +39,7 @@
                   maxlength="100"
                   class="form-control"
                   :class="{ 'is-invalid': errors['startLocation'] }"
-                >
+                />
               </div>
               <div class="form-group">
                 <label>{{ $t('drive_form.starting_mileage') }}</label>
@@ -57,7 +55,7 @@
                   @input="syncToLocalStorage"
                   class="form-control"
                   :class="{ 'is-invalid': errors['startMileage'] }"
-                >
+                />
               </div>
               <div class="form-group">
                 <label>{{ $t('drive_form.project') }}</label>
@@ -91,14 +89,9 @@
                   class="form-control"
                   :class="{ 'is-invalid': errors['car'] }"
                 >
-                  <option
-                    v-for="car in cars.data"
-                    :key="car.id"
-                    :value="car.id">{{ car.plates }}</option>
+                  <option v-for="car in cars.data" :key="car.id" :value="car.id">{{ car.plates }}</option>
                 </select>
-                <p
-                  class="font-weight-bold"
-                  v-if="!cars.data">{{ $t('drive_form.no_cars_message') }}</p>
+                <p class="font-weight-bold" v-if="!cars.data">{{ $t('drive_form.no_cars_message') }}</p>
               </div>
 
               <div class="form-group">
@@ -124,7 +117,7 @@
                   name="description"
                   class="form-control"
                   :class="{ 'is-invalid': errors['description']}"
-                >
+                />
               </div>
 
               <div class="form-group">
@@ -137,7 +130,7 @@
                   name="endLocation"
                   class="form-control"
                   :class="{ 'is-invalid': errors['endLocation'] }"
-                >
+                />
               </div>
               <div class="form-group">
                 <label>{{ $t('drive_form.ending_mileage') }}</label>
@@ -153,15 +146,30 @@
                   name="endMileage"
                   class="form-control"
                   :class="{ 'is-invalid': errors['endMileage'] }"
-                >
+                />
               </div>
               <div class="form-group">
                 <label for="driverHash">{{ $t('drive_form.driver_hash') }}</label>
                 <input
                   :value="user.rsaPubE"
+                  id="driverHash"
                   class="form-control"
                   type="text"
-                  readonly >
+                  readonly
+                />
+              </div>
+              <div class="form-group">
+                <label for="confirmHash">{{$t('drive_form.confirm_hash')}}</label>
+                <input
+                  type="text"
+                  id="confirmHash"
+                  name="confirmHash"
+                  @input="syncToLocalStorage"
+                  v-model="drive.confirmHash"
+                  maxlength="6"
+                  class="form-control"
+                  :class="{ 'is-invalid': errors['endMileage'] }"
+                />
               </div>
               <div
                 class="form-group col-xs-12"
@@ -273,7 +281,7 @@ export default {
           ...acc,
           [key]: stringFields.includes(key) ? String(value).trim() : value,
         }),
-        {},
+        {}
       );
 
       this.errors = Object.keys(data)
@@ -299,14 +307,14 @@ export default {
 
   computed: {
     ...mapState(namespaces.cars, {
-      cars: state => state,
+      cars: (state) => state,
     }),
     ...mapState(namespaces.projects, {
-      projects: state => state,
+      projects: (state) => state,
     }),
     ...mapState(namespaces.passengers, {
-      passengers: state =>
-        (state.data || []).map(p => ({
+      passengers: (state) =>
+        (state.data || []).map((p) => ({
           value: p.id,
           text: [p.firstName, p.lastName].join(' '),
         })),
