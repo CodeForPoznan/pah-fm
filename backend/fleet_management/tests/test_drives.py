@@ -25,11 +25,8 @@ class DrivesApiTest(APITestCase):
         self.driver = UserFactory()
         self.driver_group = Group.objects.filter(name=Groups.Driver.name)
         self.driver.groups.set(self.driver_group)
-
         self.drives = DriveFactory.create_batch(
-            size=10,
-            driver=self.driver,
-            passengers=self.passengers,
+            size=10, driver=self.driver, passengers=self.passengers
         )
 
     def test_401_for_unlogged_user(self):
@@ -39,19 +36,17 @@ class DrivesApiTest(APITestCase):
     def test_can_retrieve_only_my_drives(self):
         new_driver = UserFactory()
         new_driver.groups.set(self.driver_group)
-        my_drive_id = DriveFactory(driver=new_driver).id
-
-        self.client.force_login(new_driver)
+        DriveFactory.create_batch(size=4, driver=new_driver, passengers=self.passengers)
+        self.client.force_login(self.driver)
         res = self.client.get(self.url)
         drives = res.data
-
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(drives), 1)
-        self.assertEqual(drives[0]["id"], my_drive_id)
-
+        self.assertEqual(len(drives), len(self.drives))
+        for drive in drives:
+            self.assertEqual(drive["driver"]["id"], self.driver.id)
 
     def test_can_create_a_drive(self):
-        self.payload = {
+        payload = {
             "car": {"id": self.car.id},
             "passengers": [
                 {"id": self.passengers[0].id},
@@ -66,9 +61,11 @@ class DrivesApiTest(APITestCase):
             "project": {"id": self.project.id},
         }
         self.client.force_login(self.driver)
-        res = self.client.post(self.url, data=self.payload, format="json")
-        drive = Drive.objects.get(pk=res.data["id"])
+        res = self.client.post(self.url, data=payload, format="json")
+        drive = Drive.objects.filter(pk=res.data["id"])
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(drive.count(), 1)
+        drive = drive[0]
         self.assertSetEqual(
             {p.id for p in drive.passengers.all()},
             {p.id for p in self.passengers[0:2]}

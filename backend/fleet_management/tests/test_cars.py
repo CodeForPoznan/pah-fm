@@ -7,7 +7,6 @@ from rest_framework.test import APITestCase
 
 from fleet_management.constants import Groups
 from fleet_management.factories import CarFactory, UserFactory
-from fleet_management.serializers import CarSerializer
 
 
 class CarsApiTest(APITestCase):
@@ -15,11 +14,7 @@ class CarsApiTest(APITestCase):
         self.url = reverse("cars")
         self.user = UserFactory()
         self.user.groups.set(Group.objects.filter(name=Groups.Driver.name))
-        self.cars = [
-            CarFactory(country=self.user.country, plates="BB73847KB"),
-            CarFactory(country=self.user.country, plates="FOO129338"),
-            CarFactory(country=self.user.country, plates="II43530TB"),
-        ]
+        self.cars = CarFactory.create_batch(3, country=self.user.country)
 
     def test_401_for_unlogged_user(self):
         res = self.client.get(self.url)
@@ -28,13 +23,14 @@ class CarsApiTest(APITestCase):
     def test_get_all_cars(self):
         self.client.force_login(self.user)
         res = self.client.get(self.url)
-        cars = res.data
+        self.cars.sort(key=lambda car: car.plates)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(CarSerializer(self.cars, many=True).data, cars)
+        for car in zip(self.cars, res.data):
+            self.assertEqual(car[0].id, car[1]["id"])
 
     def test_search_by_plate(self):
         self.client.force_login(self.user)
-        url_params = urlencode({"search": "BB73847KB"})
+        url_params = urlencode({"search": self.cars[0].plates})
         res = self.client.get(f"{self.url}?{url_params}")
         cars = res.data
         self.assertEqual(res.status_code, status.HTTP_200_OK)
