@@ -1,19 +1,17 @@
-
-from django.db import migrations, connections
-from django.contrib.auth.models import Group
-from ..models import User
-
-
-from ..constants import Groups
+from django.db import migrations
 
 
 def create_groups(apps, schema_editor):
-    Group.objects.create(name=Groups.Passenger.name)
-    Group.objects.create(name=Groups.Driver.name)
+    Group = apps.get_model("auth", "Group")
+
+    Group.objects.create(name="Passenger")
+    Group.objects.create(name="Driver")
 
 
 def insert_to_groups(apps, schema_editor):
-    g = Group.objects.get(name=Groups.Driver.name)
+    User = apps.get_model("fleet_management", "User")
+    Group = apps.get_model("auth", "Group")
+    g = Group.objects.get(name="Driver")
     users = User.objects.all()
     for u in users:
         g.user_set.add(u)

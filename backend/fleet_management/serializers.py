@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 
 from rest_framework.exceptions import ValidationError
 
-from .models import Car, Drive, Passenger, User, Project
+from .models import Car, Drive, User, Project
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -28,7 +28,7 @@ class PassengerSerializer(serializers.ModelSerializer):
     last_name = fields.CharField(read_only=True)
 
     class Meta:
-        model = Passenger
+        model = User
         fields = ('id', 'first_name', 'last_name')
 
 
@@ -56,10 +56,18 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = ('title', 'description', 'id')
 
 
+class PassengersField(serializers.Field):
+    def to_representation(self, value):
+        return [PassengerSerializer(value).data]
+
+    def to_internal_value(self, data):
+        return data[0]
+
+
 class DriveSerializer(serializers.ModelSerializer):
     driver = UserSerializer(read_only=True)
     car = CarSerializer()
-    passengers = PassengerSerializer(many=True)
+    passengers = PassengersField(source="passenger")
     project = ProjectSerializer()
 
     class Meta:
@@ -73,14 +81,12 @@ class DriveSerializer(serializers.ModelSerializer):
         read_only_fields = ('is_verified',)
 
     def create(self, validated_data):
-        passengers_data = validated_data.pop('passengers')
+        passenger_data = validated_data.pop('passenger')
         car_data = validated_data.pop('car')
         car = Car.objects.get(pk=car_data['id'])
         project_data = validated_data.pop('project')
         project = Project.objects.get(pk=project_data['id'])
-        passengers = Passenger.objects.filter(
-            id__in=[p['id'] for p in passengers_data],
-        ).all()
+        passenger = User.objects.get(pk=passenger_data['id'])
 
         with transaction.atomic():
             drive = Drive.objects.create(
@@ -89,9 +95,9 @@ class DriveSerializer(serializers.ModelSerializer):
                 is_verified=True,
                 driver=self.context['driver'],
                 car=car,
-                project=project
+                project=project,
+                passenger=passenger
             )
-            drive.passengers.set(passengers)
             drive.save()
 
             return drive
