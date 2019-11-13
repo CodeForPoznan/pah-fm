@@ -4,13 +4,16 @@ from features.steps.common_steps import short_wait
 
 
 @when('User clicks on hamburger menu')
-def hamburger_menu_click(context) -> None:
+def click_hamburger_menu(context) -> None:
     hamburger_menu = context.driver.find_element(*selector.hamburger_menu)
     hamburger_menu.click()
 
+    short_wait(context.driver, selector.hamburger_menu_add_drive)
+    short_wait(context.driver, selector.hamburger_menu_drives)
+
 
 @step('User clicks logout button')
-def logout_button_click(context) -> None:
+def click_logout_button(context) -> None:
     short_wait(context.driver, selector.logout_button)
     logout_button = context.driver.find_element(*selector.logout_button)
     logout_button.click()

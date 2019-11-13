@@ -59,6 +59,7 @@ def click_login(context) -> None:
 
 @given('User is logged into pah-fm website')
 def logged_in_user(context) -> None:
+    # This is a step which executes several steps in one
     context.execute_steps("""
         Given User opens pah-fm website
          And User inputs "hello@codeforpoznan.pl" username

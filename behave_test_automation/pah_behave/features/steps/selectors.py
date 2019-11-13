@@ -9,6 +9,8 @@ login_button_enabled = (By.CSS_SELECTOR, '.btn-primary')
 
 # main_menu
 hamburger_menu = (By.CSS_SELECTOR, '.bm-burger-button')
+hamburger_menu_add_drive = (By.CSS_SELECTOR, 'a[href="/drive"]')
+hamburger_menu_drives = (By.CSS_SELECTOR, 'a[href="/drives"]')
 
 # logout view
 logout_button = (By.CSS_SELECTOR, 'a[href="/logout"]')
