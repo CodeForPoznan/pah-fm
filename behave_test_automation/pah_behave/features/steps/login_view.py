@@ -1,4 +1,4 @@
-from behave import then, when, step
+from behave import then, when, step, given
 import features.steps.selectors as selector
 from features.steps.common_steps import short_wait
 
@@ -55,3 +55,14 @@ def click_login(context) -> None:
 def click_login(context) -> None:
     driver_page = context.driver.current_url
     assert driver_page == 'http://localhost:8080/drive'
+
+
+@given('User is logged into pah-fm website')
+def logged_in_user(context) -> None:
+    context.execute_steps("""
+        Given User opens pah-fm website
+         And User inputs "hello@codeforpoznan.pl" username
+         And User inputs "cfp123" password
+         When User clicks login button
+         Then User is logged in successfully
+    """)
