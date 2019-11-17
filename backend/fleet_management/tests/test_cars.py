@@ -9,12 +9,16 @@ from fleet_management.constants import Groups
 from fleet_management.factories import CarFactory, UserFactory
 
 
-class CarsApiTest(APITestCase):
+class CarsApiTestCase(APITestCase):
     def setUp(self):
         self.url = reverse("cars")
-        self.user = UserFactory()
-        self.user.groups.set(Group.objects.filter(name=Groups.Driver.name))
-        self.cars = CarFactory.create_batch(3, country=self.user.country)
+        self.user = UserFactory.create(
+            groups=[Group.objects.get(name=Groups.Driver.name)]
+        )
+        self.cars = sorted(
+            CarFactory.create_batch(size=3, country=self.user.country),
+            key=lambda car: car.plates,
+        )
 
     def test_401_for_unlogged_user(self):
         res = self.client.get(self.url)
@@ -23,16 +27,15 @@ class CarsApiTest(APITestCase):
     def test_get_all_cars(self):
         self.client.force_login(self.user)
         res = self.client.get(self.url)
-        self.cars.sort(key=lambda car: car.plates)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        for car in zip(self.cars, res.data):
-            self.assertEqual(car[0].id, car[1]["id"])
+        self.assertEqual(len(self.cars), len(res.data))
+        self.assertEqual({c["plates"] for c in res.data}, {c.plates for c in self.cars})
 
     def test_search_by_plate(self):
         self.client.force_login(self.user)
         url_params = urlencode({"search": self.cars[0].plates})
         res = self.client.get(f"{self.url}?{url_params}")
-        cars = res.data
+        car = res.data
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(cars), 1)
-        self.assertEqual(cars[0]["id"], self.cars[0].id)
+        self.assertEqual(len(car), 1)
+        self.assertEqual(car[0]["id"], self.cars[0].id)
