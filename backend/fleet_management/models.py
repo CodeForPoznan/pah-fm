@@ -1,5 +1,6 @@
 import calendar
 import time
+from hashlib import md5
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -7,15 +8,40 @@ from django.utils.timezone import now
 from django_countries.fields import CountryField
 from django.core.validators import MinLengthValidator
 
+from django.conf import settings
+
+from fleet_management.crypto import PublicKey, PrivateKey, find_pair_of_keys
+
+
 def get_current_timestamp_in_gmt():
     return calendar.timegm(time.gmtime())
 
 
+def pad(n: int):
+    return str(n).zfill(settings.RSA_NUMBER_OF_DIGITS)
+
+
 class User(AbstractUser):
     country = CountryField(blank_label="(select country)", null=False)
-    rsa_modulus_n = models.CharField(max_length=6, validators=[MinLengthValidator(6)], null=False, default='')
-    rsa_pub_e = models.CharField(max_length=6, validators=[MinLengthValidator(6)], null=False, default='')
-    rsa_priv_d = models.CharField(max_length=6, validators=[MinLengthValidator(6)], null=False, default='')
+    rsa_modulus_n = models.CharField(max_length=6, null=False, default='')
+    rsa_pub_e = models.CharField(max_length=6, null=False, default='')
+    rsa_priv_d = models.CharField(max_length=6, null=False, default='')
+
+    def save(self, *args, **kwargs):
+        # generate key on create
+        if self.pk is None:
+            pub, priv = find_pair_of_keys()
+            self.rsa_modulus_n = pad(pub.n)
+            self.rsa_pub_e = pad(pub.e)
+            self.rsa_priv_d = pad(priv.d)
+
+        super().save(*args, **kwargs)
+
+    def public_key(self) -> PublicKey:
+        return PublicKey(int(str(self.rsa_modulus_n)), int(str(self.rsa_pub_e)))
+
+    def private_key(self) -> PrivateKey:
+        return PrivateKey(int(str(self.rsa_modulus_n)), int(str(self.rsa_priv_d)))
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -73,3 +99,17 @@ class Drive(models.Model):
         distance = self.end_mileage - self.start_mileage
         fuel_consumption = (distance * float(self.car.fuel_consumption)) / 100
         return round(fuel_consumption, 2)
+
+    @staticmethod
+    def form_as_hash(initial_data: dict) -> str:
+        def flatten(obj, depth=5, sep=","):
+            if depth < 0:
+                return ""
+            if type(obj) in [list, dict]:
+                values = getattr(obj, 'values', obj.__iter__)()
+                return sep.join(map(lambda x: flatten(x, depth - 1), values))
+            return str(obj)
+
+        hashed = flatten(initial_data).encode()
+        hashed = int(md5(hashed).hexdigest(), 16)
+        return hashed % 2 ** settings.RSA_NUMBER_OF_DIGITS

@@ -204,3 +204,6 @@ SYSTEM_DOMAIN = 'localhost'
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=30),
 }
+
+RSA_PUBLIC_EXPONENT = 257
+RSA_NUMBER_OF_DIGITS = 8

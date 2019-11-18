@@ -16,7 +16,12 @@ from fleet_management.models import Car, Drive, Project
 class DrivesApiTest(APITestCase):
     def setUp(self):
         self.url = reverse('drives')
-        self.passenger = UserFactory.create(groups=[Group.objects.get(name="Passenger")])
+        self.passenger = UserFactory.create(
+            groups=[Group.objects.get(name="Passenger")],
+            rsa_modulus_n=50927,
+            rsa_pub_e=257,
+            rsa_priv_d=30593
+        )
         self.car = Car.objects.create(
             plates='FOO 129338',
             fuel_consumption=8.2,
@@ -145,6 +150,7 @@ class DrivesApiTest(APITestCase):
             'project': {
                 'id': self.project.id,
             },
+            'signature': 37266,
         }
 
         self.client.force_login(self.driver)
