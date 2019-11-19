@@ -110,6 +110,11 @@ class Drive(models.Model):
                 return sep.join(map(lambda x: flatten(x, depth - 1), values))
             return str(obj)
 
-        hashed = flatten(initial_data).encode()
+        # signature shouldn't be included in hash
+        copy_of_data = initial_data.copy()
+        if 'signature' in copy_of_data:
+            copy_of_data.pop('signature')
+
+        hashed = flatten(copy_of_data).encode()
         hashed = int(md5(hashed).hexdigest(), 16)
         return hashed % 2 ** settings.RSA_NUMBER_OF_BITS

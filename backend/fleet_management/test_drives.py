@@ -150,7 +150,7 @@ class DrivesApiTest(APITestCase):
             'project': {
                 'id': self.project.id,
             },
-            'signature': 37266,
+            'signature': 20936,
         }
 
         self.client.force_login(self.driver)
