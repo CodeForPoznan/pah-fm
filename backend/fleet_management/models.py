@@ -6,7 +6,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.timezone import now
 from django_countries.fields import CountryField
-from django.core.validators import MinLengthValidator
 
 from django.conf import settings
 
@@ -18,7 +17,8 @@ def get_current_timestamp_in_gmt():
 
 
 def pad(n: int):
-    return str(n).zfill(settings.RSA_NUMBER_OF_DIGITS)
+    n_zeros = len(str(2 ** settings.RSA_NUMBER_OF_BITS))
+    return str(n).zfill(n_zeros)
 
 
 class User(AbstractUser):
@@ -112,4 +112,4 @@ class Drive(models.Model):
 
         hashed = flatten(initial_data).encode()
         hashed = int(md5(hashed).hexdigest(), 16)
-        return hashed % 2 ** settings.RSA_NUMBER_OF_DIGITS
+        return hashed % 2 ** settings.RSA_NUMBER_OF_BITS

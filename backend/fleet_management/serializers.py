@@ -4,8 +4,8 @@ from django.contrib.auth.models import Group
 
 from rest_framework.exceptions import ValidationError
 
+from fleet_management.crypto import sign, verify
 from fleet_management.models import Car, Drive, User, Project
-from fleet_management.crypto import encrypt, decrypt, sign, verify
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -93,9 +93,11 @@ class DriveSerializer(serializers.ModelSerializer):
         project_data = validated_data.pop('project')
         project = Project.objects.get(pk=project_data['id'])
         passenger = User.objects.get(pk=passenger_data['id'])
+        form_signature = validated_data.pop('signature')
 
-        cipher = sign(self.hashed_form, passenger.private_key())
-        is_verified = cipher == validated_data.pop('signature')
+        signature = sign(self.hashed_form, passenger.private_key())
+        is_verified = verify(self.hashed_form, form_signature, passenger.public_key())
+        is_verified = is_verified and signature == form_signature
 
         with transaction.atomic():
             drive = Drive.objects.create(
