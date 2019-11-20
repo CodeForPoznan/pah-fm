@@ -20,6 +20,7 @@ class DrivesApiTest(APITestCase):
         self.car = Car.objects.create(
             plates='FOO 129338',
             fuel_consumption=8.2,
+
         )
         self.project = Project.objects.create(
             title='Project title',
@@ -70,6 +71,7 @@ class DrivesApiTest(APITestCase):
                     'id': self.car.id,
                     'plates': self.car.plates,
                     'fuelConsumption': self.car.fuel_consumption,
+                    'sum_mileage': self.car.sum_mileage,
                     'description': self.car.description,
                 },
                 'passengers': [
@@ -165,3 +167,8 @@ class DrivesApiTest(APITestCase):
         drive = DriveFactory(start_mileage=100300, end_mileage=100500)
         drive.car.fuel_consumption = 9.73
         self.assertEqual(drive.fuel_consumption, 19.46)
+
+    def test_sum_mileage(self):
+        drive = DriveFactory(start_mileage=100300, end_mileage=100800)
+        drive.car.sum_mileage = 500
+        self.assertEqual(drive.sum_mileage, 500)
