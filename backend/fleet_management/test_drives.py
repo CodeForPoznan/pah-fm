@@ -20,7 +20,6 @@ class DrivesApiTest(APITestCase):
         self.car = Car.objects.create(
             plates='FOO 129338',
             fuel_consumption=8.2,
-
         )
         self.project = Project.objects.create(
             title='Project title',
