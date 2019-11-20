@@ -66,7 +66,6 @@ class DrivesApiTest(APITestCase):
                 'date': self.drives[0].date.isoformat(),
                 'startMileage': self.drives[0].start_mileage,
                 'endMileage': self.drives[0].end_mileage,
-                'sumMileage': self.drives[0].sum_mileage,
                 'description': self.drives[0].description,
                 'car': {
                     'id': self.car.id,
