@@ -75,5 +75,5 @@ class Drive(models.Model):
         return round(fuel_consumption, 2)
 
     @property
-    def sum_mileage(self):
+    def diff_mileage(self):
         return self.end_mileage - self.start_mileage

@@ -18,7 +18,7 @@ class DriveResource(resources.ModelResource):
         return drive.driver.country.name
 
     fuel_consumption = Field(attribute='fuel_consumption')
-    sum_mileage = Field(attribute='sum_mileage')
+    diff_mileage = Field(attribute='diff_mileage')
 
     class Meta:
         model = Drive
@@ -28,7 +28,7 @@ class DriveResource(resources.ModelResource):
             "date",
             "start_mileage",
             "end_mileage",
-            "sum_mileage",
+            "diff_mileage",
             "description",
             "start_location",
             "end_location",
