@@ -73,3 +73,7 @@ class Drive(models.Model):
         distance = self.end_mileage - self.start_mileage
         fuel_consumption = (distance * float(self.car.fuel_consumption)) / 100
         return round(fuel_consumption, 2)
+
+    @property
+    def sum_mileage(self):
+        return self.end_mileage - self.start_mileage
