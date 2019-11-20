@@ -66,12 +66,12 @@ class DrivesApiTest(APITestCase):
                 'date': self.drives[0].date.isoformat(),
                 'startMileage': self.drives[0].start_mileage,
                 'endMileage': self.drives[0].end_mileage,
+                'sumMileage': self.drives[0].sum_mileage,
                 'description': self.drives[0].description,
                 'car': {
                     'id': self.car.id,
                     'plates': self.car.plates,
                     'fuelConsumption': self.car.fuel_consumption,
-                    'sum_mileage': self.car.sum_mileage,
                     'description': self.car.description,
                 },
                 'passengers': [
@@ -170,5 +170,4 @@ class DrivesApiTest(APITestCase):
 
     def test_sum_mileage(self):
         drive = DriveFactory(start_mileage=100300, end_mileage=100800)
-        drive.car.sum_mileage = 500
         self.assertEqual(drive.sum_mileage, 500)
