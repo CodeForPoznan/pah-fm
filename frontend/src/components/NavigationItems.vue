@@ -1,60 +1,28 @@
 
 <template>
-  <b-nav fill>
+  <div>
     <b-nav-item
       v-for="link in links"
       :to="link.to"
       :key="link.text">{{ $t(link.text) }}</b-nav-item>
-
-    <Language />
-
-    <a
-      class="out-link"
-      href="http://codeforpoznan.pl"
-      target="_blank">
-      <img
-        class="out-link-image"
-        src="../assets/logo_codeforpoznan.svg" >
-    </a>
-
-    <b-nav-item
-      v-if="user"
-      @click="LOGOUT"
-      to="/logout"
-      key="logout"
-      class="username"
-      :class="{ offline: !isOnline }"
-    >
-      {{ $t('common.logout') }}
-      <p>{{ user.username }}</p>
-    </b-nav-item>
-  </b-nav>
+  </div>
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex';
-import * as actions from '../store/actions';
+import { mapState } from 'vuex';
 import { USER } from '../store';
-import { IS_ONLINE } from '../store/constants';
-import Language from './Language.vue';
 import { groupBasedRoutes } from '../router/index';
 
 export default {
   name: 'NavigationItems',
-  components: {
-    Language,
-  },
   computed: {
     ...mapState([USER]),
-    ...mapGetters([IS_ONLINE]),
-    links: () =>
-      this.user.groups.reduce(
+    links() {
+      return this.user.groups.reduce(
         (acc, { name }) => [...acc, ...groupBasedRoutes[name.toLowerCase()]],
         [],
-      ),
-  },
-  methods: {
-    ...mapActions([actions.LOGOUT]),
+      );
+    },
   },
 };
 </script>

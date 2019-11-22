@@ -2,12 +2,7 @@
   <div id="app">
     <Status />
     <Header />
-    <ScaleRotate
-      class="mobile-menu"
-      v-if="showMenu && isUserLoggedIn"
-      right>
-      <NavigationItems />
-    </ScaleRotate>
+    <sidebar :show="showMenu && isUserLoggedIn" />
     <div
       id="page-wrap"
       class="container">
@@ -28,13 +23,12 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import { ScaleRotate } from 'vue-burger-menu';
 
 import Header from './components/Header.vue';
 import Refresh from './components/Refresh.vue';
 import Status from './components/Status.vue';
+import Sidebar from './components/Sidebar.vue';
 import store, { LANGUAGE } from './store';
-import NavigationItems from './components/NavigationItems.vue';
 
 import { isUserLoggedIn } from './services/api/user';
 
@@ -44,6 +38,12 @@ import { FETCH_USER } from './store/actions';
 export default {
   name: 'App',
   store,
+  components: {
+    Refresh,
+    Header,
+    Status,
+    Sidebar,
+  },
   data() {
     return {
       showMenu: true,
@@ -68,13 +68,6 @@ export default {
       this.sync();
       this.fetchUser();
     }
-  },
-  components: {
-    Refresh,
-    Header,
-    Status,
-    ScaleRotate,
-    NavigationItems,
   },
 };
 </script>
