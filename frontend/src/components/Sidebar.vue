@@ -64,3 +64,22 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.out-link {
+  display: block;
+  margin: 60px auto;
+  width: 80px;
+}
+
+.out-link-image {
+  width: 100%;
+  height: 100%;
+}
+
+.offline {
+  cursor: default;
+  pointer-events: none;
+  text-decoration: none;
+}
+</style>
