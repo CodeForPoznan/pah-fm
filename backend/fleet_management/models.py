@@ -3,11 +3,10 @@ import time
 from hashlib import md5
 
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.utils.timezone import now
-from django_countries.fields import CountryField
-
 from django.conf import settings
+from django.utils.timezone import now
+from django.contrib.auth.models import AbstractUser
+from django_countries.fields import CountryField
 
 from fleet_management.crypto import PublicKey, PrivateKey, find_pair_of_keys
 
