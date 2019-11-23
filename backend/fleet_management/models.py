@@ -99,6 +99,10 @@ class Drive(models.Model):
         fuel_consumption = (distance * float(self.car.fuel_consumption)) / 100
         return round(fuel_consumption, 2)
 
+    @property
+    def diff_mileage(self):
+        return self.end_mileage - self.start_mileage
+
     @staticmethod
     def form_as_hash(initial_data: dict) -> str:
         def flatten(obj, depth=5, sep=","):
