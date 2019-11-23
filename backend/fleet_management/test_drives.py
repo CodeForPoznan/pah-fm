@@ -171,3 +171,7 @@ class DrivesApiTest(APITestCase):
         drive = DriveFactory(start_mileage=100300, end_mileage=100500)
         drive.car.fuel_consumption = 9.73
         self.assertEqual(drive.fuel_consumption, 19.46)
+
+    def test_diff_mileage(self):
+        drive = DriveFactory(start_mileage=100300, end_mileage=100800)
+        self.assertEqual(drive.diff_mileage, 500)
