@@ -110,7 +110,7 @@ class Drive(models.Model):
                 return ""
             if type(obj) in [list, dict]:
                 values = getattr(obj, 'values', obj.__iter__)()
-                return sep.join(map(lambda x: flatten(x, depth - 1), values))
+                return sep.join(map(lambda x: flatten(x, depth-1, sep), values))
             return str(obj)
 
         # signature shouldn't be included in hash
