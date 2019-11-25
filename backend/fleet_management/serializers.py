@@ -84,7 +84,7 @@ class DriveSerializer(serializers.ModelSerializer):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.hashed_form = 0
+        self.hashed_form = -1
 
     def create(self, validated_data):
         passenger_data = validated_data.pop('passenger')
@@ -114,10 +114,7 @@ class DriveSerializer(serializers.ModelSerializer):
 
     def is_valid(self, raise_exception=False):
         try:
-            if super().is_valid(raise_exception=raise_exception):
-                self.hashed_form = Drive.form_as_hash(self.initial_data)
-                return True
-            return False
+            return super().is_valid(raise_exception=raise_exception)
         except ValidationError as err:
             err_codes = err.get_codes()
             if "non_field_errors" in err_codes and "unique" in err_codes["non_field_errors"]:
