@@ -205,10 +205,11 @@ import {
 import {
   namespaces,
   actions as apiActions,
-  IS_ONLINE,
+  IS_ONLINE, PRIVATE_KEY,
 } from '../store/constants';
 import { FORM_STATE } from '../constants/form';
-import { setItem, removeItem } from '../services/localStore';
+import { getItem, setItem, removeItem } from '../services/localStore';
+import { hash, sign } from '../services/crypto';
 
 export default {
   name: 'DriveFormView',
@@ -234,14 +235,13 @@ export default {
       this.confirmationOnline = false;
 
       if (!Object.keys(this.errors).length) {
-        this[actions.SUBMIT]({
-          form: {
-            ...this.drive,
-            passengers: [this.drive.passenger],
-            timestamp: Math.floor(Date.now() / 1000),
-            signature: 0,
-          },
-        });
+        let form = {
+          ...this.drive,
+          passengers: [this.drive.passenger],
+          timestamp: Math.floor(Date.now() / 1000),
+        };
+        let signature = sign(parseInt(hash(form), 16), getItem(PRIVATE_KEY));
+        this[actions.SUBMIT]({ form: { ...form, signature: signature, }});
         removeItem(FORM_STATE);
         setItem(FORM_STATE, { car: this.drive.car });
         this.drive = makeFormState();

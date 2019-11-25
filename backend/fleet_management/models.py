@@ -102,3 +102,22 @@ class Drive(models.Model):
     @property
     def diff_mileage(self):
         return self.end_mileage - self.start_mileage
+
+    @staticmethod
+    def form_as_hash(initial_data: dict) -> str:
+        def flatten(obj, depth=5, sep=","):
+            if depth < 0:
+                return ""
+            if type(obj) in [list, dict]:
+                values = getattr(obj, 'values', obj.__iter__)()
+                return sep.join(map(lambda x: flatten(x, depth-1, sep), values))
+            return str(obj)
+
+        # signature shouldn't be included in hash
+        copy_of_data = initial_data.copy()
+        if 'signature' in copy_of_data:
+            copy_of_data.pop('signature')
+
+        hashed = flatten(copy_of_data).encode()
+        hashed = int(md5(hashed).hexdigest(), 16)
+        return hashed % 2 ** settings.RSA_NUMBER_OF_BITS
