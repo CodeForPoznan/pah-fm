@@ -149,10 +149,10 @@
                 />
               </div>
               <div class="form-group">
-                <label for="driverHash">{{ $t('drive_form.driver_hash') }}</label>
+                <label for="driveHash">{{ $t('drive_form.drive_hash') }}</label>
                 <input
-                  :value="user.rsaPubE"
-                  id="driverHash"
+                  value="TODO"
+                  id="driveHash"
                   class="form-control"
                   type="text"
                   readonly
