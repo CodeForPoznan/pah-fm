@@ -172,6 +172,7 @@ import 'vue-select/dist/vue-select.css';
 
 import MainForm from '../components/MainForm.vue';
 import FormMixin from '../mixins/FormMixin';
+import GroupGuardMixin from '../mixins/GroupGuardMixin';
 
 import * as actions from '../store/actions';
 
@@ -210,7 +211,7 @@ const requiredFields = [
 export default {
   name: 'DriveFormView',
   components: { vSelect, MainForm },
-  mixins: [FormMixin],
+  mixins: [FormMixin, GroupGuardMixin],
   mounted() {
     this.loadFormData(initialFormData);
   },

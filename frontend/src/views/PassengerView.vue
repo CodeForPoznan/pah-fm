@@ -21,6 +21,7 @@
 
 <script>
 import FormMixin from '../mixins/FormMixin';
+import GroupGuardMixin from '../mixins/GroupGuardMixin';
 import MainForm from '../components/MainForm.vue';
 
 const initialFormData = {
@@ -29,7 +30,7 @@ const initialFormData = {
 
 export default {
   name: 'PassengerView',
-  mixins: [FormMixin],
+  mixins: [FormMixin, GroupGuardMixin],
   components: { MainForm },
   mounted() {
     this.loadFormData(initialFormData);

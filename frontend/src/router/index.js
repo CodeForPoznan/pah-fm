@@ -76,17 +76,17 @@ export const groupBasedRoutes = {
   driver: [
     {
       text: 'common.new_drive',
-      to: driveCreateRoute.path,
+      to: driveCreateRoute,
     },
     {
       text: 'common.drives',
-      to: driveListRoute.path,
+      to: driveListRoute,
     },
   ],
   passenger: [
     {
       text: 'common.confirm_drive',
-      to: passengerRoute.path,
+      to: passengerRoute,
     },
   ],
 };

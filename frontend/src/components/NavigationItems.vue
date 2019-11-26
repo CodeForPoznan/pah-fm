@@ -19,10 +19,7 @@ export default {
   computed: {
     ...mapState([USER]),
     links() {
-      return this.user.groups.reduce(
-        (acc, { name }) => [...acc, ...groupBasedRoutes[name.toLowerCase()]],
-        [],
-      );
+      return this.user.groups.flatMap(({ name }) => groupBasedRoutes[name.toLowerCase()]);
     },
   },
 };

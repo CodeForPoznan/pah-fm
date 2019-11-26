@@ -115,8 +115,11 @@ import { mapActions, mapState, mapGetters } from 'vuex';
 import { actions as apiActions, namespaces, UNSYNCHRONISED_DRIVES, UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE } from '../store/constants';
 import { totalMileageReducer, totalMileageFilter } from '../utils';
 
+import GroupGuardMixin from '../mixins/GroupGuardMixin';
+
 export default {
   name: 'DrivesView',
+  mixins: [GroupGuardMixin],
   data() {
     return {
       visibleDrive: null,

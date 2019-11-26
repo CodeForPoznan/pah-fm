@@ -22,7 +22,10 @@
 </template>
 
 <script>
+import GroupGuardMixin from '../mixins/GroupGuardMixin';
+
 export default {
+  mixins: [GroupGuardMixin],
   data() {
     return {
       code: 'de72sd', // TODO: Generate the code
