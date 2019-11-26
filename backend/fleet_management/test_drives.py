@@ -31,7 +31,6 @@ class DrivesApiTest(APITestCase):
             first_name='John',
             last_name='Michaelson',
             email='me@me.com',
-            rsa_pub_e='123123',
             password='XXXXXXXXXXX',
         )
         self.driver.groups.set(Group.objects.filter(name=Groups.Driver.name))
@@ -83,7 +82,6 @@ class DrivesApiTest(APITestCase):
                 'driver': {
                     'id': self.driver.id,
                     'username': self.driver.username,
-                    'rsaPubE': self.driver.rsa_pub_e,
                     'groups': [{'name': 'Driver'}],
                 },
                 'startLocation': 'Poznan',
