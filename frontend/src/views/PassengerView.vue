@@ -7,7 +7,7 @@
     <div class="form-group">
       <label>{{ $t('passenger_form.hash') }}</label>
       <input
-        type="text"
+        type="number"
         @change="syncToLocalStorage"
         v-model="form.hash"
         name="hash"
