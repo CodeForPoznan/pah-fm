@@ -12,7 +12,7 @@
         v-model="form.hash"
         name="hash"
         maxlength="6"
-        class="form-control"
+        class="form-control passenger-input"
         :class="{ 'is-invalid': isInvalid.hash }"
       >
     </div>
@@ -23,6 +23,8 @@
 import FormMixin from '../mixins/FormMixin';
 import GroupGuardMixin from '../mixins/GroupGuardMixin';
 import MainForm from '../components/MainForm.vue';
+
+import '../scss/passenger.scss';
 
 const initialFormData = {
   hash: '',

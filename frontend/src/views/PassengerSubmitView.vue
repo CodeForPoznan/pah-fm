@@ -11,7 +11,7 @@
                 name="code"
                 id="code"
                 :value="code"
-                class="form-control"
+                class="form-control passenger-input"
                 readonly >
             </div>
           </div>
@@ -23,6 +23,8 @@
 
 <script>
 import GroupGuardMixin from '../mixins/GroupGuardMixin';
+
+import '../scss/passenger.scss';
 
 export default {
   mixins: [GroupGuardMixin],
