@@ -17,6 +17,7 @@
     },
     "drive_form": {
       "cars": "Автомобілі",
+      "confirm_hash": "код підтвердження",
       "date": "Дата:",
       "description": "Опис:",
       "distance_traveled": "{distance} (km) яку проїхали",
@@ -96,6 +97,7 @@
     },
     "drive_form": {
       "cars": "Choose a car:",
+      "confirm_hash": "Confirmation hash",
       "date": "Date:",
       "description": "Description:",
       "distance_traveled": "{distance} km traveled",
@@ -175,6 +177,7 @@
     },
     "drive_form": {
       "cars": "Wybierz samochód:",
+      "confirm_hash": "Kod potwierdzenia",
       "date": "Data:",
       "description": "Opis trasy:",
       "distance_traveled": "Łącznie przejechano {distance} km",
