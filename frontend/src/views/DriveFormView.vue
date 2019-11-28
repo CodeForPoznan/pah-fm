@@ -239,7 +239,6 @@ export default {
             ...this.drive,
             passengers: [this.drive.passenger],
             timestamp: Math.floor(Date.now() / 1000),
-            signature: 0,
           },
         });
         removeItem(FORM_STATE);

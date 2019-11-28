@@ -1,6 +1,5 @@
 import calendar
 import time
-from hashlib import md5
 
 from django.db import models
 from django.conf import settings
@@ -102,24 +101,3 @@ class Drive(models.Model):
     @property
     def diff_mileage(self):
         return self.end_mileage - self.start_mileage
-
-    @staticmethod
-    def form_as_hash(initial_data: dict) -> str:
-        def flatten(obj, depth=5, sep=","):
-            if depth < 0:
-                return ""
-            if type(obj) in [list, dict]:
-                values = getattr(obj, 'values', obj.__iter__)()
-                return sep.join(map(lambda x: flatten(x, depth-1, sep), values))
-            return str(obj)
-
-        # signature shouldn't be included in hash
-        signature = initial_data.pop('signature', None)
-
-        hashed = flatten(initial_data).encode()
-        hashed = int(md5(hashed).hexdigest(), 16)
-
-        if signature is not None:
-            initial_data["signature"] = signature
-
-        return hashed % 2 ** settings.RSA_NUMBER_OF_BITS
