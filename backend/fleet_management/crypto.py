@@ -62,11 +62,13 @@ def find_prime(bits: int) -> int:
 
     while True:
         if is_prime(prime):
-            return prime
+            break
 
         prime += 2
         if prime.bit_length() > bits:
             prime = randbits(bits) | 1
+
+    return prime
 
 
 def find_p_q_phi() -> (int, int, int):
