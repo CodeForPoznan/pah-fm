@@ -31,7 +31,7 @@ class PassengerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name','rsa_modulus_n', 'rsa_pub_e')
+        fields = ('id', 'first_name', 'last_name', 'rsa_modulus_n', 'rsa_pub_e')
 
 
 class CarSerializer(serializers.ModelSerializer):
