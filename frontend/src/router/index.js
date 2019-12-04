@@ -92,7 +92,7 @@ export const groupBasedRoutes = {
       visibleOnMenu: true,
     },
     {
-      text: 'common.heh',
+      text: '',
       to: passengerSubmitRoute,
       visibleOnMenu: false,
     },
