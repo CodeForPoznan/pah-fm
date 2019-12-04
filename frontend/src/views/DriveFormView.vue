@@ -213,7 +213,7 @@ export default {
   components: { vSelect, MainForm },
   mixins: [FormMixin, GroupGuardMixin],
   mounted() {
-    this.loadFormData(initialFormData);
+    this.loadFormData({ ...initialFormData });
   },
   data() {
     return {
