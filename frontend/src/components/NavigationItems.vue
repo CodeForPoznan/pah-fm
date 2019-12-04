@@ -1,11 +1,10 @@
 <template>
   <div>
-    <b-nav-item
-      v-for="link in links"
-      :to="link.to"
-      :key="link.text">{{
-        $t(link.text)
-      }}</b-nav-item>
+    <b-nav-item v-for="link in links" :to="link.to" :key="link.text">
+      {{
+      $t(link.text)
+      }}
+    </b-nav-item>
   </div>
 </template>
 
@@ -19,7 +18,12 @@ export default {
   computed: {
     ...mapState([USER]),
     links() {
-      return this.user.groups.flatMap(({ name }) => groupBasedRoutes[name.toLowerCase()]);
+      if (this.user) {
+        return this.user.groups.flatMap(
+          ({ name }) => groupBasedRoutes[name.toLowerCase()]
+        );
+      }
+      return [];
     },
   },
 };

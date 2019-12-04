@@ -3,7 +3,7 @@ import { groupBasedRoutes } from '../router';
 import { reverseObject } from '../services/reverseObject';
 
 const { user } = store.state;
-const groups = user.groups.map(({ name }) => name.toLowerCase());
+const groups = user ? user.groups.map(({ name }) => name.toLowerCase()) : [];
 
 const getRouteGroup = (routeName) => {
   const groupBasedRouteNames = Object.keys(groupBasedRoutes).reduce(
