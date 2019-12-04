@@ -35,7 +35,7 @@ export default {
   mixins: [FormMixin, GroupGuardMixin],
   components: { MainForm },
   mounted() {
-    this.loadFormData(initialFormData);
+    this.loadFormData({ ...initialFormData });
   },
   data() {
     return {
