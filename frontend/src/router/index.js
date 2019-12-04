@@ -77,16 +77,24 @@ export const groupBasedRoutes = {
     {
       text: 'common.new_drive',
       to: driveCreateRoute,
+      visibleOnMenu: true,
     },
     {
       text: 'common.drives',
       to: driveListRoute,
+      visibleOnMenu: true,
     },
   ],
   passenger: [
     {
       text: 'common.confirm_drive',
       to: passengerRoute,
+      visibleOnMenu: true,
+    },
+    {
+      text: 'common.heh',
+      to: passengerSubmitRoute,
+      visibleOnMenu: false,
     },
   ],
 };

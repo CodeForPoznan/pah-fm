@@ -19,9 +19,9 @@ export default {
     ...mapState([USER]),
     links() {
       if (this.user) {
-        return this.user.groups.flatMap(
-          ({ name }) => groupBasedRoutes[name.toLowerCase()]
-        );
+        return this.user.groups
+          .flatMap(({ name }) => groupBasedRoutes[name.toLowerCase()])
+          .filter((route) => route.visibleOnMenu);
       }
       return [];
     },
