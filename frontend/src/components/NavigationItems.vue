@@ -1,8 +1,11 @@
 <template>
   <div>
-    <b-nav-item v-for="link in links" :to="link.to" :key="link.text">
+    <b-nav-item
+      v-for="link in links"
+      :to="link.to"
+      :key="link.text">
       {{
-      $t(link.text)
+        $t(link.text)
       }}
     </b-nav-item>
   </div>
@@ -21,7 +24,7 @@ export default {
       if (this.user) {
         return this.user.groups
           .flatMap(({ name }) => groupBasedRoutes[name.toLowerCase()])
-          .filter((route) => route.visibleOnMenu);
+          .filter(route => route.visibleOnMenu);
       }
       return [];
     },

@@ -14,7 +14,7 @@
         maxlength="6"
         class="form-control passenger-input"
         :class="{ 'is-invalid': isInvalid.hash }"
-      />
+      >
     </div>
   </main-form>
 </template>
@@ -52,7 +52,7 @@ export default {
         console.log('run hash generation');
 
         this.clearStorage();
-        this.loadFormData(initialFormData); //re-initialize form
+        this.loadFormData(initialFormData); // re-initialize form
         this.$router.push('/confirm');
       }
     },
