@@ -25,9 +25,8 @@ class User(AbstractUser):
     rsa_pub_e = models.CharField(max_length=6, null=False, default='')
     rsa_priv_d = models.CharField(max_length=6, null=False, default='')
 
-    def save(self, *args, **kwargs):
-        # generate key on create
-        if self.pk is None:
+    def save(self, regenerate_keys: bool = False, *args, **kwargs):
+        if regenerate_keys or self.pk is None:
             pub, priv = find_pair_of_keys()
             self.rsa_modulus_n = pad(pub.n)
             self.rsa_pub_e = pad(pub.e)
