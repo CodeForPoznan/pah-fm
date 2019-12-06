@@ -50,19 +50,29 @@ class DrivesApiTestCase(APITestCase):
         for drive in drives:
             self.assertEqual(drive["driver"]["id"], self.driver.id)
 
-    def test_can_create_a_drive(self):
+    def test_can_create_a_verified_drive(self):
+        car = CarFactory(id=12)
+        project = ProjectFactory(id=42)
+        passenger = UserFactory(
+            id=55,
+            groups=[Group.objects.get(name=Groups.Passenger.name)],
+            rsa_modulus_n=50927,
+            rsa_pub_e=257,
+            rsa_priv_d=30593,
+        )
         payload = {
-            "car": {"id": self.car.id},
+            "car": {"id": car.id},
             "passengers": [
-                {"id": self.passenger.id},
+                {"id": passenger.id},
             ],
-            "date": date.today().isoformat(),
+            "date": "2019-12-06",
             "startMileage": 180000,
             "endMileage": 180250,
             "description": "",
             "startLocation": "Warsaw",
             "endLocation": "Poznan",
-            "project": {"id": self.project.id},
+            "project": {"id": project.id},
+            "signature": 28382,
         }
         self.client.force_login(self.driver)
         res = self.client.post(self.url, data=payload, format="json")
@@ -70,8 +80,9 @@ class DrivesApiTestCase(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         self.assertEqual(drive.count(), 1)
         drive = drive[0]
-        self.assertEqual(drive.passenger.id, self.passenger.id)
-        self.assertEqual(drive.car.id, self.car.id)
+        self.assertTrue(drive.is_verified)
+        self.assertEqual(drive.passenger.id, passenger.id)
+        self.assertEqual(drive.car.id, car.id)
         self.assertEqual(drive.date.isoformat(), res.data["date"])
         self.assertEqual(drive.start_mileage, res.data["start_mileage"])
         self.assertEqual(drive.end_mileage, res.data["end_mileage"])

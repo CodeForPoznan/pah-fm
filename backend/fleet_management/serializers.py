@@ -4,6 +4,7 @@ from django.contrib.auth.models import Group
 
 from rest_framework.exceptions import ValidationError
 
+from fleet_management.crypto import sign, verify
 from fleet_management.models import Car, Drive, User, Project
 
 
@@ -69,6 +70,7 @@ class DriveSerializer(serializers.ModelSerializer):
     car = CarSerializer()
     passengers = PassengersField(source="passenger")
     project = ProjectSerializer()
+    signature = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = Drive
@@ -76,9 +78,13 @@ class DriveSerializer(serializers.ModelSerializer):
             'id',
             'driver', 'car', 'passengers', 'project',
             'date', 'start_mileage', 'end_mileage', 'description',
-            'start_location', 'end_location', 'timestamp'
+            'start_location', 'end_location', 'timestamp', 'signature'
         )
         read_only_fields = ('is_verified',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.hashed_form = -1
 
     def create(self, validated_data):
         passenger_data = validated_data.pop('passenger')
@@ -87,11 +93,16 @@ class DriveSerializer(serializers.ModelSerializer):
         project_data = validated_data.pop('project')
         project = Project.objects.get(pk=project_data['id'])
         passenger = User.objects.get(pk=passenger_data['id'])
+        form_signature = validated_data.pop('signature')
+
+        signature = sign(self.hashed_form, passenger.private_key())
+        is_verified = verify(self.hashed_form, form_signature, passenger.public_key())
+        is_verified = is_verified and signature == form_signature
 
         with transaction.atomic():
             drive = Drive.objects.create(
                 **validated_data,
-                is_verified=True,
+                is_verified=is_verified,
                 driver=self.context['driver'],
                 car=car,
                 project=project,
@@ -103,7 +114,10 @@ class DriveSerializer(serializers.ModelSerializer):
 
     def is_valid(self, raise_exception=False):
         try:
-            return super().is_valid(raise_exception=raise_exception)
+            if super().is_valid(raise_exception=raise_exception):
+                self.hashed_form = Drive.hash_form(self.initial_data)
+                return True
+            return False
         except ValidationError as err:
             err_codes = err.get_codes()
             if "non_field_errors" in err_codes and "unique" in err_codes["non_field_errors"]:
