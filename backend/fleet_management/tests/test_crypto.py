@@ -10,6 +10,7 @@ from fleet_management.crypto import (
     find_prime,
     find_p_q_phi,
     find_pair_of_keys,
+    hash_dict,
 )
 
 
@@ -60,3 +61,11 @@ class CryptoTest(APISimpleTestCase):
             self.assertTrue(is_prime(p))
             self.assertTrue(is_prime(q))
             self.assertEqual(phi, my_phi)
+
+    def test_hash_dict(self):
+        self.assertEqual(hash_dict({}), 5381)
+        self.assertEqual(hash_dict({1: 1}), 177622)
+        self.assertEqual(hash_dict({1: 1, "asd": "asd"}), 490842)
+        self.assertEqual(hash_dict({1: 1, "asd": "asd", 9: [1, 2, 3]}), 344180)
+        self.assertEqual(hash_dict({1: {2: {3: {4: {5: {}}}}}}), 5381)
+        self.assertEqual(hash_dict({1: {2: {3: {4: {5: "x"}}}}}), 177693)

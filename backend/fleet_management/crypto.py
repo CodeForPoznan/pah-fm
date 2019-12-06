@@ -102,3 +102,20 @@ def find_pair_of_keys() -> (PublicKey, PrivateKey):
             break
 
     return PublicKey(p * q, exp), PrivateKey(p * q, d)
+
+
+def hash_dict(d: dict, depth=5) -> int:
+    def flatten(obj, dep=depth, sep=",") -> str:
+        if depth < 0:
+            return ""
+        if type(obj) in [list, dict]:
+            values = getattr(obj, 'values', obj.__iter__)()
+            return sep.join(map(lambda x: flatten(x, dep-1, sep), values))
+        return str(obj)
+
+    # http://www.cse.yorku.ca/~oz/hash.html
+    val = 5381
+    for c in flatten(d):
+        val = val * 33 + ord(c)
+
+    return val % 2 ** settings.RSA_NUMBER_OF_BITS
