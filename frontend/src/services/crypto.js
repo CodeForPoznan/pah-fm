@@ -21,31 +21,21 @@ export const flatten = (obj, depth = 5, sep = ',') => {
 
 export const hashDict = (dict, depth = 5) => {
   let val = 5381;
-  flatten(dict, depth).forEach(c => {
+  flatten(dict, depth).forEach((c) => {
     val = (val * 33) + c.charCodeAt(0);
   });
+
   return val % (2 ** RSA_NUMBER_OF_BITS);
 };
 
-const modexp = (a, b, n) => {
-  a = a % n;
-  let result = 1;
-  let x = a;
+const modexp = (base, exp, mod) => {
+  const b = base % mod;
+  if (exp === 0) return 1;
+  if (exp === 1) return b;
 
-  while(b > 0) {
-    let lsb = b % 2;
-    b = Math.floor(b / 2);
-
-    if (lsb === 1) {
-      result = result * x;
-      result = result % n;
-    }
-
-    x = x * x;
-    x = x % n;
-  }
-
-  return result;
+  const res = modexp(b * b, Math.trunc(exp / 2), mod);
+  if (exp % 2) return (b * res) % mod;
+  return res;
 };
 
 export const sign = (msg, priv) => modexp(msg, priv.d, priv.n);
