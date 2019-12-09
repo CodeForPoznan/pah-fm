@@ -139,6 +139,29 @@
         :class="{ 'is-invalid': isInvalid['endMileage'] }"
       >
     </div>
+    <div class="form-group">
+      <label for="driveHash">{{ $t('drive_form.drive_hash') }}</label>
+      <input
+        value="TODO"
+        id="driveHash"
+        class="form-control"
+        type="text"
+        readonly
+      >
+    </div>
+    <div class="form-group">
+      <label for="confirmHash">{{ $t('drive_form.confirm_hash') }}</label>
+      <input
+        type="text"
+        id="confirmHash"
+        name="confirmHash"
+        @input="syncToLocalStorage"
+        v-model="drive.confirmHash"
+        maxlength="6"
+        class="form-control"
+        :class="{ 'is-invalid': errors['endMileage'] }"
+      >
+    </div>
     <div
       class="form-group col-xs-12"
     >{{ $t('drive_form.distance_traveled', { distance: distance }) }}</div>
@@ -174,6 +197,7 @@ import MainForm from '../components/MainForm.vue';
 import FormMixin from '../mixins/FormMixin';
 import GroupGuardMixin from '../mixins/GroupGuardMixin';
 
+import { USER } from '../store';
 import * as actions from '../store/actions';
 
 import {
@@ -288,6 +312,7 @@ export default {
           text: [p.firstName, p.lastName].join(' '),
         })),
     }),
+    ...mapState([USER]),
     ...mapGetters([IS_ONLINE]),
     distance() {
       const distance = this.form.endMileage - this.form.startMileage;
