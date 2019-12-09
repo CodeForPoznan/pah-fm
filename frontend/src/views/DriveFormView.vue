@@ -158,8 +158,8 @@
               <div class="form-group">
                 <label for="driveHash">{{ $t('drive_form.drive_hash') }}</label>
                 <input
-                  value="TODO"
                   id="driveHash"
+                  v-model="computeHash"
                   class="form-control"
                   type="text"
                   readonly
@@ -233,6 +233,7 @@ import {
 } from '../store/constants';
 import { FORM_STATE } from '../constants/form';
 import { setItem, removeItem } from '../services/localStore';
+import { hashDict } from '../services/crypto';
 
 export default {
   name: 'DriveFormView',
@@ -279,7 +280,6 @@ export default {
     syncToLocalStorage() {
       localStorage.setItem(FORM_STATE, JSON.stringify(this.drive));
     },
-
     validateForm() {
       const makeErrorsPartial = makeErrors(this.$t.bind(this));
 
@@ -311,7 +311,6 @@ export default {
     this[apiActions.fetchPassengers]();
     this[apiActions.fetchProjects]();
   },
-
   computed: {
     ...mapState(namespaces.cars, {
       cars: state => state,
@@ -331,6 +330,19 @@ export default {
     distance() {
       const distance = this.drive.endMileage - this.drive.startMileage;
       return distance > 0 ? distance : 0;
+    },
+    computeHash() {
+      return hashDict({
+        car: { id: this.drive.car },
+        passengers: [{ id: this.drive.passenger }],
+        date: this.drive.date,
+        start_mileage: this.drive.startMileage,
+        end_mileage: this.drive.endMileage,
+        description: this.drive.description,
+        start_location: this.drive.startLocation,
+        end_location: this.drive.endLocation,
+        project: { id: this.drive.project },
+      });
     },
   },
 };

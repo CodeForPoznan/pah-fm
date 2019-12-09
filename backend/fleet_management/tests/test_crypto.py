@@ -63,9 +63,9 @@ class CryptoTest(APISimpleTestCase):
             self.assertEqual(phi, my_phi)
 
     def test_hash_dict(self):
-        self.assertEqual(hash_dict({}), 5381)
-        self.assertEqual(hash_dict({1: 1}), 177622)
-        self.assertEqual(hash_dict({1: 1, "asd": "asd"}), 490842)
-        self.assertEqual(hash_dict({1: 1, "asd": "asd", 9: [1, 2, 3]}), 344180)
-        self.assertEqual(hash_dict({1: {2: {3: {4: {5: {}}}}}}), 5381)
-        self.assertEqual(hash_dict({1: {2: {3: {4: {5: "x"}}}}}), 177693)
+        self.assertEqual(hash_dict({}), 17022)
+        self.assertEqual(hash_dict({1: 1}), 361627)
+        self.assertEqual(hash_dict({1: 1, "asd": "asd"}), 319826)
+        self.assertEqual(hash_dict({1: 1, "asd": "asd", 9: [1, 2, 3]}), 319976)
+        self.assertEqual(hash_dict({1: {2: {3: {4: {5: {}}}}}}), 17022)
+        self.assertEqual(hash_dict({1: {2: {3: {4: {5: "x"}}}}}), 288678)

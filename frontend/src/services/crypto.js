@@ -1,3 +1,4 @@
+import { default as md5 } from 'js-md5';
 import { RSA_NUMBER_OF_BITS } from '../store/constants';
 
 export const flatten = (obj, depth = 5, sep = ',') => {
@@ -20,11 +21,9 @@ export const flatten = (obj, depth = 5, sep = ',') => {
 };
 
 export const hashDict = (dict, depth = 5) => {
-  let val = 5381;
-  flatten(dict, depth).forEach((c) => {
-    val = (val * 33) + c.charCodeAt(0);
-  });
-
+  let val = md5(flatten(dict, depth));
+  val = val.substr(val.length - 6);
+  val = parseInt(val, 16);
   return val % (2 ** RSA_NUMBER_OF_BITS);
 };
 

@@ -1,3 +1,4 @@
+from hashlib import md5
 from math import floor, sqrt
 from secrets import randbits
 from collections import namedtuple
@@ -109,13 +110,12 @@ def hash_dict(d: dict, depth=5) -> int:
         if depth < 0:
             return ""
         if type(obj) in [list, dict]:
-            values = getattr(obj, 'values', obj.__iter__)()
+            values = getattr(obj, "values", obj.__iter__)()
             return sep.join(map(lambda x: flatten(x, dep-1, sep), values))
         return str(obj)
 
-    # http://www.cse.yorku.ca/~oz/hash.html
-    val = 5381
-    for c in flatten(d):
-        val = val * 33 + ord(c)
+    val = flatten(d, depth).encode()
+    val = md5(val).hexdigest()
+    val = int(val[-6:], 16)
 
     return val % 2 ** settings.RSA_NUMBER_OF_BITS
