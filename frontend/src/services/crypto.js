@@ -1,4 +1,4 @@
-import { default as md5 } from 'js-md5';
+import md5 from 'js-md5';
 import { RSA_BIT_LENGTH } from '../store/constants';
 
 export const flatten = (obj, depth = 5, sep = ',') => {
