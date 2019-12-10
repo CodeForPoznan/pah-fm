@@ -17,14 +17,14 @@ from fleet_management.crypto import (
 class CryptoTest(APISimpleTestCase):
     def setUp(self) -> None:
         self.n_tests = 1000
-        self.keys = [find_pair_of_keys() for _ in range(self.n_tests)]
 
     def test_sign_and_verify(self):
-        for pub, priv in self.keys:
+        for _ in range(1000):
             message = randbits(settings.RSA_NUMBER_OF_BITS)
-            cipher = sign(message, priv)
-            self.assertTrue(verify(message, cipher, pub))
-            self.assertFalse(verify(message + 1, cipher, pub))
+            pub, priv = find_pair_of_keys()
+            signature = sign(message, priv)
+            self.assertTrue(verify(message, signature, pub))
+            self.assertFalse(verify(message + 1, signature, pub))
 
     def test_inverse_of(self):
         self.assertEqual(inverse_of(2, 3), 2)

@@ -14,11 +14,6 @@ def get_current_timestamp_in_gmt():
     return calendar.timegm(time.gmtime())
 
 
-def pad(n: int):
-    n_zeros = len(str(2 ** settings.RSA_NUMBER_OF_BITS))
-    return str(n).zfill(n_zeros)
-
-
 class User(AbstractUser):
     country = CountryField(blank_label="(select country)", null=False)
     rsa_modulus_n = models.CharField(max_length=6, null=False, default="")
@@ -28,9 +23,9 @@ class User(AbstractUser):
     def save(self, regenerate_keys: bool = False, *args, **kwargs):
         if regenerate_keys or self.pk is None:
             pub, priv = find_pair_of_keys()
-            self.rsa_modulus_n = pad(pub.n)
-            self.rsa_pub_e = pad(pub.e)
-            self.rsa_priv_d = pad(priv.d)
+            self.rsa_modulus_n = str(pub.n).zfill(6)
+            self.rsa_pub_e = str(pub.e).zfill(6)
+            self.rsa_priv_d = str(priv.d).zfill(6)
 
         super().save(*args, **kwargs)
 

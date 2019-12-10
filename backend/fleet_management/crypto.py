@@ -59,17 +59,12 @@ def is_prime(number: int) -> bool:
 
 def find_prime(bits: int) -> int:
     """Returns prime number with specified amount of bits."""
-    prime = randbits(bits) | 1
-
     while True:
-        if is_prime(prime):
-            break
-
-        prime += 2
-        if prime.bit_length() > bits:
-            prime = randbits(bits) | 1
-
-    return prime
+        prime = randbits(bits) | 1
+        while prime.bit_length() <= bits:
+            if is_prime(prime):
+                return prime
+            prime += 2
 
 
 def find_p_q_phi() -> (int, int, int):
@@ -79,13 +74,13 @@ def find_p_q_phi() -> (int, int, int):
     q_bits = settings.RSA_NUMBER_OF_BITS // 2 - 3
     p, q = find_prime(p_bits), find_prime(q_bits)
 
-    other = False
+    other_p = False
     while p == q or p * q >= limit:
-        if other:
+        if other_p:
             p = find_prime(p_bits)
         else:
             q = find_prime(q_bits)
-        other = not other
+        other_p = not other_p
 
     p, q = max(p, q), min(p, q)
 
