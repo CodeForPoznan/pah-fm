@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 
 from rest_framework.exceptions import ValidationError
 
-from .models import Car, Drive, User, Project
+from fleet_management.models import Car, Drive, User, Project
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -93,7 +93,6 @@ class DriveSerializer(serializers.ModelSerializer):
         with transaction.atomic():
             drive = Drive.objects.create(
                 **validated_data,
-                # TODO Awaiting validation
                 is_verified=True,
                 driver=self.context['driver'],
                 car=car,
