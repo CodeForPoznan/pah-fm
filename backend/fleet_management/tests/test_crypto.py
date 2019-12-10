@@ -20,7 +20,7 @@ class CryptoTest(APISimpleTestCase):
 
     def test_sign_and_verify(self):
         for _ in range(1000):
-            message = randbits(settings.RSA_NUMBER_OF_BITS)
+            message = randbits(settings.RSA_BIT_LENGTH)
             pub, priv = find_pair_of_keys()
             signature = sign(message, priv)
             self.assertTrue(verify(message, signature, pub))
@@ -51,7 +51,7 @@ class CryptoTest(APISimpleTestCase):
 
     def test_find_prime(self):
         for _ in range(self.n_tests):
-            prime = find_prime(settings.RSA_NUMBER_OF_BITS)
+            prime = find_prime(settings.RSA_BIT_LENGTH)
             self.assertTrue(is_prime(prime))
 
     def test_find_p_q_phi(self):
