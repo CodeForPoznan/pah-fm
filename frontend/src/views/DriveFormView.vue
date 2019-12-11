@@ -33,6 +33,7 @@
       <input
         min="0"
         onkeypress="return event.key === 'Enter'
+                      || event.key === 'Backspace'
                       || (Number(event.key) >= 0
                       && Number(event.key) <= 9
                       && event.target.value < 20000000)"
@@ -128,6 +129,7 @@
       <input
         min="0"
         onkeypress="return event.key === 'Enter'
+                      || event.key === 'Backspace'
                       || (Number(event.key) >= 0
                       && Number(event.key) <= 9
                       && event.target.value < 20000000)"
@@ -146,8 +148,7 @@
         id="driveHash"
         class="form-control"
         type="text"
-        readonly
-      >
+        readonly >
     </div>
     <div class="form-group">
       <label for="confirmHash">{{ $t('drive_form.confirm_hash') }}</label>
@@ -159,7 +160,7 @@
         v-model="form.confirmHash"
         maxlength="6"
         class="form-control"
-        :class="{ 'is-invalid': isInvalid['endMileage'] }"
+        :class="{ 'is-invalid': isInvalid['confirmHash'] }"
       >
     </div>
     <div
@@ -231,6 +232,7 @@ const requiredFields = [
   'startLocation',
   'endLocation',
   'passenger',
+  'confirmHash',
 ];
 
 export default {
