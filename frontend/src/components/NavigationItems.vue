@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import flatMap from 'array.prototype.flatmap'
 import { mapState } from 'vuex';
 import { USER } from '../store';
 import { groupBasedRoutes } from '../router/index';
@@ -22,8 +23,7 @@ export default {
     ...mapState([USER]),
     links() {
       if (this.user) {
-        return this.user.groups
-          .flatMap(({ name }) => groupBasedRoutes[name.toLowerCase()])
+        return flatMap(this.user.groups, ({ name }) => groupBasedRoutes[name.toLowerCase()])
           .filter(route => route.visibleOnMenu);
       }
       return [];
