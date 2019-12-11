@@ -29,8 +29,6 @@ class CarsApiTestCase(APITestCase):
         for idx, car in enumerate(sorted(res.data, key=lambda car: car["id"])):
             self.assertEqual(car["plates"], self.cars[idx].plates)
 
-
-
     def test_search_by_plate(self):
         self.client.force_login(self.user)
         url_params = urlencode({"search": self.cars[0].plates})
