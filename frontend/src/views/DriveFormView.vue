@@ -156,10 +156,10 @@
         id="confirmHash"
         name="confirmHash"
         @input="syncToLocalStorage"
-        v-model="drive.confirmHash"
+        v-model="form.confirmHash"
         maxlength="6"
         class="form-control"
-        :class="{ 'is-invalid': errors['endMileage'] }"
+        :class="{ 'is-invalid': isInvalid['endMileage'] }"
       >
     </div>
     <div
@@ -219,6 +219,7 @@ const initialFormData = {
   passenger: '',
   startLocation: '',
   endLocation: '',
+  confirmHash: '',
 };
 
 const requiredFields = [
