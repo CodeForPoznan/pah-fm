@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style scoped>
-.error::first-letter {
+.error:first-letter {
   text-transform: capitalize;
 }
 </style>
