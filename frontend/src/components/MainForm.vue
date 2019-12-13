@@ -6,12 +6,15 @@
           <div>
             <error-list
               v-if="listOfErrors.length"
-              :errors="listOfErrors" />
+              :errors="listOfErrors"
+            />
             <h2>{{ title }}</h2>
             <form @submit.prevent="$emit('submit')">
               <slot />
               <div class="form-group">
-                <button class="btn btn-primary col-xs-3">{{ $t('drive_form.submit') }}</button>
+                <button class="btn btn-primary col-xs-3">
+                  {{ $t('drive_form.submit') }}
+                </button>
               </div>
             </form>
           </div>
@@ -39,11 +42,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import '../scss/base';
-
-.wrapper {
-  @include m(2);
-}
-</style>

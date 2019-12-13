@@ -12,7 +12,8 @@
                 id="code"
                 :value="code"
                 class="form-control passenger-input"
-                readonly >
+                readonly
+              >
             </div>
           </div>
         </div>
@@ -42,11 +43,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import '../scss/base';
-
-.wrapper {
-  @include m(2);
-}
-</style>

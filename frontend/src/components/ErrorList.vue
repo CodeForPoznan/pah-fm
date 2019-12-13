@@ -5,7 +5,10 @@
       <li
         class="error"
         v-for="(error, index) in errors"
-        :key="index">{{ error }}</li>
+        :key="index"
+      >
+        {{ error }}
+      </li>
     </ul>
   </div>
 </template>

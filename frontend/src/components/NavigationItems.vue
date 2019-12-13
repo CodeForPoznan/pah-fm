@@ -3,7 +3,8 @@
     <b-nav-item
       v-for="link in links"
       :to="link.to"
-      :key="link.text">
+      :key="link.text"
+    >
       {{
         $t(link.text)
       }}
@@ -12,7 +13,7 @@
 </template>
 
 <script>
-import flatMap from 'array.prototype.flatmap'
+import flatMap from 'array.prototype.flatmap';
 import { mapState } from 'vuex';
 import { USER } from '../store';
 import { groupBasedRoutes } from '../router/index';

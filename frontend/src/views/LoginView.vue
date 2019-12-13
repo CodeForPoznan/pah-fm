@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div
-      class="jumbotron login-form">
+    <div class="jumbotron wrapper">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
             <div
               v-if="loginError"
-              class="alert alert-danger">
+              class="alert alert-danger"
+            >
               {{ loginError }}
             </div>
             <h2>{{ $t('common.login') }}</h2>
@@ -24,11 +24,12 @@
                 <div
                   v-show="submitted && !username"
                   class="invalid-feedback"
-                >{{ $t('login.username') }}
+                >
+                  {{ $t('login.username') }}
                 </div>
               </div>
               <div class="form-group">
-                <label htmlFor="password">{{ $t('login.password') }}</label>
+                <label for="password">{{ $t('login.password') }}</label>
                 <input
                   type="password"
                   v-model="password"
@@ -39,14 +40,16 @@
                 <div
                   v-show="submitted && !password"
                   class="invalid-feedback"
-                >{{ $t('login.username') }}
+                >
+                  {{ $t('login.username') }}
                 </div>
               </div>
               <div class="form-group">
                 <button
                   class="btn btn-primary"
                   :disabled="loginInProgress || !username || !password"
-                >{{ $t('common.login') }}
+                >
+                  {{ $t('common.login') }}
                 </button>
               </div>
             </form>
@@ -55,7 +58,7 @@
       </div>
     </div>
     <div class="language-container">
-      <Language/>
+      <Language />
     </div>
   </div>
 </template>
@@ -97,14 +100,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../scss/base";
+@import '../scss/base';
 
 .language-container {
   max-width: 200px;
   margin: 0 auto;
-}
-
-.login-form {
-  @include m(2);
 }
 </style>

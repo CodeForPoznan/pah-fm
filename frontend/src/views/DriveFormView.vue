@@ -2,7 +2,8 @@
   <main-form
     @submit="handleSubmit"
     :title="$t('common.new_drive')"
-    :list-of-errors="listOfErrors">
+    :list-of-errors="listOfErrors"
+  >
     <div class="form-group">
       <label>{{ $t('drive_form.date') }}</label>
       <input
@@ -59,11 +60,16 @@
           v-for="project in projects.data"
           :key="project.id"
           :value="project.id"
-        >{{ project.title }}</option>
+        >
+          {{ project.title }}
+        </option>
       </select>
       <p
         class="font-weight-bold"
-        v-if="!cars.data">{{ $t('drive_form.no_project_message') }}</p>
+        v-if="!cars.data"
+      >
+        {{ $t('drive_form.no_project_message') }}
+      </p>
     </div>
 
     <div class="form-group">
@@ -79,11 +85,17 @@
         <option
           v-for="car in cars.data"
           :key="car.id"
-          :value="car.id">{{ car.plates }}</option>
+          :value="car.id"
+        >
+          {{ car.plates }}
+        </option>
       </select>
       <p
         class="font-weight-bold"
-        v-if="!cars.data">{{ $t('drive_form.no_cars_message') }}</p>
+        v-if="!cars.data"
+      >
+        {{ $t('drive_form.no_cars_message') }}
+      </p>
     </div>
 
     <div class="form-group">
@@ -148,7 +160,8 @@
         id="driveHash"
         class="form-control"
         type="text"
-        readonly >
+        readonly
+      >
     </div>
     <div class="form-group">
       <label for="confirmHash">{{ $t('drive_form.confirm_hash') }}</label>
@@ -165,7 +178,9 @@
     </div>
     <div
       class="form-group col-xs-12"
-    >{{ $t('drive_form.distance_traveled', { distance: distance }) }}</div>
+    >
+      {{ $t('drive_form.distance_traveled', { distance: distance }) }}
+    </div>
 
     <b-alert
       class="col-xs-12"

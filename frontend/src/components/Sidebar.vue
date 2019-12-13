@@ -2,7 +2,8 @@
   <ScaleRotate
     class="mobile-menu"
     v-if="show"
-    right>
+    right
+  >
     <b-nav fill>
       <NavigationItems />
       <Language />
@@ -10,10 +11,12 @@
       <a
         class="out-link"
         href="http://codeforpoznan.pl"
-        target="_blank">
+        target="_blank"
+      >
         <img
           class="out-link-image"
-          src="../assets/logo_codeforpoznan.svg" >
+          src="../assets/logo_codeforpoznan.svg"
+        >
       </a>
 
       <b-nav-item

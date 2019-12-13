@@ -1,11 +1,13 @@
 <template>
   <div
     id="refresh"
-    v-if="updateReady">
+    v-if="updateReady"
+  >
     <span> {{ $t("refresh.new_version") }}
       <a
         @click="reload"
-        href="#">{{ $t("refresh.reload") }}</a>
+        href="#"
+      >{{ $t("refresh.reload") }}</a>
     </span>
   </div>
 </template>

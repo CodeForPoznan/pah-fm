@@ -5,13 +5,15 @@
     <sidebar :show="showMenu && isUserLoggedIn" />
     <div
       id="page-wrap"
-      class="container">
+      class="container"
+    >
       <div class="row">
         <div class="col-xs-12 page">
           <transition
             name="fade"
             mode="out-in"
-            appear>
+            appear
+          >
             <router-view @hide-menu="showMenu = false" />
           </transition>
         </div>

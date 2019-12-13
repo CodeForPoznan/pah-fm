@@ -1,14 +1,17 @@
 <template>
   <div>
     <ul
-      class="lang">
+      class="lang"
+    >
       <li
         v-for="language in languagesOrder"
         :key="language"
-        @click="changeLang(language)">
+        @click="changeLang(language)"
+      >
         <flag
           :iso="language"
-          :squared="false"/>
+          :squared="false"
+        />
       </li>
     </ul>
   </div>
