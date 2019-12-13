@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import flatMap from 'array.prototype.flatmap';
 
 import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
@@ -144,12 +145,10 @@ router.beforeEach((to, _from, next) => {
 
   // Guard routes based on groups
   if (userLoggedIn && allGroupBasedRoutes.includes(to.name)) {
-    const availableRoutes = store.state.user.groups
-      .reduce(
-        (acc, group) => [...acc, ...groupBasedRoutes[group.name.toLowerCase()]],
-        [],
-      )
-      .map(route => route.to.name);
+    const availableRoutes = flatMap(
+      store.state.user.groups,
+      group => groupBasedRoutes[group.name.toLowerCase()],
+    ).map(route => route.to.name);
 
     const routeAccessible = availableRoutes.includes(to.name);
 

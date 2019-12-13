@@ -47,13 +47,12 @@ export default {
       this.isInvalid = {};
       this.listOfErrors = [];
 
-      this.listOfErrors = this.requiredFields.reduce((acc, field) => {
-        const isInvalid = !isValid(this.requiredFields, this.form, field);
-
-        this.isInvalid[field] = isInvalid;
-
-        return isInvalid ? [...acc, this.getErrorMessage(field)] : acc;
-      }, []);
+      this.listOfErrors = this.requiredFields
+        .filter(field => !isValid(this.requiredFields, this.form, field))
+        .map((field) => {
+          this.isInvalid[field] = true;
+          return this.getErrorMessage(field);
+        });
 
       if (validator) {
         this.listOfErrors.push(...validator(this.form));
