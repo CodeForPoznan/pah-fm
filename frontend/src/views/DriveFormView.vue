@@ -234,6 +234,7 @@ import {
 import { FORM_STATE } from '../constants/form';
 import { setItem, removeItem } from '../services/localStore';
 import { hashDict } from '../services/crypto';
+import { padWithZeros } from "../utils";
 
 export default {
   name: 'DriveFormView',
@@ -332,17 +333,15 @@ export default {
       return distance > 0 ? distance : 0;
     },
     computeHash() {
-      return hashDict({
+      return padWithZeros(hashDict({
         car: { id: this.drive.car },
-        passengers: [{ id: this.drive.passenger }],
-        date: this.drive.date,
-        start_mileage: this.drive.startMileage,
-        end_mileage: this.drive.endMileage,
-        description: this.drive.description,
-        start_location: this.drive.startLocation,
-        end_location: this.drive.endLocation,
         project: { id: this.drive.project },
-      });
+        passengers: [{ id: this.drive.passenger }],
+        startLocation: this.drive.startLocation,
+        endLocation: this.drive.endLocation,
+        startMileage: this.drive.startMileage,
+        endMileage: this.drive.endMileage,
+      }), 6);
     },
   },
 };

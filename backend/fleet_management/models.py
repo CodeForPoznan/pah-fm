@@ -105,12 +105,13 @@ class Drive(models.Model):
 
     @staticmethod
     def hash_form(initial_data: dict) -> int:
-        copy_of_data = initial_data.copy()
-
-        if "signature" in copy_of_data:
-            copy_of_data.pop("signature")
-
-        if "timestamp" in copy_of_data:
-            copy_of_data.pop("timestamp")
-
-        return hash_dict(copy_of_data)
+        required_fields = {
+            "car": initial_data["car"],
+            "project": initial_data["project"],
+            "passengers": initial_data["passengers"],
+            "startLocation": initial_data["start_location"],
+            "endLocation": initial_data["end_location"],
+            "startMileage": initial_data["start_mileage"],
+            "endMileage": initial_data["end_mileage"],
+        }
+        return hash_dict(required_fields)
