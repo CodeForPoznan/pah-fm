@@ -9,5 +9,5 @@ export const totalMileageFilter
 export const padWithZeros = (num, width) => {
   const n = `${num}`;
   if (n.length >= width) return n;
-  return new Array(width - (n.length + 1)).join('0') + n;
+  return new Array((width + 1) - n.length).join('0') + n;
 };

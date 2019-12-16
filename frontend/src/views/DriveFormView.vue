@@ -19,53 +19,56 @@
             <h2>{{ $t('common.new_drive') }}</h2>
             <form @submit.prevent="handleSubmit">
               <div class="form-group">
-                <label>{{ $t('drive_form.date') }}</label>
+                <label for="date">{{ $t('drive_form.date') }}</label>
                 <input
+                  id="date"
                   type="date"
-                  @change="syncToLocalStorage"
-                  v-model="drive.date"
                   name="date"
                   :max="currentDate"
+                  v-model="drive.date"
+                  @change="syncToLocalStorage"
                   class="form-control"
                   :class="{ 'is-invalid': errors['date'] }"
                 >
               </div>
-
               <div class="form-group">
-                <label>{{ $t('drive_form.start_location') }}</label>
+                <label for="startLocation">{{ $t('drive_form.start_location') }}</label>
                 <input
+                  id="startLocation"
                   type="text"
-                  v-model="drive.startLocation"
-                  @input="syncToLocalStorage"
                   name="startLocation"
                   maxlength="100"
+                  v-model="drive.startLocation"
+                  @input="syncToLocalStorage"
                   class="form-control"
                   :class="{ 'is-invalid': errors['startLocation'] }"
                 >
               </div>
               <div class="form-group">
-                <label>{{ $t('drive_form.starting_mileage') }}</label>
+                <label for="startMileage">{{ $t('drive_form.starting_mileage') }}</label>
                 <input
+                  id="startMileage"
+                  type="number"
+                  name="startMileage"
                   min="0"
+                  v-model.number="drive.startMileage"
                   onkeypress="return event.key === 'Enter'
                       || (Number(event.key) >= 0
                       && Number(event.key) <= 9
                       && event.target.value < 20000000)"
-                  type="number"
-                  v-model="drive.startMileage"
-                  name="startMileage"
                   @input="syncToLocalStorage"
                   class="form-control"
                   :class="{ 'is-invalid': errors['startMileage'] }"
                 >
               </div>
               <div class="form-group">
-                <label>{{ $t('drive_form.project') }}</label>
+                <label for="project">{{ $t('drive_form.project') }}</label>
                 <select
-                  v-if="projects.data"
-                  @change="syncToLocalStorage"
-                  v-model="drive.project"
+                  id="project"
                   name="car"
+                  v-if="projects.data"
+                  v-model.number="drive.project"
+                  @change="syncToLocalStorage"
                   class="form-control"
                   :class="{ 'is-invalid': errors['project'] }"
                 >
@@ -80,77 +83,79 @@
                   v-if="!cars.data"
                 >{{ $t('drive_form.no_project_message') }}</p>
               </div>
-
               <div class="form-group">
-                <label>{{ $t('drive_form.cars') }}</label>
+                <label for="cars">{{ $t('drive_form.cars') }}</label>
                 <select
-                  v-if="cars.data"
-                  v-model="drive.car"
-                  @change="syncToLocalStorage"
+                  id="cars"
                   name="car"
+                  v-if="cars.data"
+                  v-model.number="drive.car"
+                  @change="syncToLocalStorage"
                   class="form-control"
                   :class="{ 'is-invalid': errors['car'] }"
                 >
                   <option
                     v-for="car in cars.data"
                     :key="car.id"
-                    :value="car.id">{{ car.plates }}</option>
+                    :value="car.id"
+                  >{{ car.plates }}</option>
                 </select>
                 <p
                   class="font-weight-bold"
-                  v-if="!cars.data">{{ $t('drive_form.no_cars_message') }}</p>
+                  v-if="!cars.data"
+                >{{ $t('drive_form.no_cars_message') }}</p>
               </div>
-
               <div class="form-group">
-                <label>{{ $t('drive_form.passenger') }}</label>
+                <label for="passenger">{{ $t('drive_form.passenger') }}</label>
                 <v-select
-                  v-model="drive.passenger"
+                  id="passenger"
+                  label="text"
                   name="passenger"
+                  v-model.number="drive.passenger"
                   @input="syncToLocalStorage"
                   class="form-control select"
                   :class="{ 'is-invalid': errors['passenger'] }"
-                  label="text"
                   :reduce="passenger => String(passenger.value)"
                   :options="passengers"
                 />
               </div>
-
               <div class="form-group">
-                <label>{{ $t('drive_form.description') }}</label>
+                <label for="description">{{ $t('drive_form.description') }}</label>
                 <input
+                  id="description"
                   type="text"
+                  name="description"
                   v-model="drive.description"
                   @input="syncToLocalStorage"
-                  name="description"
                   class="form-control"
                   :class="{ 'is-invalid': errors['description']}"
                 >
               </div>
-
               <div class="form-group">
-                <label>{{ $t('drive_form.end_location') }}</label>
+                <label for="endLocation">{{ $t('drive_form.end_location') }}</label>
                 <input
+                  id="endLocation"
                   type="text"
+                  name="endLocation"
                   maxlength="100"
                   @input="syncToLocalStorage"
                   v-model="drive.endLocation"
-                  name="endLocation"
                   class="form-control"
                   :class="{ 'is-invalid': errors['endLocation'] }"
                 >
-              </div>
               <div class="form-group">
-                <label>{{ $t('drive_form.ending_mileage') }}</label>
+                <label for="endMileage">{{ $t('drive_form.ending_mileage') }}</label>
                 <input
+                  id="endMileage"
+                  type="number"
+                  name="endMileage"
                   min="0"
+                  v-model.number="drive.endMileage"
                   onkeypress="return event.key === 'Enter'
                       || (Number(event.key) >= 0
                       && Number(event.key) <= 9
                       && event.target.value < 20000000)"
-                  type="number"
-                  v-model="drive.endMileage"
                   @input="syncToLocalStorage"
-                  name="endMileage"
                   class="form-control"
                   :class="{ 'is-invalid': errors['endMileage'] }"
                 >
@@ -159,23 +164,27 @@
                 <label for="driveHash">{{ $t('drive_form.drive_hash') }}</label>
                 <input
                   id="driveHash"
-                  v-model="computeHash"
+                  v-model.number="computeHash"
                   class="form-control"
                   type="text"
                   readonly
                 >
               </div>
               <div class="form-group">
-                <label for="confirmHash">{{ $t('drive_form.confirm_hash') }}</label>
+                <label for="signature">{{ $t('drive_form.confirm_hash') }}</label>
                 <input
-                  type="text"
-                  id="confirmHash"
-                  name="confirmHash"
-                  @input="syncToLocalStorage"
-                  v-model="drive.confirmHash"
+                  id="signature"
+                  type="number"
+                  name="signature"
+                  min="0"
                   maxlength="6"
+                  v-model.number="drive.signature"
+                  onkeypress="return event.key === 'Enter'
+                      || (Number(event.key) >= 0
+                      && Number(event.key) <= 9
+                      && event.target.value < 20000000)"
                   class="form-control"
-                  :class="{ 'is-invalid': errors['endMileage'] }"
+                  :class="{ 'is-invalid': errors['signature'] }"
                 >
               </div>
               <div
