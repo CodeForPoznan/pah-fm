@@ -2,7 +2,6 @@ import calendar
 import time
 
 from django.db import models
-from django.conf import settings
 from django.utils.timezone import now
 from django.contrib.auth.models import AbstractUser
 from django_countries.fields import CountryField
@@ -63,7 +62,7 @@ class Drive(models.Model):
         User, on_delete=models.CASCADE, related_name="drives_driven"
     )
     car = models.ForeignKey(Car, null=False, on_delete=models.CASCADE)
-    date = models.DateField(default=now, blank=False)
+    date = models.DateField(default=lambda: now().date(), blank=False)
     start_mileage = models.IntegerField(null=False)
     end_mileage = models.IntegerField(null=False)
     description = models.CharField(max_length=1000, blank=True)
@@ -107,7 +106,11 @@ class Drive(models.Model):
     @staticmethod
     def hash_form(initial_data: dict) -> int:
         copy_of_data = initial_data.copy()
+
         if "signature" in copy_of_data:
             copy_of_data.pop("signature")
+
+        if "timestamp" in copy_of_data:
+            copy_of_data.pop("timestamp")
 
         return hash_dict(copy_of_data)
