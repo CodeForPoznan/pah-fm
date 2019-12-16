@@ -234,7 +234,7 @@ import {
 import { FORM_STATE } from '../constants/form';
 import { setItem, removeItem } from '../services/localStore';
 import { hashDict } from '../services/crypto';
-import { padWithZeros } from "../utils";
+import { padWithZeros } from '../utils';
 
 export default {
   name: 'DriveFormView',
