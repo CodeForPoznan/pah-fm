@@ -3,7 +3,7 @@
  *
  * @example
  * {
- *  key1: value1,
+ *  key1: [value1],
  *  key2: [value2, value3]
  * }
  * //will be converted to:
@@ -14,13 +14,10 @@
  * }
  */
 export const reverseObject = objectToReverse =>
-  Object.keys(objectToReverse).reduce(
-    (acc, key) => ({
+  Object.entries(objectToReverse).reduce(
+    (acc, [key, value]) => ({
       ...acc,
-      ...objectToReverse[key].reduce(
-        (acc2, value) => ({ ...acc2, ...{ [value]: key } }),
-        {},
-      ),
+      ...value.reduce((a, v) => ({ ...a, ...{ [v]: key } }), {}),
     }),
     {},
   );
