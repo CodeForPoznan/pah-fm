@@ -32,12 +32,13 @@ export const makeDefaultFormState = () => ({
   date: getToday(),
   car: '',
   description: '',
-  startMileage: '',
-  endMileage: '',
+  startMileage: 0,
+  endMileage: 0,
   project: '',
   passenger: '',
   startLocation: '',
   endLocation: '',
+  signature: 0,
 });
 
 const makeStoredFormState = () => {

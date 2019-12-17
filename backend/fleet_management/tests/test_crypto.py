@@ -10,20 +10,21 @@ from fleet_management.crypto import (
     find_prime,
     find_p_q_phi,
     find_pair_of_keys,
+    hash_dict,
 )
 
 
 class CryptoTest(APISimpleTestCase):
     def setUp(self) -> None:
         self.n_tests = 1000
-        self.keys = [find_pair_of_keys() for _ in range(self.n_tests)]
 
     def test_sign_and_verify(self):
-        for pub, priv in self.keys:
-            message = randbits(settings.RSA_NUMBER_OF_BITS)
-            cipher = sign(message, priv)
-            self.assertTrue(verify(message, cipher, pub))
-            self.assertFalse(verify(message + 1, cipher, pub))
+        for _ in range(1000):
+            message = randbits(settings.RSA_BIT_LENGTH)
+            pub, priv = find_pair_of_keys()
+            signature = sign(message, priv)
+            self.assertTrue(verify(message, signature, pub))
+            self.assertFalse(verify(message + 1, signature, pub))
 
     def test_inverse_of(self):
         self.assertEqual(inverse_of(2, 3), 2)
@@ -50,7 +51,7 @@ class CryptoTest(APISimpleTestCase):
 
     def test_find_prime(self):
         for _ in range(self.n_tests):
-            prime = find_prime(settings.RSA_NUMBER_OF_BITS)
+            prime = find_prime(settings.RSA_BIT_LENGTH)
             self.assertTrue(is_prime(prime))
 
     def test_find_p_q_phi(self):
@@ -60,3 +61,11 @@ class CryptoTest(APISimpleTestCase):
             self.assertTrue(is_prime(p))
             self.assertTrue(is_prime(q))
             self.assertEqual(phi, my_phi)
+
+    def test_hash_dict(self):
+        self.assertEqual(hash_dict({}), 17022)
+        self.assertEqual(hash_dict({1: 1}), 361627)
+        self.assertEqual(hash_dict({1: 1, "asd": "asd"}), 319826)
+        self.assertEqual(hash_dict({1: 1, "asd": "asd", 9: [1, 2, 3]}), 319976)
+        self.assertEqual(hash_dict({1: {2: {3: {4: {5: {}}}}}}), 17022)
+        self.assertEqual(hash_dict({1: {2: {3: {4: {5: "x"}}}}}), 288678)

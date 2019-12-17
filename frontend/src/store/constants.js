@@ -13,6 +13,7 @@ export const SET_DATA = 'setData';
 export const SET_ERRORS = 'setErrors';
 export const SAVE = 'save';
 export const VERIFICATION_TOKEN = 'verificationToken';
+export const RSA_BIT_LENGTH = 19;
 
 export const IS_ONLINE = 'isOnline';
 
