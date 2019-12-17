@@ -1,5 +1,3 @@
-from datetime import date
-
 from django.contrib.auth.models import Group
 from django.urls import reverse
 from rest_framework import status

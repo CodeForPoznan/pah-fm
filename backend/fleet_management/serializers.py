@@ -27,10 +27,12 @@ class PassengerSerializer(serializers.ModelSerializer):
 
     first_name = fields.CharField(read_only=True)
     last_name = fields.CharField(read_only=True)
+    rsa_modulus_n = fields.CharField(read_only=True)
+    rsa_pub_e = fields.CharField(read_only=True)
 
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name')
+        fields = ('id', 'first_name', 'last_name', 'rsa_modulus_n', 'rsa_pub_e')
 
 
 class CarSerializer(serializers.ModelSerializer):
@@ -75,8 +77,7 @@ class DriveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Drive
         fields = (
-            'id',
-            'driver', 'car', 'passengers', 'project',
+            'id', 'driver', 'car', 'passengers', 'project',
             'date', 'start_mileage', 'end_mileage', 'description',
             'start_location', 'end_location', 'timestamp', 'signature'
         )

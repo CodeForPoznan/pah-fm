@@ -1,3 +1,4 @@
+from hashlib import md5
 from math import floor, sqrt
 from secrets import randbits
 from collections import namedtuple
@@ -58,33 +59,28 @@ def is_prime(number: int) -> bool:
 
 def find_prime(bits: int) -> int:
     """Returns prime number with specified amount of bits."""
-    prime = randbits(bits) | 1
-
     while True:
-        if is_prime(prime):
-            break
-
-        prime += 2
-        if prime.bit_length() > bits:
-            prime = randbits(bits) | 1
-
-    return prime
+        prime = randbits(bits) | 1
+        while prime.bit_length() <= bits:
+            if is_prime(prime):
+                return prime
+            prime += 2
 
 
 def find_p_q_phi() -> (int, int, int):
     """Returns RSA key components."""
-    limit = (2 ** settings.RSA_NUMBER_OF_BITS) // 2
-    p_bits = settings.RSA_NUMBER_OF_BITS // 2 + 3
-    q_bits = settings.RSA_NUMBER_OF_BITS // 2 - 3
+    limit = (2 ** settings.RSA_BIT_LENGTH) // 2
+    p_bits = settings.RSA_BIT_LENGTH // 2 + 3
+    q_bits = settings.RSA_BIT_LENGTH // 2 - 3
     p, q = find_prime(p_bits), find_prime(q_bits)
 
-    other = False
+    other_p = False
     while p == q or p * q >= limit:
-        if other:
+        if other_p:
             p = find_prime(p_bits)
         else:
             q = find_prime(q_bits)
-        other = not other
+        other_p = not other_p
 
     p, q = max(p, q), min(p, q)
 
@@ -93,7 +89,7 @@ def find_p_q_phi() -> (int, int, int):
 
 def find_pair_of_keys() -> (PublicKey, PrivateKey):
     """Returns pair of public and private keys for RSA."""
-    exp = settings.RSA_PUBLIC_EXPONENT
+    exp = settings.RSA_PUBLIC_EXP
 
     while True:
         p, q, phi = find_p_q_phi()
@@ -109,13 +105,12 @@ def hash_dict(d: dict, depth=5) -> int:
         if depth < 0:
             return ""
         if type(obj) in [list, dict]:
-            values = getattr(obj, 'values', obj.__iter__)()
+            values = getattr(obj, "values", obj.__iter__)()
             return sep.join(map(lambda x: flatten(x, dep-1, sep), values))
         return str(obj)
 
-    # http://www.cse.yorku.ca/~oz/hash.html
-    val = 5381
-    for c in flatten(d):
-        val = val * 33 + ord(c)
+    val = flatten(d, depth).encode()
+    val = md5(val).hexdigest()
+    val = int(val[-6:], 16)
 
-    return val % 2 ** settings.RSA_NUMBER_OF_BITS
+    return val % 2 ** settings.RSA_BIT_LENGTH
