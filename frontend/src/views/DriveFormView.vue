@@ -143,6 +143,7 @@
                   class="form-control"
                   :class="{ 'is-invalid': errors['endLocation'] }"
                 >
+              </div>
               <div class="form-group">
                 <label for="endMileage">{{ $t('drive_form.ending_mileage') }}</label>
                 <input
@@ -190,7 +191,6 @@
               <div
                 class="form-group col-xs-12"
               >{{ $t('drive_form.distance_traveled', { distance: distance }) }}</div>
-
               <b-alert
                 class="col-xs-12"
                 variant="success"
@@ -209,7 +209,6 @@
               >
                 <b>{{ $t('drive_form.drive_added_offline_notification') }}</b>
               </b-alert>
-
               <div class="form-group">
                 <button class="btn btn-primary col-xs-3">{{ $t('drive_form.submit') }}</button>
               </div>
