@@ -177,6 +177,33 @@
         :class="{ 'is-invalid': isInvalid['confirmHash'] }"
       >
     </div>
+    <div class="form-group">
+                <label for="driveHash">{{ $t('drive_form.drive_hash') }}</label>
+                <input
+                  id="driveHash"
+                  v-model.number="computeHash"
+                  class="form-control"
+                  type="text"
+                  readonly
+                >
+              </div>
+    <div class="form-group">
+                <label for="signature">{{ $t('drive_form.confirm_hash') }}</label>
+                <input
+                  id="signature"
+                  type="number"
+                  name="signature"
+                  min="0"
+                  maxlength="6"
+                  v-model.number="drive.signature"
+                  onkeypress="return event.key === 'Enter'
+                      || (Number(event.key) >= 0
+                      && Number(event.key) <= 9
+                      && event.target.value < 20000000)"
+                  class="form-control"
+                  :class="{ 'is-invalid': errors['signature'] }"
+                >
+              </div>
     <div
       class="form-group col-xs-12"
     >
@@ -225,6 +252,8 @@ import {
 import { FORM_STATE } from '../constants/form';
 import { setItem } from '../services/localStore';
 import { getToday } from '../services/time';
+import { hashDict } from '../services/crypto';
+import { padWithZeros } from '../utils';
 
 const initialFormData = {
   date: getToday(),
@@ -316,7 +345,6 @@ export default {
     this[apiActions.fetchPassengers]();
     this[apiActions.fetchProjects]();
   },
-
   computed: {
     ...mapState(namespaces.cars, {
       cars: state => state,
@@ -336,6 +364,17 @@ export default {
     distance() {
       const distance = this.form.endMileage - this.form.startMileage;
       return distance > 0 ? distance : 0;
+    },
+    computeHash() {
+      return padWithZeros(hashDict({
+        car: { id: this.drive.car },
+        project: { id: this.drive.project },
+        passengers: [{ id: this.drive.passenger }],
+        startLocation: this.drive.startLocation,
+        endLocation: this.drive.endLocation,
+        startMileage: this.drive.startMileage,
+        endMileage: this.drive.endMileage,
+      }), 6);
     },
   },
 };

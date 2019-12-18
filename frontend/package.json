@@ -22,6 +22,7 @@
     "date-fns": "1.28.5",
     "jwt-decode": "^2.2.0",
     "register-service-worker": "^1.5.2",
+    "js-md5": "^0.7.3",
     "vue": "2.5.17",
     "vue-burger-menu": "^1.0.9",
     "vue-flag-icon": "^1.0.6",

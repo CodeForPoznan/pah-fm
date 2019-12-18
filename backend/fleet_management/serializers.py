@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 
 from rest_framework.exceptions import ValidationError
 
-from .models import Car, Drive, User, Project
+from fleet_management.models import Car, Drive, User, Project
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -71,14 +71,14 @@ class DriveSerializer(serializers.ModelSerializer):
     car = CarSerializer()
     passengers = PassengersField(source="passenger")
     project = ProjectSerializer()
+    signature = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = Drive
         fields = (
-            'id',
-            'driver', 'car', 'passengers', 'project',
+            'id', 'driver', 'car', 'passengers', 'project',
             'date', 'start_mileage', 'end_mileage', 'description',
-            'start_location', 'end_location', 'timestamp'
+            'start_location', 'end_location', 'timestamp', 'signature'
         )
         read_only_fields = ('is_verified',)
 
@@ -89,11 +89,11 @@ class DriveSerializer(serializers.ModelSerializer):
         project_data = validated_data.pop('project')
         project = Project.objects.get(pk=project_data['id'])
         passenger = User.objects.get(pk=passenger_data['id'])
+        form_signature = validated_data.pop("signature")
 
         with transaction.atomic():
             drive = Drive.objects.create(
                 **validated_data,
-                # TODO Awaiting validation
                 is_verified=True,
                 driver=self.context['driver'],
                 car=car,
