@@ -70,7 +70,7 @@ class DrivesApiTestCase(APITestCase):
             "startLocation": "Warsaw",
             "endLocation": "Poznan",
             "project": {"id": project.id},
-            "signature": 28382,
+            "signature": 25171,
         }
         self.client.force_login(self.driver)
         res = self.client.post(self.url, data=payload, format="json")
