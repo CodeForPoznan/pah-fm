@@ -156,54 +156,30 @@
     <div class="form-group">
       <label for="driveHash">{{ $t('drive_form.drive_hash') }}</label>
       <input
-        value="TODO"
         id="driveHash"
+        v-model.number="computeHash"
         class="form-control"
         type="text"
         readonly
       >
     </div>
     <div class="form-group">
-      <label for="confirmHash">{{ $t('drive_form.confirm_hash') }}</label>
+      <label for="signature">{{ $t('drive_form.signature') }}</label>
       <input
+        id="signature"
         type="number"
-        id="confirmHash"
-        name="confirmHash"
-        @input="syncToLocalStorage"
-        v-model="form.confirmHash"
-        max="999999"
+        name="signature"
         min="0"
-        class="form-control"
-        :class="{ 'is-invalid': isInvalid['confirmHash'] }"
-      >
-    </div>
-    <div class="form-group">
-                <label for="driveHash">{{ $t('drive_form.drive_hash') }}</label>
-                <input
-                  id="driveHash"
-                  v-model.number="computeHash"
-                  class="form-control"
-                  type="text"
-                  readonly
-                >
-              </div>
-    <div class="form-group">
-                <label for="signature">{{ $t('drive_form.confirm_hash') }}</label>
-                <input
-                  id="signature"
-                  type="number"
-                  name="signature"
-                  min="0"
-                  maxlength="6"
-                  v-model.number="drive.signature"
-                  onkeypress="return event.key === 'Enter'
+        maxlength="6"
+        v-model.number="form.signature"
+        onkeypress="return event.key === 'Enter'
                       || (Number(event.key) >= 0
                       && Number(event.key) <= 9
                       && event.target.value < 20000000)"
-                  class="form-control"
-                  :class="{ 'is-invalid': errors['signature'] }"
-                >
-              </div>
+        class="form-control"
+        :class="{ 'is-invalid': isInvalid['signature'] }"
+      >
+    </div>
     <div
       class="form-group col-xs-12"
     >
@@ -265,7 +241,7 @@ const initialFormData = {
   passenger: '',
   startLocation: '',
   endLocation: '',
-  confirmHash: '',
+  signature: '',
 };
 
 const requiredFields = [
@@ -277,7 +253,7 @@ const requiredFields = [
   'startLocation',
   'endLocation',
   'passenger',
-  'confirmHash',
+  'signature',
 ];
 
 export default {
@@ -291,7 +267,6 @@ export default {
     return {
       formId: FORM_STATE,
       requiredFields,
-      errors: {},
       confirmationOnline: false,
       confirmationOffline: false,
       currentDate: new Date().toISOString().split('T')[0],
@@ -367,13 +342,13 @@ export default {
     },
     computeHash() {
       return padWithZeros(hashDict({
-        car: { id: this.drive.car },
-        project: { id: this.drive.project },
-        passengers: [{ id: this.drive.passenger }],
-        startLocation: this.drive.startLocation,
-        endLocation: this.drive.endLocation,
-        startMileage: this.drive.startMileage,
-        endMileage: this.drive.endMileage,
+        car: { id: this.form.car },
+        project: { id: this.form.project },
+        passengers: [{ id: this.form.passenger }],
+        startLocation: this.form.startLocation,
+        endLocation: this.form.endLocation,
+        startMileage: this.form.startMileage,
+        endMileage: this.form.endMileage,
       }), 6);
     },
   },
