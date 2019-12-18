@@ -43,7 +43,7 @@
     },
     "passenger_form": {
       "hash": "код драйвера",
-      "length_should_be_6": "Код драйвера повинен бути довжиною 6"
+      "invalid_length": "Код драйвера повинен бути довжиною 6"
     },
     "drives": {
       "car": "Автомобіль",
@@ -128,7 +128,7 @@
     },
     "passenger_form": {
       "hash": "Driver code",
-      "length_should_be_6": "Driver code should be of length 6"
+      "invalid_length": "Driver code should be of length 6"
     },
     "drives": {
       "car": "With car:",
@@ -213,7 +213,7 @@
     },
     "passenger_form": {
       "hash": "Kod kierowcy",
-      "length_should_be_6": "Kod kierowcy powiniem mieć długość 6"
+      "invalid_length": "Kod kierowcy powiniem mieć długość 6"
     },
     "drives": {
       "car": "Samochodem:",
