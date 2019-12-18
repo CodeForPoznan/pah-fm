@@ -252,8 +252,7 @@ const requiredFields = [
   'endMileage',
   'startLocation',
   'endLocation',
-  'passenger',
-  'signature',
+  'passenger'
 ];
 
 export default {
