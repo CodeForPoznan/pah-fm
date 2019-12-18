@@ -5,13 +5,16 @@
     @submit="handleSubmit"
   >
     <div class="form-group">
-      <label>{{ $t('passenger_form.hash') }}</label>
+      <label for="hash">{{ $t('passenger_form.hash') }}</label>
       <input
         type="number"
         @change="syncToLocalStorage"
         v-model="form.hash"
+        id="hash"
         name="hash"
-        maxlength="6"
+        max="999999"
+        step="1"
+        min="0"
         class="form-control passenger-input"
         :class="{ 'is-invalid': isInvalid.hash }"
       >
