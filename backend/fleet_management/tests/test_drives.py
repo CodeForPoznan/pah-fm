@@ -33,12 +33,8 @@ class DrivesApiTestCase(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_can_retrieve_only_my_drives(self):
-        new_driver = UserFactory(
-            groups=Group.objects.filter(name=Groups.Driver.name)
-        )
-        DriveFactory.create_batch(
-            size=4, driver=new_driver, passenger=self.passenger
-        )
+        new_driver = UserFactory(groups=Group.objects.filter(name=Groups.Driver.name))
+        DriveFactory.create_batch(size=4, driver=new_driver, passenger=self.passenger)
         self.client.force_login(self.driver)
         res = self.client.get(self.url)
         drives = res.data
@@ -60,9 +56,7 @@ class DrivesApiTestCase(APITestCase):
         )
         payload = {
             "car": {"id": car.id},
-            "passengers": [
-                {"id": passenger.id},
-            ],
+            "passengers": [{"id": passenger.id}],
             "date": "2019-12-06",
             "startMileage": 180000,
             "endMileage": 180250,

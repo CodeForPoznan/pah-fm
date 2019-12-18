@@ -11,7 +11,7 @@ from fleet_management.models import Car, Drive, User, Project
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
-        fields = ('name',)
+        fields = ("name",)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -19,7 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'groups')
+        fields = ("id", "username", "groups")
 
 
 class PassengerSerializer(serializers.ModelSerializer):
@@ -32,7 +32,7 @@ class PassengerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'rsa_modulus_n', 'rsa_pub_e')
+        fields = ("id", "first_name", "last_name", "rsa_modulus_n", "rsa_pub_e")
 
 
 class CarSerializer(serializers.ModelSerializer):
@@ -41,12 +41,7 @@ class CarSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Car
-        fields = (
-            'id',
-            'plates',
-            'fuel_consumption',
-            'description',
-        )
+        fields = ("id", "plates", "fuel_consumption", "description")
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -56,7 +51,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('title', 'description', 'id')
+        fields = ("title", "description", "id")
 
 
 class PassengersField(serializers.Field):
@@ -77,24 +72,34 @@ class DriveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Drive
         fields = (
-            'id', 'driver', 'car', 'passengers', 'project',
-            'date', 'start_mileage', 'end_mileage', 'description',
-            'start_location', 'end_location', 'timestamp', 'signature'
+            "id",
+            "driver",
+            "car",
+            "passengers",
+            "project",
+            "date",
+            "start_mileage",
+            "end_mileage",
+            "description",
+            "start_location",
+            "end_location",
+            "timestamp",
+            "signature",
         )
-        read_only_fields = ('is_verified',)
+        read_only_fields = ("is_verified",)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.hashed_form = -1
 
     def create(self, validated_data):
-        passenger_data = validated_data.pop('passenger')
-        car_data = validated_data.pop('car')
-        car = Car.objects.get(pk=car_data['id'])
-        project_data = validated_data.pop('project')
-        project = Project.objects.get(pk=project_data['id'])
-        passenger = User.objects.get(pk=passenger_data['id'])
-        form_signature = validated_data.pop('signature')
+        passenger_data = validated_data.pop("passenger")
+        car_data = validated_data.pop("car")
+        car = Car.objects.get(pk=car_data["id"])
+        project_data = validated_data.pop("project")
+        project = Project.objects.get(pk=project_data["id"])
+        passenger = User.objects.get(pk=passenger_data["id"])
+        form_signature = validated_data.pop("signature")
 
         signature = sign(self.hashed_form, passenger.private_key())
         is_verified = verify(self.hashed_form, form_signature, passenger.public_key())
@@ -104,7 +109,7 @@ class DriveSerializer(serializers.ModelSerializer):
             drive = Drive.objects.create(
                 **validated_data,
                 is_verified=is_verified,
-                driver=self.context['driver'],
+                driver=self.context["driver"],
                 car=car,
                 project=project,
                 passenger=passenger
@@ -121,6 +126,9 @@ class DriveSerializer(serializers.ModelSerializer):
             return False
         except ValidationError as err:
             err_codes = err.get_codes()
-            if "non_field_errors" in err_codes and "unique" in err_codes["non_field_errors"]:
+            if (
+                "non_field_errors" in err_codes
+                and "unique" in err_codes["non_field_errors"]
+            ):
                 err.status_code = status.HTTP_409_CONFLICT
             raise err
