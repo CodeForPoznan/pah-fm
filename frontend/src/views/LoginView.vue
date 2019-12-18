@@ -13,10 +13,11 @@
             <h2>{{ $t('common.login') }}</h2>
             <form @submit.prevent="handleSubmit">
               <div class="form-group">
-                <label>{{ $t('login.username') }}</label>
+                <label for="username">{{ $t('login.username') }}</label>
                 <input
                   type="text"
                   v-model="username"
+                  id="username"
                   name="username"
                   class="form-control"
                   :class="{ 'is-invalid': submitted && !username }"
@@ -33,6 +34,7 @@
                 <input
                   type="password"
                   v-model="password"
+                  id="password"
                   name="password"
                   class="form-control"
                   :class="{ 'is-invalid': submitted && !password }"

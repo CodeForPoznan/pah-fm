@@ -166,12 +166,13 @@
     <div class="form-group">
       <label for="confirmHash">{{ $t('drive_form.confirm_hash') }}</label>
       <input
-        type="text"
+        type="number"
         id="confirmHash"
         name="confirmHash"
         @input="syncToLocalStorage"
         v-model="form.confirmHash"
-        maxlength="6"
+        max="999999"
+        min="0"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['confirmHash'] }"
       >
