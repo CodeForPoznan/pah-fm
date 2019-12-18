@@ -1,0 +1,5 @@
+@import '~@7ninjas/scss-mixins/all';
+
+.wrapper {
+  @include m(2);
+}
