@@ -30,7 +30,6 @@ class Car(models.Model):
     def __str__(self):
         return self.plates
 
-
 class Project(models.Model):
     title = models.CharField(max_length=50, blank=False)
     description = models.CharField(max_length=1000, blank=False)
@@ -54,6 +53,10 @@ class Drive(models.Model):
     is_verified = models.BooleanField(default=False)
     passenger = models.ForeignKey(User, on_delete=models.CASCADE, related_name="drives_taken", null=True, blank=True)
 
+    @property
+    def country(self):
+        return self.driver.country.name
+
     class Meta:
         unique_together = [
             (
@@ -62,6 +65,7 @@ class Drive(models.Model):
                 "timestamp",
                 "start_location",
                 "end_location",
+
             )
         ]
 
