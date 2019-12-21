@@ -59,7 +59,7 @@ class Drive(models.Model):
         User, on_delete=models.CASCADE, related_name="drives_driven"
     )
     car = models.ForeignKey(Car, null=False, on_delete=models.CASCADE)
-    date = models.DateField(default=lambda: now().date(), blank=False)
+    date = models.DateField(auto_now_add=True, blank=False)
     start_mileage = models.IntegerField(null=False)
     end_mileage = models.IntegerField(null=False)
     description = models.CharField(max_length=1000, blank=True)
