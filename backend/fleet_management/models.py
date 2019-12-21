@@ -19,14 +19,11 @@ class User(AbstractUser):
     rsa_pub_e = models.CharField(max_length=6, null=False, default="")
     rsa_priv_d = models.CharField(max_length=6, null=False, default="")
 
-    def save(self, regenerate_keys: bool = False, *args, **kwargs):
-        if regenerate_keys or self.pk is None:
-            pub, priv = find_pair_of_keys()
-            self.rsa_modulus_n = str(pub.n).zfill(6)
-            self.rsa_pub_e = str(pub.e).zfill(6)
-            self.rsa_priv_d = str(priv.d).zfill(6)
-
-        super().save(*args, **kwargs)
+    def regenerate_keys(self):
+        pub, priv = find_pair_of_keys()
+        self.rsa_modulus_n = str(pub.n).zfill(6)
+        self.rsa_pub_e = str(pub.e).zfill(6)
+        self.rsa_priv_d = str(priv.d).zfill(6)
 
     def public_key(self) -> PublicKey:
         return PublicKey(int(str(self.rsa_modulus_n)), int(str(self.rsa_pub_e)))
