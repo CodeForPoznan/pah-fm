@@ -2,7 +2,6 @@ import calendar
 import time
 
 from django.db import models
-from django.utils.timezone import now
 from django.contrib.auth.models import AbstractUser
 from django_countries.fields import CountryField
 
@@ -18,6 +17,12 @@ class User(AbstractUser):
     rsa_modulus_n = models.CharField(max_length=6, null=False, default="")
     rsa_pub_e = models.CharField(max_length=6, null=False, default="")
     rsa_priv_d = models.CharField(max_length=6, null=False, default="")
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            self.regenerate_keys()
+
+        super().save(*args, **kwargs)
 
     def regenerate_keys(self):
         pub, priv = find_pair_of_keys()
