@@ -2,12 +2,11 @@
   <div
     v-if="!drives.length && !unsyncedDrives.length"
     class="alert alert-warning m-5"
-    role="alert">
+    role="alert"
+  >
     {{ $t('drives.no_driver_drives') }}
   </div>
-  <div
-    v-else>
-
+  <div v-else>
     <h4
       class="heading"
       v-if="unsyncedDrives.length"
@@ -23,10 +22,12 @@
     <div
       class="card"
       v-for="drive in unsyncedDrives"
-      :key="drive.id">
+      :key="drive.id"
+    >
       <div
         class="card-header"
-        @click="showDrive(drive.timestamp)">
+        @click="showDrive(drive.timestamp)"
+      >
         <h5 class="mb-0">
           <span class="font-weight-bold">{{ drive.date }}</span>
           {{ $t('drives.from_to', { from: drive.startLocation, destination: drive.endLocation}) }}
@@ -73,10 +74,12 @@
     <div
       class="card"
       v-for="drive in drives"
-      :key="drive.id">
+      :key="drive.id"
+    >
       <div
         class="card-header"
-        @click="showDrive(drive.id)">
+        @click="showDrive(drive.id)"
+      >
         <h5 class="mb-0">
           <span class="font-weight-bold">{{ drive.date }}</span>
           {{ $t('drives.from_to', { from: drive.startLocation, destination: drive.endLocation}) }}
@@ -108,15 +111,22 @@
       </div>
     </div>
   </div>
-
 </template>
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex';
-import { actions as apiActions, namespaces, UNSYNCHRONISED_DRIVES, UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE } from '../store/constants';
+import {
+  actions as apiActions,
+  namespaces,
+  UNSYNCHRONISED_DRIVES,
+  UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE,
+} from '../store/constants';
 import { totalMileageReducer, totalMileageFilter } from '../utils';
+
+import GroupGuardMixin from '../mixins/GroupGuardMixin';
 
 export default {
   name: 'DrivesView',
+  mixins: [GroupGuardMixin],
   data() {
     return {
       visibleDrive: null,
@@ -135,12 +145,8 @@ export default {
     }),
     ...mapState(namespaces.drives, {
       drives: state => state.data || [],
-      totalKilometers: state => state.data
-        .filter(totalMileageFilter)
-        .reduce(
-          totalMileageReducer,
-          0,
-        ),
+      totalKilometers: state =>
+        state.data.filter(totalMileageFilter).reduce(totalMileageReducer, 0),
     }),
   },
   created() {
@@ -150,14 +156,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../scss/base";
+@import '../scss/base';
 
 .card-header {
   cursor: pointer;
-}
-
-.wrapper {
-  @include m(2);
 }
 
 .heading {

@@ -2,10 +2,12 @@ import calendar
 import time
 
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 from django.utils.timezone import now
+from django.contrib.auth.models import AbstractUser
 from django_countries.fields import CountryField
-from django.core.validators import MinLengthValidator
+
+from fleet_management.crypto import PublicKey, PrivateKey, find_pair_of_keys, hash_dict
+
 
 def get_current_timestamp_in_gmt():
     return calendar.timegm(time.gmtime())
@@ -13,9 +15,24 @@ def get_current_timestamp_in_gmt():
 
 class User(AbstractUser):
     country = CountryField(blank_label="(select country)", null=False)
-    rsa_modulus_n = models.CharField(max_length=6, validators=[MinLengthValidator(6)], null=False, default='')
-    rsa_pub_e = models.CharField(max_length=6, validators=[MinLengthValidator(6)], null=False, default='')
-    rsa_priv_d = models.CharField(max_length=6, validators=[MinLengthValidator(6)], null=False, default='')
+    rsa_modulus_n = models.CharField(max_length=6, null=False, default="")
+    rsa_pub_e = models.CharField(max_length=6, null=False, default="")
+    rsa_priv_d = models.CharField(max_length=6, null=False, default="")
+
+    def save(self, regenerate_keys: bool = False, *args, **kwargs):
+        if regenerate_keys or self.pk is None:
+            pub, priv = find_pair_of_keys()
+            self.rsa_modulus_n = str(pub.n).zfill(6)
+            self.rsa_pub_e = str(pub.e).zfill(6)
+            self.rsa_priv_d = str(priv.d).zfill(6)
+
+        super().save(*args, **kwargs)
+
+    def public_key(self) -> PublicKey:
+        return PublicKey(int(str(self.rsa_modulus_n)), int(str(self.rsa_pub_e)))
+
+    def private_key(self) -> PrivateKey:
+        return PrivateKey(int(str(self.rsa_modulus_n)), int(str(self.rsa_priv_d)))
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -34,16 +51,18 @@ class Car(models.Model):
 class Project(models.Model):
     title = models.CharField(max_length=50, blank=False)
     description = models.CharField(max_length=1000, blank=False)
-    country = CountryField(blank_label='(select country)', default=None)
+    country = CountryField(blank_label="(select country)", default=None)
 
     def __str__(self):
         return self.title
 
 
 class Drive(models.Model):
-    driver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="drives_driven")
+    driver = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="drives_driven"
+    )
     car = models.ForeignKey(Car, null=False, on_delete=models.CASCADE)
-    date = models.DateField(default=now, blank=False)
+    date = models.DateField(default=lambda: now().date(), blank=False)
     start_mileage = models.IntegerField(null=False)
     end_mileage = models.IntegerField(null=False)
     description = models.CharField(max_length=1000, blank=True)
@@ -52,7 +71,13 @@ class Drive(models.Model):
     timestamp = models.IntegerField(blank=False, default=get_current_timestamp_in_gmt)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     is_verified = models.BooleanField(default=False)
-    passenger = models.ForeignKey(User, on_delete=models.CASCADE, related_name="drives_taken", null=True, blank=True)
+    passenger = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="drives_taken",
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         unique_together = [
@@ -77,3 +102,16 @@ class Drive(models.Model):
     @property
     def diff_mileage(self):
         return self.end_mileage - self.start_mileage
+
+    @staticmethod
+    def hash_form(initial_data: dict) -> int:
+        required_fields = {
+            "car": initial_data["car"],
+            "project": initial_data["project"],
+            "passengers": initial_data["passengers"],
+            "startLocation": initial_data["start_location"],
+            "endLocation": initial_data["end_location"],
+            "startMileage": initial_data["start_mileage"],
+            "endMileage": initial_data["end_mileage"],
+        }
+        return hash_dict(required_fields)
