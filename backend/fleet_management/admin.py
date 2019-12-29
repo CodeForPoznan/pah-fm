@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from import_export.admin import ImportExportModelAdmin
 from import_export.fields import Field
 from import_export import resources
-from .models import Car, Drive, User, Project
+from .models import Car, Drive, User, Project, ProjectAdmin
 
 
 class DriveResource(resources.ModelResource):
@@ -47,6 +47,7 @@ class DriveAdmin(ImportExportModelAdmin):
     list_filter = ('driver__country',)
     list_display = ('__str__', 'country',)
 
+
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {"fields": ("username", "password")}),
@@ -73,4 +74,4 @@ class CustomUserAdmin(UserAdmin):
 admin.site.register(Car)
 admin.site.register(Drive, DriveAdmin)
 admin.site.register(User, CustomUserAdmin)
-admin.site.register(Project)
+admin.site.register(Project, ProjectAdmin)
