@@ -46,7 +46,7 @@ class DriveAdmin(ImportExportModelAdmin):
     resource_class = DriveResource
     list_filter = ('driver__country',)
     list_display = ('__str__', 'country',)
-
+    
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
