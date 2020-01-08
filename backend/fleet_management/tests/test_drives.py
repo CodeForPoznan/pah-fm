@@ -45,10 +45,10 @@ class DrivesApiTestCase(APITestCase):
             self.assertEqual(drive["driver"]["id"], self.driver.id)
 
     def test_can_create_a_verified_drive(self):
-        car = CarFactory(id=12)
-        project = ProjectFactory(id=42)
+        car = CarFactory(id=9912)
+        project = ProjectFactory(id=9942)
         passenger = UserFactory(
-            id=55,
+            id=9959,
             groups=[Group.objects.get(name=Groups.Passenger.name)],
             rsa_modulus_n=50927,
             rsa_pub_e=257,
@@ -81,6 +81,33 @@ class DrivesApiTestCase(APITestCase):
         self.assertEqual(drive.description, res.data["description"])
         self.assertEqual(drive.start_location, res.data["start_location"])
         self.assertEqual(drive.end_location, res.data["end_location"])
+
+    def test_can_create_a_verified_drive(self):
+        car = CarFactory(id=9921)
+        project = ProjectFactory(id=9924)
+        passenger = UserFactory(
+            id=9995,
+            groups=[Group.objects.get(name=Groups.Passenger.name)],
+            rsa_modulus_n=50927,
+            rsa_pub_e=257,
+            rsa_priv_d=30593,
+        )
+        payload = {
+            "car": {"id": car.id},
+            "passengers": [{"id": passenger.id}],
+            "date": "2019-12-06",
+            "startMileage": 180000,
+            "endMileage": 180250,
+            "description": "",
+            "startLocation": "Warsaw",
+            "endLocation": "Poznan",
+            "project": {"id": project.id},
+        }
+        self.client.force_login(self.driver)
+        res = self.client.post(self.url, data=payload, format="json")
+        drive = Drive.objects.get(pk=res.data["id"])
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertFalse(drive.is_verified)
 
     def test_fuel_consumption_is_valid(self):
         drive = DriveFactory(start_mileage=100300, end_mileage=100500)
