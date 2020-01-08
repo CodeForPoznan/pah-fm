@@ -81,6 +81,10 @@ class Drive(models.Model):
         blank=True,
     )
 
+    @property
+    def country(self):
+        return self.driver.country.name
+
     class Meta:
         unique_together = [
             (

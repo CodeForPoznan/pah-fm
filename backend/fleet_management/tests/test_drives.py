@@ -1,5 +1,3 @@
-from datetime import date
-
 from django.contrib.auth.models import Group
 from django.urls import reverse
 from rest_framework import status
@@ -35,12 +33,8 @@ class DrivesApiTestCase(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_can_retrieve_only_my_drives(self):
-        new_driver = UserFactory(
-            groups=Group.objects.filter(name=Groups.Driver.name)
-        )
-        DriveFactory.create_batch(
-            size=4, driver=new_driver, passenger=self.passenger
-        )
+        new_driver = UserFactory(groups=Group.objects.filter(name=Groups.Driver.name))
+        DriveFactory.create_batch(size=4, driver=new_driver, passenger=self.passenger)
         self.client.force_login(self.driver)
         res = self.client.get(self.url)
         drives = res.data
@@ -50,30 +44,37 @@ class DrivesApiTestCase(APITestCase):
         for drive in drives:
             self.assertEqual(drive["driver"]["id"], self.driver.id)
 
-    def test_can_create_a_drive(self):
+    def test_can_create_a_verified_drive(self):
+        car = CarFactory(id=12)
+        project = ProjectFactory(id=42)
+        passenger = UserFactory(
+            id=55,
+            groups=[Group.objects.get(name=Groups.Passenger.name)],
+            rsa_modulus_n=50927,
+            rsa_pub_e=257,
+            rsa_priv_d=30593,
+        )
         payload = {
-            "car": {"id": self.car.id},
-            "passengers": [
-                {"id": self.passenger.id},
-            ],
-            "date": date.today().isoformat(),
+            "car": {"id": car.id},
+            "passengers": [{"id": passenger.id}],
+            "date": "2019-12-06",
             "startMileage": 180000,
             "endMileage": 180250,
             "description": "",
             "startLocation": "Warsaw",
             "endLocation": "Poznan",
-            "project": {"id": self.project.id},
-            "signature": 123123,
+            "project": {"id": project.id},
+            "signature": 25171,
         }
-
         self.client.force_login(self.driver)
         res = self.client.post(self.url, data=payload, format="json")
         drive = Drive.objects.filter(pk=res.data["id"])
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         self.assertEqual(drive.count(), 1)
         drive = drive[0]
-        self.assertEqual(drive.passenger.id, self.passenger.id)
-        self.assertEqual(drive.car.id, self.car.id)
+        self.assertTrue(drive.is_verified)
+        self.assertEqual(drive.passenger.id, passenger.id)
+        self.assertEqual(drive.car.id, car.id)
         self.assertEqual(drive.date.isoformat(), res.data["date"])
         self.assertEqual(drive.start_mileage, res.data["start_mileage"])
         self.assertEqual(drive.end_mileage, res.data["end_mileage"])
