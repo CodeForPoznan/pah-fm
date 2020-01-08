@@ -67,7 +67,7 @@ class DriveSerializer(serializers.ModelSerializer):
     car = CarSerializer()
     passengers = PassengersField(source="passenger")
     project = ProjectSerializer()
-    signature = serializers.IntegerField(write_only=True)
+    signature = serializers.IntegerField(write_only=True, required=False)
 
     class Meta:
         model = Drive
@@ -90,7 +90,7 @@ class DriveSerializer(serializers.ModelSerializer):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.hashed_form = -1
+        self.hashed_form = 0
 
     def create(self, validated_data):
         passenger_data = validated_data.pop("passenger")
@@ -99,11 +99,14 @@ class DriveSerializer(serializers.ModelSerializer):
         project_data = validated_data.pop("project")
         project = Project.objects.get(pk=project_data["id"])
         passenger = User.objects.get(pk=passenger_data["id"])
-        form_signature = validated_data.pop("signature")
 
-        signature = sign(self.hashed_form, passenger.private_key())
-        is_verified = verify(self.hashed_form, form_signature, passenger.public_key())
-        is_verified = is_verified and signature == form_signature
+        is_verified = False
+        form_signature = validated_data.pop("signature", False)
+
+        if form_signature:
+            signature = sign(self.hashed_form, passenger.private_key())
+            is_verified = verify(self.hashed_form, form_signature, passenger.public_key())
+            is_verified = is_verified and signature == form_signature
 
         with transaction.atomic():
             drive = Drive.objects.create(
