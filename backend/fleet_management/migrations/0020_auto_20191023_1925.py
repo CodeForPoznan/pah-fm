@@ -3,12 +3,6 @@
 from django.db import migrations, models
 
 
-def generate_rsa_keys_for_existing_users(apps, schema_editor):
-    User = apps.get_model("fleet_management", "User")
-    for user in User.objects.filter(rsa_priv_d=''):
-        user.save(regenerate_keys=True)
-
-
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -31,5 +25,4 @@ class Migration(migrations.Migration):
             name='rsa_pub_e',
             field=models.CharField(default='', max_length=6),
         ),
-        migrations.RunPython(generate_rsa_keys_for_existing_users),
     ]

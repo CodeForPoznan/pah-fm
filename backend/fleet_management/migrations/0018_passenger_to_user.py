@@ -17,7 +17,7 @@ def migrate_passenger_to_user(apps, schema_editor):
                 'email': p.email,
                 'is_superuser': False,
                 'is_staff': False,
-                'country': p.country,
+                'country': p.country or 'UA',
                 'is_active': True,
                 'first_name': p.first_name,
                 'last_name': p.last_name
@@ -28,7 +28,7 @@ def migrate_passenger_to_user(apps, schema_editor):
 
         drives = Drive.objects.filter(passengers=p.id)
         for d in drives:
-            assert d.passengers.all().count() == 1, f"Too many passengers in a drive {d.id}"
+            d.passengers.all().delete()
             d.passenger = u
             d.save()
 
