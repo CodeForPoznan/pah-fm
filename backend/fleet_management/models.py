@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.timezone import now
 from django.contrib.auth.models import AbstractUser
 from django_countries.fields import CountryField
+from django.contrib import admin
 
 from fleet_management.crypto import PublicKey, PrivateKey, find_pair_of_keys, hash_dict
 
@@ -55,6 +56,11 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'country')
+    list_filter = ('country',)
 
 
 class Drive(models.Model):
