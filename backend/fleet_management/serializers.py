@@ -1,8 +1,10 @@
 from django.db import transaction
-from rest_framework import fields, serializers, status
 from django.contrib.auth.models import Group
+from django.core.exceptions import ObjectDoesNotExist
 
+from rest_framework import fields, serializers, status
 from rest_framework.exceptions import ValidationError
+
 
 from fleet_management.crypto import sign, verify
 from fleet_management.models import Car, Drive, User, Project
@@ -90,17 +92,21 @@ class DriveSerializer(serializers.ModelSerializer):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.hashed_form = -1
+        self.hashed_form = 0
 
     def create(self, validated_data):
-        passenger_data = validated_data.pop("passenger")
-        car_data = validated_data.pop("car")
-        car = Car.objects.get(pk=car_data["id"])
-        project_data = validated_data.pop("project")
-        project = Project.objects.get(pk=project_data["id"])
-        passenger = User.objects.get(pk=passenger_data["id"])
-        form_signature = validated_data.pop("signature")
+        passenger_id = validated_data.pop("passenger")["id"]
+        project_id = validated_data.pop("project")["id"]
+        car_id = validated_data.pop("car")["id"]
 
+        try:
+            passenger = User.objects.get(id=passenger_id)
+            project = Project.objects.get(id=project_id)
+            car = Car.objects.get(id=car_id)
+        except ObjectDoesNotExist as e:
+            raise ValidationError(e.args[0])
+
+        form_signature = validated_data.pop("signature")
         signature = sign(self.hashed_form, passenger.private_key())
         is_verified = verify(self.hashed_form, form_signature, passenger.public_key())
         is_verified = is_verified and signature == form_signature
