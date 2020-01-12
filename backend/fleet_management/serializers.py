@@ -1,7 +1,8 @@
 from django.db import transaction
-from rest_framework import fields, serializers, status
+from django.conf import settings
 from django.contrib.auth.models import Group
 
+from rest_framework import fields, serializers, status
 from rest_framework.exceptions import ValidationError
 
 from fleet_management.crypto import sign, verify
@@ -120,6 +121,16 @@ class DriveSerializer(serializers.ModelSerializer):
             drive.save()
 
             return drive
+
+    def validate_signature(self, value):
+        """ validate the actual number in case someone sends 2^32 of 9's """
+        num_digits = len(str(2 ** settings.RSA_BIT_LENGTH))
+        max_number = 10 ** num_digits - 1
+
+        if value > max_number:
+            raise ValidationError('Signature field contains incorrect value')
+
+        return value
 
     def is_valid(self, raise_exception=False):
         try:
