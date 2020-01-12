@@ -16,10 +16,13 @@ class GroupSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     groups = GroupSerializer(many=True)
+    rsa_modulus_n = fields.CharField(read_only=True)
+    rsa_pub_e = fields.CharField(read_only=True)
+    rsa_priv_d = fields.CharField(read_only=True)
 
     class Meta:
         model = User
-        fields = ("id", "username", "groups")
+        fields = ("id", "username", "groups", "rsa_modulus_n", "rsa_pub_e", "rsa_priv_d")
 
 
 class PassengerSerializer(serializers.ModelSerializer):
