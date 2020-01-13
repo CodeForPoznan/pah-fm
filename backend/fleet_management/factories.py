@@ -2,31 +2,65 @@ import string
 from datetime import timedelta
 
 import random
+
+from django.db import transaction
+from django.db.utils import IntegrityError
 from django.utils.timezone import now
-from factory import fuzzy, DjangoModelFactory, Faker, LazyAttribute, lazy_attribute, \
-    post_generation, SubFactory
-
-
-from fleet_management.models import (
-    Car, Drive, Project, User
+from factory import (
+    fuzzy,
+    DjangoModelFactory,
+    Faker,
+    LazyAttribute,
+    lazy_attribute,
+    post_generation,
+    SubFactory,
 )
 
-COUNTRIES = ('UA', 'SS')
+
+from fleet_management.models import Car, Drive, Project, User
 
 
-class UserFactory(DjangoModelFactory):
+COUNTRIES = ("UA", "SS")
 
+
+class MakeFactoryMixin:
+    """
+        This class attaches two new static methods to factory class.
+
+        make() and make_batch() both overwrite the default behaviour
+        of create() and create_batch() in order to protect the user
+        from pushing to the DB the same instance multiple times.
+        This protects you from getting hit with IntegrityError.
+    """
+    @classmethod
+    def make(cls, **kwargs):
+        try:
+            with transaction.atomic():
+                return super().create(**kwargs)
+        except IntegrityError:
+            try:
+                model = cls._meta.model
+                return model.objects.get(**kwargs)
+            except model.MultipleObjectsReturned:
+                return model.objects.last()
+
+    @classmethod
+    def make_batch(cls, size, **kwargs):
+        return [cls.make(**kwargs) for _ in range(size)]
+
+
+class UserFactory(MakeFactoryMixin, DjangoModelFactory):
     class Meta:
         model = User
 
-    first_name = Faker('first_name', locale='uk_UA')
-    last_name = Faker('last_name', locale='uk_UA')
-    email = Faker('email', locale='uk_UA')
+    first_name = Faker("first_name", locale="uk_UA")
+    last_name = Faker("last_name", locale="uk_UA")
+    email = Faker("email", locale="uk_UA")
     username = LazyAttribute(lambda obj: obj.email)
     country = fuzzy.FuzzyChoice(COUNTRIES)
 
     is_active = True
-    password = 'pass123'
+    password = "pass123"
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):
@@ -38,7 +72,7 @@ class UserFactory(DjangoModelFactory):
         return user
 
 
-class CarFactory(DjangoModelFactory):
+class CarFactory(MakeFactoryMixin, DjangoModelFactory):
 
     REGIONAL_PREFIXES = ('AA', 'KA', 'AB', 'KB', 'AC', 'KC', 'AE', 'KE', 'AH',
                          'KH', 'AI', 'KI', 'AK', 'KK', 'AM', 'KM', 'AO', 'KO',
@@ -94,20 +128,20 @@ class CarFactory(DjangoModelFactory):
 
     class Meta:
         model = Car
-        exclude = ('REGIONAL_PREFIXES', 'COLORS', 'MODELS')
+        exclude = ("REGIONAL_PREFIXES", "COLORS", "MODELS")
 
     @lazy_attribute
     def plates(self):
-        return '{regional_prefix}{four_digits}{two_letters}'.format(
+        return "{regional_prefix}{four_digits}{two_letters}".format(
             regional_prefix=random.choice(self.REGIONAL_PREFIXES),
-            four_digits=''.join(random.choices(string.digits, k=4)),
-            two_letters=''.join(random.choices('ABEIKMHOPCTX', k=2)),
+            four_digits="".join(random.choices(string.digits, k=4)),
+            two_letters="".join(random.choices("ABEIKMHOPCTX", k=2)),
         )
 
     @lazy_attribute
     def description(self):
         manufacturer = random.choice(list(self.MODELS.keys()))
-        return '{color} {manufacturer} {model} {year}'.format(
+        return "{color} {manufacturer} {model} {year}".format(
             color=random.choice(self.COLORS).capitalize(),
             manufacturer=manufacturer,
             model=random.choice(self.MODELS[manufacturer]),
@@ -115,13 +149,12 @@ class CarFactory(DjangoModelFactory):
         )
 
 
-class ProjectFactory(DjangoModelFactory):
-
+class ProjectFactory(MakeFactoryMixin, DjangoModelFactory):
     class Meta:
         model = Project
 
-    title = Faker('text', max_nb_chars=50)
-    description = Faker('text', max_nb_chars=1000)
+    title = Faker("text", max_nb_chars=50)
+    description = Faker("text", max_nb_chars=1000)
     country = fuzzy.FuzzyChoice(COUNTRIES)
 
     @post_generation
@@ -134,8 +167,7 @@ class ProjectFactory(DjangoModelFactory):
                 self.drives.add(drive)
 
 
-class DriveFactory(DjangoModelFactory):
-
+class DriveFactory(MakeFactoryMixin, DjangoModelFactory):
     class Meta:
         model = Drive
 
@@ -144,14 +176,10 @@ class DriveFactory(DjangoModelFactory):
     passenger = SubFactory(UserFactory)
     car = SubFactory(CarFactory)
     date = fuzzy.FuzzyDate((now() - timedelta(days=1000)).date())
-    start_mileage = fuzzy.FuzzyInteger(1000000)
-    description = Faker('text', max_nb_chars=1000)
+    start_mileage = fuzzy.FuzzyInteger(1, 1000)
+    end_mileage = fuzzy.FuzzyInteger(1000, 9999)
+    description = Faker("text", max_nb_chars=1000)
     timestamp = fuzzy.FuzzyInteger(1, 999999999)
     start_location = Faker("city", locale="uk_UA")
     end_location = Faker("city", locale="uk_UA")
-    is_verified = True
-
-    @lazy_attribute
-    def end_mileage(self):
-        return random.randint(self.start_mileage, 1000000)
-
+    is_verified = False
