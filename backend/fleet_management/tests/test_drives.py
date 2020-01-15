@@ -39,7 +39,7 @@ class DrivesApiTestCase(APITestCase):
 
     def test_can_retrieve_only_my_drives(self):
         new_driver = UserFactory.make(groups=[self.drivers_group])
-        DriveFactory.make_batch(4, driver=new_driver, passenger=self.passenger)
+        DriveFactory.make_batch(size=4, driver=new_driver, passenger=self.passenger)
 
         self.client.force_login(self.driver)
         res = self.client.get(self.url)
