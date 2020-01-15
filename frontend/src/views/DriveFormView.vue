@@ -282,15 +282,19 @@ export default {
       this.confirmationOnline = false;
 
       if (this.listOfErrors.length === 0) {
-        const passenger = this.passengers.find(p => p.value === parseInt(this.form.passenger));
-        const publicKey = { e: parseInt(passenger.rsaPubE), n: parseInt(passenger.rsaModulusN) };
-        const verified = verify(parseInt(this.computeHash), this.form.signature || 0, publicKey);
+        const passenger = this.passengers.find(p => p.value === parseInt(this.form.passenger, 10));
+        const pubKey = {
+          e: parseInt(passenger.rsaPubE, 10),
+          n: parseInt(passenger.rsaModulusN, 10),
+        };
+        const verified = verify(parseInt(this.computeHash, 10), this.form.signature || 0, pubKey);
         this[actions.SUBMIT]({
           form: {
             ...this.form,
+
+            verified,
             passengers: [this.form.passenger],
             timestamp: Math.floor(Date.now() / 1000),
-            verified: verified,
           },
         });
         this.clearStorage();
