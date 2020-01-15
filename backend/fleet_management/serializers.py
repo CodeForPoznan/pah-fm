@@ -1,6 +1,7 @@
 from django.db import transaction
 from django.conf import settings
 from django.contrib.auth.models import Group
+from django.core.exceptions import ObjectDoesNotExist
 
 from rest_framework import fields, serializers, status
 from rest_framework.exceptions import ValidationError
@@ -17,10 +18,13 @@ class GroupSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     groups = GroupSerializer(many=True)
+    rsa_modulus_n = fields.CharField(read_only=True)
+    rsa_pub_e = fields.CharField(read_only=True)
+    rsa_priv_d = fields.CharField(read_only=True)
 
     class Meta:
         model = User
-        fields = ("id", "username", "groups")
+        fields = ("id", "username", "groups", "rsa_modulus_n", "rsa_pub_e", "rsa_priv_d")
 
 
 class PassengerSerializer(serializers.ModelSerializer):
@@ -94,12 +98,16 @@ class DriveSerializer(serializers.ModelSerializer):
         self.hashed_form = 0
 
     def create(self, validated_data):
-        passenger_data = validated_data.pop("passenger")
-        car_data = validated_data.pop("car")
-        car = Car.objects.get(pk=car_data["id"])
-        project_data = validated_data.pop("project")
-        project = Project.objects.get(pk=project_data["id"])
-        passenger = User.objects.get(pk=passenger_data["id"])
+        passenger_id = validated_data.pop("passenger")["id"]
+        project_id = validated_data.pop("project")["id"]
+        car_id = ta.pop("car")["id"]
+
+        try:
+            passenger = User.objects.get(id=passenger_id)
+            project = Project.objects.get(id=project_id)
+            car = Car.objects.get(id=car_id)
+        except ObjectDoesNotExist as e:
+            raise ValidationError(e.args[0])
 
         is_verified = False
         form_signature = validated_data.pop("signature", False)
