@@ -8,45 +8,48 @@ from .models import Car, Drive, User, Project, ProjectAdmin
 
 
 class DriveResource(resources.ModelResource):
+
+    def dehydrate_driver(self, drive):
+        return str(drive.driver)
+
+    def dehydrate_driver__country(self, drive):
+        return str(drive.driver.country.name)
+
     def dehydrate_passenger(self, drive):
         return str(drive.passenger)
 
-    def dehydrate_driver(self, drive):
-        return str(drive.driver)  # required, because import-export prints PK by default
-
-    def dehydrate_driver__country(self, drive):
-        return drive.driver.country.name
-
-    fuel_consumption = Field(attribute='fuel_consumption')
-    diff_mileage = Field(attribute='diff_mileage')
+    # patch model properties
+    fuel_consumption = Field(attribute="fuel_consumption")
+    diff_mileage = Field(attribute="diff_mileage")
+    country = Field(attribute="country")
 
     class Meta:
         model = Drive
         fields = (
             "id",
-            "passenger",
             "date",
+            "country",
+            "project__title",
+            "description",
             "start_mileage",
             "end_mileage",
             "diff_mileage",
-            "description",
             "start_location",
             "end_location",
             "driver",
             "driver__country",
-            "fuel_consumption",
+            "passenger",
             "car__plates",
-            "project__title",
-            "country",
+            "fuel_consumption",
         )
         export_order = fields
 
 
 class DriveAdmin(ImportExportModelAdmin):
     resource_class = DriveResource
-    list_filter = ('driver__country',)
-    list_display = ('__str__', 'country',)
-    
+    list_filter = ("driver__country",)
+    list_display = ("__str__", "country")
+
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = (

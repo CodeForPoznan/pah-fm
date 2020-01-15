@@ -87,10 +87,6 @@ class Drive(models.Model):
         blank=True,
     )
 
-    @property
-    def country(self):
-        return self.driver.country.name
-
     class Meta:
         unique_together = [
             (
@@ -104,6 +100,10 @@ class Drive(models.Model):
 
     def __str__(self):
         return f"Drive from {self.start_location} to {self.end_location} (driver: {self.driver})"
+
+    @property
+    def country(self):
+        return self.driver.country.name
 
     @property
     def fuel_consumption(self):
