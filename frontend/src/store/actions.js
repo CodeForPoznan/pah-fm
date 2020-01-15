@@ -17,6 +17,7 @@ export const FETCH_USER = 'FETCH_USER';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const SUBMIT = 'SUBMIT';
+export const SET_HASH = 'SET_HASH';
 export const SWITCH_LANGUAGE = 'SWITCH_LANGUAGE';
 
 export const actions = {
@@ -60,6 +61,10 @@ export const actions = {
   [SUBMIT]({ commit, dispatch }, { form }) {
     commit(mutations.ADD_DRIVE, form);
     dispatch(SYNC);
+  },
+
+  [SET_HASH]({ commit, dispatch }, hash) {
+    commit(mutations.SET_HASH, hash);
   },
 
   [SWITCH_LANGUAGE]({ commit }, language) {

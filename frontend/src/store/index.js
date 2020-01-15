@@ -3,8 +3,10 @@ import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 
 import { actions } from './actions';
-import { VERIFICATION_TOKEN, SYNC, namespaces, IS_ONLINE, INCORRECT_DRIVE_ENTRIES,
-  UNSYNCHRONISED_DRIVES, UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE } from './constants';
+import {
+  VERIFICATION_TOKEN, SYNC, namespaces, IS_ONLINE, INCORRECT_DRIVE_ENTRIES,
+  UNSYNCHRONISED_DRIVES, UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE, GET_HASH
+} from './constants';
 import { mutations, SET_IS_CONNECTED } from './mutations';
 import { modules } from './modules';
 import { totalMileageReducer, totalMileageFilter } from '../utils';
@@ -41,6 +43,7 @@ const store = new Vuex.Store({
       LANGUAGE, ...Object.values(namespaces)],
   })],
   getters: {
+    [GET_HASH]: state => state.hash,
     [IS_ONLINE]: state => state.isOnline,
     [UNSYNCHRONISED_DRIVES]: state => state.unsyncedDrives,
     [UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE]: state => state.unsyncedDrives

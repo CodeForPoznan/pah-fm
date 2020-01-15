@@ -9,7 +9,7 @@
       <input
         type="number"
         @change="syncToLocalStorage"
-        v-model="form.hash"
+        v-model.number="form.hash"
         id="hash"
         name="hash"
         max="999999"
@@ -26,11 +26,13 @@
 import FormMixin from '../mixins/FormMixin';
 import GroupGuardMixin from '../mixins/GroupGuardMixin';
 import MainForm from '../components/MainForm.vue';
+import store from '../store';
 
 import '../scss/passenger.scss';
+import { SET_HASH } from "../store/actions";
 
 const initialFormData = {
-  hash: '',
+  hash: null,
 };
 
 export default {
@@ -51,16 +53,14 @@ export default {
       this.validateForm(this.validator);
 
       if (this.listOfErrors.length === 0) {
-        // TODO: hash generation
-        console.log('run hash generation');
-
+        store.dispatch(SET_HASH, this.form.hash);
         this.clearStorage();
         this.loadFormData(initialFormData); // re-initialize form
         this.$router.push('/confirm');
       }
     },
     validator() {
-      if (this.form.hash.length !== 6) {
+      if (String(this.form.hash).length !== 6) {
         this.isInvalid.hash = true;
         return [this.$t('passenger_form.invalid_length')];
       }
