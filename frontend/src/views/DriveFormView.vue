@@ -337,9 +337,10 @@ export default {
     ...mapState(namespaces.passengers, {
       passengers: state =>
         (state.data || []).map(p => ({
-          ...p,
           value: p.id,
           text: [p.firstName, p.lastName].join(' '),
+          rsaModulusN: p.rsaModulusN,
+          rsaPubE: p.rsaPubE,
         })),
     }),
     ...mapState([USER]),
