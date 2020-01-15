@@ -27,11 +27,12 @@ class MakeFactoryMixin:
     """
         This class attaches two new static methods to factory class.
 
-        make() and make_batch() both overwrite the default behaviour
-        of create() and create_batch() in order to protect the user
+        make() and make_batch() both overwrite the default behaviour of
+        create() and create_batch() in order to protect the developer
         from pushing to the DB the same instance multiple times.
         This protects you from getting hit with IntegrityError.
     """
+
     @classmethod
     def make(cls, **kwargs):
         try:

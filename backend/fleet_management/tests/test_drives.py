@@ -29,7 +29,9 @@ class DrivesApiTestCase(APITestCase):
             rsa_modulus_n=50927,
             groups=[self.passengers_group],
         )
-        self.drives = DriveFactory.make_batch(10, driver=self.driver, passenger=self.passenger)
+        self.drives = DriveFactory.make_batch(
+            size=10, driver=self.driver, passenger=self.passenger
+        )
 
     def test_401_for_unlogged_user(self):
         res = self.client.get(self.url)
