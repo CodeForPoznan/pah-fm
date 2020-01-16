@@ -63,7 +63,7 @@ export const actions = {
     dispatch(SYNC);
   },
 
-  [SET_HASH]({ commit, dispatch }, hash) {
+  [SET_HASH]({ commit }, hash) {
     commit(mutations.SET_HASH, hash);
   },
 

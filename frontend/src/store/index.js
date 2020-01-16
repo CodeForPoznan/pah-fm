@@ -5,7 +5,7 @@ import createPersistedState from 'vuex-persistedstate';
 import { actions } from './actions';
 import {
   VERIFICATION_TOKEN, SYNC, namespaces, IS_ONLINE, INCORRECT_DRIVE_ENTRIES,
-  UNSYNCHRONISED_DRIVES, UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE, GET_HASH
+  UNSYNCHRONISED_DRIVES, UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE, GET_HASH,
 } from './constants';
 import { mutations, SET_IS_CONNECTED } from './mutations';
 import { modules } from './modules';

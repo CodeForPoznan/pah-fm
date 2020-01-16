@@ -29,7 +29,7 @@ import MainForm from '../components/MainForm.vue';
 import store from '../store';
 
 import '../scss/passenger.scss';
-import { SET_HASH } from "../store/actions";
+import { SET_HASH } from '../store/actions';
 
 const initialFormData = {
   hash: null,
