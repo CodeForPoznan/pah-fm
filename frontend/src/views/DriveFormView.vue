@@ -157,9 +157,9 @@
       <label for="driveHash">{{ $t('drive_form.drive_hash') }}</label>
       <input
         id="driveHash"
+        type="number"
         v-model.number="computeHash"
         class="form-control"
-        type="text"
         readonly
       >
     </div>
@@ -228,7 +228,7 @@ import {
 import { FORM_STATE } from '../constants/form';
 import { setItem } from '../services/localStore';
 import { getToday } from '../services/time';
-import { hashDict } from '../services/crypto';
+import { hashDict, verify } from '../services/crypto';
 import { padWithZeros } from '../utils';
 
 const initialFormData = {
@@ -282,9 +282,17 @@ export default {
       this.confirmationOnline = false;
 
       if (this.listOfErrors.length === 0) {
+        const passenger = this.passengers.find(p => p.value === parseInt(this.form.passenger, 10));
+        const pubKey = {
+          e: parseInt(passenger.rsaPubE, 10),
+          n: parseInt(passenger.rsaModulusN, 10),
+        };
+        const verified = verify(parseInt(this.computeHash, 10), this.form.signature || 0, pubKey);
         this[actions.SUBMIT]({
           form: {
             ...this.form,
+
+            verified,
             passengers: [this.form.passenger],
             timestamp: Math.floor(Date.now() / 1000),
           },
@@ -331,6 +339,8 @@ export default {
         (state.data || []).map(p => ({
           value: p.id,
           text: [p.firstName, p.lastName].join(' '),
+          rsaModulusN: p.rsaModulusN,
+          rsaPubE: p.rsaPubE,
         })),
     }),
     ...mapState([USER]),

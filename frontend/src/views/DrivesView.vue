@@ -23,6 +23,7 @@
       class="card"
       v-for="drive in unsyncedDrives"
       :key="drive.id"
+      :class="{ verified: drive.verified }"
     >
       <div
         class="card-header"
@@ -79,6 +80,7 @@
       <div
         class="card-header"
         @click="showDrive(drive.id)"
+        :class="{ verified: drive.verified }"
       >
         <h5 class="mb-0">
           <span class="font-weight-bold">{{ drive.date }}</span>
@@ -160,9 +162,14 @@ export default {
 
 .card-header {
   cursor: pointer;
+  border-left: 5px solid #28a745;
 }
 
 .heading {
   text-align: center;
+}
+
+.verified {
+  border-left: 5px solid #ffc107;
 }
 </style>
