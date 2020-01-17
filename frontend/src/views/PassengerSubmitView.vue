@@ -7,10 +7,10 @@
             <h2>Confirmation code</h2>
             <div class="form-group">
               <input
+                id="signature"
                 type="text"
-                name="code"
-                id="code"
-                :value="code"
+                name="signature"
+                v-model.number="computeSignature"
                 class="form-control passenger-input"
                 readonly
               >
@@ -23,23 +23,36 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex';
+
 import GroupGuardMixin from '../mixins/GroupGuardMixin';
 
 import '../scss/passenger.scss';
+import { GET_HASH } from '../store/constants';
+import { sign } from '../services/crypto';
+import { USER } from '../store';
+import { padWithZeros } from '../utils';
 
 export default {
   mixins: [GroupGuardMixin],
-  data() {
-    return {
-      code: 'de72sd', // TODO: Generate the code
-    };
-  },
   beforeRouteEnter(to, from, next) {
     // TODO: Check if code is in Vuex
     if (from.path === '/passenger') {
       return next();
     }
     return next({ path: '/passenger' });
+  },
+  computed: {
+    getHash: undefined,
+    ...mapState([USER]),
+    ...mapGetters([GET_HASH]),
+    computeSignature() {
+      const privKey = {
+        d: parseInt(this.user.rsaPrivD, 10),
+        n: parseInt(this.user.rsaModulusN, 10),
+      };
+      return padWithZeros(sign(this.getHash, privKey), 6);
+    },
   },
 };
 </script>
