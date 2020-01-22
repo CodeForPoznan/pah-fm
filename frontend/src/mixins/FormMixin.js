@@ -52,7 +52,7 @@ export default {
       this.listOfErrors = [];
 
       this.listOfErrors = this.requiredFields
-        .filter((field) => !isValid(this.requiredFields, this.form, field))
+        .filter(field => !isValid(this.requiredFields, this.form, field))
         .map((field) => {
           this.isInvalid[field] = true;
           return this.getErrorMessage(field);

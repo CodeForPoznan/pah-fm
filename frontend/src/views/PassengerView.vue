@@ -18,7 +18,7 @@
         min="0"
         class="form-control passenger-input"
         :class="{ 'is-invalid': isInvalid.hash }"
-      />
+      >
     </div>
   </main-form>
 </template>
