@@ -1,6 +1,7 @@
 <template>
   <main-form
     @submit="handleSubmit"
+    @reset="reset"
     :title="$t('common.new_drive')"
     :list-of-errors="listOfErrors"
   >
@@ -14,7 +15,7 @@
         :max="currentDate"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['date'] }"
-      >
+      />
     </div>
 
     <div class="form-group">
@@ -27,7 +28,7 @@
         maxlength="100"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['startLocation'] }"
-      >
+      />
     </div>
     <div class="form-group">
       <label>{{ $t('drive_form.starting_mileage') }}</label>
@@ -44,7 +45,7 @@
         @input="syncToLocalStorage"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['startMileage'] }"
-      >
+      />
     </div>
     <div class="form-group">
       <label>{{ $t('drive_form.project') }}</label>
@@ -64,10 +65,7 @@
           {{ project.title }}
         </option>
       </select>
-      <p
-        class="font-weight-bold"
-        v-if="!cars.data"
-      >
+      <p class="font-weight-bold" v-if="!cars.data">
         {{ $t('drive_form.no_project_message') }}
       </p>
     </div>
@@ -82,18 +80,11 @@
         class="form-control"
         :class="{ 'is-invalid': isInvalid['car'] }"
       >
-        <option
-          v-for="car in cars.data"
-          :key="car.id"
-          :value="car.id"
-        >
+        <option v-for="car in cars.data" :key="car.id" :value="car.id">
           {{ car.plates }}
         </option>
       </select>
-      <p
-        class="font-weight-bold"
-        v-if="!cars.data"
-      >
+      <p class="font-weight-bold" v-if="!cars.data">
         {{ $t('drive_form.no_cars_message') }}
       </p>
     </div>
@@ -107,7 +98,7 @@
         class="form-control select"
         :class="{ 'is-invalid': isInvalid['passenger'] }"
         label="text"
-        :reduce="passenger => String(passenger.value)"
+        :reduce="(passenger) => String(passenger.value)"
         :options="passengers"
       />
     </div>
@@ -120,8 +111,8 @@
         @input="syncToLocalStorage"
         name="description"
         class="form-control"
-        :class="{ 'is-invalid': isInvalid['description']}"
-      >
+        :class="{ 'is-invalid': isInvalid['description'] }"
+      />
     </div>
 
     <div class="form-group">
@@ -134,7 +125,7 @@
         name="endLocation"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['endLocation'] }"
-      >
+      />
     </div>
     <div class="form-group">
       <label>{{ $t('drive_form.ending_mileage') }}</label>
@@ -151,7 +142,7 @@
         name="endMileage"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['endMileage'] }"
-      >
+      />
     </div>
     <div class="form-group">
       <label for="driveHash">{{ $t('drive_form.drive_hash') }}</label>
@@ -161,7 +152,7 @@
         v-model.number="computeHash"
         class="form-control"
         readonly
-      >
+      />
     </div>
     <div class="form-group">
       <label for="signature">{{ $t('drive_form.signature') }}</label>
@@ -178,11 +169,9 @@
                       && event.target.value < 20000000)"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['signature'] }"
-      >
+      />
     </div>
-    <div
-      class="form-group col-xs-12"
-    >
+    <div class="form-group col-xs-12">
       {{ $t('drive_form.distance_traveled', { distance: distance }) }}
     </div>
 
@@ -191,7 +180,7 @@
       variant="success"
       dismissible
       :show="confirmationOnline"
-      @dismissed="confirmationOnline=false"
+      @dismissed="confirmationOnline = false"
     >
       <b>{{ $t('drive_form.drive_added_online_notification') }}</b>
     </b-alert>
@@ -200,7 +189,7 @@
       variant="secondary"
       dismissible
       :show="confirmationOffline"
-      @dismissed="confirmationffline=false"
+      @dismissed="confirmationffline = false"
     >
       <b>{{ $t('drive_form.drive_added_offline_notification') }}</b>
     </b-alert>
@@ -266,6 +255,7 @@ export default {
     return {
       formId: FORM_STATE,
       requiredFields,
+      initialData: initialFormData,
       confirmationOnline: false,
       confirmationOffline: false,
       currentDate: new Date().toISOString().split('T')[0],
@@ -282,12 +272,18 @@ export default {
       this.confirmationOnline = false;
 
       if (this.listOfErrors.length === 0) {
-        const passenger = this.passengers.find(p => p.value === parseInt(this.form.passenger, 10));
+        const passenger = this.passengers.find(
+          (p) => p.value === parseInt(this.form.passenger, 10)
+        );
         const pubKey = {
           e: parseInt(passenger.rsaPubE, 10),
           n: parseInt(passenger.rsaModulusN, 10),
         };
-        const verified = verify(parseInt(this.computeHash, 10), this.form.signature || 0, pubKey);
+        const verified = verify(
+          parseInt(this.computeHash, 10),
+          this.form.signature || 0,
+          pubKey
+        );
         this[actions.SUBMIT]({
           form: {
             ...this.form,
@@ -329,14 +325,14 @@ export default {
   },
   computed: {
     ...mapState(namespaces.cars, {
-      cars: state => state,
+      cars: (state) => state,
     }),
     ...mapState(namespaces.projects, {
-      projects: state => state,
+      projects: (state) => state,
     }),
     ...mapState(namespaces.passengers, {
-      passengers: state =>
-        (state.data || []).map(p => ({
+      passengers: (state) =>
+        (state.data || []).map((p) => ({
           value: p.id,
           text: [p.firstName, p.lastName].join(' '),
           rsaModulusN: p.rsaModulusN,
@@ -350,15 +346,18 @@ export default {
       return distance > 0 ? distance : 0;
     },
     computeHash() {
-      return padWithZeros(hashDict({
-        car: { id: this.form.car },
-        project: { id: this.form.project },
-        passengers: [{ id: this.form.passenger }],
-        startLocation: this.form.startLocation,
-        endLocation: this.form.endLocation,
-        startMileage: this.form.startMileage,
-        endMileage: this.form.endMileage,
-      }), 6);
+      return padWithZeros(
+        hashDict({
+          car: { id: this.form.car },
+          project: { id: this.form.project },
+          passengers: [{ id: this.form.passenger }],
+          startLocation: this.form.startLocation,
+          endLocation: this.form.endLocation,
+          startMileage: this.form.startMileage,
+          endMileage: this.form.endMileage,
+        }),
+        6
+      );
     },
   },
 };

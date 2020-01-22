@@ -38,6 +38,10 @@ export default {
     syncToLocalStorage() {
       localStorage.setItem(this.formId, JSON.stringify(this.form));
     },
+    reset() {
+      this.clearStorage();
+      this.loadFormData();
+    },
     validateForm(validator = undefined) {
       /**
        * In validator argument you should pass a function that takes `this.form` as argument and
@@ -48,7 +52,7 @@ export default {
       this.listOfErrors = [];
 
       this.listOfErrors = this.requiredFields
-        .filter(field => !isValid(this.requiredFields, this.form, field))
+        .filter((field) => !isValid(this.requiredFields, this.form, field))
         .map((field) => {
           this.isInvalid[field] = true;
           return this.getErrorMessage(field);
@@ -58,8 +62,8 @@ export default {
         this.listOfErrors.push(...validator(this.form));
       }
     },
-    loadFormData(initialData) {
-      this.form = loadStateFromStorage(this.formId) || initialData;
+    loadFormData() {
+      this.form = loadStateFromStorage(this.formId) || { ...this.initialData };
     },
     clearStorage() {
       removeItem(this.formId);
