@@ -4,14 +4,17 @@ export const apiUrl = process.env.VUE_APP_API_URL;
 const CONTENT_TYPE_JSON = 'application/json; charset=utf-8';
 
 async function handleResponse(response) {
-  const message = await response.json();
-
-  if (response.status >= 200 && response.status < 300) {
-    return message;
+  try {
+    const message = await response.json();
+    if (response.status >= 200 && response.status < 300) {
+      return message;
+    }
+    // eslint-disable-next-line
+    return Promise.reject({ message, response });
+  } catch (err) {
+    //eslint-disable-next-line
+    return Promise.reject({ err, response });
   }
-
-  // eslint-disable-next-line
-  return Promise.reject({ message, response });
 }
 
 function setAuthData(requestOptions, auth) {
