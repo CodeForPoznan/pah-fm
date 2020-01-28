@@ -10,8 +10,8 @@
                 id="signature"
                 type="text"
                 name="signature"
-                v-model.number="computeSignature"
                 class="form-control passenger-input"
+                :value="computeSignature()"
                 readonly
               >
             </div>
@@ -31,7 +31,7 @@ import '../scss/passenger.scss';
 import { GET_HASH } from '../store/constants';
 import { sign } from '../services/crypto';
 import { USER } from '../store';
-import { padWithZeros } from '../utils';
+import { padWithZeros as pad } from '../utils';
 
 export default {
   mixins: [GroupGuardMixin],
@@ -43,15 +43,12 @@ export default {
     return next({ path: '/passenger' });
   },
   computed: {
-    getHash: undefined,
     ...mapState([USER]),
     ...mapGetters([GET_HASH]),
+  },
+  methods: {
     computeSignature() {
-      const privKey = {
-        d: parseInt(this.user.rsaPrivD, 10),
-        n: parseInt(this.user.rsaModulusN, 10),
-      };
-      return padWithZeros(sign(this.getHash, privKey), 6);
+      return pad(sign(this.getHash, this.user.rsaPrivD, this.user.rsaModulusN), 6);
     },
   },
 };

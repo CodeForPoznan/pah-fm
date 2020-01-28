@@ -7,14 +7,20 @@
     <div class="form-group">
       <label for="hash">{{ $t('passenger_form.hash') }}</label>
       <input
-        type="number"
-        @change="syncToLocalStorage"
-        v-model.number="form.hash"
         id="hash"
         name="hash"
-        max="999999"
-        step="1"
+        type="text"
+        pattern="[0-9]+"
+        inputmode="numeric"
         min="0"
+        maxlength="6"
+        @change="syncToLocalStorage"
+        v-model="form.hash"
+        onkeypress="return event.key === 'Enter'
+                      || event.key === 'Backspace'
+                      || (Number(event.key) >= 0
+                      && Number(event.key) <= 9
+                      && event.target.value < 20000000)"
         class="form-control passenger-input"
         :class="{ 'is-invalid': isInvalid.hash }"
       >
@@ -60,7 +66,7 @@ export default {
       }
     },
     validator() {
-      if (String(this.form.hash).length !== 6) {
+      if (this.form.hash.length !== 6) {
         this.isInvalid.hash = true;
         return [this.$t('passenger_form.invalid_length')];
       }
