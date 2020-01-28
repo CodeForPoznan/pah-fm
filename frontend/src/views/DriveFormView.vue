@@ -39,7 +39,7 @@
                       && Number(event.key) <= 9
                       && event.target.value < 20000000)"
         type="number"
-        v-model="form.startMileage"
+        v-model.number="form.startMileage"
         name="startMileage"
         @input="syncToLocalStorage"
         class="form-control"
@@ -146,7 +146,7 @@
                       && Number(event.key) <= 9
                       && event.target.value < 20000000)"
         type="number"
-        v-model="form.endMileage"
+        v-model.number="form.endMileage"
         @input="syncToLocalStorage"
         name="endMileage"
         class="form-control"
@@ -157,7 +157,7 @@
       <label for="driveHash">{{ $t('drive_form.drive_hash') }}</label>
       <input
         id="driveHash"
-        type="number"
+        type="text"
         v-model.number="computeHash"
         class="form-control"
         readonly
@@ -167,15 +167,12 @@
       <label for="signature">{{ $t('drive_form.signature') }}</label>
       <input
         id="signature"
-        type="number"
         name="signature"
-        min="0"
+        type="text"
+        pattern="[0-9]+"
+        inputmode="numeric"
         maxlength="6"
-        v-model.number="form.signature"
-        onkeypress="return event.key === 'Enter'
-                      || (Number(event.key) >= 0
-                      && Number(event.key) <= 9
-                      && event.target.value < 20000000)"
+        v-model="form.signature"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['signature'] }"
       >
@@ -185,7 +182,6 @@
     >
       {{ $t('drive_form.distance_traveled', { distance: distance }) }}
     </div>
-
     <b-alert
       class="col-xs-12"
       variant="success"
@@ -200,9 +196,17 @@
       variant="secondary"
       dismissible
       :show="confirmationOffline"
-      @dismissed="confirmationffline=false"
+      @dismissed="confirmationOffline=false"
     >
       <b>{{ $t('drive_form.drive_added_offline_notification') }}</b>
+    </b-alert>
+    <b-alert
+      class="col-xs-12"
+      variant="warning"
+      dismissible
+      :show="(confirmationOnline || confirmationOffline) && !isVerified"
+    >
+      <b>{{ $t('drives.unverified_drive') }}</b>
     </b-alert>
   </main-form>
 </template>
@@ -241,7 +245,8 @@ const initialFormData = {
   passenger: '',
   startLocation: '',
   endLocation: '',
-  signature: '',
+  signature: 0,
+  isVerified: false,
 };
 
 const requiredFields = [
@@ -260,7 +265,7 @@ export default {
   components: { vSelect, MainForm },
   mixins: [FormMixin, GroupGuardMixin],
   mounted() {
-    this.loadFormData({ ...initialFormData });
+    this.loadFormData(initialFormData);
   },
   data() {
     return {
@@ -280,19 +285,20 @@ export default {
       this.validateForm(this.validator);
       this.confirmationOffline = false;
       this.confirmationOnline = false;
+      this.isVerified = false;
 
       if (this.listOfErrors.length === 0) {
-        const passenger = this.passengers.find(p => p.value === parseInt(this.form.passenger, 10));
-        const pubKey = {
-          e: parseInt(passenger.rsaPubE, 10),
-          n: parseInt(passenger.rsaModulusN, 10),
-        };
-        const verified = verify(parseInt(this.computeHash, 10), this.form.signature || 0, pubKey);
+        const passenger = this.passengers.find(p => p.value.toString() === this.form.passenger);
+        const isVerified = verify(
+          this.computeHash,
+          this.form.signature || 0,
+          passenger.rsaPubE,
+          passenger.rsaModulusN,
+        );
         this[actions.SUBMIT]({
           form: {
             ...this.form,
-
-            verified,
+            isVerified: isVerified,
             passengers: [this.form.passenger],
             timestamp: Math.floor(Date.now() / 1000),
           },
@@ -306,15 +312,12 @@ export default {
         } else {
           this.confirmationOffline = true;
         }
+        this.isVerified = isVerified;
       }
     },
     validator(data) {
       const { startMileage, endMileage } = data;
-      if (
-        !!startMileage &&
-        !!endMileage &&
-        parseInt(startMileage, 10) >= parseInt(endMileage, 10)
-      ) {
+      if (!!startMileage && !!endMileage && startMileage >= endMileage) {
         const errorStartMileage = this.$t('drive_form.start_mileage_error');
         const errorEndMileage = this.$t('drive_form.end_mileage_error');
         return [errorStartMileage, errorEndMileage];
