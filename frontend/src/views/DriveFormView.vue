@@ -245,7 +245,7 @@ const initialFormData = {
   passenger: '',
   startLocation: '',
   endLocation: '',
-  signature: 0,
+  signature: '',
   isVerified: false,
 };
 
