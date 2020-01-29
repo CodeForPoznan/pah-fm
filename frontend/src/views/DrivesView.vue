@@ -58,7 +58,7 @@
           </p>
           <div
             v-if="!drive.isVerified"
-            class="alert alert-warning m-5"
+            class="alert alert-warning col-xs-12"
             role="alert"
           >
             {{ $t('drives.unverified_drive') }}
