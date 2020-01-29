@@ -1,18 +1,22 @@
 Feature: Login view
+    In order to be able to login to pah website
+    As a user
+    I want to login only via valid credentials
 
     Background:
-      Given User opens pah-fm website
+       Given User navigates to pah-fm website
 
-    Scenario: User opens pah-fm login view
-       And User sees "username_field"
-       And User sees "password_field"
-       And User sees "Login" button
-       And User sees three flags: polish, english, ukrainian, in the right side, at top of the page
 
-    # Positive scenario (passing valid login and password)
     Scenario: User successfully logs in to pah-fm system with valid credentials
-      And User inputs "hello@codeforpoznan.pl" username
-      And User inputs "cfp123" password
-      When User clicks login button
-      Then User is logged in successfully
-      And User is on add new drive page
+       Given User submits login form with "hello@codeforpoznan.pl" login and "cfp123" password
+        Then User is logged in to pah website successfully
+
+
+    Scenario Outline: User is not able to login to pah-fm with invalid credentials
+       Given User submits login form with "<login>" login and "<password>" password
+        Then User not logged into pah-fm website
+      Examples:
+        | login                  | password |
+        |   123                  |    123   |
+        | hello@codeforpoznan.pl |          |
+        |                        | cfp123   |
