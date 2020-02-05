@@ -100,7 +100,6 @@ export const actions = {
         commit(SYNC_ITEM_FAILURE, timestamp);
         dispatch(SYNC);
       } else {
-        console.log('errrr');
         setTimeout(() => dispatch(SYNC), 60000);
       }
     }
