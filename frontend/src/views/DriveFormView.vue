@@ -171,7 +171,7 @@
         id="signature"
         name="signature"
         type="text"
-        pattern="[0-9]+"
+        pattern="[0-9]{6}"
         inputmode="numeric"
         maxlength="6"
         v-model="form.signature"
