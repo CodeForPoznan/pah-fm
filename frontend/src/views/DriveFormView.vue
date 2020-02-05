@@ -295,6 +295,7 @@ export default {
           passenger.rsaPubE,
           passenger.rsaModulusN,
         );
+        if (!this.form.signature) delete this.form.signature;
         this[actions.SUBMIT]({
           form: {
             ...this.form,
