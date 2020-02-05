@@ -12,7 +12,7 @@ async function handleResponse(response) {
     // eslint-disable-next-line
     return Promise.reject({ message, response });
   } catch (err) {
-    //eslint-disable-next-line
+    // eslint-disable-next-line
     return Promise.reject({ err, response });
   }
 }
