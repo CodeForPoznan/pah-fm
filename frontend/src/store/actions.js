@@ -98,8 +98,10 @@ export const actions = {
         commit(SYNC_ITEM_SUCCESS, timestamp);
       } else if (e.response && [400, 403, 500].includes(e.response.status)) {
         commit(SYNC_ITEM_FAILURE, timestamp);
+        dispatch(SYNC);
+      } else {
+        setTimeout(() => dispatch(SYNC), 60000);
       }
     }
-    dispatch(SYNC);
   },
 };
