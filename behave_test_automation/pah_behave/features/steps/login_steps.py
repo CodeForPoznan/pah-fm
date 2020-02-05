@@ -1,8 +1,9 @@
-import parse
 from behave import given, then, register_type
+from features.steps.common_actions import short_wait
+
 import features.selectors.login_selectors as login_selector
 import features.selectors.base_selectors as base_selector
-from features.steps.common_actions import short_wait
+import parse
 
 
 @given('User navigates to pah-fm website')
@@ -39,14 +40,22 @@ def submit_form_with_valid_credentials(context, login_credential, password_crede
 
 
 @then('User is logged in to pah website successfully')
-def successful_login(context):
+def login_successful(context):
     short_wait(context.driver, base_selector.hamburger_menu)
     assert context.driver.execute_script("return window.localStorage.jwt") is not None
     driver_page = context.driver.current_url
     assert driver_page == 'http://localhost:8080/drive'
 
 
-@then('User not logged into pah-fm website')
-def unsuccessful_login(context):
+@then('User failed to login into pah-fm website')
+def login_unsuccessful(context):
     current_page = context.driver.current_url
     assert current_page == 'http://localhost:8080/login'
+    short_wait(context.driver, login_selector.login_failed_message)
+
+
+@then('Login button is not clickable')
+def login_unsuccessful(context):
+    current_page = context.driver.current_url
+    assert current_page == 'http://localhost:8080/login'
+    short_wait(context.driver, login_selector.login_button_disabled)
