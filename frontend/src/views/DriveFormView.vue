@@ -246,7 +246,6 @@ const initialFormData = {
   startLocation: '',
   endLocation: '',
   signature: '',
-  isVerified: false,
 };
 
 const requiredFields = [
