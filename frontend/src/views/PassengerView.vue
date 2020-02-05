@@ -3,6 +3,7 @@
     :title="$t('common.confirm_drive')"
     :list-of-errors="listOfErrors"
     @submit="handleSubmit"
+    @reset="reset"
   >
     <div class="form-group">
       <label for="hash">{{ $t('passenger_form.hash') }}</label>

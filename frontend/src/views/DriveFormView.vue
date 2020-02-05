@@ -1,6 +1,8 @@
 <template>
   <main-form
     @submit="handleSubmit"
+    @reset="reset"
+    resetable
     :title="$t('common.new_drive')"
     :list-of-errors="listOfErrors"
   >
@@ -107,7 +109,7 @@
         class="form-control select"
         :class="{ 'is-invalid': isInvalid['passenger'] }"
         label="text"
-        :reduce="passenger => String(passenger.value)"
+        :reduce="(passenger) => String(passenger.value)"
         :options="passengers"
       />
     </div>
@@ -120,7 +122,7 @@
         @input="syncToLocalStorage"
         name="description"
         class="form-control"
-        :class="{ 'is-invalid': isInvalid['description']}"
+        :class="{ 'is-invalid': isInvalid['description'] }"
       >
     </div>
 
@@ -180,9 +182,7 @@
         :class="{ 'is-invalid': isInvalid['signature'] }"
       >
     </div>
-    <div
-      class="form-group col-xs-12"
-    >
+    <div class="form-group col-xs-12">
       {{ $t('drive_form.distance_traveled', { distance: distance }) }}
     </div>
 
@@ -191,7 +191,7 @@
       variant="success"
       dismissible
       :show="confirmationOnline"
-      @dismissed="confirmationOnline=false"
+      @dismissed="confirmationOnline = false"
     >
       <b>{{ $t('drive_form.drive_added_online_notification') }}</b>
     </b-alert>
@@ -200,7 +200,7 @@
       variant="secondary"
       dismissible
       :show="confirmationOffline"
-      @dismissed="confirmationffline=false"
+      @dismissed="confirmationffline = false"
     >
       <b>{{ $t('drive_form.drive_added_offline_notification') }}</b>
     </b-alert>
@@ -266,6 +266,7 @@ export default {
     return {
       formId: FORM_STATE,
       requiredFields,
+      initialData: initialFormData,
       confirmationOnline: false,
       confirmationOffline: false,
       currentDate: new Date().toISOString().split('T')[0],
@@ -287,7 +288,11 @@ export default {
           e: parseInt(passenger.rsaPubE, 10),
           n: parseInt(passenger.rsaModulusN, 10),
         };
-        const verified = verify(parseInt(this.computeHash, 10), this.form.signature || 0, pubKey);
+        const verified = verify(
+          parseInt(this.computeHash, 10),
+          this.form.signature || 0,
+          pubKey,
+        );
         this[actions.SUBMIT]({
           form: {
             ...this.form,
@@ -350,15 +355,18 @@ export default {
       return distance > 0 ? distance : 0;
     },
     computeHash() {
-      return padWithZeros(hashDict({
-        car: { id: this.form.car },
-        project: { id: this.form.project },
-        passengers: [{ id: this.form.passenger }],
-        startLocation: this.form.startLocation,
-        endLocation: this.form.endLocation,
-        startMileage: this.form.startMileage,
-        endMileage: this.form.endMileage,
-      }), 6);
+      return padWithZeros(
+        hashDict({
+          car: { id: this.form.car },
+          project: { id: this.form.project },
+          passengers: [{ id: this.form.passenger }],
+          startLocation: this.form.startLocation,
+          endLocation: this.form.endLocation,
+          startMileage: this.form.startMileage,
+          endMileage: this.form.endMileage,
+        }),
+        6,
+      );
     },
   },
 };
