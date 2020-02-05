@@ -90,6 +90,7 @@ class DriveSerializer(serializers.ModelSerializer):
             "end_location",
             "timestamp",
             "signature",
+            "is_verified",
         )
         read_only_fields = ("is_verified",)
 

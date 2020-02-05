@@ -14,10 +14,11 @@
               @reset.prevent="$emit('reset')"
             >
               <slot />
-              <div class="form-group">
+              <div class="form-group form-buttons">
                 <button class="btn btn-primary col-xs-3">
                   {{ $t('drive_form.submit') }}
                 </button>
+                <span style="flex: 1" />
                 <input
                   v-if="resetable"
                   type="reset"
@@ -55,3 +56,10 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+  .form-buttons {
+    display: flex;
+    flex-direction: row;
+  }
+</style>
