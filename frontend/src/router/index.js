@@ -6,6 +6,7 @@ import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import DriveFormView from '../views/DriveFormView.vue';
 import DrivesView from '../views/DrivesView.vue';
+import DriveVerifyView from '../views/DriveVerifyView.vue';
 import SuccessfulLogoutView from '../views/SuccessfulLogoutView.vue';
 import PassengerView from '../views/PassengerView.vue';
 import PassengerSubmitView from '../views/PassengerSubmitView.vue';
@@ -31,6 +32,11 @@ export const driveListRoute = {
   path: '/drives',
   name: 'Drives',
   component: DrivesView,
+};
+export const driveVerifyRoute = {
+  path: '/verify',
+  name: 'Verify',
+  component: DriveVerifyView,
 };
 export const passengerRoute = {
   path: '/passenger',
@@ -65,6 +71,7 @@ const router = new Router({
     loginRoute,
     driveCreateRoute,
     driveListRoute,
+    driveVerifyRoute,
     passengerRoute,
     passengerSubmitRoute,
     homeRoute,
@@ -85,6 +92,11 @@ export const groupBasedRoutes = {
       to: driveListRoute,
       visibleOnMenu: true,
     },
+    {
+      text: '',
+      to: driveVerifyRoute,
+      visibleOnMenu: false,
+    },
   ],
   passenger: [
     {
@@ -103,7 +115,7 @@ export const groupBasedRoutes = {
 const allGroupBasedRoutes = [
   ...groupBasedRoutes.driver,
   ...groupBasedRoutes.passenger,
-].map(route => route.to.name);
+].map((route) => route.to.name);
 
 const openRoutes = [loginRoute.name];
 
@@ -147,8 +159,8 @@ router.beforeEach((to, _from, next) => {
   if (userLoggedIn && allGroupBasedRoutes.includes(to.name)) {
     const availableRoutes = flatMap(
       store.state.user.groups,
-      group => groupBasedRoutes[group.name.toLowerCase()],
-    ).map(route => route.to.name);
+      (group) => groupBasedRoutes[group.name.toLowerCase()]
+    ).map((route) => route.to.name);
 
     const routeAccessible = availableRoutes.includes(to.name);
 
