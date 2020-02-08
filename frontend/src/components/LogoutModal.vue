@@ -14,12 +14,16 @@
 <script>
 import { mapActions } from 'vuex';
 
+import router from '../router';
 import { LOGOUT } from '../store/actions';
 
 export default {
   name: 'LogoutModal',
   methods: {
     ...mapActions([LOGOUT]),
+    logout() {
+      this.LOGOUT(router);
+    },
   },
 };
 </script>
