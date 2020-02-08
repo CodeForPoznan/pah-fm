@@ -1,4 +1,5 @@
 import { post } from '../services/api/http';
+import router from '../router/router';
 import { login, saveToken, deleteStorageData } from '../services/api/auth';
 import { getMyself } from '../services/api/user';
 import * as mutations from './mutations';
@@ -56,6 +57,7 @@ export const actions = {
     commit(mutations.SET_USER, null);
     deleteStorageData();
     commit(mutations.SET_LOGOUT_PROGRESS, true);
+    router.push({ path: '/logout' });
   },
 
   [SUBMIT]({ commit, dispatch }, { form }) {

@@ -1,8 +1,8 @@
 import store from '../store';
-import { groupBasedRoutes } from '../router';
+import { groupBasedRoutes } from '../router/routes';
 import { reverseObject } from '../services/reverseObject';
 
-const { user } = store.state;
+const { user } = store ? store.state : { user: undefined };
 const groups = user ? user.groups.map(({ name }) => name.toLowerCase()) : [];
 
 const getRouteGroup = (routeName) => {
