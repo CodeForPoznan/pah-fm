@@ -1,12 +1,14 @@
 <template>
   <b-modal
     id="logout-modal"
-    title="Are you sure?"
+    :title="$t('common.are_you_sure')"
+    :okTitle="$t('common.logout')"
+    :cancelTitle="$t('common.cancel')"
     @ok="logout"
+    class="logout-modal"
   >
     <p>
-      You are offline so if you log out you will no able to log in again until
-      you will be online again
+      {{ $t('logout.offline_logout_warning') }}
     </p>
   </b-modal>
 </template>
@@ -27,3 +29,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.logout-modal {
+  color: black;
+}
+</style>
