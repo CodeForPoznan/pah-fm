@@ -2,8 +2,9 @@
   <b-modal
     id="logout-modal"
     :title="$t('common.are_you_sure')"
-    :okTitle="$t('common.logout')"
-    :cancelTitle="$t('common.cancel')"
+    :ok-title="$t('common.logout')"
+    :cancel-title="$t('common.cancel')"
+    ok-variant="danger"
     @ok="logout"
     class="logout-modal"
   >
