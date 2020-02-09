@@ -19,11 +19,7 @@ export default {
     this.$emit('hide-menu');
   },
   beforeRouteEnter(to, from, next) {
-    if (store.state.logoutInProgress) {
-      store.commit(SET_LOGOUT_PROGRESS, false);
-    } else {
-      store.dispatch(LOGOUT);
-    }
+    store.dispatch(LOGOUT);
     next();
   },
 };
