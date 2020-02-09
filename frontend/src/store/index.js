@@ -4,8 +4,14 @@ import createPersistedState from 'vuex-persistedstate';
 
 import { actions } from './actions';
 import {
-  VERIFICATION_TOKEN, SYNC, namespaces, IS_ONLINE, INCORRECT_DRIVE_ENTRIES,
-  UNSYNCHRONISED_DRIVES, UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE, GET_HASH,
+  VERIFICATION_TOKEN,
+  SYNC,
+  namespaces,
+  IS_ONLINE,
+  INCORRECT_DRIVE_ENTRIES,
+  UNSYNCHRONISED_DRIVES,
+  UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE,
+  GET_HASH,
 } from './constants';
 import { mutations, SET_IS_CONNECTED } from './mutations';
 import { modules } from './modules';
@@ -39,20 +45,26 @@ const store = new Vuex.Store({
   actions,
   modules,
   mutations,
-  plugins: [createPersistedState({
-    paths: [USER, INCORRECT_DRIVE_ENTRIES, UNSYNCHRONISED_DRIVES, CARS,
-      LANGUAGE, ...Object.values(namespaces)],
-  })],
+  plugins: [
+    createPersistedState({
+      paths: [
+        USER,
+        INCORRECT_DRIVE_ENTRIES,
+        UNSYNCHRONISED_DRIVES,
+        CARS,
+        LANGUAGE,
+        ...Object.values(namespaces),
+      ],
+    }),
+  ],
   getters: {
     [GET_HASH]: state => state.hash,
     [IS_ONLINE]: state => state.isOnline,
     [UNSYNCHRONISED_DRIVES]: state => state.unsyncedDrives,
-    [UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE]: state => state.unsyncedDrives
-      .filter(totalMileageFilter)
-      .reduce(
-        totalMileageReducer,
-        0,
-      ),
+    [UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE]: state =>
+      state.unsyncedDrives
+        .filter(totalMileageFilter)
+        .reduce(totalMileageReducer, 0),
   },
 });
 

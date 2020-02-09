@@ -1,6 +1,10 @@
 import {
-  INCORRECT_DRIVE_ENTRIES, SYNC_ITEM_SUCCESS, VERIFICATION_TOKEN,
-  SYNC_ITEM_FAILURE, UNSYNCHRONISED_DRIVES } from './constants';
+  INCORRECT_DRIVE_ENTRIES,
+  SYNC_ITEM_SUCCESS,
+  VERIFICATION_TOKEN,
+  SYNC_ITEM_FAILURE,
+  UNSYNCHRONISED_DRIVES,
+} from './constants';
 
 export const SET_USER = 'SET_USER';
 export const SET_HASH = 'SET_HASH';
@@ -11,13 +15,13 @@ export const SET_UPDATE_READY = 'SET_UPDATE_READY';
 export const SET_IS_CONNECTED = 'SET_IS_CONNECTED';
 export const SET_LANG = 'SET_LANG';
 export const SET_VERIFICATION_TOKEN_ACTIVE = 'SET_VERIFICATION_TOKEN_ACTIVE';
-export const SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS = 'SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS';
+export const SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS =
+  'SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS';
 
 export const mutations = {
   [SYNC_ITEM_SUCCESS](state, timestamp) {
     Object.assign(state, {
-      [UNSYNCHRONISED_DRIVES]: state[UNSYNCHRONISED_DRIVES]
-        .filter(drive => drive.timestamp !== timestamp),
+      [UNSYNCHRONISED_DRIVES]: state[UNSYNCHRONISED_DRIVES].filter(drive => drive.timestamp !== timestamp),
     });
   },
   [SYNC_ITEM_FAILURE](state, timestamp) {
@@ -28,8 +32,7 @@ export const mutations = {
 
     Object.assign(state, {
       [INCORRECT_DRIVE_ENTRIES]: newIncorrectEntries,
-      [UNSYNCHRONISED_DRIVES]: state[UNSYNCHRONISED_DRIVES]
-        .filter(drive => drive.timestamp !== timestamp),
+      [UNSYNCHRONISED_DRIVES]: state[UNSYNCHRONISED_DRIVES].filter(drive => drive.timestamp !== timestamp),
     });
   },
   [SET_USER](state, user) {
@@ -45,13 +48,12 @@ export const mutations = {
     Object.assign(state, { loginError });
   },
   [ADD_DRIVE](state, drive) {
-    Object.assign(
-      state,
-      {
-        [UNSYNCHRONISED_DRIVES]: [...state[UNSYNCHRONISED_DRIVES],
-          Object.assign({}, drive)],
-      },
-    );
+    Object.assign(state, {
+      [UNSYNCHRONISED_DRIVES]: [
+        ...state[UNSYNCHRONISED_DRIVES],
+        Object.assign({}, drive),
+      ],
+    });
   },
   [SET_UPDATE_READY](state, isReady) {
     Object.assign(state, { updateReady: isReady });

@@ -11,7 +11,6 @@
 <script>
 import store from '../store';
 import { LOGOUT } from '../store/actions';
-import { SET_LOGOUT_PROGRESS } from '../store/mutations';
 
 export default {
   name: 'SuccessfulLogoutView',
