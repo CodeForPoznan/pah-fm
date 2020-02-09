@@ -1,12 +1,14 @@
+import Vue from 'vue';
+import Router from 'vue-router';
+
 import flatMap from 'array.prototype.flatmap';
 
-import router from './router';
 import store from '../store';
 import * as mutations from '../store/mutations';
 import { deleteStorageData } from '../services/api/auth';
 import { isUserLoggedIn } from '../services/api/user';
 
-import {
+import routes, {
   openRoutes,
   homeRoute,
   pageNotFoundRoute,
@@ -15,6 +17,13 @@ import {
   groupBasedRoutes,
   allGroupBasedRoutes,
 } from './routes';
+
+Vue.use(Router);
+
+const router = new Router({
+  mode: 'history',
+  routes,
+});
 
 router.beforeEach((to, _from, next) => {
   const userLoggedIn = isUserLoggedIn();
@@ -56,8 +65,8 @@ router.beforeEach((to, _from, next) => {
   if (userLoggedIn && allGroupBasedRoutes.includes(to.name)) {
     const availableRoutes = flatMap(
       store.state.user.groups,
-      group => groupBasedRoutes[group.name.toLowerCase()],
-    ).map(route => route.to.name);
+      (group) => groupBasedRoutes[group.name.toLowerCase()]
+    ).map((route) => route.to.name);
 
     const routeAccessible = availableRoutes.includes(to.name);
 
