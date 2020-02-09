@@ -15,12 +15,11 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 
 import router from '../router';
-
+import { logoutRoute } from '../router/routes';
 import { USER } from '../store';
-import { LOGOUT } from '../store/actions';
 import { IS_ONLINE } from '../store/constants';
 
 import LogoutModal from './LogoutModal.vue';
@@ -35,10 +34,9 @@ export default {
     ...mapGetters([IS_ONLINE]),
   },
   methods: {
-    ...mapActions([LOGOUT]),
     logout() {
       if (this.isOnline) {
-        this.LOGOUT(router);
+        router.push(logoutRoute);
       }
     },
   },

@@ -4,8 +4,8 @@ import Router from 'vue-router';
 import flatMap from 'array.prototype.flatmap';
 
 import store from '../store';
+import { LOGOUT } from '../store/actions';
 import * as mutations from '../store/mutations';
-import { deleteStorageData } from '../services/api/auth';
 import { isUserLoggedIn } from '../services/api/user';
 
 import routes, {
@@ -31,14 +31,6 @@ router.beforeEach((to, _from, next) => {
   // 404 if not route matches
   if (to.name === pageNotFoundRoute.name) {
     return next({ path: homeRoute.path });
-  }
-
-  // user is going to log out
-  if (userLoggedIn && to.name === logoutRoute.name) {
-    store.commit(mutations.SET_USER, null);
-    deleteStorageData();
-    store.commit(mutations.SET_LOGOUT_PROGRESS, true);
-    return next();
   }
 
   // user logged out

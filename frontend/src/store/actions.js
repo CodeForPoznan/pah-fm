@@ -52,11 +52,10 @@ export const actions = {
       });
   },
 
-  [LOGOUT]({ commit }, router) {
+  [LOGOUT]({ commit }) {
     commit(mutations.SET_USER, null);
     deleteStorageData();
     commit(mutations.SET_LOGOUT_PROGRESS, true);
-    router.push({ path: '/logout' });
   },
 
   [SUBMIT]({ commit, dispatch }, { form }) {
