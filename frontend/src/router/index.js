@@ -4,15 +4,12 @@ import Router from 'vue-router';
 import flatMap from 'array.prototype.flatmap';
 
 import store from '../store';
-import { LOGOUT } from '../store/actions';
-import * as mutations from '../store/mutations';
 import { isUserLoggedIn } from '../services/api/user';
 
 import routes, {
   openRoutes,
   homeRoute,
   pageNotFoundRoute,
-  logoutRoute,
   loginRoute,
   groupBasedRoutes,
   allGroupBasedRoutes,
@@ -32,13 +29,7 @@ router.beforeEach((to, _from, next) => {
   if (to.name === pageNotFoundRoute.name) {
     return next({ path: homeRoute.path });
   }
-
-  // user logged out
-  if (store.state.logoutInProgress && to.name === logoutRoute.name) {
-    store.commit(mutations.SET_LOGOUT_PROGRESS, false);
-    return next();
-  }
-
+  //
   // route is open
   if (openRoutes.includes(to.name)) {
     return next();

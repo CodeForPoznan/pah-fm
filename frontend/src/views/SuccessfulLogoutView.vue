@@ -11,6 +11,7 @@
 <script>
 import store from '../store';
 import { LOGOUT } from '../store/actions';
+import { SET_LOGOUT_PROGRESS } from '../store/mutations';
 
 export default {
   name: 'SuccessfulLogoutView',
@@ -18,7 +19,11 @@ export default {
     this.$emit('hide-menu');
   },
   beforeRouteEnter(to, from, next) {
-    store.dispatch(LOGOUT);
+    if (store.state.logoutInProgress) {
+      store.commit(SET_LOGOUT_PROGRESS, false);
+    } else {
+      store.dispatch(LOGOUT);
+    }
     next();
   },
 };
