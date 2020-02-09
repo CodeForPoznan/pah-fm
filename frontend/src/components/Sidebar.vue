@@ -1,11 +1,22 @@
 <template>
-  <scale-rotate class="mobile-menu" v-if="show" right>
+  <scale-rotate
+    class="mobile-menu"
+    v-if="show"
+    right
+  >
     <b-nav fill>
       <navigation-items />
       <language />
 
-      <a class="out-link" href="http://codeforpoznan.pl" target="_blank">
-        <img class="out-link-image" src="../assets/logo_codeforpoznan.svg" />
+      <a
+        class="out-link"
+        href="http://codeforpoznan.pl"
+        target="_blank"
+      >
+        <img
+          class="out-link-image"
+          src="../assets/logo_codeforpoznan.svg"
+        >
       </a>
       <user-details />
     </b-nav>
