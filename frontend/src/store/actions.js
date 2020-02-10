@@ -55,7 +55,6 @@ export const actions = {
   [LOGOUT]({ commit }) {
     commit(mutations.SET_USER, null);
     deleteStorageData();
-    // commit(mutations.SET_LOGOUT_PROGRESS, true);
   },
 
   [SUBMIT]({ commit, dispatch }, { form }) {
