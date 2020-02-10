@@ -76,7 +76,7 @@
       "thank_you": "спасибі!",
       "successfully_logged_out": "Вийшли з системи.",
       "login_again": "Вхід знову",
-      "offline_logout_warning": "У вас немає підключення до Інтернету, тому якщо ви вийдете, ви зможете ввійти в систему лише після відновлення з'єднання."
+      "offline_logout_warning": "Ви в автономному режимі, тому якщо ви вийдете зараз, тоді ви не зможете ввійти, поки ви знову не ввійдете в мережу."
     },
     "refresh": {
       "new_version": "Доступна нова версія вебсайту",
@@ -166,7 +166,7 @@
       "thank_you": "Thank you!",
       "successfully_logged_out": "Successfully logged out.",
       "login_again": "Login again",
-      "offline_logout_warning": "You are offline so if you log out you will no able to log in again until you will be online again"
+      "offline_logout_warning": "You are offline, so if you log out right now then you won't be able to log in until you become online again."
     },
     "refresh": {
       "new_version": "A new version of website is available.",
@@ -252,7 +252,7 @@
       "thank_you": "Dziękujemy!",
       "successfully_logged_out": "Wylogowano pomyślnie.",
       "login_again": "Zaloguj się ponownie",
-      "offline_logout_warning": "Nie masz połączenia z internetem, więc jeśli się wylogujesz będziesz mógł się zalogować dopiero jak odzyskasz połączenie."
+      "offline_logout_warning": "Nie masz połączenia z internetem, więc jeśli się teraz wylogujesz to będziesz mógł się zalogować dopiero gdy odzyskasz połączenie."
     },
     "refresh": {
       "new_version": "Jest dostępna nowa wersja strony.",
