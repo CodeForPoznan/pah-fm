@@ -2,7 +2,8 @@
   <div
     v-if="!isLogin && user"
     class="is-online"
-    :class="{ online: isOnline }"/>
+    :class="{ online: isOnline }"
+  />
 </template>
 
 <script>

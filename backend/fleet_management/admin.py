@@ -4,44 +4,51 @@ from django.utils.translation import gettext_lazy as _
 from import_export.admin import ImportExportModelAdmin
 from import_export.fields import Field
 from import_export import resources
-from .models import Car, Drive, User, Project
+from .models import Car, Drive, User, Project, ProjectAdmin
 
 
 class DriveResource(resources.ModelResource):
+
+    def dehydrate_driver(self, drive):
+        return str(drive.driver)
+
+    def dehydrate_driver__country(self, drive):
+        return str(drive.driver.country.name)
+
     def dehydrate_passenger(self, drive):
         return str(drive.passenger)
 
-    def dehydrate_driver(self, drive):
-        return str(drive.driver)  # required, because import-export prints PK by default
-
-    def dehydrate_driver__country(self, drive):
-        return drive.driver.country.name
-
-    fuel_consumption = Field(attribute='fuel_consumption')
+    # patch model properties
+    fuel_consumption = Field(attribute="fuel_consumption")
+    diff_mileage = Field(attribute="diff_mileage")
+    country = Field(attribute="country")
 
     class Meta:
         model = Drive
         fields = (
             "id",
-            "passenger",
             "date",
+            "country",
+            "project__title",
+            "description",
             "start_mileage",
             "end_mileage",
-            "description",
+            "diff_mileage",
             "start_location",
             "end_location",
             "driver",
             "driver__country",
-            "fuel_consumption",
+            "passenger",
             "car__plates",
-            "project__title",
+            "fuel_consumption",
         )
         export_order = fields
 
 
 class DriveAdmin(ImportExportModelAdmin):
     resource_class = DriveResource
-    list_filter = ('driver__country',)
+    list_filter = ("driver__country",)
+    list_display = ("__str__", "country", "is_verified")
 
 
 class CustomUserAdmin(UserAdmin):
@@ -70,4 +77,4 @@ class CustomUserAdmin(UserAdmin):
 admin.site.register(Car)
 admin.site.register(Drive, DriveAdmin)
 admin.site.register(User, CustomUserAdmin)
-admin.site.register(Project)
+admin.site.register(Project, ProjectAdmin)

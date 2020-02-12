@@ -27,7 +27,7 @@ class PassengerListView(generics.ListAPIView):
     filter_backends = (filters.OrderingFilter, filters.SearchFilter)
     search_fields = (
         'first_name',
-        'last_name',
+        'last_name'
     )
     ordering = ('first_name', 'last_name')
 
