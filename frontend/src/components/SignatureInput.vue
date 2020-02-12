@@ -9,7 +9,7 @@
         event.key === 'Backspace' ||
         (Number(event.key) >= 0 && Number(event.key) <= 9)"
     :value="value"
-    @change="$emit('input', $event.target.value)"
+    @change="(e) => $emit('input', e.target.value)"
   />
 </template>
 
