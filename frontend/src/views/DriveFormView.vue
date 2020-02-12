@@ -109,7 +109,7 @@
         class="form-control select"
         :class="{ 'is-invalid': isInvalid['passenger'] }"
         label="text"
-        :reduce="(passenger) => String(passenger.value)"
+        :reduce="(passenger) => passenger.value"
         :options="passengers"
       />
     </div>
@@ -288,7 +288,7 @@ export default {
       this.isVerified = false;
 
       if (this.listOfErrors.length === 0) {
-        const passenger = this.passengers.find(p => p.value.toString() === this.form.passenger);
+        const passenger = this.passengers.find(p => p.value === this.form.passenger);
         this.isVerified = verify(
           this.computeHash,
           this.form.signature || 0,
