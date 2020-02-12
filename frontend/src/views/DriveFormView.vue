@@ -163,7 +163,7 @@
         v-model.number="computeHash"
         class="form-control"
         readonly
-      />
+      >
     </div>
     <div class="form-group">
       <label for="signature">{{ $t('drive_form.signature') }}</label>
@@ -191,7 +191,7 @@
       variant="secondary"
       dismissible
       :show="confirmationOffline"
-      @dismissed="confirmationOffline=false"
+      @dismissed="confirmationOffline = false"
     >
       <b>{{ $t('drive_form.drive_added_offline_notification') }}</b>
     </b-alert>
