@@ -7,23 +7,14 @@
   >
     <div class="form-group">
       <label for="hash">{{ $t('passenger_form.hash') }}</label>
-      <input
+      <signature-input
         id="hash"
         name="hash"
-        type="text"
-        pattern="[0-9]{6}"
-        inputmode="numeric"
-        maxlength="6"
         @change="syncToLocalStorage"
         v-model="form.hash"
-        onkeypress="return event.key === 'Enter'
-                      || event.key === 'Backspace'
-                      || (Number(event.key) >= 0
-                      && Number(event.key) <= 9
-                      && event.target.value < 20000000)"
-        class="form-control passenger-input"
+        class="passenger-input"
         :class="{ 'is-invalid': isInvalid.hash }"
-      >
+      />
     </div>
   </main-form>
 </template>
@@ -31,6 +22,7 @@
 <script>
 import FormMixin from '../mixins/FormMixin';
 import GroupGuardMixin from '../mixins/GroupGuardMixin';
+import SignatureInput from '../components/SignatureInput.vue';
 import MainForm from '../components/MainForm.vue';
 import store from '../store';
 
@@ -44,7 +36,7 @@ const initialFormData = {
 export default {
   name: 'PassengerView',
   mixins: [FormMixin, GroupGuardMixin],
-  components: { MainForm },
+  components: { MainForm, SignatureInput },
   mounted() {
     this.loadFormData({ ...initialFormData });
   },

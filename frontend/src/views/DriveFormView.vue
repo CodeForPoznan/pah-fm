@@ -163,21 +163,16 @@
         v-model.number="computeHash"
         class="form-control"
         readonly
-      >
+      />
     </div>
     <div class="form-group">
       <label for="signature">{{ $t('drive_form.signature') }}</label>
-      <input
+      <signature-input
         id="signature"
         name="signature"
-        type="text"
-        pattern="[0-9]{6}"
-        inputmode="numeric"
-        maxlength="6"
         v-model="form.signature"
-        class="form-control"
         :class="{ 'is-invalid': isInvalid['signature'] }"
-      >
+      />
     </div>
     <div class="form-group col-xs-12">
       {{ $t('drive_form.distance_traveled', { distance: distance }) }}
@@ -217,6 +212,7 @@ import vSelect from 'vue-select';
 
 import 'vue-select/dist/vue-select.css';
 
+import SignatureInput from '../components/SignatureInput.vue';
 import MainForm from '../components/MainForm.vue';
 import FormMixin from '../mixins/FormMixin';
 import GroupGuardMixin from '../mixins/GroupGuardMixin';
@@ -261,7 +257,7 @@ const requiredFields = [
 
 export default {
   name: 'DriveFormView',
-  components: { vSelect, MainForm },
+  components: { vSelect, MainForm, SignatureInput },
   mixins: [FormMixin, GroupGuardMixin],
   mounted() {
     this.loadFormData(initialFormData);
