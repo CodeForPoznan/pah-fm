@@ -21,24 +21,20 @@ export const SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS =
 export const mutations = {
   [SYNC_ITEM_SUCCESS](state, timestamp) {
     Object.assign(state, {
-      [UNSYNCHRONISED_DRIVES]: state[UNSYNCHRONISED_DRIVES].filter(
-        drive => drive.timestamp !== timestamp
-      ),
+      // eslint-ignore-next-line
+      [UNSYNCHRONISED_DRIVES]: state[UNSYNCHRONISED_DRIVES].filter(drive => drive.timestamp !== timestamp),
     });
   },
   [SYNC_ITEM_FAILURE](state, timestamp) {
     const newIncorrectEntries = [
       ...state[INCORRECT_DRIVE_ENTRIES],
-      state[UNSYNCHRONISED_DRIVES].find(
-        drive => drive.timestamp === timestamp
-      ),
+      state[UNSYNCHRONISED_DRIVES].find(drive => drive.timestamp === timestamp),
     ];
 
     Object.assign(state, {
       [INCORRECT_DRIVE_ENTRIES]: newIncorrectEntries,
-      [UNSYNCHRONISED_DRIVES]: state[UNSYNCHRONISED_DRIVES].filter(
-        drive => drive.timestamp !== timestamp
-      ),
+      // eslint-ignore-next-line
+      [UNSYNCHRONISED_DRIVES]: state[UNSYNCHRONISED_DRIVES].filter(drive => drive.timestamp !== timestamp),
     });
   },
   [SET_USER](state, user) {
