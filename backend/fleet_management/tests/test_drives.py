@@ -56,7 +56,7 @@ class DrivesApiTestCase(APITestCase):
         payload = {
             "car": {"id": self.car.id},
             "project": {"id": self.project.id},
-            "passengers": [{"id": self.passenger.id}],
+            "passenger": {"id": self.passenger.id},
             "date": "2019-12-06",
             "startMileage": 180000,
             "endMileage": 180250,
@@ -89,7 +89,7 @@ class DrivesApiTestCase(APITestCase):
         payload = {
             "car": {"id": self.car.id},
             "project": {"id": self.project.id},
-            "passengers": [{"id": self.passenger.id}],
+            "passenger": {"id": self.passenger.id},
             "date": "2019-12-07",
             "startMileage": 180000,
             "endMileage": 180250,
