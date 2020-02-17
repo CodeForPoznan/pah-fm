@@ -59,18 +59,10 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = ("title", "description", "id")
 
 
-class PassengersField(serializers.Field):
-    def to_representation(self, value):
-        return [PassengerSerializer(value).data]
-
-    def to_internal_value(self, data):
-        return data[0]
-
-
 class DriveSerializer(serializers.ModelSerializer):
     driver = UserSerializer(read_only=True)
     car = CarSerializer()
-    passengers = PassengersField(source="passenger")
+    passenger = PassengerSerializer()
     project = ProjectSerializer()
     signature = serializers.IntegerField(write_only=True, required=False)
 
@@ -80,7 +72,7 @@ class DriveSerializer(serializers.ModelSerializer):
             "id",
             "driver",
             "car",
-            "passengers",
+            "passenger",
             "project",
             "date",
             "start_mileage",

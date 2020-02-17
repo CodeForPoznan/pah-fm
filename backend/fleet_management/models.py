@@ -120,7 +120,7 @@ class Drive(models.Model):
         required_fields = {
             "car": initial_data["car"],
             "project": initial_data["project"],
-            "passengers": initial_data["passengers"],
+            "passenger": initial_data["passenger"],
             "startLocation": initial_data["start_location"],
             "endLocation": initial_data["end_location"],
             "startMileage": initial_data["start_mileage"],
