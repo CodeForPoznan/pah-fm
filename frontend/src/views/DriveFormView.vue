@@ -300,7 +300,6 @@ export default {
           form: {
             ...this.form,
             isVerified: this.isVerified,
-            passengers: [this.form.passenger],
             timestamp: Math.floor(Date.now() / 1000),
           },
         });
