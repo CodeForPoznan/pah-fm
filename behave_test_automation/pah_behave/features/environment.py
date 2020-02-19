@@ -6,10 +6,9 @@ def before_all(context):
         executable_path='/usr/local/bin/chromedriver'
     )
 
-
-def before_scenario(context, scenario):
-    if 'skip' in scenario.tags:
-        scenario.skip()
+# def before_scenario(scenario):
+#     if 'skip' in scenario.tags:
+#         scenario.skip()
 
 
 def after_all(context):
