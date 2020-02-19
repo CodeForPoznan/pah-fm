@@ -1,5 +1,3 @@
-from time import sleep
-
 from behave import when, given, then
 
 from page_objects.base_page import BasePage
