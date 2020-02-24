@@ -7,10 +7,5 @@ def before_all(context):
     )
 
 
-def before_scenario(context, scenario):
-    if 'skip' in scenario.tags:
-        scenario.skip()
-
-
 def after_all(context):
     context.driver.quit()
