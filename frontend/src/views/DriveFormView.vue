@@ -109,7 +109,7 @@
         class="form-control select"
         :class="{ 'is-invalid': isInvalid['passenger'] }"
         label="text"
-        :reduce="(passenger) => String(passenger.value)"
+        :reduce="(passenger) => passenger.value"
         :options="passengers"
       />
     </div>
@@ -167,17 +167,12 @@
     </div>
     <div class="form-group">
       <label for="signature">{{ $t('drive_form.signature') }}</label>
-      <input
+      <signature-input
         id="signature"
         name="signature"
-        type="text"
-        pattern="[0-9]{6}"
-        inputmode="numeric"
-        maxlength="6"
         v-model="form.signature"
-        class="form-control"
         :class="{ 'is-invalid': isInvalid['signature'] }"
-      >
+      />
     </div>
     <div class="form-group col-xs-12">
       {{ $t('drive_form.distance_traveled', { distance: distance }) }}
@@ -196,7 +191,7 @@
       variant="secondary"
       dismissible
       :show="confirmationOffline"
-      @dismissed="confirmationOffline=false"
+      @dismissed="confirmationOffline = false"
     >
       <b>{{ $t('drive_form.drive_added_offline_notification') }}</b>
     </b-alert>
@@ -217,6 +212,7 @@ import vSelect from 'vue-select';
 
 import 'vue-select/dist/vue-select.css';
 
+import SignatureInput from '../components/SignatureInput.vue';
 import MainForm from '../components/MainForm.vue';
 import FormMixin from '../mixins/FormMixin';
 import GroupGuardMixin from '../mixins/GroupGuardMixin';
@@ -261,7 +257,7 @@ const requiredFields = [
 
 export default {
   name: 'DriveFormView',
-  components: { vSelect, MainForm },
+  components: { vSelect, MainForm, SignatureInput },
   mixins: [FormMixin, GroupGuardMixin],
   mounted() {
     this.loadFormData(initialFormData);
@@ -288,7 +284,7 @@ export default {
       this.isVerified = false;
 
       if (this.listOfErrors.length === 0) {
-        const passenger = this.passengers.find(p => p.value.toString() === this.form.passenger);
+        const passenger = this.passengers.find(p => p.value === this.form.passenger);
         this.isVerified = verify(
           this.computeHash,
           this.form.signature || 0,
