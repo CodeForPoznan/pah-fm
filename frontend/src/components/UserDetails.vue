@@ -16,8 +16,6 @@
 <script>
 import { mapState } from 'vuex';
 
-import router from '../router';
-import { logoutRoute } from '../router/routes';
 import { USER } from '../store';
 
 import LogoutModal from './LogoutModal.vue';
