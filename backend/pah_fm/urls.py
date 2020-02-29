@@ -33,7 +33,7 @@ from fleet_management.api import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/docs/', include_docs_urls(title='PAH-FM', public=False)),
-    path('api/api-token-auth/', obtain_jwt_token),
+    path('api/api-token-auth/', obtain_jwt_token, name='jwt'),
     path('api/users/me', CurrentUserRetrieveView.as_view(), name='me'),
     path('api/passengers', PassengerListView.as_view(), name='passengers'),
     path('api/cars', CarListView.as_view(), name='cars'),
