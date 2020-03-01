@@ -17,6 +17,7 @@ export const FETCH_USER = 'FETCH_USER';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const SUBMIT = 'SUBMIT';
+export const SET_HASH = 'SET_HASH';
 export const SWITCH_LANGUAGE = 'SWITCH_LANGUAGE';
 
 export const actions = {
@@ -62,6 +63,10 @@ export const actions = {
     dispatch(SYNC);
   },
 
+  [SET_HASH]({ commit }, hash) {
+    commit(mutations.SET_HASH, hash);
+  },
+
   [SWITCH_LANGUAGE]({ commit }, language) {
     commit(mutations.SET_LANG, language);
     i18n.locale = language;
@@ -87,14 +92,17 @@ export const actions = {
     try {
       await post('drives', mappedDrive);
       commit(SYNC_ITEM_SUCCESS, timestamp);
+      dispatch(SYNC);
     } catch (e) {
       if (e.response && e.response.status === 409) {
         // was synced previously
         commit(SYNC_ITEM_SUCCESS, timestamp);
       } else if (e.response && [400, 403, 500].includes(e.response.status)) {
         commit(SYNC_ITEM_FAILURE, timestamp);
+        dispatch(SYNC);
+      } else {
+        setTimeout(() => dispatch(SYNC), 60000);
       }
     }
-    dispatch(SYNC);
   },
 };

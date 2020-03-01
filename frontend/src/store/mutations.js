@@ -3,6 +3,7 @@ import {
   SYNC_ITEM_FAILURE, UNSYNCHRONISED_DRIVES } from './constants';
 
 export const SET_USER = 'SET_USER';
+export const SET_HASH = 'SET_HASH';
 export const SET_LOGIN_PROGRESS = 'SET_LOGIN_PROGRESS';
 export const SET_LOGOUT_PROGRESS = 'SET_LOGOUT_PROGRESS';
 export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
@@ -34,6 +35,9 @@ export const mutations = {
   },
   [SET_USER](state, user) {
     Object.assign(state, { user });
+  },
+  [SET_HASH](state, hash) {
+    Object.assign(state, { hash });
   },
   [SET_LOGIN_PROGRESS](state, loginInProgress) {
     Object.assign(state, { loginInProgress });

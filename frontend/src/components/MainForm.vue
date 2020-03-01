@@ -9,12 +9,22 @@
               :errors="listOfErrors"
             />
             <h2>{{ title }}</h2>
-            <form @submit.prevent="$emit('submit')">
+            <form
+              @submit.prevent="$emit('submit')"
+              @reset.prevent="$emit('reset')"
+            >
               <slot />
-              <div class="form-group">
+              <div class="form-group form-buttons">
                 <button class="btn btn-primary col-xs-3">
                   {{ $t('drive_form.submit') }}
                 </button>
+                <span style="flex: 1" />
+                <input
+                  v-if="resetable"
+                  type="reset"
+                  class="btn btn-secondary col-xs-2"
+                  :value="$t('drive_form.reset')"
+                >
               </div>
             </form>
           </div>
@@ -39,6 +49,17 @@ export default {
       type: Array,
       default: () => [],
     },
+    resetable: {
+      type: Boolean,
+      default: () => false,
+    },
   },
 };
 </script>
+
+<style scoped lang="scss">
+  .form-buttons {
+    display: flex;
+    flex-direction: row;
+  }
+</style>

@@ -37,6 +37,8 @@ const modexp = (base, exp, mod) => {
   return res;
 };
 
-export const sign = (msg, priv) => modexp(msg, priv.d, priv.n);
+const int = n => parseInt(n, 10);
 
-export const verify = (msg, sgn, pub) => modexp(sgn, pub.e, pub.n) === msg % pub.n;
+export const sign = (msg, d, n) => modexp(int(msg), int(d), int(n));
+
+export const verify = (msg, sgn, e, n) => modexp(int(sgn), int(e), int(n)) === int(msg) % int(n);

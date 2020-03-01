@@ -1,24 +1,30 @@
 from django.db import transaction
-from rest_framework import fields, serializers, status
+from django.conf import settings
 from django.contrib.auth.models import Group
+from django.core.exceptions import ObjectDoesNotExist
 
+from rest_framework import fields, serializers, status
 from rest_framework.exceptions import ValidationError
 
+from fleet_management.crypto import sign, verify
 from fleet_management.models import Car, Drive, User, Project
 
 
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
-        fields = ('name',)
+        fields = ("name",)
 
 
 class UserSerializer(serializers.ModelSerializer):
     groups = GroupSerializer(many=True)
+    rsa_modulus_n = fields.CharField(read_only=True)
+    rsa_pub_e = fields.CharField(read_only=True)
+    rsa_priv_d = fields.CharField(read_only=True)
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'groups')
+        fields = ("id", "username", "groups", "rsa_modulus_n", "rsa_pub_e", "rsa_priv_d")
 
 
 class PassengerSerializer(serializers.ModelSerializer):
@@ -31,7 +37,7 @@ class PassengerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'rsa_modulus_n', 'rsa_pub_e')
+        fields = ("id", "first_name", "last_name", "rsa_modulus_n", "rsa_pub_e")
 
 
 class CarSerializer(serializers.ModelSerializer):
@@ -40,12 +46,7 @@ class CarSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Car
-        fields = (
-            'id',
-            'plates',
-            'fuel_consumption',
-            'description',
-        )
+        fields = ("id", "plates", "fuel_consumption", "description")
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -55,7 +56,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('title', 'description', 'id')
+        fields = ("title", "description", "id")
 
 
 class PassengersField(serializers.Field):
@@ -71,31 +72,57 @@ class DriveSerializer(serializers.ModelSerializer):
     car = CarSerializer()
     passengers = PassengersField(source="passenger")
     project = ProjectSerializer()
-    signature = serializers.IntegerField(write_only=True)
+    signature = serializers.IntegerField(write_only=True, required=False)
 
     class Meta:
         model = Drive
         fields = (
-            'id', 'driver', 'car', 'passengers', 'project',
-            'date', 'start_mileage', 'end_mileage', 'description',
-            'start_location', 'end_location', 'timestamp', 'signature'
+            "id",
+            "driver",
+            "car",
+            "passengers",
+            "project",
+            "date",
+            "start_mileage",
+            "end_mileage",
+            "description",
+            "start_location",
+            "end_location",
+            "timestamp",
+            "signature",
+            "is_verified",
         )
-        read_only_fields = ('is_verified',)
+        read_only_fields = ("is_verified",)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.hashed_form = 0
 
     def create(self, validated_data):
-        passenger_data = validated_data.pop('passenger')
-        car_data = validated_data.pop('car')
-        car = Car.objects.get(pk=car_data['id'])
-        project_data = validated_data.pop('project')
-        project = Project.objects.get(pk=project_data['id'])
-        passenger = User.objects.get(pk=passenger_data['id'])
-        form_signature = validated_data.pop("signature")
+        passenger_id = validated_data.pop("passenger")["id"]
+        project_id = validated_data.pop("project")["id"]
+        car_id = validated_data.pop("car")["id"]
+
+        try:
+            passenger = User.objects.get(id=passenger_id)
+            project = Project.objects.get(id=project_id)
+            car = Car.objects.get(id=car_id)
+        except ObjectDoesNotExist as e:
+            raise ValidationError(e.args[0])
+
+        is_verified = False
+        form_signature = validated_data.pop("signature", False)
+
+        if form_signature:
+            signature = sign(self.hashed_form, passenger.private_key())
+            is_verified = verify(self.hashed_form, form_signature, passenger.public_key())
+            is_verified = is_verified and signature == form_signature
 
         with transaction.atomic():
             drive = Drive.objects.create(
                 **validated_data,
-                is_verified=True,
-                driver=self.context['driver'],
+                is_verified=is_verified,
+                driver=self.context["driver"],
                 car=car,
                 project=project,
                 passenger=passenger
@@ -104,11 +131,27 @@ class DriveSerializer(serializers.ModelSerializer):
 
             return drive
 
+    def validate_signature(self, value):
+        """ validate the actual number in case someone sends 2^32 of 9's """
+        num_digits = len(str(2 ** settings.RSA_BIT_LENGTH))
+        max_number = 10 ** num_digits - 1
+
+        if value > max_number:
+            raise ValidationError('Signature field contains incorrect value')
+
+        return value
+
     def is_valid(self, raise_exception=False):
         try:
-            return super().is_valid(raise_exception=raise_exception)
+            if super().is_valid(raise_exception=raise_exception):
+                self.hashed_form = Drive.hash_form(self.initial_data)
+                return True
+            return False
         except ValidationError as err:
             err_codes = err.get_codes()
-            if "non_field_errors" in err_codes and "unique" in err_codes["non_field_errors"]:
+            if (
+                "non_field_errors" in err_codes
+                and "unique" in err_codes["non_field_errors"]
+            ):
                 err.status_code = status.HTTP_409_CONFLICT
             raise err

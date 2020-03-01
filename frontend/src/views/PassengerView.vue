@@ -3,21 +3,18 @@
     :title="$t('common.confirm_drive')"
     :list-of-errors="listOfErrors"
     @submit="handleSubmit"
+    @reset="reset"
   >
     <div class="form-group">
       <label for="hash">{{ $t('passenger_form.hash') }}</label>
-      <input
-        type="number"
-        @change="syncToLocalStorage"
-        v-model="form.hash"
+      <signature-input
         id="hash"
         name="hash"
-        max="999999"
-        step="1"
-        min="0"
-        class="form-control passenger-input"
+        @change="syncToLocalStorage"
+        v-model="form.hash"
+        class="passenger-input"
         :class="{ 'is-invalid': isInvalid.hash }"
-      >
+      />
     </div>
   </main-form>
 </template>
@@ -25,18 +22,21 @@
 <script>
 import FormMixin from '../mixins/FormMixin';
 import GroupGuardMixin from '../mixins/GroupGuardMixin';
+import SignatureInput from '../components/SignatureInput.vue';
 import MainForm from '../components/MainForm.vue';
+import store from '../store';
 
 import '../scss/passenger.scss';
+import { SET_HASH } from '../store/actions';
 
 const initialFormData = {
-  hash: '',
+  hash: null,
 };
 
 export default {
   name: 'PassengerView',
   mixins: [FormMixin, GroupGuardMixin],
-  components: { MainForm },
+  components: { MainForm, SignatureInput },
   mounted() {
     this.loadFormData({ ...initialFormData });
   },
@@ -51,9 +51,7 @@ export default {
       this.validateForm(this.validator);
 
       if (this.listOfErrors.length === 0) {
-        // TODO: hash generation
-        console.log('run hash generation');
-
+        store.dispatch(SET_HASH, this.form.hash);
         this.clearStorage();
         this.loadFormData(initialFormData); // re-initialize form
         this.$router.push('/confirm');

@@ -2,9 +2,9 @@ import calendar
 import time
 
 from django.db import models
-from django.utils.timezone import now
 from django.contrib.auth.models import AbstractUser
 from django_countries.fields import CountryField
+from django.contrib import admin
 
 from fleet_management.crypto import PublicKey, PrivateKey, find_pair_of_keys, hash_dict
 
@@ -19,14 +19,17 @@ class User(AbstractUser):
     rsa_pub_e = models.CharField(max_length=6, null=False, default="")
     rsa_priv_d = models.CharField(max_length=6, null=False, default="")
 
-    def save(self, regenerate_keys: bool = False, *args, **kwargs):
-        if regenerate_keys or self.pk is None:
-            pub, priv = find_pair_of_keys()
-            self.rsa_modulus_n = str(pub.n).zfill(6)
-            self.rsa_pub_e = str(pub.e).zfill(6)
-            self.rsa_priv_d = str(priv.d).zfill(6)
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            self.regenerate_keys()
 
         super().save(*args, **kwargs)
+
+    def regenerate_keys(self):
+        pub, priv = find_pair_of_keys()
+        self.rsa_modulus_n = str(pub.n).zfill(6)
+        self.rsa_pub_e = str(pub.e).zfill(6)
+        self.rsa_priv_d = str(priv.d).zfill(6)
 
     def public_key(self) -> PublicKey:
         return PublicKey(int(str(self.rsa_modulus_n)), int(str(self.rsa_pub_e)))
@@ -57,12 +60,17 @@ class Project(models.Model):
         return self.title
 
 
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'country')
+    list_filter = ('country',)
+
+
 class Drive(models.Model):
     driver = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="drives_driven"
     )
     car = models.ForeignKey(Car, null=False, on_delete=models.CASCADE)
-    date = models.DateField(default=lambda: now().date(), blank=False)
+    date = models.DateField(auto_now_add=True, blank=False)
     start_mileage = models.IntegerField(null=False)
     end_mileage = models.IntegerField(null=False)
     description = models.CharField(max_length=1000, blank=True)
@@ -92,6 +100,10 @@ class Drive(models.Model):
 
     def __str__(self):
         return f"Drive from {self.start_location} to {self.end_location} (driver: {self.driver})"
+
+    @property
+    def country(self):
+        return self.driver.country.name
 
     @property
     def fuel_consumption(self):

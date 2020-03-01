@@ -1,6 +1,8 @@
 <template>
   <main-form
     @submit="handleSubmit"
+    @reset="reset"
+    resetable
     :title="$t('common.new_drive')"
     :list-of-errors="listOfErrors"
   >
@@ -39,7 +41,7 @@
                       && Number(event.key) <= 9
                       && event.target.value < 20000000)"
         type="number"
-        v-model="form.startMileage"
+        v-model.number="form.startMileage"
         name="startMileage"
         @input="syncToLocalStorage"
         class="form-control"
@@ -107,7 +109,7 @@
         class="form-control select"
         :class="{ 'is-invalid': isInvalid['passenger'] }"
         label="text"
-        :reduce="passenger => String(passenger.value)"
+        :reduce="(passenger) => passenger.value"
         :options="passengers"
       />
     </div>
@@ -120,7 +122,7 @@
         @input="syncToLocalStorage"
         name="description"
         class="form-control"
-        :class="{ 'is-invalid': isInvalid['description']}"
+        :class="{ 'is-invalid': isInvalid['description'] }"
       >
     </div>
 
@@ -146,7 +148,7 @@
                       && Number(event.key) <= 9
                       && event.target.value < 20000000)"
         type="number"
-        v-model="form.endMileage"
+        v-model.number="form.endMileage"
         @input="syncToLocalStorage"
         name="endMileage"
         class="form-control"
@@ -157,41 +159,30 @@
       <label for="driveHash">{{ $t('drive_form.drive_hash') }}</label>
       <input
         id="driveHash"
+        type="text"
         v-model.number="computeHash"
         class="form-control"
-        type="text"
         readonly
       >
     </div>
     <div class="form-group">
       <label for="signature">{{ $t('drive_form.signature') }}</label>
-      <input
+      <signature-input
         id="signature"
-        type="number"
         name="signature"
-        min="0"
-        maxlength="6"
-        v-model.number="form.signature"
-        onkeypress="return event.key === 'Enter'
-                      || (Number(event.key) >= 0
-                      && Number(event.key) <= 9
-                      && event.target.value < 20000000)"
-        class="form-control"
+        v-model="form.signature"
         :class="{ 'is-invalid': isInvalid['signature'] }"
-      >
+      />
     </div>
-    <div
-      class="form-group col-xs-12"
-    >
+    <div class="form-group col-xs-12">
       {{ $t('drive_form.distance_traveled', { distance: distance }) }}
     </div>
-
     <b-alert
       class="col-xs-12"
       variant="success"
       dismissible
       :show="confirmationOnline"
-      @dismissed="confirmationOnline=false"
+      @dismissed="confirmationOnline = false"
     >
       <b>{{ $t('drive_form.drive_added_online_notification') }}</b>
     </b-alert>
@@ -200,9 +191,17 @@
       variant="secondary"
       dismissible
       :show="confirmationOffline"
-      @dismissed="confirmationffline=false"
+      @dismissed="confirmationOffline = false"
     >
       <b>{{ $t('drive_form.drive_added_offline_notification') }}</b>
+    </b-alert>
+    <b-alert
+      class="col-xs-12"
+      variant="warning"
+      dismissible
+      :show="(confirmationOnline || confirmationOffline) && !isVerified"
+    >
+      <b>{{ $t('drives.unverified_drive') }}</b>
     </b-alert>
   </main-form>
 </template>
@@ -213,6 +212,7 @@ import vSelect from 'vue-select';
 
 import 'vue-select/dist/vue-select.css';
 
+import SignatureInput from '../components/SignatureInput.vue';
 import MainForm from '../components/MainForm.vue';
 import FormMixin from '../mixins/FormMixin';
 import GroupGuardMixin from '../mixins/GroupGuardMixin';
@@ -228,7 +228,7 @@ import {
 import { FORM_STATE } from '../constants/form';
 import { setItem } from '../services/localStore';
 import { getToday } from '../services/time';
-import { hashDict } from '../services/crypto';
+import { hashDict, verify } from '../services/crypto';
 import { padWithZeros } from '../utils';
 
 const initialFormData = {
@@ -257,15 +257,16 @@ const requiredFields = [
 
 export default {
   name: 'DriveFormView',
-  components: { vSelect, MainForm },
+  components: { vSelect, MainForm, SignatureInput },
   mixins: [FormMixin, GroupGuardMixin],
   mounted() {
-    this.loadFormData({ ...initialFormData });
+    this.loadFormData(initialFormData);
   },
   data() {
     return {
       formId: FORM_STATE,
       requiredFields,
+      initialData: initialFormData,
       confirmationOnline: false,
       confirmationOffline: false,
       currentDate: new Date().toISOString().split('T')[0],
@@ -280,11 +281,21 @@ export default {
       this.validateForm(this.validator);
       this.confirmationOffline = false;
       this.confirmationOnline = false;
+      this.isVerified = false;
 
       if (this.listOfErrors.length === 0) {
+        const passenger = this.passengers.find(p => p.value === this.form.passenger);
+        this.isVerified = verify(
+          this.computeHash,
+          this.form.signature || 0,
+          passenger.rsaPubE,
+          passenger.rsaModulusN,
+        );
+        if (!this.form.signature) delete this.form.signature;
         this[actions.SUBMIT]({
           form: {
             ...this.form,
+            isVerified: this.isVerified,
             passengers: [this.form.passenger],
             timestamp: Math.floor(Date.now() / 1000),
           },
@@ -302,11 +313,7 @@ export default {
     },
     validator(data) {
       const { startMileage, endMileage } = data;
-      if (
-        !!startMileage &&
-        !!endMileage &&
-        parseInt(startMileage, 10) >= parseInt(endMileage, 10)
-      ) {
+      if (!!startMileage && !!endMileage && startMileage >= endMileage) {
         const errorStartMileage = this.$t('drive_form.start_mileage_error');
         const errorEndMileage = this.$t('drive_form.end_mileage_error');
         return [errorStartMileage, errorEndMileage];
@@ -331,6 +338,8 @@ export default {
         (state.data || []).map(p => ({
           value: p.id,
           text: [p.firstName, p.lastName].join(' '),
+          rsaModulusN: p.rsaModulusN,
+          rsaPubE: p.rsaPubE,
         })),
     }),
     ...mapState([USER]),
@@ -340,15 +349,18 @@ export default {
       return distance > 0 ? distance : 0;
     },
     computeHash() {
-      return padWithZeros(hashDict({
-        car: { id: this.form.car },
-        project: { id: this.form.project },
-        passengers: [{ id: this.form.passenger }],
-        startLocation: this.form.startLocation,
-        endLocation: this.form.endLocation,
-        startMileage: this.form.startMileage,
-        endMileage: this.form.endMileage,
-      }), 6);
+      return padWithZeros(
+        hashDict({
+          car: { id: this.form.car },
+          project: { id: this.form.project },
+          passengers: [{ id: this.form.passenger }],
+          startLocation: this.form.startLocation,
+          endLocation: this.form.endLocation,
+          startMileage: this.form.startMileage,
+          endMileage: this.form.endMileage,
+        }),
+        6,
+      );
     },
   },
 };

@@ -27,6 +27,7 @@
       <div
         class="card-header"
         @click="showDrive(drive.timestamp)"
+        :class="{ verified: drive.isVerified }"
       >
         <h5 class="mb-0">
           <span class="font-weight-bold">{{ drive.date }}</span>
@@ -55,6 +56,13 @@
             <span class="font-weight-bold mr-1">{{ $t('drives.ending_mileage') }}</span>
             <span>{{ drive.endMileage }}</span>
           </p>
+          <div
+            v-if="!drive.isVerified"
+            class="alert alert-warning col-xs-12"
+            role="alert"
+          >
+            {{ $t('drives.unverified_drive') }}
+          </div>
         </div>
       </div>
     </div>
@@ -79,10 +87,11 @@
       <div
         class="card-header"
         @click="showDrive(drive.id)"
+        :class="{ verified: drive.isVerified }"
       >
         <h5 class="mb-0">
           <span class="font-weight-bold">{{ drive.date }}</span>
-          {{ $t('drives.from_to', { from: drive.startLocation, destination: drive.endLocation}) }}
+          {{ $t('drives.from_to', { from: drive.startLocation, destination: drive.endLocation }) }}
         </h5>
       </div>
       <div :class="['collapse', { show: visibleDrive === drive.id }]">
@@ -107,6 +116,13 @@
             <span class="font-weight-bold mr-1">{{ $t('drives.ending_mileage') }}</span>
             <span>{{ drive.endMileage }}</span>
           </p>
+          <div
+            v-if="!drive.isVerified"
+            class="alert alert-warning col-xs-12"
+            role="alert"
+          >
+            {{ $t('drives.unverified_drive') }}
+          </div>
         </div>
       </div>
     </div>
@@ -156,13 +172,16 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../scss/base';
-
 .card-header {
   cursor: pointer;
+  border-left: 5px solid #ffc107;
 }
 
 .heading {
   text-align: center;
+}
+
+.verified {
+  border-left: 5px solid #28a745;
 }
 </style>

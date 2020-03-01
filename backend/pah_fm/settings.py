@@ -28,12 +28,14 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.environ.get('DEBUG', '0') == '1'
 
 ALLOWED_HOSTS = [
-        'localhost',
-        '127.0.0.1',
-        '52.232.62.212',
-        '.pahfm.codeforpoznan.pl',
-        '.lemik.pl',
-    ]
+    'localhost',
+    '127.0.0.1',
+    '52.232.62.212',
+    '.pahfm.codeforpoznan.pl',
+]
+
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
 
 
 # Application definition
