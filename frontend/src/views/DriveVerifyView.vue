@@ -27,6 +27,7 @@ import GroupGuardMixin from '../mixins/GroupGuardMixin';
 import SignatureInput from '../components/SignatureInput.vue';
 import MainForm from '../components/MainForm.vue';
 import store from '../store';
+import { FORM_STATE } from '../constants/form';
 
 import '../scss/passenger.scss';
 
@@ -47,17 +48,40 @@ export default {
     return {
       formId: 'driveVerifyForm',
       requiredFields: ['signature'],
+      isVerified: false,
     };
   },
   methods: {
     handleSubmit() {
       this.validateForm();
-      let isVerified = verify(
+      this.confirmationOffline = false;
+      this.confirmationOnline = false;
+      const passenger = this.passengers.find(
+        (p) => p.value.toString() === this.form.passenger
+      );
+      this.isVerified = verify(
         store.state.DRIVE_HASH,
         this.form.signature || 0,
         passenger.rsaPubE,
         passenger.rsaModulusN
       );
+      if (!this.form.signature) delete this.form.signature;
+      this[actions.SUBMIT]({
+        form: {
+          ...this.form,
+          isVerified: this.isVerified,
+          passengers: [this.form.passenger],
+          timestamp: Math.floor(Date.now() / 1000),
+        },
+      });
+      this.clearStorage();
+      setItem(FORM_STATE, { car: this.form.car });
+
+      if (this.isOnline) {
+        this.confirmationOnline = true;
+      } else {
+        this.confirmationOffline = true;
+      }
     },
   },
 };

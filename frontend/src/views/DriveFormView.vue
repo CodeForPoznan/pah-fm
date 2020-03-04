@@ -187,6 +187,7 @@ import 'vue-select/dist/vue-select.css';
 import MainForm from '../components/MainForm.vue';
 import FormMixin from '../mixins/FormMixin';
 import GroupGuardMixin from '../mixins/GroupGuardMixin';
+import router, { driveVerifyRoute } from '../router';
 
 import { USER } from '../store';
 import * as actions from '../store/actions';
@@ -250,38 +251,10 @@ export default {
     ...mapActions(namespaces.projects, [apiActions.fetchProjects]),
     handleSubmit() {
       this.validateForm(this.validator);
-      this.confirmationOffline = false;
-      this.confirmationOnline = false;
-      this.isVerified = false;
-
       if (this.listOfErrors.length === 0) {
-        const passenger = this.passengers.find(
-          (p) => p.value.toString() === this.form.passenger
-        );
-        this.isVerified = verify(
-          this.computeHash,
-          this.form.signature || 0,
-          passenger.rsaPubE,
-          passenger.rsaModulusN
-        );
-        if (!this.form.signature) delete this.form.signature;
-        this[actions.SUBMIT]({
-          form: {
-            ...this.form,
-            isVerified: this.isVerified,
-            passengers: [this.form.passenger],
-            timestamp: Math.floor(Date.now() / 1000),
-          },
-        });
-        this.clearStorage();
-        setItem(FORM_STATE, { car: this.form.car });
-        this.loadFormData(initialFormData);
-
-        if (this.isOnline) {
-          this.confirmationOnline = true;
-        } else {
-          this.confirmationOffline = true;
-        }
+        // TODO: Save form to vuex
+        // TODO: Save checksum to vuex, checksum is stored in `this.computeHash`
+        router.push(driveVerifyRoute);
       }
     },
     validator(data) {
