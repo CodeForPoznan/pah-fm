@@ -4,6 +4,8 @@ import { getMyself } from '../services/api/user';
 import * as mutations from './mutations';
 import { mapDrive } from './helpers';
 import { i18n } from '../main';
+import { hashDict } from '../services/crypto';
+import { padWithZeros } from '../utils';
 import {
   actions as apiActions,
   namespaces,
@@ -18,6 +20,7 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const SUBMIT = 'SUBMIT';
 export const SET_HASH = 'SET_HASH';
+export const SET_DRIVE_FORM = 'SET_DRIVE_FORM';
 export const SWITCH_LANGUAGE = 'SWITCH_LANGUAGE';
 
 export const actions = {
@@ -65,6 +68,25 @@ export const actions = {
 
   [SET_HASH]({ commit }, hash) {
     commit(mutations.SET_HASH, hash);
+  },
+
+  [SET_DRIVE_FORM]({ commit }, form) {
+    // This function takes form from 'DriveFormView' save remove unnecessary parts and
+    // calculate the checksum.
+    commit(mutations.SET_DRIVE_FORM, form);
+    const hash = padWithZeros(
+      hashDict({
+        car: { id: form.car },
+        project: { id: form.project },
+        passengers: [{ id: form.passenger }],
+        startLocation: form.startLocation,
+        endLocation: form.endLocation,
+        startMileage: form.startMileage,
+        endMileage: form.endMileage,
+      }),
+      6
+    );
+    commit(mutations.SET_DRIVE_HASH, hash);
   },
 
   [SWITCH_LANGUAGE]({ commit }, language) {

@@ -13,6 +13,8 @@ import { totalMileageReducer, totalMileageFilter } from '../utils';
 
 export const USER = 'user';
 export const HASH = 'hash';
+export const DRIVE_HASH = 'drive_hash';
+export const DRIVE_FORM = 'drive_form';
 export const CARS = 'cars';
 export const LANGUAGE = 'language';
 
@@ -22,6 +24,8 @@ Vue.use(Vuex);
 
 const initialState = {
   [USER]: null,
+  [DRIVE_HASH]: null,
+  [DRIVE_FORM]: null,
   [HASH]: null,
   [INCORRECT_DRIVE_ENTRIES]: [],
   [UNSYNCHRONISED_DRIVES]: [],

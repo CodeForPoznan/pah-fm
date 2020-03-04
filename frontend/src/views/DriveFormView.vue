@@ -190,7 +190,7 @@ import GroupGuardMixin from '../mixins/GroupGuardMixin';
 import router, { driveVerifyRoute } from '../router';
 
 import { USER } from '../store';
-import * as actions from '../store/actions';
+import { SET_DRIVE_FORM } from '../store/actions';
 
 import {
   namespaces,
@@ -200,8 +200,7 @@ import {
 import { FORM_STATE } from '../constants/form';
 import { setItem } from '../services/localStore';
 import { getToday } from '../services/time';
-import { hashDict, verify } from '../services/crypto';
-import { padWithZeros } from '../utils';
+import { verify } from '../services/crypto';
 
 const initialFormData = {
   date: getToday(),
@@ -245,15 +244,14 @@ export default {
     };
   },
   methods: {
-    ...mapActions([actions.SUBMIT]),
+    ...mapActions([SET_DRIVE_FORM]),
     ...mapActions(namespaces.cars, [apiActions.fetchCars]),
     ...mapActions(namespaces.passengers, [apiActions.fetchPassengers]),
     ...mapActions(namespaces.projects, [apiActions.fetchProjects]),
     handleSubmit() {
       this.validateForm(this.validator);
       if (this.listOfErrors.length === 0) {
-        // TODO: Save form to vuex
-        // TODO: Save checksum to vuex, checksum is stored in `this.computeHash`
+        this[SET_DRIVE_FORM](this.form);
         router.push(driveVerifyRoute);
       }
     },
@@ -293,20 +291,6 @@ export default {
     distance() {
       const distance = this.form.endMileage - this.form.startMileage;
       return distance > 0 ? distance : 0;
-    },
-    computeHash() {
-      return padWithZeros(
-        hashDict({
-          car: { id: this.form.car },
-          project: { id: this.form.project },
-          passengers: [{ id: this.form.passenger }],
-          startLocation: this.form.startLocation,
-          endLocation: this.form.endLocation,
-          startMileage: this.form.startMileage,
-          endMileage: this.form.endMileage,
-        }),
-        6
-      );
     },
   },
 };
