@@ -31,3 +31,8 @@ class LoginPage(BasePage):
         self.find_element(*self.password_field).send_keys("cfp123")
         self.find_element(*self.login_button_enabled).click()
         self.wait_for_element(self.hamburger_menu)
+
+    def input_login_data(self, login, password):
+        self.find_element(*self.username_field).send_keys(login)
+        self.find_element(*self.password_field).send_keys(password)
+

@@ -1,8 +1,8 @@
 from behave import when, given, then
 
-from page_objects.base_page import BasePage
-from page_objects.login_page import LoginPage
-from page_objects.logout_page import LogoutPage
+from features.page_objects.base_page import BasePage
+from features.page_objects.login_page import LoginPage
+from features.page_objects.logout_page import LogoutPage
 
 
 @given('User is on drive page')
