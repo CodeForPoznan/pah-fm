@@ -51,6 +51,11 @@ class Car(models.Model):
         return self.plates
 
 
+class CarAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'country')
+    list_filter = ('country',)
+
+
 class Project(models.Model):
     title = models.CharField(max_length=50, blank=False)
     description = models.CharField(max_length=1000, blank=False)
