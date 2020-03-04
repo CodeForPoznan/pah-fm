@@ -54,7 +54,7 @@
         v-if="projects.data"
         @change="syncToLocalStorage"
         v-model="form.project"
-        name="car"
+        name="project"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['project'] }"
       >
