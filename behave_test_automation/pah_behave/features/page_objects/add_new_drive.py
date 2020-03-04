@@ -18,7 +18,7 @@ class AddNewDrivePage(BasePage):
         return By.XPATH, f'//option[contains(text(), "{name}")]'
 
     def error_add_new_drive(self, name):
-        return By.XPATH, f'//li[contains(text(), "{name}" + is required)]'
+        return By.XPATH, f'//li[contains(text(), "{name} is required")]'
 
     def submit_add_new_drive_required_fields(self, start_location, starting_mileage, project, car, passenger,
                                              end_location, end_mileage) -> None:
@@ -36,11 +36,12 @@ class AddNewDrivePage(BasePage):
 
         self.find_element(*self.add_new_drive_field("endLocation")).send_keys(end_location)
         self.find_element(*self.add_new_drive_field("endMileage")).send_keys(end_mileage)
-
+        from time import sleep
+        sleep(10)
         self.find_element(*self.submit_button).click()
 
-    def show_all_add_drive_errors(self):
-        self.find_element(*self.error_add_new_drive("date"))
+    def show_add_drive_errors(self):
+        # self.find_element(*self.error_add_new_drive("date"))
         self.find_element(*self.error_add_new_drive("car"))
         self.find_element(*self.error_add_new_drive("project"))
         self.find_element(*self.error_add_new_drive("start Mileage"))

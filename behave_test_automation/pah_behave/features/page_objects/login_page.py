@@ -35,4 +35,3 @@ class LoginPage(BasePage):
     def input_login_data(self, login, password):
         self.find_element(*self.username_field).send_keys(login)
         self.find_element(*self.password_field).send_keys(password)
-

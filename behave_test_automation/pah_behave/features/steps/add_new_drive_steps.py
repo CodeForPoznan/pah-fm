@@ -19,4 +19,4 @@ def submit_add_new_drive_required_fields(context, start_location, starting_milea
 @then('User sees an errors list')
 def show_all_add_drive_errors(context) -> None:
     page = AddNewDrivePage(context.driver)
-    page.show_all_add_drive_errors()
+    page.show_add_drive_errors()
