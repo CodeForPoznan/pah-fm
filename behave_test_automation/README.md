@@ -39,7 +39,7 @@ Go to the directory with PAH website, eg.:
 
 Make sure, that virtual environment is active, so the prompt will look like:
 
-1. ```(pah_behave) ~/codeforpoznan/pah-fm/pah_behave```
+1. ```(pah_behave) ~/codeforpoznan/pah-fm/behave_test_automation/pah_behave```
 
 1. ```behave pah_behave/features/```
 
