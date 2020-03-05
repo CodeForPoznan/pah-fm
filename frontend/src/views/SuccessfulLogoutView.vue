@@ -9,10 +9,17 @@
 </template>
 
 <script>
+import store from '../store';
+import { LOGOUT } from '../store/actions';
+
 export default {
   name: 'SuccessfulLogoutView',
   mounted() {
     this.$emit('hide-menu');
+  },
+  beforeRouteEnter(to, from, next) {
+    store.dispatch(LOGOUT);
+    next();
   },
 };
 </script>

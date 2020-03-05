@@ -1,12 +1,12 @@
 <template>
-  <ScaleRotate
+  <scale-rotate
     class="mobile-menu"
     v-if="show"
     right
   >
     <b-nav fill>
-      <NavigationItems />
-      <Language />
+      <navigation-items />
+      <language />
 
       <a
         class="out-link"
@@ -18,30 +18,15 @@
           src="../assets/logo_codeforpoznan.svg"
         >
       </a>
-
-      <b-nav-item
-        v-if="user"
-        @click="LOGOUT"
-        to="/logout"
-        key="logout"
-        class="username"
-        :class="{ offline: !isOnline }"
-      >
-        {{ $t('common.logout') }}
-        <p>{{ user.username }}</p>
-      </b-nav-item>
+      <user-details />
     </b-nav>
-  </ScaleRotate>
+  </scale-rotate>
 </template>
 
 <script>
 import { ScaleRotate } from 'vue-burger-menu';
-import { mapActions, mapGetters, mapState } from 'vuex';
 
-import { USER } from '../store';
-import * as actions from '../store/actions';
-import { IS_ONLINE } from '../store/constants';
-
+import UserDetails from './UserDetails.vue';
 import NavigationItems from './NavigationItems.vue';
 import Language from './Language.vue';
 
@@ -51,19 +36,13 @@ export default {
     ScaleRotate,
     NavigationItems,
     Language,
+    UserDetails,
   },
   props: {
     show: {
       type: Boolean,
       required: true,
     },
-  },
-  computed: {
-    ...mapState([USER]),
-    ...mapGetters([IS_ONLINE]),
-  },
-  methods: {
-    ...mapActions([actions.LOGOUT]),
   },
 };
 </script>
@@ -78,11 +57,5 @@ export default {
 .out-link-image {
   width: 100%;
   height: 100%;
-}
-
-.offline {
-  cursor: default;
-  pointer-events: none;
-  text-decoration: none;
 }
 </style>
