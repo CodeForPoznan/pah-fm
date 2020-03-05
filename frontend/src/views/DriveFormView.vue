@@ -209,7 +209,7 @@
       dismissible
       :show="(confirmationOnline || confirmationOffline) && isVerified"
     >
-      <b>{{ $t('drives.verifired_drive') }}</b>
+      <b>{{ $t('drives.verified_drive') }}</b>
     </b-alert>
   </main-form>
 </template>

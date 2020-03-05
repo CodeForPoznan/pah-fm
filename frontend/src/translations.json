@@ -59,8 +59,8 @@
       "starting_mileage": "Початкове значення вимірювального приладу",
       "unsynced_drives": "Не синхронізовані поїздки",
       "total_mileage": "Всього {total} км",
-      "unverified_drive": "Цей привід не перевірено, зв'яжіться з людиною з ПАУ, відповідальною за накопичувачі, щоб вирішити його",
-      "verifired_drive": "Ця їзда перевірена"
+      "unverified_drive": "Цей привід не перевірено, зв'яжіться з людиною з ПАУ, відповідальною за накопичувачі, щоб вирішити його.",
+      "verified_drive": "Ця їзда перевірена."
     },
     "header": {
       "polish_humanitarian_action": "Польська Гуманітарна Акція"
@@ -152,7 +152,7 @@
       "unsynced_drives": "Unsynchronized drives",
       "total_mileage": "Total {total} km",
       "unverified_drive": "This drive was not verified, contact with a person from PAH responsible for drives to solve it.",
-      "verifired_drive": "This drive was verified"
+      "verified_drive": "This drive was verified."
     },
     "header": {
       "polish_humanitarian_action": "Polish Humanitarian Action"
@@ -244,7 +244,7 @@
       "unsynced_drives": "Przejazdy niezsynchronizowane",
       "total_mileage": "Razem {total} km",
       "unverified_drive": "Ten przejazd nie został zweryfikowany, skontaktuj się z osobą z PAH odpowiedzialną za przejazdy by to wyjaśnić.",
-      "verifired_drive": "Ten przejazd został zweryfikowany"
+      "verified_drive": "Ten przejazd został zweryfikowany."
     },
     "login": {
       "password": "Hasło",
