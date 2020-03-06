@@ -207,5 +207,16 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=30),
 }
 
+# Verification settings
 RSA_PUBLIC_EXP = 257
 RSA_BIT_LENGTH = 19
+
+# Countries settings
+COUNTRIES_ONLY = [
+    'IQ',  # Iraq
+    'PL',  # Poland
+    'SO',  # Somalia
+    'SS',  # South Sudan
+    'UA',  # Ukraine
+    'YE',  # Yemen
+]
