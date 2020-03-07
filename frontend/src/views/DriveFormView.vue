@@ -203,6 +203,14 @@
     >
       <b>{{ $t('drives.unverified_drive') }}</b>
     </b-alert>
+    <b-alert
+      class="col-xs-12"
+      variant="success"
+      dismissible
+      :show="(confirmationOnline || confirmationOffline) && isVerified"
+    >
+      <b>{{ $t('drives.verified_drive') }}</b>
+    </b-alert>
   </main-form>
 </template>
 
