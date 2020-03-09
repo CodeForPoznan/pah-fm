@@ -5,7 +5,7 @@
       <input
         id="driveHash"
         type="text"
-        value="234987"
+        :value="drive_hash"
         class="form-control passenger-input"
         readonly
       />
@@ -16,18 +16,50 @@
         id="signature"
         name="signature"
         v-model="form.signature"
+        class="passenger-input"
       />
     </div>
+    <b-alert
+      class="col-xs-12"
+      variant="success"
+      dismissible
+      :show="confirmationOnline"
+      @dismissed="confirmationOnline = false"
+    >
+      <b>{{ $t('drive_form.drive_added_online_notification') }}</b>
+    </b-alert>
+    <b-alert
+      class="col-xs-12"
+      variant="secondary"
+      dismissible
+      :show="confirmationOffline"
+      @dismissed="confirmationOffline = false"
+    >
+      <b>{{ $t('drive_form.drive_added_offline_notification') }}</b>
+    </b-alert>
+    <b-alert
+      class="col-xs-12"
+      variant="warning"
+      dismissible
+      :show="(confirmationOnline || confirmationOffline) && !isVerified"
+    >
+      <b>{{ $t('drives.unverified_drive') }}</b>
+    </b-alert>
   </main-form>
 </template>
 
 <script>
+import { mapState, mapActions, mapGetters } from 'vuex';
+
 import FormMixin from '../mixins/FormMixin';
 import GroupGuardMixin from '../mixins/GroupGuardMixin';
 import SignatureInput from '../components/SignatureInput.vue';
 import MainForm from '../components/MainForm.vue';
-import store from '../store';
+import store, { DRIVE_HASH, DRIVE_FORM } from '../store';
+import { namespaces, actions, IS_ONLINE } from '../store/constants';
+import { SUBMIT } from '../store/actions';
 import { FORM_STATE } from '../constants/form';
+import { setItem } from '../services/localStore';
 
 import '../scss/passenger.scss';
 
@@ -44,38 +76,45 @@ export default {
   mounted() {
     this.loadFormData(initialFormData);
   },
+  created() {
+    this[actions.fetchPassengers]();
+  },
   data() {
     return {
       formId: 'driveVerifyForm',
       requiredFields: ['signature'],
       isVerified: false,
+      confirmationOnline: false,
+      confirmationOffline: false,
     };
   },
   methods: {
+    ...mapActions(namespaces.passengers, [actions.fetchPassengers]),
     handleSubmit() {
       this.validateForm();
       this.confirmationOffline = false;
       this.confirmationOnline = false;
       const passenger = this.passengers.find(
-        (p) => p.value.toString() === this.form.passenger
+        (p) => p.value.toString() === this.drive_form.passenger
       );
       this.isVerified = verify(
-        store.state.DRIVE_HASH,
+        this[DRIVE_HASH],
         this.form.signature || 0,
         passenger.rsaPubE,
         passenger.rsaModulusN
       );
       if (!this.form.signature) delete this.form.signature;
-      this[actions.SUBMIT]({
+      store.dispatch(SUBMIT, {
         form: {
+          ...this.drive_form,
           ...this.form,
           isVerified: this.isVerified,
-          passengers: [this.form.passenger],
+          passengers: [this.drive_form.passenger],
           timestamp: Math.floor(Date.now() / 1000),
         },
       });
       this.clearStorage();
-      setItem(FORM_STATE, { car: this.form.car });
+      setItem(FORM_STATE, { car: this.drive_form.car });
 
       if (this.isOnline) {
         this.confirmationOnline = true;
@@ -83,6 +122,19 @@ export default {
         this.confirmationOffline = true;
       }
     },
+  },
+  computed: {
+    ...mapState([DRIVE_FORM, DRIVE_HASH]),
+    ...mapState(namespaces.passengers, {
+      passengers: (state) =>
+        (state.data || []).map((p) => ({
+          value: p.id,
+          text: [p.firstName, p.lastName].join(' '),
+          rsaModulusN: p.rsaModulusN,
+          rsaPubE: p.rsaPubE,
+        })),
+    }),
+    ...mapGetters([IS_ONLINE]),
   },
 };
 </script>
