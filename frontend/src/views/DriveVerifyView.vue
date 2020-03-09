@@ -60,6 +60,7 @@ import { namespaces, actions, IS_ONLINE } from '../store/constants';
 import { SUBMIT } from '../store/actions';
 import { FORM_STATE } from '../constants/form';
 import { setItem } from '../services/localStore';
+import router, { driveCreateRoute } from '../router';
 
 import '../scss/passenger.scss';
 
@@ -121,6 +122,7 @@ export default {
       } else {
         this.confirmationOffline = true;
       }
+      route.push(driveCreateRoute);
     },
   },
   computed: {
@@ -135,6 +137,12 @@ export default {
         })),
     }),
     ...mapGetters([IS_ONLINE]),
+  },
+  beforeRouteEnter(to, from, next) {
+    if (from.path === '/drive') {
+      return next();
+    }
+    return next({ path: '/drive' });
   },
 };
 </script>
