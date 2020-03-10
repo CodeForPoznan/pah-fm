@@ -8,7 +8,7 @@
 
     Scenario: User logs in to pah-fm system
        Given User submits login form with "hello@codeforpoznan.pl" login and "cfp123" password
-        Then User is logged in to pah website successfully
+        Then User is logged in to pah website
 
     Scenario: User is not able to login to pah-fm with invalid credentials
        Given User submits login form with "test_login!" login and "test_password!" password

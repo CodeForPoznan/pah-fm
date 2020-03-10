@@ -16,7 +16,7 @@
         :max="currentDate"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['date'] }"
-      >
+      />
     </div>
 
     <div class="form-group">
@@ -29,7 +29,7 @@
         maxlength="100"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['startLocation'] }"
-      >
+      />
     </div>
     <div class="form-group">
       <label>{{ $t('drive_form.starting_mileage') }}</label>
@@ -46,7 +46,7 @@
         @input="syncToLocalStorage"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['startMileage'] }"
-      >
+      />
     </div>
     <div class="form-group">
       <label>{{ $t('drive_form.project') }}</label>
@@ -54,7 +54,7 @@
         v-if="projects.data"
         @change="syncToLocalStorage"
         v-model="form.project"
-        name="car"
+        name="project"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['project'] }"
       >
@@ -66,10 +66,7 @@
           {{ project.title }}
         </option>
       </select>
-      <p
-        class="font-weight-bold"
-        v-if="!cars.data"
-      >
+      <p class="font-weight-bold" v-if="!cars.data">
         {{ $t('drive_form.no_project_message') }}
       </p>
     </div>
@@ -84,18 +81,11 @@
         class="form-control"
         :class="{ 'is-invalid': isInvalid['car'] }"
       >
-        <option
-          v-for="car in cars.data"
-          :key="car.id"
-          :value="car.id"
-        >
+        <option v-for="car in cars.data" :key="car.id" :value="car.id">
           {{ car.plates }}
         </option>
       </select>
-      <p
-        class="font-weight-bold"
-        v-if="!cars.data"
-      >
+      <p class="font-weight-bold" v-if="!cars.data">
         {{ $t('drive_form.no_cars_message') }}
       </p>
     </div>
@@ -109,7 +99,7 @@
         class="form-control select"
         :class="{ 'is-invalid': isInvalid['passenger'] }"
         label="text"
-        :reduce="(passenger) => String(passenger.value)"
+        :reduce="(passenger) => passenger.value"
         :options="passengers"
       />
     </div>
@@ -123,7 +113,7 @@
         name="description"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['description'] }"
-      >
+      />
     </div>
 
     <div class="form-group">
@@ -136,7 +126,7 @@
         name="endLocation"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['endLocation'] }"
-      >
+      />
     </div>
     <div class="form-group">
       <label>{{ $t('drive_form.ending_mileage') }}</label>
@@ -153,9 +143,29 @@
         name="endMileage"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['endMileage'] }"
-      >
+      />
     </div>
-
+    <<<<<<< HEAD =======
+    <div class="form-group">
+      <label for="driveHash">{{ $t('drive_form.drive_hash') }}</label>
+      <input
+        id="driveHash"
+        type="text"
+        v-model.number="computeHash"
+        class="form-control"
+        readonly
+      />
+    </div>
+    <div class="form-group">
+      <label for="signature">{{ $t('drive_form.signature') }}</label>
+      <signature-input
+        id="signature"
+        name="signature"
+        v-model="form.signature"
+        :class="{ 'is-invalid': isInvalid['signature'] }"
+      />
+    </div>
+    >>>>>>> upstream/develop
     <div class="form-group col-xs-12">
       {{ $t('drive_form.distance_traveled', { distance: distance }) }}
     </div>
@@ -185,6 +195,14 @@
     >
       <b>{{ $t('drives.unverified_drive') }}</b>
     </b-alert>
+    <b-alert
+      class="col-xs-12"
+      variant="success"
+      dismissible
+      :show="(confirmationOnline || confirmationOffline) && isVerified"
+    >
+      <b>{{ $t('drives.verified_drive') }}</b>
+    </b-alert>
   </main-form>
 </template>
 
@@ -194,6 +212,7 @@ import vSelect from 'vue-select';
 
 import 'vue-select/dist/vue-select.css';
 
+import SignatureInput from '../components/SignatureInput.vue';
 import MainForm from '../components/MainForm.vue';
 import FormMixin from '../mixins/FormMixin';
 import GroupGuardMixin from '../mixins/GroupGuardMixin';
@@ -236,7 +255,7 @@ const requiredFields = [
 
 export default {
   name: 'DriveFormView',
-  components: { vSelect, MainForm },
+  components: { vSelect, MainForm, SignatureInput },
   mixins: [FormMixin, GroupGuardMixin],
   mounted() {
     this.loadFormData(initialFormData);
@@ -280,14 +299,14 @@ export default {
   },
   computed: {
     ...mapState(namespaces.cars, {
-      cars: state => state,
+      cars: (state) => state,
     }),
     ...mapState(namespaces.projects, {
-      projects: state => state,
+      projects: (state) => state,
     }),
     ...mapState(namespaces.passengers, {
-      passengers: state =>
-        (state.data || []).map(p => ({
+      passengers: (state) =>
+        (state.data || []).map((p) => ({
           value: p.id,
           text: [p.firstName, p.lastName].join(' '),
           rsaModulusN: p.rsaModulusN,

@@ -1,8 +1,5 @@
 <template>
-  <main-form
-    :title="$t('common.confirm_drive')"
-    @submit="handleSubmit"
-  >
+  <main-form :title="$t('common.confirm_drive')" @submit="handleSubmit">
     <div class="form-group">
       <label for="driveHash">{{ $t('drive_form.drive_hash') }}</label>
       <input
@@ -11,7 +8,7 @@
         :value="drive_hash"
         class="form-control passenger-input"
         readonly
-      >
+      />
     </div>
     <div class="form-group">
       <label for="signature">{{ $t('drive_form.signature') }}</label>
@@ -97,14 +94,15 @@ export default {
       this.validateForm();
       this.confirmationOffline = false;
       this.confirmationOnline = false;
-      const passenger = this.passengers.find(p => p.value.toString() === this.drive_form.passenger);
+      const passenger = this.passengers.find(
+        (p) => p.value.toString() === this.drive_form.passenger
+      );
       this.isVerified = verify(
         this[DRIVE_HASH],
         this.form.signature || 0,
         passenger.rsaPubE,
-        passenger.rsaModulusN,
+        passenger.rsaModulusN
       );
-      if (!this.form.signature) delete this.form.signature;
       store.dispatch(SUBMIT, {
         form: {
           ...this.drive_form,
@@ -129,8 +127,8 @@ export default {
   computed: {
     ...mapState([DRIVE_FORM, DRIVE_HASH]),
     ...mapState(namespaces.passengers, {
-      passengers: state =>
-        (state.data || []).map(p => ({
+      passengers: (state) =>
+        (state.data || []).map((p) => ({
           value: p.id,
           text: [p.firstName, p.lastName].join(' '),
           rsaModulusN: p.rsaModulusN,

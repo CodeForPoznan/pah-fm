@@ -80,9 +80,6 @@ debug-backend:  ## Debug backend container (Django)
 populate-database:  ## Populate database with factory based data
 	make manage CMD=populate_database
 
-init-behave:
-	cat behave_test_automation/pah_behave/features/data/fixtures.sql | docker-compose exec -T db psql -U pah-fm
-
 checkout:  ## Checkout to existing branch and start clean app, i.e. make checkout BRANCH=develop
 	@test "${BRANCH}" || make help | grep " $@ "
 	@test "${BRANCH}" # fail if variable is not set

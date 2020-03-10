@@ -1,5 +1,5 @@
 import store from '../store';
-import { groupBasedRoutes } from '../router';
+import { groupBasedRoutes } from '../router/routes';
 import { reverseObject } from '../services/reverseObject';
 
 const { user } = store.state;
