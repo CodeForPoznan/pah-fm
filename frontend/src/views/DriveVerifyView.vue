@@ -1,5 +1,8 @@
 <template>
-  <main-form :title="$t('common.confirm_drive')" @submit="handleSubmit">
+  <main-form
+    :title="$t('common.confirm_drive')"
+    @submit="handleSubmit"
+  >
     <div class="form-group">
       <label for="driveHash">{{ $t('drive_form.drive_hash') }}</label>
       <input
@@ -8,7 +11,7 @@
         :value="drive_hash"
         class="form-control passenger-input"
         readonly
-      />
+      >
     </div>
     <div class="form-group">
       <label for="signature">{{ $t('drive_form.signature') }}</label>
@@ -44,6 +47,14 @@
       :show="(confirmationOnline || confirmationOffline) && !isVerified"
     >
       <b>{{ $t('drives.unverified_drive') }}</b>
+    </b-alert>
+    <b-alert
+      class="col-xs-12"
+      variant="success"
+      dismissible
+      :show="(confirmationOnline || confirmationOffline) && isVerified"
+    >
+      <b>{{ $t('drives.verified_drive') }}</b>
     </b-alert>
   </main-form>
 </template>
@@ -94,14 +105,12 @@ export default {
       this.validateForm();
       this.confirmationOffline = false;
       this.confirmationOnline = false;
-      const passenger = this.passengers.find(
-        (p) => p.value.toString() === this.drive_form.passenger
-      );
+      const passenger = this.passengers.find(p => p.value.toString() === this.drive_form.passenger);
       this.isVerified = verify(
         this[DRIVE_HASH],
         this.form.signature || 0,
         passenger.rsaPubE,
-        passenger.rsaModulusN
+        passenger.rsaModulusN,
       );
       store.dispatch(SUBMIT, {
         form: {
@@ -127,8 +136,8 @@ export default {
   computed: {
     ...mapState([DRIVE_FORM, DRIVE_HASH]),
     ...mapState(namespaces.passengers, {
-      passengers: (state) =>
-        (state.data || []).map((p) => ({
+      passengers: state =>
+        (state.data || []).map(p => ({
           value: p.id,
           text: [p.firstName, p.lastName].join(' '),
           rsaModulusN: p.rsaModulusN,

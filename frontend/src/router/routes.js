@@ -5,6 +5,7 @@ import DrivesView from '../views/DrivesView.vue';
 import SuccessfulLogoutView from '../views/SuccessfulLogoutView.vue';
 import PassengerView from '../views/PassengerView.vue';
 import PassengerSubmitView from '../views/PassengerSubmitView.vue';
+import DriveVerifyView from '../views/DriveVerifyView.vue';
 
 export const loginRoute = {
   path: '/login',
@@ -15,6 +16,11 @@ export const driveCreateRoute = {
   path: '/drive',
   name: 'Drive',
   component: DriveFormView,
+};
+export const driveVerifyRoute = {
+  path: '/verify',
+  name: '',
+  component: DriveVerifyView,
 };
 export const driveListRoute = {
   path: '/drives',
@@ -59,6 +65,11 @@ export const groupBasedRoutes = {
       to: driveListRoute,
       visibleOnMenu: true,
     },
+    {
+      text: '',
+      to: driveVerifyRoute,
+      visibleOnMenu: false,
+    },
   ],
   passenger: [
     {
@@ -77,7 +88,7 @@ export const groupBasedRoutes = {
 export const allGroupBasedRoutes = [
   ...groupBasedRoutes.driver,
   ...groupBasedRoutes.passenger,
-].map(route => route.to.name);
+].map((route) => route.to.name);
 
 export const openRoutes = [loginRoute.name];
 
@@ -90,4 +101,5 @@ export default [
   homeRoute,
   pageNotFoundRoute,
   logoutRoute,
+  driveVerifyRoute,
 ];

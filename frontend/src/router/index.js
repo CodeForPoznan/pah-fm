@@ -48,8 +48,8 @@ router.beforeEach((to, _from, next) => {
   if (userLoggedIn && allGroupBasedRoutes.includes(to.name)) {
     const availableRoutes = flatMap(
       store.state.user.groups,
-      (group) => groupBasedRoutes[group.name.toLowerCase()]
-    ).map((route) => route.to.name);
+      group => groupBasedRoutes[group.name.toLowerCase()],
+    ).map(route => route.to.name);
 
     const routeAccessible = availableRoutes.includes(to.name);
 

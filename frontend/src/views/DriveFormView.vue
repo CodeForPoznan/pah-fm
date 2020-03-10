@@ -145,64 +145,9 @@
         :class="{ 'is-invalid': isInvalid['endMileage'] }"
       />
     </div>
-    <<<<<<< HEAD =======
-    <div class="form-group">
-      <label for="driveHash">{{ $t('drive_form.drive_hash') }}</label>
-      <input
-        id="driveHash"
-        type="text"
-        v-model.number="computeHash"
-        class="form-control"
-        readonly
-      />
-    </div>
-    <div class="form-group">
-      <label for="signature">{{ $t('drive_form.signature') }}</label>
-      <signature-input
-        id="signature"
-        name="signature"
-        v-model="form.signature"
-        :class="{ 'is-invalid': isInvalid['signature'] }"
-      />
-    </div>
-    >>>>>>> upstream/develop
     <div class="form-group col-xs-12">
       {{ $t('drive_form.distance_traveled', { distance: distance }) }}
     </div>
-    <b-alert
-      class="col-xs-12"
-      variant="success"
-      dismissible
-      :show="confirmationOnline"
-      @dismissed="confirmationOnline = false"
-    >
-      <b>{{ $t('drive_form.drive_added_online_notification') }}</b>
-    </b-alert>
-    <b-alert
-      class="col-xs-12"
-      variant="secondary"
-      dismissible
-      :show="confirmationOffline"
-      @dismissed="confirmationOffline = false"
-    >
-      <b>{{ $t('drive_form.drive_added_offline_notification') }}</b>
-    </b-alert>
-    <b-alert
-      class="col-xs-12"
-      variant="warning"
-      dismissible
-      :show="(confirmationOnline || confirmationOffline) && !isVerified"
-    >
-      <b>{{ $t('drives.unverified_drive') }}</b>
-    </b-alert>
-    <b-alert
-      class="col-xs-12"
-      variant="success"
-      dismissible
-      :show="(confirmationOnline || confirmationOffline) && isVerified"
-    >
-      <b>{{ $t('drives.verified_drive') }}</b>
-    </b-alert>
   </main-form>
 </template>
 
@@ -212,11 +157,11 @@ import vSelect from 'vue-select';
 
 import 'vue-select/dist/vue-select.css';
 
-import SignatureInput from '../components/SignatureInput.vue';
 import MainForm from '../components/MainForm.vue';
 import FormMixin from '../mixins/FormMixin';
 import GroupGuardMixin from '../mixins/GroupGuardMixin';
-import router, { driveVerifyRoute } from '../router';
+import router from '../router';
+import { driveVerifyRoute } from '../router/routes';
 
 import { USER } from '../store';
 import { SET_DRIVE_FORM } from '../store/actions';
@@ -255,7 +200,7 @@ const requiredFields = [
 
 export default {
   name: 'DriveFormView',
-  components: { vSelect, MainForm, SignatureInput },
+  components: { vSelect, MainForm },
   mixins: [FormMixin, GroupGuardMixin],
   mounted() {
     this.loadFormData(initialFormData);
