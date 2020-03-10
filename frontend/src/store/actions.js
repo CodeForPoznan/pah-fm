@@ -84,7 +84,7 @@ export const actions = {
         startMileage: form.startMileage,
         endMileage: form.endMileage,
       }),
-      6
+      6,
     );
     commit(mutations.SET_DRIVE_HASH, hash);
   },

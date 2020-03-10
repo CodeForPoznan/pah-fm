@@ -16,7 +16,7 @@
         :max="currentDate"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['date'] }"
-      />
+      >
     </div>
 
     <div class="form-group">
@@ -29,7 +29,7 @@
         maxlength="100"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['startLocation'] }"
-      />
+      >
     </div>
     <div class="form-group">
       <label>{{ $t('drive_form.starting_mileage') }}</label>
@@ -46,7 +46,7 @@
         @input="syncToLocalStorage"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['startMileage'] }"
-      />
+      >
     </div>
     <div class="form-group">
       <label>{{ $t('drive_form.project') }}</label>
@@ -66,7 +66,10 @@
           {{ project.title }}
         </option>
       </select>
-      <p class="font-weight-bold" v-if="!cars.data">
+      <p
+        class="font-weight-bold"
+        v-if="!cars.data"
+      >
         {{ $t('drive_form.no_project_message') }}
       </p>
     </div>
@@ -81,11 +84,18 @@
         class="form-control"
         :class="{ 'is-invalid': isInvalid['car'] }"
       >
-        <option v-for="car in cars.data" :key="car.id" :value="car.id">
+        <option
+          v-for="car in cars.data"
+          :key="car.id"
+          :value="car.id"
+        >
           {{ car.plates }}
         </option>
       </select>
-      <p class="font-weight-bold" v-if="!cars.data">
+      <p
+        class="font-weight-bold"
+        v-if="!cars.data"
+      >
         {{ $t('drive_form.no_cars_message') }}
       </p>
     </div>
@@ -113,7 +123,7 @@
         name="description"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['description'] }"
-      />
+      >
     </div>
 
     <div class="form-group">
@@ -126,7 +136,7 @@
         name="endLocation"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['endLocation'] }"
-      />
+      >
     </div>
     <div class="form-group">
       <label>{{ $t('drive_form.ending_mileage') }}</label>
@@ -143,7 +153,7 @@
         name="endMileage"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['endMileage'] }"
-      />
+      >
     </div>
 
     <div class="form-group col-xs-12">
@@ -198,9 +208,7 @@ import {
   IS_ONLINE,
 } from '../store/constants';
 import { FORM_STATE } from '../constants/form';
-import { setItem } from '../services/localStore';
 import { getToday } from '../services/time';
-import { verify } from '../services/crypto';
 
 const initialFormData = {
   date: getToday(),
@@ -272,14 +280,14 @@ export default {
   },
   computed: {
     ...mapState(namespaces.cars, {
-      cars: (state) => state,
+      cars: state => state,
     }),
     ...mapState(namespaces.projects, {
-      projects: (state) => state,
+      projects: state => state,
     }),
     ...mapState(namespaces.passengers, {
-      passengers: (state) =>
-        (state.data || []).map((p) => ({
+      passengers: state =>
+        (state.data || []).map(p => ({
           value: p.id,
           text: [p.firstName, p.lastName].join(' '),
           rsaModulusN: p.rsaModulusN,
