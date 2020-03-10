@@ -67,23 +67,22 @@ import '../scss/passenger.scss';
 import { hashDict, verify } from '../services/crypto';
 
 const initialFormData = {
-  signature: null,
+  signature: '',
 };
 
 export default {
   name: 'DriveVerifyView',
   mixins: [FormMixin, GroupGuardMixin],
   components: { MainForm, SignatureInput },
-  mounted() {
-    this.loadFormData(initialFormData);
-  },
   created() {
     this[actions.fetchPassengers]();
+    this.loadFormData(initialFormData);
   },
   data() {
     return {
       formId: 'driveVerifyForm',
       requiredFields: ['signature'],
+      initialData: initialFormData,
       isVerified: false,
       confirmationOnline: false,
       confirmationOffline: false,
@@ -122,7 +121,8 @@ export default {
       } else {
         this.confirmationOffline = true;
       }
-      route.push(driveCreateRoute);
+      this.reset();
+      //router.push(driveCreateRoute);
     },
   },
   computed: {
