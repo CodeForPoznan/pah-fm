@@ -4,8 +4,6 @@ import time
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django_countries.fields import CountryField
-from django.contrib import admin
-
 from fleet_management.crypto import PublicKey, PrivateKey, find_pair_of_keys, hash_dict
 
 
@@ -51,11 +49,6 @@ class Car(models.Model):
         return self.plates
 
 
-class CarAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'country')
-    list_filter = ('country',)
-
-
 class Project(models.Model):
     title = models.CharField(max_length=50, blank=False)
     description = models.CharField(max_length=1000, blank=False)
@@ -63,11 +56,6 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
-
-
-class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'country')
-    list_filter = ('country',)
 
 
 class Drive(models.Model):
@@ -132,3 +120,6 @@ class Drive(models.Model):
             "endMileage": initial_data["end_mileage"],
         }
         return hash_dict(required_fields)
+
+
+
