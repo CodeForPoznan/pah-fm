@@ -170,7 +170,6 @@ import 'vue-select/dist/vue-select.css';
 import MainForm from '../components/MainForm.vue';
 import FormMixin from '../mixins/FormMixin';
 import GroupGuardMixin from '../mixins/GroupGuardMixin';
-import router from '../router';
 import { driveVerifyRoute } from '../router/routes';
 
 import { USER } from '../store';
@@ -234,7 +233,7 @@ export default {
       this.validateForm(this.validator);
       if (this.listOfErrors.length === 0) {
         this[SET_DRIVE_FORM](this.form);
-        router.push(driveVerifyRoute);
+        this.$router.push(driveVerifyRoute);
       }
     },
     validator(data) {
