@@ -70,8 +70,8 @@ export const actions = {
   },
 
   [SET_DRIVE_FORM]({ commit }, form) {
-    // This function takes form from 'DriveFormView' save remove unnecessary parts and
-    // calculate the checksum.
+    // This function takes form from 'DriveFormView', removes unnecessary parts and
+    // calculates the checksum.
     commit(mutations.SET_DRIVE_FORM, form);
     const hash = padWithZeros(
       hashDict({
