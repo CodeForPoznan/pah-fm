@@ -1,10 +1,12 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
+
 from import_export.admin import ImportExportModelAdmin
 from import_export.fields import Field
 from import_export import resources
-from .models import Car, Drive, User, Project
+
+from fleet_management.models import Car, Drive, User, Project
 
 
 class CountryFilter(admin.SimpleListFilter):
@@ -12,17 +14,26 @@ class CountryFilter(admin.SimpleListFilter):
     parameter_name = 'country'
 
     def lookups(self, request, model_admin):
-        return set([
-            (obj.country, obj.country.name) for obj in model_admin.model.objects.exclude(
-                country__isnull=True
-            ).exclude(country__exact='')
-        ])
+        objects = model_admin.model.objects.distinct(self.parameter_name)
+        countries = [(o.country.code, o.country.name) for o in objects]
+        countries = sorted(countries, key=lambda c: c[1])  # sort by name, A-Z
+        return [('ALL', _('Global'))] + countries
 
     def queryset(self, request, queryset):
-        if self.value():
-            return queryset.filter(country=self.value())
+        key = self.parameter_name
+        q = self.value()
+
+        if q == "ALL":
+            key = f"{key}__exact"
+            return queryset.filter(**{key: ''})
+        elif q:
+            return queryset.filter(**{key: q})
         else:
             return queryset
+
+
+class DriveCountryFilter(CountryFilter):
+    parameter_name = 'driver__country'
 
 
 class DriveResource(resources.ModelResource):
@@ -46,6 +57,7 @@ class DriveResource(resources.ModelResource):
             "id",
             "date",
             "country",
+            "is_verified",
             "project__title",
             "description",
             "start_mileage",
@@ -63,6 +75,10 @@ class DriveResource(resources.ModelResource):
 
 
 class DriveAdmin(ImportExportModelAdmin):
+
+    def country(self, drive):
+        return str(drive.driver.country.name)
+
     resource_class = DriveResource
     list_filter = ("driver__country",)
     list_display = ("__str__", "country", "is_verified")
@@ -99,7 +115,8 @@ class CustomUserAdmin(UserAdmin):
         ),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
-    list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups', CountryFilter,)
+    list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups', CountryFilter)
+    list_display = ('username', 'first_name', 'last_name', 'country', 'is_staff')
 
 
 admin.site.register(Car, CarAdmin)
