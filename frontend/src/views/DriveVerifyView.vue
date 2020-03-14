@@ -105,7 +105,7 @@ export default {
       this.validateForm();
       this.confirmationOffline = false;
       this.confirmationOnline = false;
-      const passenger = this.passengers.find(p => p.value.toString() === this.drive_form.passenger);
+      const passenger = this.passengers.find(p => p.value === this.drive_form.passenger);
       this.isVerified = verify(
         this[DRIVE_HASH],
         this.form.signature || 0,
