@@ -4,8 +4,6 @@ import time
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django_countries.fields import CountryField
-from django.contrib import admin
-
 from fleet_management.crypto import PublicKey, PrivateKey, find_pair_of_keys, hash_dict
 
 
@@ -14,7 +12,7 @@ def get_current_timestamp_in_gmt():
 
 
 class User(AbstractUser):
-    country = CountryField(blank_label="(select country)", null=False)
+    country = CountryField(blank_label="(select country)", null=False, blank=True)
     rsa_modulus_n = models.CharField(max_length=6, null=False, default="")
     rsa_pub_e = models.CharField(max_length=6, null=False, default="")
     rsa_priv_d = models.CharField(max_length=6, null=False, default="")
@@ -45,29 +43,19 @@ class Car(models.Model):
     plates = models.CharField(max_length=10, blank=False, unique=True)
     description = models.CharField(max_length=500, blank=True)
     fuel_consumption = models.FloatField(null=False, default=0)
-    country = CountryField(blank_label="(select country)", null=False)
+    country = CountryField(blank_label="(select country)", null=False, blank=False)
 
     def __str__(self):
         return self.plates
 
 
-class CarAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'country')
-    list_filter = ('country',)
-
-
 class Project(models.Model):
     title = models.CharField(max_length=50, blank=False)
     description = models.CharField(max_length=1000, blank=False)
-    country = CountryField(blank_label="(select country)", default=None)
+    country = CountryField(blank_label="(select country)", null=False, blank=True)
 
     def __str__(self):
         return self.title
-
-
-class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'country')
-    list_filter = ('country',)
 
 
 class Drive(models.Model):
@@ -83,7 +71,6 @@ class Drive(models.Model):
     end_location = models.CharField(max_length=100, blank=False)
     timestamp = models.IntegerField(blank=False, default=get_current_timestamp_in_gmt)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    is_verified = models.BooleanField(default=False)
     passenger = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -108,7 +95,7 @@ class Drive(models.Model):
 
     @property
     def country(self):
-        return self.driver.country.name
+        return self.driver.country
 
     @property
     def fuel_consumption(self):
