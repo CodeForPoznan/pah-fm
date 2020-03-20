@@ -29,6 +29,7 @@ class DriveResource(resources.ModelResource):
             "id",
             "date",
             "country",
+            "is_verified",
             "project__title",
             "description",
             "start_mileage",
