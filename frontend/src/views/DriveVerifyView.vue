@@ -1,62 +1,76 @@
 <template>
-  <main-form
-    :title="$t('common.confirm_drive')"
-    @submit="handleSubmit"
-  >
-    <div class="form-group">
-      <label for="driveHash">{{ $t('drive_form.drive_hash') }}</label>
-      <input
-        id="driveHash"
-        type="text"
-        :value="drive_hash"
-        class="form-control passenger-input"
-        readonly
+  <div>
+    <main-form
+      v-if="!submitted"
+      :title="$t('common.confirm_drive')"
+      @submit="handleSubmit"
+    >
+      <div class="form-group">
+        <label for="driveHash">{{ $t('drive_form.drive_hash') }}</label>
+        <input
+          id="driveHash"
+          type="text"
+          :value="drive_hash"
+          class="form-control passenger-input"
+          readonly
+        >
+      </div>
+      <div class="form-group">
+        <label for="signature">{{ $t('drive_form.signature') }}</label>
+        <signature-input
+          id="signature"
+          name="signature"
+          v-model="form.signature"
+          class="passenger-input"
+        />
+      </div>
+    </main-form>
+    <div
+      v-else
+      class=" jumbotron wrapper"
+    >
+      <b-alert
+        class="col-xs-12"
+        variant="success"
+        dismissible
+        :show="confirmationOnline"
+        @dismissed="confirmationOnline = false"
       >
+        <b>{{ $t('drive_form.drive_added_online_notification') }}</b>
+      </b-alert>
+      <b-alert
+        class="col-xs-12"
+        variant="secondary"
+        dismissible
+        :show="confirmationOffline"
+        @dismissed="confirmationOffline = false"
+      >
+        <b>{{ $t('drive_form.drive_added_offline_notification') }}</b>
+      </b-alert>
+      <b-alert
+        class="col-xs-12"
+        variant="warning"
+        dismissible
+        :show="(confirmationOnline || confirmationOffline) && !isVerified"
+      >
+        <b>{{ $t('drives.unverified_drive') }}</b>
+      </b-alert>
+      <b-alert
+        class="col-xs-12"
+        variant="success"
+        dismissible
+        :show="(confirmationOnline || confirmationOffline) && isVerified"
+      >
+        <b>{{ $t('drives.verified_drive') }}</b>
+      </b-alert>
+      <router-link
+        to="/drive"
+        class="btn btn-primary"
+      >
+        {{ $t('common.new_drive') }}
+      </router-link>
     </div>
-    <div class="form-group">
-      <label for="signature">{{ $t('drive_form.signature') }}</label>
-      <signature-input
-        id="signature"
-        name="signature"
-        v-model="form.signature"
-        class="passenger-input"
-      />
-    </div>
-    <b-alert
-      class="col-xs-12"
-      variant="success"
-      dismissible
-      :show="confirmationOnline"
-      @dismissed="confirmationOnline = false"
-    >
-      <b>{{ $t('drive_form.drive_added_online_notification') }}</b>
-    </b-alert>
-    <b-alert
-      class="col-xs-12"
-      variant="secondary"
-      dismissible
-      :show="confirmationOffline"
-      @dismissed="confirmationOffline = false"
-    >
-      <b>{{ $t('drive_form.drive_added_offline_notification') }}</b>
-    </b-alert>
-    <b-alert
-      class="col-xs-12"
-      variant="warning"
-      dismissible
-      :show="(confirmationOnline || confirmationOffline) && !isVerified"
-    >
-      <b>{{ $t('drives.unverified_drive') }}</b>
-    </b-alert>
-    <b-alert
-      class="col-xs-12"
-      variant="success"
-      dismissible
-      :show="(confirmationOnline || confirmationOffline) && isVerified"
-    >
-      <b>{{ $t('drives.verified_drive') }}</b>
-    </b-alert>
-  </main-form>
+  </div>
 </template>
 
 <script>
@@ -97,6 +111,7 @@ export default {
       isVerified: false,
       confirmationOnline: false,
       confirmationOffline: false,
+      submitted: false,
     };
   },
   methods: {
@@ -121,6 +136,7 @@ export default {
           timestamp: Math.floor(Date.now() / 1000),
         },
       });
+      this.submitted = true;
       this.clearStorage();
       setItem(FORM_STATE, { car: this.drive_form.car });
 
