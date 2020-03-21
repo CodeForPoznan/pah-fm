@@ -1,4 +1,4 @@
-from behave import given, then, when
+from behave import then, when
 from behave.matchers import use_step_matcher
 
 from features.page_objects.add_new_drive import AddNewDrivePage
@@ -31,13 +31,3 @@ def show_all_add_drive_errors(context) -> None:
 def submit_empty_drive_form(context) -> None:
     page = AddNewDrivePage(context.driver)
     page.submit_empty_drive_form()
-
-
-@then('User sees "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" alert')
-def show_missing_field_alert(context, start_location_alert, starting_mileage_alert, project_alert, car_alert,
-                             passenger_alert,
-                             end_location_alert, end_mileage_alert) -> None:
-    page = AddNewDrivePage(context.driver)
-    page.show_missing_field_alert(start_location_alert, starting_mileage_alert, project_alert, car_alert,
-                                  passenger_alert,
-                                  end_location_alert, end_mileage_alert)
