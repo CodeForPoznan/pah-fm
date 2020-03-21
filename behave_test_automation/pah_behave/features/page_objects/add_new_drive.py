@@ -1,3 +1,5 @@
+from time import sleep
+
 from selenium.webdriver.common.by import By
 
 from features.page_objects.base_page import BasePage
@@ -7,6 +9,9 @@ class AddNewDrivePage(BasePage):
     submit_button = (By.CSS_SELECTOR, '.btn-primary')
     passenger_dropdown = (By.CSS_SELECTOR, 'input[type="search"]')
     passenger_dropdown_output = (By.CSS_SELECTOR, 'ul[role="listbox"]')
+    drive_added_alert = (By.CSS_SELECTOR, '.alert-success')
+    drive_not_verified_alert = (By.CSS_SELECTOR, '.alert-warning')
+    drive_errors_alert = (By.CSS_SELECTOR, '.alert-danger')
 
     def add_new_drive_field(self, name):
         return By.CSS_SELECTOR, f'input[name="{name}"]'
@@ -36,12 +41,13 @@ class AddNewDrivePage(BasePage):
 
         self.find_element(*self.add_new_drive_field("endLocation")).send_keys(end_location)
         self.find_element(*self.add_new_drive_field("endMileage")).send_keys(end_mileage)
-        from time import sleep
-        sleep(10)
         self.find_element(*self.submit_button).click()
 
+    def get_success_and_warning_alert(self):
+        self.find_element(*self.drive_added_alert)
+        self.find_element(*self.drive_not_verified_alert)
+
     def show_add_drive_errors(self):
-        # self.find_element(*self.error_add_new_drive("date"))
         self.find_element(*self.error_add_new_drive("car"))
         self.find_element(*self.error_add_new_drive("project"))
         self.find_element(*self.error_add_new_drive("start Mileage"))
@@ -49,3 +55,7 @@ class AddNewDrivePage(BasePage):
         self.find_element(*self.error_add_new_drive("start Location"))
         self.find_element(*self.error_add_new_drive("end Location"))
         self.find_element(*self.error_add_new_drive("passenger"))
+
+    def submit_empty_drive_form(self):
+        sleep(1)
+        self.find_element(*self.submit_button).click()
