@@ -8,6 +8,8 @@ import {
 
 export const SET_USER = 'SET_USER';
 export const SET_HASH = 'SET_HASH';
+export const SET_DRIVE_HASH = 'SET_DRIVE_HASH';
+export const SET_DRIVE_FORM = 'SET_DRIVE_FORM';
 export const SET_LOGIN_PROGRESS = 'SET_LOGIN_PROGRESS';
 export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
 export const ADD_DRIVE = 'ADD_DRIVE';
@@ -44,6 +46,12 @@ export const mutations = {
   },
   [SET_HASH](state, hash) {
     Object.assign(state, { hash });
+  },
+  [SET_DRIVE_HASH](state, hash) {
+    Object.assign(state, { drive_hash: hash });
+  },
+  [SET_DRIVE_FORM](state, form) {
+    Object.assign(state, { drive_form: form });
   },
   [SET_LOGIN_PROGRESS](state, loginInProgress) {
     Object.assign(state, { loginInProgress });

@@ -155,62 +155,9 @@
         :class="{ 'is-invalid': isInvalid['endMileage'] }"
       >
     </div>
-    <div class="form-group">
-      <label for="driveHash">{{ $t('drive_form.drive_hash') }}</label>
-      <input
-        id="driveHash"
-        type="text"
-        v-model.number="computeHash"
-        class="form-control"
-        readonly
-      >
-    </div>
-    <div class="form-group">
-      <label for="signature">{{ $t('drive_form.signature') }}</label>
-      <signature-input
-        id="signature"
-        name="signature"
-        v-model="form.signature"
-        :class="{ 'is-invalid': isInvalid['signature'] }"
-      />
-    </div>
     <div class="form-group col-xs-12">
       {{ $t('drive_form.distance_traveled', { distance: distance }) }}
     </div>
-    <b-alert
-      class="col-xs-12"
-      variant="success"
-      dismissible
-      :show="confirmationOnline"
-      @dismissed="confirmationOnline = false"
-    >
-      <b>{{ $t('drive_form.drive_added_online_notification') }}</b>
-    </b-alert>
-    <b-alert
-      class="col-xs-12"
-      variant="secondary"
-      dismissible
-      :show="confirmationOffline"
-      @dismissed="confirmationOffline = false"
-    >
-      <b>{{ $t('drive_form.drive_added_offline_notification') }}</b>
-    </b-alert>
-    <b-alert
-      class="col-xs-12"
-      variant="warning"
-      dismissible
-      :show="(confirmationOnline || confirmationOffline) && !isVerified"
-    >
-      <b>{{ $t('drives.unverified_drive') }}</b>
-    </b-alert>
-    <b-alert
-      class="col-xs-12"
-      variant="success"
-      dismissible
-      :show="(confirmationOnline || confirmationOffline) && isVerified"
-    >
-      <b>{{ $t('drives.verified_drive') }}</b>
-    </b-alert>
   </main-form>
 </template>
 
@@ -220,13 +167,13 @@ import vSelect from 'vue-select';
 
 import 'vue-select/dist/vue-select.css';
 
-import SignatureInput from '../components/SignatureInput.vue';
 import MainForm from '../components/MainForm.vue';
 import FormMixin from '../mixins/FormMixin';
 import GroupGuardMixin from '../mixins/GroupGuardMixin';
+import { driveVerifyRoute } from '../router/routes';
 
 import { USER } from '../store';
-import * as actions from '../store/actions';
+import { SET_DRIVE_FORM } from '../store/actions';
 
 import {
   namespaces,
@@ -234,10 +181,7 @@ import {
   IS_ONLINE,
 } from '../store/constants';
 import { FORM_STATE } from '../constants/form';
-import { setItem } from '../services/localStore';
 import { getToday } from '../services/time';
-import { hashDict, verify } from '../services/crypto';
-import { padWithZeros } from '../utils';
 
 const initialFormData = {
   date: getToday(),
@@ -265,7 +209,7 @@ const requiredFields = [
 
 export default {
   name: 'DriveFormView',
-  components: { vSelect, MainForm, SignatureInput },
+  components: { vSelect, MainForm },
   mixins: [FormMixin, GroupGuardMixin],
   mounted() {
     this.loadFormData(initialFormData);
@@ -281,42 +225,15 @@ export default {
     };
   },
   methods: {
-    ...mapActions([actions.SUBMIT]),
+    ...mapActions([SET_DRIVE_FORM]),
     ...mapActions(namespaces.cars, [apiActions.fetchCars]),
     ...mapActions(namespaces.passengers, [apiActions.fetchPassengers]),
     ...mapActions(namespaces.projects, [apiActions.fetchProjects]),
     handleSubmit() {
       this.validateForm(this.validator);
-      this.confirmationOffline = false;
-      this.confirmationOnline = false;
-      this.isVerified = false;
-
       if (this.listOfErrors.length === 0) {
-        const passenger = this.passengers.find(p => p.value === this.form.passenger);
-        this.isVerified = verify(
-          this.computeHash,
-          this.form.signature || 0,
-          passenger.rsaPubE,
-          passenger.rsaModulusN,
-        );
-        if (!this.form.signature) delete this.form.signature;
-        this[actions.SUBMIT]({
-          form: {
-            ...this.form,
-            isVerified: this.isVerified,
-            passengers: [this.form.passenger],
-            timestamp: Math.floor(Date.now() / 1000),
-          },
-        });
-        this.clearStorage();
-        setItem(FORM_STATE, { car: this.form.car });
-        this.loadFormData(initialFormData);
-
-        if (this.isOnline) {
-          this.confirmationOnline = true;
-        } else {
-          this.confirmationOffline = true;
-        }
+        this[SET_DRIVE_FORM](this.form);
+        this.$router.push(driveVerifyRoute);
       }
     },
     validator(data) {
@@ -355,20 +272,6 @@ export default {
     distance() {
       const distance = this.form.endMileage - this.form.startMileage;
       return distance > 0 ? distance : 0;
-    },
-    computeHash() {
-      return padWithZeros(
-        hashDict({
-          car: { id: this.form.car },
-          project: { id: this.form.project },
-          passengers: [{ id: this.form.passenger }],
-          startLocation: this.form.startLocation,
-          endLocation: this.form.endLocation,
-          startMileage: this.form.startMileage,
-          endMileage: this.form.endMileage,
-        }),
-        6,
-      );
     },
   },
 };
