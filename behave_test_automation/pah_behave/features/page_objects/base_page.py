@@ -31,3 +31,8 @@ class BasePage:
         WebDriverWait(self.browser, 5).until(
             expected_conditions.visibility_of_element_located(*locator)
         )
+
+    def wait_for_url(self, url) -> None:
+        WebDriverWait(self.browser, 2).until(
+            expected_conditions.url_to_be("http://localhost:8080/" + url)
+        )
