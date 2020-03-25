@@ -10,8 +10,7 @@
 import { mapState } from 'vuex';
 import { USER } from '../store';
 import { IS_ONLINE } from '../store/constants';
-import { loginRoute } from '../router';
-
+import { loginRoute } from '../router/routes';
 
 export default {
   name: 'Refresh',

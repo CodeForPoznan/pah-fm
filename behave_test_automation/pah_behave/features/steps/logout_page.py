@@ -31,3 +31,12 @@ def logged_out_user_state(context):
 def enter_logout_url(context):
     page = BasePage(context.driver)
     page.visit_logout_view()
+
+
+@then('User logs in via logout view')
+def login_via_logout_view(context):
+    page_logout = LogoutPage(context.driver)
+    page_logout.navigate_to_login_via_logout()
+    page_login = LoginPage(context.driver)
+    page_login.login_to_pah_website()
+    page_login.login_successful()

@@ -4,7 +4,6 @@ import time
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django_countries.fields import CountryField
-from django.contrib import admin
 
 from fleet_management.crypto import PublicKey, PrivateKey, find_pair_of_keys, hash_dict
 
@@ -60,11 +59,6 @@ class Project(models.Model):
         return self.title
 
 
-class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'country')
-    list_filter = ('country',)
-
-
 class Drive(models.Model):
     driver = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="drives_driven"
@@ -103,7 +97,7 @@ class Drive(models.Model):
 
     @property
     def country(self):
-        return self.driver.country.name
+        return self.driver.country
 
     @property
     def fuel_consumption(self):

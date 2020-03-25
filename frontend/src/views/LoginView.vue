@@ -94,9 +94,6 @@ export default {
         this[actions.LOGIN]({ username, password });
       }
     },
-    logout() {
-      this[actions.LOGOUT]();
-    },
   },
 };
 </script>

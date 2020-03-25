@@ -16,7 +16,7 @@
 import flatMap from 'array.prototype.flatmap';
 import { mapState } from 'vuex';
 import { USER } from '../store';
-import { groupBasedRoutes } from '../router/index';
+import { groupBasedRoutes } from '../router/routes';
 
 export default {
   name: 'NavigationItems',
