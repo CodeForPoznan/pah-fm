@@ -4,19 +4,19 @@ from features.page_objects.base_page import BasePage
 
 
 class LogoutPage(BasePage):
-    logout_button = (By.CSS_SELECTOR, 'a[href="/logout"]')
+    logout_button = (By.CSS_SELECTOR, 'a[href="#"]')
     logout_message = (By.CSS_SELECTOR, '.logout')
     hamburger_menu = (By.CSS_SELECTOR, 'div.bm-burger-button')
     login_link = (By.CSS_SELECTOR, 'a[href="/login"]')
+    logout_confirmation_button = (By.CSS_SELECTOR, '.btn-danger')
 
     def logout_via_logout_button(self):
         self.wait_for_element(self.hamburger_menu)
+        self.find_element(*self.hamburger_menu).click()
         sleep(1)
-        hamburger_menu_button = self.find_element(*self.hamburger_menu)
-        self.browser.execute_script("arguments[0].click();", hamburger_menu_button)
-        self.wait_for_element(self.logout_button)
-        logout_button = self.find_element(*self.logout_button)
-        self.browser.execute_script("arguments[0].click();", logout_button)
+        self.find_element(*self.logout_button).click()
+        self.wait_for_element(self.logout_confirmation_button)
+        self.find_element(*self.logout_confirmation_button).click()
         self.wait_for_element(self.login_link)
 
     def logged_out_user_state(self):
