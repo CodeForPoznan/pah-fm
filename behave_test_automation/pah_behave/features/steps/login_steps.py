@@ -2,11 +2,13 @@ from behave import given, then, when, step
 from behave.matchers import use_step_matcher
 
 from features.page_objects.login_page import LoginPage
+from features.helpers.decorators import delete_all_cookies
 
 use_step_matcher("re")
 
 
 @given('User navigates to pah-fm website')
+@delete_all_cookies
 def open_main_url(context):
     page = LoginPage(context.driver)
     page.visit()

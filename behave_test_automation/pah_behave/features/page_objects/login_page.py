@@ -68,4 +68,3 @@ class LoginPage(BasePage):
     def switch_language_and_submit(self, language):
         self.find_element(*self.change_language_selector(language)).click()
         self.find_element(*self.login_button_enabled).click()
-

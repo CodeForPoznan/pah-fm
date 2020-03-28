@@ -46,3 +46,6 @@ class BasePage:
             'return document.readyState;'
         )
         return page_state == 'complete'
+
+    def click(self) -> None:
+        self.browser.execute_script("arguments[0].click();")
