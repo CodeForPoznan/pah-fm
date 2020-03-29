@@ -8,5 +8,10 @@ def before_all(context):
     context.driver.implicitly_wait(6)
 
 
+def before_scenario(context, scenario):
+    if "skip" in scenario.effective_tags:
+        scenario.skip("Marked with @skip")
+
+
 def after_all(context):
     context.driver.quit()

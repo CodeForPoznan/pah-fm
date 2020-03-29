@@ -6,6 +6,7 @@ Feature: Login view
   Background:
     Given User navigates to pah-fm website
 
+  @skip
   Scenario Outline: User sees language translation
     Given User chooses "<language>"
     Then User sees "<login_title>", "<username>", "<password>" and "<login_button>" translated
@@ -15,7 +16,8 @@ Feature: Login view
       | gb       | Login       | Username          | Password | Login        |
       | ua       | Логін       | Ім'я користувача  | Пароль   | Логін        |
 
-   Scenario: User doesn't loose inputted data when he changes language
+  @skip
+  Scenario: User doesn't loose inputted data when he changes language
     Given User inputs valid credentials in login form
     When User switches language to "ua" and submits form
     Then User is logged in to pah website
