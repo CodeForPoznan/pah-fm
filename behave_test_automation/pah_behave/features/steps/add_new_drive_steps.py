@@ -15,10 +15,10 @@ def submit_add_new_drive_required_fields(context, start_location, starting_milea
                                               end_mileage)
 
 
-@then('User sees a success and warning alert')
-def show_success_and_warning_alert(context) -> None:
+@then('User submits "([^"]*)" signature')
+def show_success_and_warning_alert(context, signature_input) -> None:
     page = AddNewDrivePage(context.driver)
-    page.get_success_and_warning_alert()
+    page.get_success_and_warning_alert(signature_input)
 
 
 @then('User sees an errors list')

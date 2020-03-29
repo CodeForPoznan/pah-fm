@@ -12,6 +12,7 @@ class AddNewDrivePage(BasePage):
     drive_added_alert = (By.CSS_SELECTOR, '.alert-success')
     drive_not_verified_alert = (By.CSS_SELECTOR, '.alert-warning')
     drive_errors_alert = (By.CSS_SELECTOR, '.alert-danger')
+    signature_text_field = (By.CSS_SELECTOR, '#signature')
 
     def add_new_drive_field(self, name):
         return By.CSS_SELECTOR, f'input[name="{name}"]'
@@ -43,7 +44,10 @@ class AddNewDrivePage(BasePage):
         self.find_element(*self.add_new_drive_field("endMileage")).send_keys(end_mileage)
         self.find_element(*self.submit_button).click()
 
-    def get_success_and_warning_alert(self):
+    def get_success_and_warning_alert(self, signature_input):
+        self.wait_for_element(self.signature_text_field)
+        self.find_element(*self.signature_text_field).send_keys(signature_input)
+        self.find_element(*self.submit_button).click()
         self.find_element(*self.drive_added_alert)
         self.find_element(*self.drive_not_verified_alert)
 
