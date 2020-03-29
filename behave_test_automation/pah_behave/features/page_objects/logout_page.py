@@ -12,6 +12,7 @@ class LogoutPage(BasePage):
 
     def logout_via_logout_button(self):
         self.wait_for_element(self.hamburger_menu)
+        sleep(1)
         self.find_element(*self.hamburger_menu).click()
         sleep(1)
         self.find_element(*self.logout_button).click()

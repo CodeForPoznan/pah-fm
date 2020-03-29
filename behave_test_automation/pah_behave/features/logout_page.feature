@@ -1,4 +1,4 @@
-  Feature: Login view
+  Feature: Logout view
     In order to be not logged in after login to pah fm website
     As a user
     I want to be able to log out
