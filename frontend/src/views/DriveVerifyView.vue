@@ -4,13 +4,15 @@
       v-if="!submitted"
       :title="$t('common.confirm_drive')"
       @submit="handleSubmit"
+      @skip="submit"
+      skippable
     >
       <div class="form-group">
         <label for="driveHash">{{ $t('drive_form.drive_hash') }}</label>
         <input
           id="driveHash"
           type="text"
-          :value="drive_hash"
+          :value="NEW_DRIVE_FORM_CHECKSUM"
           class="form-control passenger-input"
           readonly
         >
@@ -76,18 +78,21 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
 
+import '../scss/passenger.scss';
+
 import FormMixin from '../mixins/FormMixin';
 import GroupGuardMixin from '../mixins/GroupGuardMixin';
 import SignatureInput from '../components/SignatureInput.vue';
 import MainForm from '../components/MainForm.vue';
-import store, { DRIVE_HASH, DRIVE_FORM } from '../store';
 import { namespaces, actions, IS_ONLINE } from '../store/constants';
 import { SUBMIT } from '../store/actions';
-import { FORM_STATE } from '../constants/form';
-import { setItem } from '../services/localStore';
 // import router, { driveCreateRoute } from '../router';
 
-import '../scss/passenger.scss';
+import {
+  NEW_DRIVE_FORM,
+  CLEAR_NEW_DRIVE_FORM,
+  NEW_DRIVE_FORM_CHECKSUM,
+} from '../store/modules/data';
 
 import { verify } from '../services/crypto';
 
@@ -115,30 +120,36 @@ export default {
     };
   },
   methods: {
+    ...mapActions('data', [CLEAR_NEW_DRIVE_FORM]),
     ...mapActions(namespaces.passengers, [actions.fetchPassengers]),
     handleSubmit() {
-      this.validateForm();
+      if (!this.listOfErrors.length) {
+        this.submit();
+      }
+    },
+    submit() {
       this.confirmationOffline = false;
       this.confirmationOnline = false;
-      const passenger = this.passengers.find(p => p.value === this.drive_form.passenger);
+      const passenger = this.passengers.find(p => p.value === this[NEW_DRIVE_FORM].passenger);
       this.isVerified = verify(
-        this[DRIVE_HASH],
+        this[NEW_DRIVE_FORM_CHECKSUM],
         this.form.signature || 0,
         passenger.rsaPubE,
         passenger.rsaModulusN,
       );
-      store.dispatch(SUBMIT, {
+      if (!this.form.signature) delete this.form.signature;
+
+      this.$store.dispatch(SUBMIT, {
         form: {
-          ...this.drive_form,
+          ...this[NEW_DRIVE_FORM],
           ...this.form,
           isVerified: this.isVerified,
-          passengers: [this.drive_form.passenger],
+          passengers: [this[NEW_DRIVE_FORM].passenger],
           timestamp: Math.floor(Date.now() / 1000),
         },
       });
       this.submitted = true;
-      this.clearStorage();
-      setItem(FORM_STATE, { car: this.drive_form.car });
+      this[CLEAR_NEW_DRIVE_FORM]();
 
       if (this.isOnline) {
         this.confirmationOnline = true;
@@ -150,7 +161,8 @@ export default {
     },
   },
   computed: {
-    ...mapState([DRIVE_FORM, DRIVE_HASH]),
+    ...mapState('data', [NEW_DRIVE_FORM]),
+    ...mapGetters('data', [NEW_DRIVE_FORM_CHECKSUM]),
     ...mapState(namespaces.passengers, {
       passengers: state =>
         (state.data || []).map(p => ({

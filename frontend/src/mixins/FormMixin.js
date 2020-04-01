@@ -1,6 +1,4 @@
 import { splitCamelCase } from '../services/splitCamelCase';
-import { getToday } from '../services/time';
-import { getItem, removeItem } from '../services/localStore';
 
 function isValid(requiredFields, form, field) {
   return (
@@ -8,17 +6,6 @@ function isValid(requiredFields, form, field) {
     form[field] &&
     !!String(form[field]).trim()
   );
-}
-
-function loadStateFromStorage(formId) {
-  const storageState = getItem(formId);
-  if (storageState && !storageState.date) {
-    return {
-      ...storageState,
-      date: getToday(),
-    };
-  }
-  return storageState;
 }
 
 export default {
@@ -35,9 +22,6 @@ export default {
         field: splitCamelCase(field),
       });
     },
-    syncToLocalStorage() {
-      localStorage.setItem(this.formId, JSON.stringify(this.form));
-    },
     reset() {
       this.clearStorage();
       this.loadFormData();
@@ -52,7 +36,7 @@ export default {
       this.listOfErrors = [];
 
       this.listOfErrors = this.requiredFields
-        .filter(field => !isValid(this.requiredFields, this.form, field))
+        .filter(field => !isValid(this.requiredFields, this, field))
         .map((field) => {
           this.isInvalid[field] = true;
           return this.getErrorMessage(field);
@@ -63,10 +47,7 @@ export default {
       }
     },
     loadFormData() {
-      this.form = loadStateFromStorage(this.formId) || { ...this.initialData };
-    },
-    clearStorage() {
-      removeItem(this.formId);
+      this.form = { ...this.initialData };
     },
   },
 };

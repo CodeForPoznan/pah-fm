@@ -15,8 +15,18 @@
             >
               <slot />
               <div class="form-group form-buttons">
-                <button class="btn btn-primary col-xs-3">
+                <button
+                  type="submit"
+                  class="btn btn-primary col-xs-3"
+                >
                   {{ $t('drive_form.submit') }}
+                </button>
+                <button
+                  v-if="skippable"
+                  class="btn btn-secondary mx-2 col-xs-2"
+                  @click.prevent="$emit('skip')"
+                >
+                  {{ $t('common.skip') }}
                 </button>
                 <span style="flex: 1" />
                 <input
@@ -53,13 +63,17 @@ export default {
       type: Boolean,
       default: () => false,
     },
+    skippable: {
+      type: Boolean,
+      default: () => false,
+    },
   },
 };
 </script>
 
 <style scoped lang="scss">
-  .form-buttons {
-    display: flex;
-    flex-direction: row;
-  }
+.form-buttons {
+  display: flex;
+  flex-direction: row;
+}
 </style>
