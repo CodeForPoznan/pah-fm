@@ -25,7 +25,7 @@ describe('Data Module', () => {
 
     mutations[CLEAR_NEW_DRIVE_FORM](state);
 
-    expect(state[NEW_DRIVE_FORM]).toBe({
+    expect(state[NEW_DRIVE_FORM]).toStrictEqual({
       date: getToday(),
       car: 4,
     });
