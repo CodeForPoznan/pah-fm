@@ -27,6 +27,7 @@ script:
 
   - cd frontend
   - npm run lint
+  - npm run test
   - cd ..
 after_success:
   - |
