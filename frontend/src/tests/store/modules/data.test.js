@@ -1,4 +1,3 @@
-import jest from 'jest';
 import { getToday } from '../../../services/time';
 import data, {
   NEW_DRIVE_FORM,
