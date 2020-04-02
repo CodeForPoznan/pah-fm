@@ -40,6 +40,7 @@ lint:   ## Run linters
 	make lint-backend
 
 test:  ## Run tests
+	make test-frontend
 	make test-backend
 
 manage:  ## Use manage.py, i.e make manage CMD=collectstatic
@@ -64,6 +65,9 @@ lint-backend:  ## Run linters on backend container
 
 lint-frontend:  ## Run linters on frontend container
 	docker-compose run --rm --no-deps frontend npm run lint:fix
+
+test-frontend: ## Run tests on frontend container
+	docker-compose run --rm --no-deps frontend npm run test
 
 test-backend:  ## Run tests on backend container
 	make manage CMD=test
