@@ -9,7 +9,8 @@
     "http:server": "http-server dist -c-1",
     "lint:fix": "vue-cli-service lint",
     "stylelint": "stylelint src/**/*.vue src/**/*.scss --syntax scss --cache",
-    "watch": "vue-cli-service build --watch --no-clean"
+    "watch": "vue-cli-service build --watch --no-clean",
+    "test": "jest"
   },
   "dependencies": {
     "@7ninjas/scss-mixins": "^1.0.1",
@@ -39,15 +40,30 @@
     "@vue/cli-plugin-pwa": "^4.1.1",
     "@vue/cli-service": "^4.1.1",
     "@vue/eslint-config-airbnb": "3.0.5",
+    "@vue/test-utils": "^1.0.0-beta.32",
     "babel-eslint": "^10.0.3",
+    "babel-jest": "^25.2.4",
     "eslint": "^4.19.1",
     "eslint-plugin-vue": "^6.0.1",
     "http-server": "^0.11.1",
+    "jest": "^25.2.4",
     "node-sass": "4.9.0",
     "sass-loader": "7.0.1",
     "stylelint": "^9.8.0",
     "stylelint-config-standard": "^18.2.0",
     "stylelint-processor-html": "^1.0.0",
+    "vue-jest": "^3.0.5",
     "vue-template-compiler": "2.5.17"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "vue-jest"
+    }
   }
 }
