@@ -21,29 +21,26 @@ const moduleState = {
   [NEW_DRIVE_FORM]: { ...newDriveFormInitialState },
 };
 
-export const SET_NEW_DRIVE_FORM = 'SET_NEW_DRIVE_FORM';
+export const CLEAR_NEW_DRIVE_FORM = 'CLEAR_NEW_DRIVE_FORM';
 
 const mutations = {
   updateField,
-  [SET_NEW_DRIVE_FORM]: (state, newForm) =>
-    Object.assign(state, { [NEW_DRIVE_FORM]: newForm }),
-};
-
-export const CLEAR_NEW_DRIVE_FORM = 'CLEAR_NEW_DRIVE_FORM';
-
-const actions = {
-  [CLEAR_NEW_DRIVE_FORM]: ({ state, commit }) =>
-    commit(SET_NEW_DRIVE_FORM, {
-      date: getToday(),
-      car: state[NEW_DRIVE_FORM].car,
+  [CLEAR_NEW_DRIVE_FORM]: (state) =>
+    Object.assign(state, {
+      [NEW_DRIVE_FORM]: {
+        date: getToday(),
+        car: state[NEW_DRIVE_FORM].car,
+      },
     }),
 };
+
+const actions = {};
 
 export const NEW_DRIVE_FORM_CHECKSUM = 'NEW_DRIVE_FORM_CHECKSUM';
 
 const getters = {
   getField,
-  [NEW_DRIVE_FORM_CHECKSUM]: state =>
+  [NEW_DRIVE_FORM_CHECKSUM]: (state) =>
     padWithZeros(
       hashDict({
         car: { id: state[NEW_DRIVE_FORM].car },

@@ -2,16 +2,13 @@ import jest from 'jest';
 import { getToday } from '../../../services/time';
 import data, {
   NEW_DRIVE_FORM,
-  SET_NEW_DRIVE_FORM,
   CLEAR_NEW_DRIVE_FORM,
 } from '../../../store/modules/data';
 
-const { actions } = data;
+const { mutations } = data;
 
 describe('Data Module', () => {
   it('CLEAR_NEW_DRIVE_FORM perserves the car and sets date', () => {
-    const commit = jest.fn();
-
     const state = {
       [NEW_DRIVE_FORM]: {
         date: '2020-04-01',
@@ -26,9 +23,9 @@ describe('Data Module', () => {
       },
     };
 
-    actions[CLEAR_NEW_DRIVE_FORM]({ state, commit });
+    mutations[CLEAR_NEW_DRIVE_FORM](state);
 
-    expect(commit).toHaveBeenCalledWith(SET_NEW_DRIVE_FORM, {
+    expect(state[NEW_DRIVE_FORM]).toBe({
       date: getToday(),
       car: 4,
     });

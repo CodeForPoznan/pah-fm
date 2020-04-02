@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
 
 import '../scss/passenger.scss';
 
@@ -120,7 +120,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions('data', [CLEAR_NEW_DRIVE_FORM]),
+    ...mapMutations('data', [CLEAR_NEW_DRIVE_FORM]),
     ...mapActions(namespaces.passengers, [actions.fetchPassengers]),
     handleSubmit() {
       if (!this.listOfErrors.length) {
