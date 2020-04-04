@@ -10,10 +10,10 @@ Feature: Add new drive view
 
   Scenario Outline: User submits a new drive
     Given User logs in to pah-fm system
-    When User submits "<start location>", "<starting mileage>", "<project>", "<car>", "<passenger>", "<end location>" and "<ending mileage>"
+    When User submits "<start location>", "<starting mileage>", "<end location>" and "<ending mileage>"
     Then User submits "123123" signature
     Examples:
-      | start location | starting mileage | project                                       | car      | passenger        | end location | ending mileage |
-      | Poland         | 100              | Maybe stage reach show eat ago.               | AB9683EO | Максим Хомик     | Ukraina      | 123            |
-      | Ukraine        | 1000             | View item any old. Since notice music notice. | AK3880OO | Оксана Фартушняк | Poland       | 2000           |
+      | start location | starting mileage | end location | ending mileage |
+      | Poland         | 100              | Ukraina      | 123            |
+      | Ukraine        | 1000             | Poland       | 2000           |
 

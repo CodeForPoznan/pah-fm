@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+
 from features.page_objects.base_page import BasePage
 
 
@@ -11,7 +12,7 @@ class LoginPage(BasePage):
     hamburger_menu = (By.CSS_SELECTOR, '.bm-burger-button')
 
     def change_language_selector(self, language):
-        return By.CSS_SELECTOR, f'span[title="{language}"]'
+        return By.CSS_SELECTOR, f".flag-icon-{language}"
 
     def login_text_selector(self, login_translation):
         return By.XPATH, f'//h2[contains(text(), "{login_translation}")]'
@@ -52,6 +53,8 @@ class LoginPage(BasePage):
         self.find_element(*self.password_field).send_keys(password)
 
     def change_language(self, language):
+        self.page_has_loaded()
+        self.wait_for_element_clickable(self.change_language_selector)
         self.find_element(*self.change_language_selector(language)).click()
 
     def translation_login_view(self, login_title, username, password, login_button):

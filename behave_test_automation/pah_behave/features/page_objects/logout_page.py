@@ -1,5 +1,7 @@
 from time import sleep
+
 from selenium.webdriver.common.by import By
+
 from features.page_objects.base_page import BasePage
 
 
@@ -14,7 +16,6 @@ class LogoutPage(BasePage):
         self.wait_for_element(self.hamburger_menu)
         sleep(1)
         self.find_element(*self.hamburger_menu).click()
-        sleep(1)
         self.find_element(*self.logout_button).click()
         self.wait_for_element(self.logout_confirmation_button)
         self.find_element(*self.logout_confirmation_button).click()

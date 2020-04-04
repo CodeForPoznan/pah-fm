@@ -12,8 +12,6 @@ class ConfirmDrivePage(BasePage):
     text_input = (By.CSS_SELECTOR, '#hash')
     confirmation_code = (By.CSS_SELECTOR, '#signature')
     confirm_drive_input_error = (By.CSS_SELECTOR, '.alert-danger')
-    # hamburger_menu = (By.CSS_SELECTOR, '.bm-burger-button')
-    style_of_menu = (By.CSS_SELECTOR, 'div[style="left: auto; right: 0px; width: 300px;"]')
 
     def wait_for_stale_element(self, locator) -> None:
         WebDriverWait(self.browser, 5).until(staleness_of(locator))
@@ -21,7 +19,6 @@ class ConfirmDrivePage(BasePage):
     def navigate_to_confirm_drive(self):
         sleep(1)
         self.find_element(*self.hamburger_menu).click()
-        self.find_element(*self.style_of_menu)
         self.page_has_loaded()
         self.find_element(*self.confirm_drive_menu_item).click()
 

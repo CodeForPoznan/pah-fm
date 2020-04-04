@@ -1,6 +1,8 @@
 from time import sleep
 
+from behave_webdriver.driver import Select
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
 
 from features.page_objects.base_page import BasePage
 
@@ -13,6 +15,7 @@ class AddNewDrivePage(BasePage):
     drive_not_verified_alert = (By.CSS_SELECTOR, '.alert-warning')
     drive_errors_alert = (By.CSS_SELECTOR, '.alert-danger')
     signature_text_field = (By.CSS_SELECTOR, '#signature')
+    dropdown_toggle = (By.CSS_SELECTOR, 'svg[role="presentation"]')
 
     def add_new_drive_field(self, name):
         return By.CSS_SELECTOR, f'input[name="{name}"]'
@@ -26,18 +29,19 @@ class AddNewDrivePage(BasePage):
     def error_add_new_drive(self, name):
         return By.XPATH, f'//li[contains(text(), "{name} is required")]'
 
-    def submit_add_new_drive_required_fields(self, start_location, starting_mileage, project, car, passenger,
+    def first_select_option(self, select_name):
+        first_option = Select(self.browser.find_element_by_name(f'{select_name}'))
+        first_option.select_by_index(0)
+
+    def submit_add_new_drive_required_fields(self, start_location, starting_mileage,
                                              end_location, end_mileage) -> None:
         self.find_element(*self.add_new_drive_field("startLocation")).send_keys(start_location)
         self.find_element(*self.add_new_drive_field("startMileage")).send_keys(starting_mileage)
 
-        self.find_element(*self.add_new_drive_dropdown("project")).click()
-        self.find_element(*self.choose_dropdown_option(project)).click()
+        self.first_select_option("project")
+        self.first_select_option("car")
 
-        self.find_element(*self.add_new_drive_dropdown("car")).click()
-        self.find_element(*self.choose_dropdown_option(car)).click()
-
-        self.find_element(*self.passenger_dropdown).send_keys(passenger)
+        self.find_element(*self.dropdown_toggle).click()
         self.find_element(*self.passenger_dropdown_output).click()
 
         self.find_element(*self.add_new_drive_field("endLocation")).send_keys(end_location)

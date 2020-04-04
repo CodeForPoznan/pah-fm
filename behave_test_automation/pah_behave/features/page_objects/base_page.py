@@ -5,7 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 class BasePage:
     def __init__(
-        self, browser, base_url="http://localhost:8080/login",
+            self, browser, base_url="http://localhost:8080/login",
             logout_url='http://localhost:8080/logout'
     ) -> None:
         self.base_url = base_url
@@ -49,3 +49,8 @@ class BasePage:
 
     def click(self) -> None:
         self.browser.execute_script("arguments[0].click();")
+
+    def wait_for_element_clickable(self, *locator) -> None:
+        WebDriverWait(self.browser, 15).until(
+            expected_conditions.element_to_be_clickable(*locator)
+        )
