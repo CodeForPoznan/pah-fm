@@ -33,12 +33,15 @@ class LoginPage(BasePage):
 
     def login_successful(self):
         self.wait_for_element(self.hamburger_menu)
+        assert self.browser.execute_script("return window.localStorage.jwt") is not None
 
     def login_unsuccessful(self):
         self.wait_for_element(self.login_failed_message)
+        assert "login" in self.get_current_url()
 
     def disabled_login_button(self):
         self.find_element(*self.login_button_disabled)
+        assert "login" in self.get_current_url()
 
     def login_to_pah_website(self):
         self.visit()

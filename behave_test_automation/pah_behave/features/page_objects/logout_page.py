@@ -23,6 +23,8 @@ class LogoutPage(BasePage):
 
     def logged_out_user_state(self):
         self.wait_for_element(self.logout_message)
+        assert self.browser.execute_script("return window.localStorage.jwt") is None
+        assert "drive" not in self.get_current_url()
 
     def enter_logout_url(self):
         self.visit()

@@ -30,13 +30,13 @@ class AddNewDrivePage(BasePage):
         return By.XPATH, f'//li[contains(text(), "{name} is required")]'
 
     def first_select_option(self, select_name):
-        first_option = Select(self.browser.find_element_by_name(f'{select_name}'))
+        first_option = Select(self.browser.find_element_by_name(select_name))
         first_option.select_by_index(0)
 
-    def submit_add_new_drive_required_fields(self, start_location, starting_mileage,
+    def submit_add_new_drive_required_fields(self, start_location, start_mileage,
                                              end_location, end_mileage) -> None:
         self.find_element(*self.add_new_drive_field("startLocation")).send_keys(start_location)
-        self.find_element(*self.add_new_drive_field("startMileage")).send_keys(starting_mileage)
+        self.find_element(*self.add_new_drive_field("startMileage")).send_keys(start_mileage)
 
         self.first_select_option("project")
         self.first_select_option("car")

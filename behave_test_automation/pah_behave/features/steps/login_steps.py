@@ -10,7 +10,6 @@ use_step_matcher("re")
 @delete_all_cookies
 def open_main_url(context):
     context.login_page.visit()
-    assert "login" in context.login_page.get_current_url()
 
 
 @given('User submits login form with "([^"]*)" login and "([^"]*)" password')
@@ -22,19 +21,16 @@ def submit_form_with_valid_credentials(context, login_credential, password_crede
 def login_successful(context):
     context.login_page.login_successful()
     context.login_page.wait_for_url("drive")
-    assert context.driver.execute_script("return window.localStorage.jwt") is not None
 
 
 @then('User failed to login into pah-fm website')
 def login_unsuccessful(context):
     context.login_page.login_unsuccessful()
-    assert "login" in context.login_page.get_current_url()
 
 
 @then('Login button is not clickable')
 def login_unsuccessful(context):
     context.login_page.disabled_login_button()
-    assert "login" in context.login_page.get_current_url()
 
 
 @given('User provides "([^"]*)" login and "([^"]*)" password')

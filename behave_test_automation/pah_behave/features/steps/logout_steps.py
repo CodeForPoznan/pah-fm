@@ -5,7 +5,6 @@ from behave import when, given, then
 def login_successful(context):
     context.login_page.login_to_pah_website()
     context.login_page.login_successful()
-    assert context.driver.execute_script("return window.localStorage.jwt") is not None
 
 
 @when('User logs out via menu Logout button')
@@ -16,8 +15,6 @@ def logout_via_button(context):
 @then('User is on logout view with removed session details')
 def logged_out_user_state(context):
     context.logout_page.logged_out_user_state()
-    assert context.driver.execute_script("return window.localStorage.jwt") is None
-    assert "drive" not in context.logout_page.get_current_url()
 
 
 @when('User enters logout page')

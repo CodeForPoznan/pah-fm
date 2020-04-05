@@ -2,7 +2,7 @@ from selenium import webdriver
 
 from features.page_objects.logout_page import LogoutPage
 from features.page_objects.login_page import LoginPage
-from features.page_objects.new_drive_page import AddNewDrivePage
+from features.page_objects.add_new_drive_page import AddNewDrivePage
 from features.page_objects.confirm_drive_page import ConfirmDrivePage
 
 

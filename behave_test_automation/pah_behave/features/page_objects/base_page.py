@@ -18,6 +18,7 @@ class BasePage:
 
     def visit(self) -> None:
         self.browser.get(self.base_url)
+        assert "login" in self.get_current_url()
 
     def visit_logout_view(self) -> None:
         self.browser.get(self.logout_url)
@@ -42,10 +43,7 @@ class BasePage:
         )
 
     def page_has_loaded(self):
-        page_state = self.browser.execute_script(
-            'return document.readyState;'
-        )
-        return page_state == 'complete'
+        return self.browser.execute_script('return document.readyState') == 'complete'
 
     def click(self) -> None:
         self.browser.execute_script("arguments[0].click();")
