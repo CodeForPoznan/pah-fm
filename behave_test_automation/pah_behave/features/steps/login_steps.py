@@ -33,7 +33,7 @@ def login_unsuccessful(context):
     context.login_page.disabled_login_button()
 
 
-@given('User provides "([^"]*)" login and "([^"]*)" password')
+@given('User provides "{login_credential}" login and "{password_credential}" password')
 def input_login_data(context, login_credential, password_credential):
     context.login_page.input_login_data(login_credential, password_credential)
 
@@ -43,12 +43,12 @@ def login_to_pah(context):
     context.login_page.login_to_pah_website()
 
 
-@given('User chooses "([^"]*)"')
+@given('User chooses "{language}"')
 def change_language(context, language):
     context.login_page.change_language(language)
 
 
-@then('User sees "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)" translated')
+@then('User sees "{login_title}", "{username}", "{password}" and "{login_button}" translated')
 def translation_login_view(context, login_title, username, password, login_button):
     context.login_page.translation_login_view(login_title, username, password, login_button)
 
@@ -58,6 +58,6 @@ def input_valid_credentials_to_login_form(context):
     context.login_page.input_valid_credentials_to_login_form()
 
 
-@when('User switches language to "([^"]*)" and submits form')
+@when('User switches language to "{language}" and submits form')
 def switch_language_and_submit(context, language):
     context.login_page.switch_language_and_submit(language)
