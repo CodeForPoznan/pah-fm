@@ -98,7 +98,7 @@ class ProjectAdmin(admin.ModelAdmin):
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     list_filter = ("groups", CountryFilter)
-    list_display = ("username", "first_name", "last_name", "country", "is_staff")
+    list_display = ("username", "first_name", "last_name", "country", "is_staff", "last_seen")
 
     fieldsets = (
         (None, {"fields": ("username", "password")}),
@@ -118,5 +118,5 @@ class CustomUserAdmin(UserAdmin):
                 )
             },
         ),
-        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
+        (_("Important dates"), {"fields": ("last_seen", "last_login", "date_joined")}),
     )
