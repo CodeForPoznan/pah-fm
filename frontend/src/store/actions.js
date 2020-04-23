@@ -3,7 +3,7 @@ import { login, saveToken, deleteStorageData } from '../services/api/auth';
 import { getMyself } from '../services/api/user';
 import * as mutations from './mutations';
 import { mapDrive } from './helpers';
-import { i18n } from '../main';
+import i18n from '../services/lang';
 import {
   actions as apiActions,
   namespaces,
