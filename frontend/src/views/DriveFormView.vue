@@ -207,9 +207,9 @@ export default {
       if (noErrors) {
         this.$router.push(driveVerifyRoute);
       } else {
-        emptyFields.forEach((field) => (this.isInvalid[field] = true));
+        emptyFields.forEach(field => (this.isInvalid[field] = true));
         this.listOfErrors = emptyFields
-          .map((field) => renderErrorMessage(field))
+          .map(field => renderErrorMessage(field))
           .concat(mileageErrors);
       }
     },

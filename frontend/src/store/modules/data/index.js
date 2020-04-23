@@ -64,10 +64,10 @@ const getters = {
         startMileage: state[NEW_DRIVE_FORM].startMileage,
         endMileage: state[NEW_DRIVE_FORM].endMileage,
       }),
-      6
+      6,
     ),
-  [NEW_DRIVE_FORM_EMPTY_FIELDS]: (state) =>
-    requiredFields.filter((field) => !isValid(state[NEW_DRIVE_FORM][field])),
+  [NEW_DRIVE_FORM_EMPTY_FIELDS]: state =>
+    requiredFields.filter(field => !isValid(state[NEW_DRIVE_FORM][field])),
 };
 
 export default {
