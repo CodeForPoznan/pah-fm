@@ -228,7 +228,7 @@ export default {
       return [];
     },
     resetInvalidLabels() {
-      Object.keys(this.isInvalid).forEach(field => {
+      Object.keys(this.isInvalid).forEach((field) => {
         this.isInvalid[field] = false;
       });
     },
