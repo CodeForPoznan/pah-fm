@@ -1,11 +1,7 @@
-import { splitCamelCase } from '../services/splitCamelCase';
+import { renderErrorMessage } from '../services/errorMessages';
 
-function isValid(requiredFields, form, field) {
-  return (
-    requiredFields.includes(field) &&
-    form[field] &&
-    !!String(form[field]).trim()
-  );
+export function isValid(field) {
+  return field && !!String(field).trim();
 }
 
 export default {
@@ -17,11 +13,6 @@ export default {
     };
   },
   methods: {
-    getErrorMessage(field) {
-      return this.$t('drive_form.validation_error', {
-        field: splitCamelCase(field),
-      });
-    },
     reset() {
       this.clearStorage();
       this.loadFormData();
@@ -36,10 +27,10 @@ export default {
       this.listOfErrors = [];
 
       this.listOfErrors = this.requiredFields
-        .filter(field => !isValid(this.requiredFields, this, field))
+        .filter((field) => !isValid(this.form[field]))
         .map((field) => {
           this.isInvalid[field] = true;
-          return this.getErrorMessage(field);
+          return renderErrorMessage(this.$t, field);
         });
 
       if (validator) {

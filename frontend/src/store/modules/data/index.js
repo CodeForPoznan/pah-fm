@@ -2,6 +2,7 @@ import { getField, updateField } from 'vuex-map-fields';
 import { hashDict } from '../../../services/crypto';
 import { padWithZeros } from '../../../utils';
 import { getToday } from '../../../services/time';
+import { isValid } from '../../../mixins/FormMixin';
 
 export const NEW_DRIVE_FORM = 'NEW_DRIVE_FORM';
 
@@ -66,7 +67,7 @@ const getters = {
       6
     ),
   [NEW_DRIVE_FORM_EMPTY_FIELDS]: (state) =>
-    requiredFields.filter((field) => !state[NEW_DRIVE_FORM][field]),
+    requiredFields.filter((field) => !isValid(state[NEW_DRIVE_FORM][field])),
 };
 
 export default {

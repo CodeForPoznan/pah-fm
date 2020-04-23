@@ -160,8 +160,8 @@ import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 
 import MainForm from '../components/MainForm.vue';
-import FormMixin from '../mixins/FormMixin';
 import GroupGuardMixin from '../mixins/GroupGuardMixin';
+import { renderErrorMessage } from '../services/errorMessages';
 
 import { driveVerifyRoute } from '../router/routes';
 
@@ -200,16 +200,26 @@ export default {
     ...mapActions(namespaces.projects, [apiActions.fetchProjects]),
     ...mapMutations('data', [CLEAR_NEW_DRIVE_FORM]),
     handleSubmit() {
-      const empty_fields = this[NEW_DRIVE_FORM_EMPTY_FIELDS];
-      if (empty_fields.length === 0) {
+      const emptyFields = this[NEW_DRIVE_FORM_EMPTY_FIELDS];
+      const mileageErrors = this.checkMileage();
+      const noErrors = emptyFields.length === 0 && mileageErrors.length === 0;
+
+      if (noErrors) {
         this.$router.push(driveVerifyRoute);
+      } else {
+        emptyFields.forEach((field) => (this.isInvalid[field] = true));
+        this.listOfErrors = emptyFields
+          .map((field) => renderErrorMessage(field))
+          .concat(mileageErrors);
       }
     },
-    validator() {
+    checkMileage() {
       const { startMileage, endMileage } = this;
       if (!!startMileage && !!endMileage && startMileage >= endMileage) {
         const errorStartMileage = this.$t('drive_form.start_mileage_error');
         const errorEndMileage = this.$t('drive_form.end_mileage_error');
+        this.isInvalid.startMileage = true;
+        this.isInvalid.endMileage = true;
         return [errorStartMileage, errorEndMileage];
       }
       return [];
