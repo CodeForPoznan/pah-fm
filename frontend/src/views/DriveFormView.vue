@@ -201,6 +201,7 @@ export default {
     ...mapMutations('data', [CLEAR_NEW_DRIVE_FORM]),
     handleSubmit() {
       const emptyFields = this[NEW_DRIVE_FORM_EMPTY_FIELDS];
+      this.resetInvalidLabels();
       const mileageErrors = this.checkMileage();
       const noErrors = emptyFields.length === 0 && mileageErrors.length === 0;
 
@@ -225,6 +226,11 @@ export default {
         return [errorStartMileage, errorEndMileage];
       }
       return [];
+    },
+    resetInvalidLabels() {
+      Object.keys(this.isInvalid).forEach(field => {
+        this.isInvalid[field] = false;
+      });
     },
   },
   created() {
