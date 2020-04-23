@@ -1,7 +1,7 @@
 <template>
   <main-form
     @submit="handleSubmit"
-    @reset="reset"
+    @reset="CLEAR_NEW_DRIVE_FORM"
     resetable
     :title="$t('common.new_drive')"
     :list-of-errors="listOfErrors"
@@ -153,7 +153,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex';
+import { mapActions, mapMutations, mapGetters, mapState } from 'vuex';
 import { createHelpers } from 'vuex-map-fields';
 
 import vSelect from 'vue-select';
@@ -174,6 +174,8 @@ import {
 import {
   newDriveFormInitialState,
   NEW_DRIVE_FORM,
+  NEW_DRIVE_FORM_EMPTY_FIELDS,
+  CLEAR_NEW_DRIVE_FORM,
 } from '../store/modules/data';
 
 const { mapFields } = createHelpers({
@@ -181,34 +183,25 @@ const { mapFields } = createHelpers({
   mutationType: 'data/updateField',
 });
 
-const requiredFields = [
-  'date',
-  'car',
-  'project',
-  'startMileage',
-  'endMileage',
-  'startLocation',
-  'endLocation',
-  'passenger',
-];
-
 export default {
   name: 'DriveFormView',
   components: { vSelect, MainForm },
-  mixins: [FormMixin, GroupGuardMixin],
+  mixins: [GroupGuardMixin],
   data() {
     return {
-      requiredFields,
       currentDate: new Date().toISOString().split('T')[0],
+      listOfErrors: [],
+      isInvalid: {},
     };
   },
   methods: {
     ...mapActions(namespaces.cars, [apiActions.fetchCars]),
     ...mapActions(namespaces.passengers, [apiActions.fetchPassengers]),
     ...mapActions(namespaces.projects, [apiActions.fetchProjects]),
+    ...mapMutations('data', [CLEAR_NEW_DRIVE_FORM]),
     handleSubmit() {
-      this.validateForm(this.validator);
-      if (this.listOfErrors.length === 0) {
+      const empty_fields = this[NEW_DRIVE_FORM_EMPTY_FIELDS];
+      if (empty_fields.length === 0) {
         this.$router.push(driveVerifyRoute);
       }
     },
@@ -246,6 +239,7 @@ export default {
         })),
     }),
     ...mapGetters([IS_ONLINE]),
+    ...mapGetters('data', [NEW_DRIVE_FORM_EMPTY_FIELDS]),
     distance() {
       const distance = this.endMileage - this.startMileage;
       return distance > 0 ? distance : 0;

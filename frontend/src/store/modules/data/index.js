@@ -17,6 +17,17 @@ export const newDriveFormInitialState = {
   endLocation: '',
 };
 
+const requiredFields = [
+  'date',
+  'car',
+  'project',
+  'startMileage',
+  'endMileage',
+  'startLocation',
+  'endLocation',
+  'passenger',
+];
+
 const moduleState = {
   [NEW_DRIVE_FORM]: { ...newDriveFormInitialState },
 };
@@ -37,6 +48,7 @@ const mutations = {
 const actions = {};
 
 export const NEW_DRIVE_FORM_CHECKSUM = 'NEW_DRIVE_FORM_CHECKSUM';
+export const NEW_DRIVE_FORM_EMPTY_FIELDS = 'NEW_DRIVE_FORM_EMPTY_FIELDS';
 
 const getters = {
   getField,
@@ -51,8 +63,10 @@ const getters = {
         startMileage: state[NEW_DRIVE_FORM].startMileage,
         endMileage: state[NEW_DRIVE_FORM].endMileage,
       }),
-      6,
+      6
     ),
+  [NEW_DRIVE_FORM_EMPTY_FIELDS]: (state) =>
+    requiredFields.filter((field) => !state[NEW_DRIVE_FORM][field]),
 };
 
 export default {

@@ -49,5 +49,6 @@ export default {
     loadFormData() {
       this.form = { ...this.initialData };
     },
+    clearStorage() {},
   },
 };
