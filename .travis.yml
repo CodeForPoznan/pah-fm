@@ -16,10 +16,10 @@ env:
 
 install:
   - pip install awscli==1.18.9
-  - pip install -r backend/requirements/dev.txt
 
   - nvm install 8.12.0
-  - cd frontend && npm install && cd -
+  - (cd frontend && npm install)
+  - (cd backend  && pip install -r requirements/dev.txt)
 
 
 before_script:
@@ -34,15 +34,20 @@ script:
 
 
 after_success:
-  # log in to docker, push the images
+  # log in to docker, build and push images
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-  - (cd backend  && docker build -f Dockerfile -t codeforpoznan/pah-fm-backend:latest .)
-  - (cd frontend && docker build -f Dockerfile -t codeforpoznan/pah-fm-frontend:latest .)
+  - docker build -t codeforpoznan/pah-fm-backend:latest  backend
+  - docker build -t codeforpoznan/pah-fm-frontend:latest frontend
   - docker push codeforpoznan
+
+  # build and publish static files
+  - (cd frontend && npm run build                  && cp -r dist   ../public)
+  - (cd backend  && python manage.py collectstatic && cp -r static ../public)
+  - aws s3 cp --quiet --recursive public s3://codeforpoznan-public/dev_pah_fm
 
   # prepare zip file with the application code and required dependencies
   - pip install -r backend/requirements/base.txt --target packages
-  - mv packages/psycopg2/_psycopg*.so packages/psycopg2/_psycopg.so # hot fix
+  - mv packages/psycopg2/_psycopg*.so packages/psycopg2/_psycopg.so # hotfix
   - (cd packages && rm -r *-info && zip -qgr9 ../lambda.zip .)
   - (cd backend  && rm -r static && zip -qgr9 ../lambda.zip .)
   - aws s3 cp lambda.zip s3://codeforpoznan-lambdas/dev_pah_fm.zip
