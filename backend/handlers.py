@@ -12,11 +12,7 @@ django.setup()
 
 
 def api(event, context):
-    event.setdefault("body")
-    event.setdefault("headers")
-    event.setdefault("path", "")
-    event.setdefault("httpMethod", "GET")
-    event.setdefault("requestContext", {})
+    # event["headers"]["X-Forwarded-Host"] = "dev.pahfm.codeforpoznan.pl"
     return handle_request(application, event, context)
 
 
