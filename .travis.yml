@@ -48,8 +48,8 @@ jobs:
     - stage: prepare_database
       name:  prepare database
       script:
-        - psql -U postgres -c "CREATE USER 'pah-fm' WITH PASSWORD 'pah-fm';"
-        - psql -U postgres -c "ALTER USER  'pah-fm' CREATEDB;"
+        - psql -U postgres -c 'CREATE USER "pah-fm" WITH PASSWORD "pah-fm";'
+        - psql -U postgres -c 'ALTER USER  "pah-fm" CREATEDB;'
 
 
     - stage: lint_and_test
