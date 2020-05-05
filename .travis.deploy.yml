@@ -8,38 +8,39 @@ env:
 
 
 after_success:
-  # build_and_push_images
+  # build and push images
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
   - docker build -t codeforpoznan/pah-fm-backend:latest  backend
   - docker build -t codeforpoznan/pah-fm-frontend:latest frontend
   - docker push codeforpoznan
 
-  # build_and_push_statics
-  - (cd frontend && npm    run       build         && cp -r dist   ../public)
-  - (cd backend  && python manage.py collectstatic && cp -r static ../public)
-  - aws s3 sync --quiet public s3://codeforpoznan-public/dev_pah_fm
+  # build and push statics
+  - (cd frontend && npm     run       build                    && cp -r dist   ../public)
+  - (cd backend  && python3 manage.py collectstatic --no-input && cp -r static ../public)
+  - aws --quiet s3         sync                public s3://codeforpoznan-public/dev_pah_fm
+  - aws --quiet cloudfront create-invalidation --paths "/*" --distribution-id E2ESZ1QPNV00X
 
-  # bundle_application
+  # bundle application
   - pip install --quiet -r backend/requirements/base.txt --target packages
   - mv packages/psycopg2/_psycopg*.so packages/psycopg2/_psycopg.so # hotfix
   - (cd packages && rm -r *-info && zip -qgr9 ../lambda.zip .)
   - (cd backend  && rm -r static && zip -qgr9 ../lambda.zip .)
   - aws s3 cp lambda.zip s3://codeforpoznan-lambdas/dev_pah_fm.zip
 
-  # refresh_lambdas
+  # refresh lambdas
   - aws lambda update-function-code
     --function-name dev_pah_fm_serverless_api
     --s3-bucket     codeforpoznan-lambdas
     --s3-key        dev_pah_fm.zip
-    | jq 'del(.Environment, .VpcConfig)'
+    | jq 'del(.Environment, .VpcConfig, .Role, .FunctionArn)'
 
   - aws lambda update-function-code
     --function-name dev_pah_fm_migration
     --s3-bucket     codeforpoznan-lambdas
     --s3-key        dev_pah_fm.zip
-    | jq 'del(.Environment, .VpcConfig)'
+    | jq 'del(.Environment, .VpcConfig, .Role, .FunctionArn)'
 
-  # run_migrations
+  # run migrations
   - aws lambda invoke
     --function-name dev_pah_fm_migration
     response.json
