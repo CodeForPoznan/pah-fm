@@ -1,36 +1,44 @@
-services:
-  - docker
-
-addons:
-  postgresql: "9.5"
+git:
+  quiet: true
 
 language: python
 python: ["3.6"]
 
+services: [docker]
+addons:
+  postgresql: "9.5"
+
+
 env:
   global:
     - AWS_REGION=eu-west-1
-    - SECRET_KEY="TRAVIS-SECRET-KEY"
+    - SECRET_KEY=TRAVIS-SECRET-KEY
     - secure: "FvksvizyP/p/ZmMD+Dq5STciE5EXAtPFMG4GI84QbQ7jcAFyIqSqxHAfhBpC4mW0Mu3Tv8Iz8/K24bcAL3AwKINKD3L+G7qing+y+/5XzGNudLMFNt9Ag+bm3o3KkbSVSGmH1zWccuE2SpFwFYT7MpBsvXIoYyeuesPpoUtr0SopYvBKXPOCxqNrC27tVWsND1AyM7T0+xmLye4S6s4cuDcIuzUw9XhIUK4tZdEPZkKODwjQ8aAIOHDWs0B8xiqe7+z4UlW6wewsVk9ZV5ij7RVuBcBUmLJn/RaT87TZ1fRE/s7eNP8sQGfFuU1gTYMw7Nj+/8kA8JjSegxhudaxZAVH6kQ321mEPGVhoZOhLV5/shBXYT39eI2vXtYigmXRz6RLZSvKjA/ZKRuYRxrg4KvdL1sdxcHgrznZN4UxkwdL4RZYUOgb0Hko/3ZLS4qOcPlEEF1LtZa3gqhmmgUQP0Z9qdVSemQYt2K9QFMF75Yy5mx/rRnEwVBOrlIsKZmULphOVakMSKzLlhatx28dFyO7wpMBbt2yzAX3Uw1UVzoI3v2WcDmdXjYwTSaCkpU8iBx5TA7NvkGG538L35ZI/TH04Osu33JYg/hIyVE/GjiD4vEmJo6Qcr/1pSE38stGVNDTqN6beOUUIgAQ9mBV4vDXwWvE8oVUE9I4qJYWKWU="
 
 
 install:
   - pip install awscli==1.18.9
 
+  # install dependencies
   - nvm install 8.12.0
   - (cd frontend && npm install)
   - (cd backend  && pip install -r requirements/dev.txt)
 
 
 before_script:
+  # prepare database
   - psql -U postgres -c "CREATE USER 'pah-fm' WITH PASSWORD 'pah-fm';"
-  - psql -U postgres -c "ALTER USER 'pah-fm' CREATEDB;"
+  - psql -U postgres -c "ALTER USER  'pah-fm' CREATEDB;"
 
 
 script:
+  # lint and test frontend
+  - (cd frontend && npm run lint)
+  - (cd frontend && npm run test)
+
+  # lint and test backend
   - (cd backend  && flake8 --config=.flake8 .)
   - (cd backend  && python manage.py test)
-  - (cd frontend && npm run lint)
 
 
 after_success:
@@ -41,29 +49,29 @@ after_success:
   - docker push codeforpoznan
 
   # build and publish static files
-  - (cd frontend && npm run build                  && cp -r dist   ../public)
+  - (cd frontend && npm    run       build         && cp -r dist   ../public)
   - (cd backend  && python manage.py collectstatic && cp -r static ../public)
   - aws s3 cp --quiet --recursive public s3://codeforpoznan-public/dev_pah_fm
 
   # prepare zip file with the application code and required dependencies
-  - pip install -r backend/requirements/base.txt --target packages
+  - pip install --quiet -r backend/requirements/base.txt --target packages
   - mv packages/psycopg2/_psycopg*.so packages/psycopg2/_psycopg.so # hotfix
   - (cd packages && rm -r *-info && zip -qgr9 ../lambda.zip .)
   - (cd backend  && rm -r static && zip -qgr9 ../lambda.zip .)
   - aws s3 cp lambda.zip s3://codeforpoznan-lambdas/dev_pah_fm.zip
 
-  # refresh api lambda code
+  # refresh serverless api lambda code
   - aws lambda update-function-code
       --function-name dev_pah_fm_serverless_api
-      --s3-bucket codeforpoznan-lambdas
-      --s3-key dev_pah_fm.zip
+      --s3-bucket     codeforpoznan-lambdas
+      --s3-key        dev_pah_fm.zip
     | jq 'del(.Environment, .VpcConfig)'
 
   # refresh migration lambda code
   - aws lambda update-function-code
       --function-name dev_pah_fm_migration
-      --s3-bucket codeforpoznan-lambdas
-      --s3-key dev_pah_fm.zip
+      --s3-bucket     codeforpoznan-lambdas
+      --s3-key        dev_pah_fm.zip
     | jq 'del(.Environment, .VpcConfig)'
 
   # run migrations
@@ -72,17 +80,10 @@ after_success:
       response.json
     > request.json
 
-  # parse the output with a bit of logic
-  - |
-    jq --slurp add request.json response.json | jq --exit-status --raw-output
-    '
+  - > # parse the output from above
+    jq -s add *.json | jq -re '
       if .FunctionError then
-        "lambda invoke: \(.FunctionError)",
-        "error message: \(.errorMessage)",
-        true
+        .FunctionError, .errorMessage, false
       else
-        "stdout: \(.stdout)",
-        "stderr: \(.stderr)",
-        false
-      end
-    ' # fail job if above exits with 1
+        .stdout, .stderr
+      end'
