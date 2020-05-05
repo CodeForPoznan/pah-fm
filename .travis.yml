@@ -36,6 +36,6 @@ import:
   # deploy on merge to master
   - source: .travis.deploy.yml
     mode: deep_merge_append
-    if: type   = push   and
-        branch = master and
+    if: branch = master and
+        type   = push   and
         repo   = 'CodeForPoznan/pah-fm'
