@@ -1,117 +1,41 @@
-git:
-  depth: 1
-  quiet: true
+version: ~> 1.0  # for imports
 
 
 language: python
 python:   ["3.6"]
 
+addons:
+  postgresql: "9.5"
+
 env:
   global:
-    - AWS_REGION=eu-west-1
     - SECRET_KEY=TRAVIS-SECRET-KEY
-    - secure: "FvksvizyP/p/ZmMD+Dq5STciE5EXAtPFMG4GI84QbQ7jcAFyIqSqxHAfhBpC4mW0Mu3Tv8Iz8/K24bcAL3AwKINKD3L+G7qing+y+/5XzGNudLMFNt9Ag+bm3o3KkbSVSGmH1zWccuE2SpFwFYT7MpBsvXIoYyeuesPpoUtr0SopYvBKXPOCxqNrC27tVWsND1AyM7T0+xmLye4S6s4cuDcIuzUw9XhIUK4tZdEPZkKODwjQ8aAIOHDWs0B8xiqe7+z4UlW6wewsVk9ZV5ij7RVuBcBUmLJn/RaT87TZ1fRE/s7eNP8sQGfFuU1gTYMw7Nj+/8kA8JjSegxhudaxZAVH6kQ321mEPGVhoZOhLV5/shBXYT39eI2vXtYigmXRz6RLZSvKjA/ZKRuYRxrg4KvdL1sdxcHgrznZN4UxkwdL4RZYUOgb0Hko/3ZLS4qOcPlEEF1LtZa3gqhmmgUQP0Z9qdVSemQYt2K9QFMF75Yy5mx/rRnEwVBOrlIsKZmULphOVakMSKzLlhatx28dFyO7wpMBbt2yzAX3Uw1UVzoI3v2WcDmdXjYwTSaCkpU8iBx5TA7NvkGG538L35ZI/TH04Osu33JYg/hIyVE/GjiD4vEmJo6Qcr/1pSE38stGVNDTqN6beOUUIgAQ9mBV4vDXwWvE8oVUE9I4qJYWKWU="
 
 
-pull: &pull
-  if: type = pull_request
+install:
+  # install dependencies
+  - (cd frontend && npm install --quiet)
+  - (cd backend  && pip install --quiet -r requirements/dev.txt)
 
-push: &push
-  if: type = push and branch = master and repo = 'CodeForPoznan/pah-fm'
-
-
-stages:
-  - { name: install_dependencies       ,<<: *pull }
-  - { name: prepare_database           ,<<: *pull }
-  - { name: lint_and_test              ,<<: *pull }
-  - { name: build_and_push_images      ,<<: *push }
-  - { name: build_and_push_statics     ,<<: *push }
-  - { name: bundle_application         ,<<: *push }
-  - { name: refresh_lambdas            ,<<: *push }
-  - { name: run_migrations             ,<<: *push }
+  # prepare database
+  - psql -U postgres -c "CREATE USER \"pah-fm\" WITH PASSWORD 'pah-fm';"
+  - psql -U postgres -c "ALTER  USER \"pah-fm\" CREATEDB;"
 
 
-jobs:
-  include:
+script:
+  # lint and test frontend
+  - (cd frontend && npm run lint)
+  - (cd frontend && npm run test)
 
-    - stage: install_dependencies
-      script:
-        - nvm install 8.12.0
-        - (cd frontend && npm install --quiet)
-        - (cd backend  && pip install --quiet -r requirements/dev.txt)
-
-
-    - stage: prepare_database
-      addons:
-        postgresql: "9.5"
-      script:
-        - psql -U postgres -c "CREATE USER \"pah-fm\" WITH PASSWORD 'pah-fm';"
-        - psql -U postgres -c "ALTER USER \"pah-fm\" CREATEDB;"
+  # lint and test backend
+  - (cd backend  && flake8 .)
+  - (cd backend  && python manage.py test)
 
 
-    - stage: lint_and_test
-      name: frontend
-      script:
-        - (cd frontend && npm run lint)
-        - (cd frontend && npm run test)
-
-    - name: backend
-      script:
-        - (cd backend  && flake8 --config=.flake8 .)
-        - (cd backend  && python manage.py test)
-
-
-    - stage: build_and_push_images
-      services: docker
-      script:
-        - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-        - docker build -t codeforpoznan/pah-fm-backend:latest  backend
-        - docker build -t codeforpoznan/pah-fm-frontend:latest frontend
-        - docker push codeforpoznan
-
-
-    - stage: build_and_push_statics
-      script:
-        - (cd frontend && npm    run       build         && cp -r dist   ../public)
-        - (cd backend  && python manage.py collectstatic && cp -r static ../public)
-        - aws s3 sync --quiet public s3://codeforpoznan-public/dev_pah_fm
-
-
-    - stage: bundle_application
-      script:
-        - pip install --quiet -r backend/requirements/base.txt --target packages
-        - mv packages/psycopg2/_psycopg*.so packages/psycopg2/_psycopg.so # hotfix
-        - (cd packages && rm -r *-info && zip -qgr9 ../lambda.zip .)
-        - (cd backend  && rm -r static && zip -qgr9 ../lambda.zip .)
-        - aws s3 cp lambda.zip s3://codeforpoznan-lambdas/dev_pah_fm.zip
-
-
-    - stage: refresh_lambdas
-      script:
-        - aws lambda update-function-code
-            --function-name dev_pah_fm_serverless_api
-            --s3-bucket     codeforpoznan-lambdas
-            --s3-key        dev_pah_fm.zip
-          | jq 'del(.Environment, .VpcConfig)'
-
-        - aws lambda update-function-code
-            --function-name dev_pah_fm_migration
-            --s3-bucket     codeforpoznan-lambdas
-            --s3-key        dev_pah_fm.zip
-          | jq 'del(.Environment, .VpcConfig)'
-
-
-    - stage: run_migrations
-      script:
-        - aws lambda invoke
-            --function-name dev_pah_fm_migration
-            response.json
-          > request.json
-
-        - > # parse the output from above
-          jq -s add *.json | jq -re '
-            if .FunctionError then
-              .FunctionError, .errorMessage, false
-            else
-              .stdout, .stderr
-            end'
+import:
+  # deploy on merge to master
+  - source: .travis.deploy.yml
+    mode: deep_merge_append
+    if: type   = push   and
+        branch = master and
+        repo   = 'CodeForPoznan/pah-fm'

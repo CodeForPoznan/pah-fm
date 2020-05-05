@@ -1,0 +1,54 @@
+services: docker
+
+
+env:
+  global:
+    - AWS_REGION=eu-west-1
+    - secure: "FvksvizyP/p/ZmMD+Dq5STciE5EXAtPFMG4GI84QbQ7jcAFyIqSqxHAfhBpC4mW0Mu3Tv8Iz8/K24bcAL3AwKINKD3L+G7qing+y+/5XzGNudLMFNt9Ag+bm3o3KkbSVSGmH1zWccuE2SpFwFYT7MpBsvXIoYyeuesPpoUtr0SopYvBKXPOCxqNrC27tVWsND1AyM7T0+xmLye4S6s4cuDcIuzUw9XhIUK4tZdEPZkKODwjQ8aAIOHDWs0B8xiqe7+z4UlW6wewsVk9ZV5ij7RVuBcBUmLJn/RaT87TZ1fRE/s7eNP8sQGfFuU1gTYMw7Nj+/8kA8JjSegxhudaxZAVH6kQ321mEPGVhoZOhLV5/shBXYT39eI2vXtYigmXRz6RLZSvKjA/ZKRuYRxrg4KvdL1sdxcHgrznZN4UxkwdL4RZYUOgb0Hko/3ZLS4qOcPlEEF1LtZa3gqhmmgUQP0Z9qdVSemQYt2K9QFMF75Yy5mx/rRnEwVBOrlIsKZmULphOVakMSKzLlhatx28dFyO7wpMBbt2yzAX3Uw1UVzoI3v2WcDmdXjYwTSaCkpU8iBx5TA7NvkGG538L35ZI/TH04Osu33JYg/hIyVE/GjiD4vEmJo6Qcr/1pSE38stGVNDTqN6beOUUIgAQ9mBV4vDXwWvE8oVUE9I4qJYWKWU="
+
+
+after_success:
+  # build_and_push_images
+  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+  - docker build -t codeforpoznan/pah-fm-backend:latest  backend
+  - docker build -t codeforpoznan/pah-fm-frontend:latest frontend
+  - docker push codeforpoznan
+
+  # build_and_push_statics
+  - (cd frontend && npm    run       build         && cp -r dist   ../public)
+  - (cd backend  && python manage.py collectstatic && cp -r static ../public)
+  - aws s3 sync --quiet public s3://codeforpoznan-public/dev_pah_fm
+
+  # bundle_application
+  - pip install --quiet -r backend/requirements/base.txt --target packages
+  - mv packages/psycopg2/_psycopg*.so packages/psycopg2/_psycopg.so # hotfix
+  - (cd packages && rm -r *-info && zip -qgr9 ../lambda.zip .)
+  - (cd backend  && rm -r static && zip -qgr9 ../lambda.zip .)
+  - aws s3 cp lambda.zip s3://codeforpoznan-lambdas/dev_pah_fm.zip
+
+  # refresh_lambdas
+  - aws lambda update-function-code
+    --function-name dev_pah_fm_serverless_api
+    --s3-bucket     codeforpoznan-lambdas
+    --s3-key        dev_pah_fm.zip
+    | jq 'del(.Environment, .VpcConfig)'
+
+  - aws lambda update-function-code
+    --function-name dev_pah_fm_migration
+    --s3-bucket     codeforpoznan-lambdas
+    --s3-key        dev_pah_fm.zip
+    | jq 'del(.Environment, .VpcConfig)'
+
+  # run_migrations
+  - aws lambda invoke
+    --function-name dev_pah_fm_migration
+    response.json
+    > request.json
+
+  - > # parse the output from above
+    jq -s add *.json | jq -re '
+      if .FunctionError then
+        .FunctionError, .errorMessage, false
+      else
+        .stdout, .stderr
+      end'
