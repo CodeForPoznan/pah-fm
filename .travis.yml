@@ -1,12 +1,10 @@
 git:
+  depth: 1
   quiet: true
+
 
 language: python
 python:   ["3.6"]
-services: [docker]
-addons:
-  postgresql: "9.5"
-
 
 env:
   global:
@@ -37,19 +35,18 @@ jobs:
   include:
 
     - stage: install_dependencies
-      name:  install dependencies
       script:
         - nvm install 8.12.0
-        - (cd frontend && npm install)
-        - (cd backend  && pip install -r requirements/dev.txt)
-        - pip install awscli==1.18.9
+        - (cd frontend && npm install --quiet)
+        - (cd backend  && pip install --quiet -r requirements/dev.txt)
 
 
     - stage: prepare_database
-      name:  prepare database
+      addons:
+        postgresql: "9.5"
       script:
-        - psql -U postgres -c 'CREATE USER "pah-fm" WITH PASSWORD "pah-fm";'
-        - psql -U postgres -c 'ALTER USER  "pah-fm" CREATEDB;'
+        - psql -U postgres -c "CREATE USER \"pah-fm\" WITH PASSWORD 'pah-fm';"
+        - psql -U postgres -c "ALTER USER \"pah-fm\" CREATEDB;"
 
 
     - stage: lint_and_test
@@ -65,7 +62,7 @@ jobs:
 
 
     - stage: build_and_push_images
-      name:  build and push images
+      services: docker
       script:
         - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         - docker build -t codeforpoznan/pah-fm-backend:latest  backend
@@ -74,7 +71,6 @@ jobs:
 
 
     - stage: build_and_push_statics
-      name:  build and push statics
       script:
         - (cd frontend && npm    run       build         && cp -r dist   ../public)
         - (cd backend  && python manage.py collectstatic && cp -r static ../public)
@@ -82,7 +78,6 @@ jobs:
 
 
     - stage: bundle_application
-      name:  bundle application
       script:
         - pip install --quiet -r backend/requirements/base.txt --target packages
         - mv packages/psycopg2/_psycopg*.so packages/psycopg2/_psycopg.so # hotfix
@@ -92,7 +87,6 @@ jobs:
 
 
     - stage: refresh_lambdas
-      name:  refresh_lambdas
       script:
         - aws lambda update-function-code
             --function-name dev_pah_fm_serverless_api
@@ -108,7 +102,6 @@ jobs:
 
 
     - stage: run_migrations
-      name:  run_migrations
       script:
         - aws lambda invoke
             --function-name dev_pah_fm_migration
