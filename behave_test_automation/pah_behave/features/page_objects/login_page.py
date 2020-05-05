@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+
 from features.page_objects.base_page import BasePage
 
 
@@ -11,7 +12,7 @@ class LoginPage(BasePage):
     hamburger_menu = (By.CSS_SELECTOR, '.bm-burger-button')
 
     def change_language_selector(self, language):
-        return By.CSS_SELECTOR, f'span[title="{language}"]'
+        return By.CSS_SELECTOR, f".flag-icon-{language}"
 
     def login_text_selector(self, login_translation):
         return By.XPATH, f'//h2[contains(text(), "{login_translation}")]'
@@ -32,12 +33,15 @@ class LoginPage(BasePage):
 
     def login_successful(self):
         self.wait_for_element(self.hamburger_menu)
+        assert self.browser.execute_script("return window.localStorage.jwt") is not None
 
     def login_unsuccessful(self):
         self.wait_for_element(self.login_failed_message)
+        assert "login" in self.get_current_url()
 
     def disabled_login_button(self):
         self.find_element(*self.login_button_disabled)
+        assert "login" in self.get_current_url()
 
     def login_to_pah_website(self):
         self.visit()
@@ -52,6 +56,8 @@ class LoginPage(BasePage):
         self.find_element(*self.password_field).send_keys(password)
 
     def change_language(self, language):
+        self.page_has_loaded()
+        self.wait_for_element_clickable(self.change_language_selector)
         self.find_element(*self.change_language_selector(language)).click()
 
     def translation_login_view(self, login_title, username, password, login_button):
@@ -68,4 +74,3 @@ class LoginPage(BasePage):
     def switch_language_and_submit(self, language):
         self.find_element(*self.change_language_selector(language)).click()
         self.find_element(*self.login_button_enabled).click()
-
