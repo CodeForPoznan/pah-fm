@@ -50,22 +50,18 @@
     </div>
     <div class="form-group">
       <label>{{ $t('drive_form.project') }}</label>
-      <select
+      <v-select
         v-if="projects.data"
-        @change="syncToLocalStorage"
+        @input="syncToLocalStorage"
         v-model="form.project"
         name="project"
-        class="form-control"
+        class="form-control select"
         :class="{ 'is-invalid': isInvalid['project'] }"
-      >
-        <option
-          v-for="project in projects.data"
-          :key="project.id"
-          :value="project.id"
-        >
-          {{ project.title }}
-        </option>
-      </select>
+        label="title"
+        :reduce="(project) => project.id"
+        :options="projects.data"
+      />
+      <p>{{ project }} </p>
       <p
         class="font-weight-bold"
         v-if="!cars.data"
@@ -76,22 +72,17 @@
 
     <div class="form-group">
       <label>{{ $t('drive_form.cars') }}</label>
-      <select
+      <v-select
         v-if="cars.data"
         v-model="form.car"
-        @change="syncToLocalStorage"
+        @input="syncToLocalStorage"
         name="car"
-        class="form-control"
+        class="form-control select"
         :class="{ 'is-invalid': isInvalid['car'] }"
-      >
-        <option
-          v-for="car in cars.data"
-          :key="car.id"
-          :value="car.id"
-        >
-          {{ car.plates }}
-        </option>
-      </select>
+        label="plates"
+        :reduce="(car) => car.id"
+        :options="cars.data"
+      />
       <p
         class="font-weight-bold"
         v-if="!cars.data"
