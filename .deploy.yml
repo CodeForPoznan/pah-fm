@@ -12,8 +12,8 @@ after_success:
   # build and push statics
   - (cd frontend && npm     run       build                    && cp -r dist   ../public)
   - (cd backend  && python3 manage.py collectstatic --no-input && cp -r static ../public)
-  - aws s3         sync                --quiet public s3://codeforpoznan-public/dev_pah_fm
-  - aws cloudfront create-invalidation --quiet --paths "/*" --distribution-id E2ESZ1QPNV00X
+  - aws s3         sync                public s3://codeforpoznan-public/dev_pah_fm
+  - aws cloudfront create-invalidation --paths "/*" --distribution-id E2ESZ1QPNV00X
 
   # bundle application
   - pip install --quiet -r backend/requirements/base.txt --target packages
