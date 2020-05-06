@@ -1,24 +1,19 @@
 services: docker
 
 
-env:
-  global:
-    - AWS_REGION=eu-west-1
-    - secure: "FvksvizyP/p/ZmMD+Dq5STciE5EXAtPFMG4GI84QbQ7jcAFyIqSqxHAfhBpC4mW0Mu3Tv8Iz8/K24bcAL3AwKINKD3L+G7qing+y+/5XzGNudLMFNt9Ag+bm3o3KkbSVSGmH1zWccuE2SpFwFYT7MpBsvXIoYyeuesPpoUtr0SopYvBKXPOCxqNrC27tVWsND1AyM7T0+xmLye4S6s4cuDcIuzUw9XhIUK4tZdEPZkKODwjQ8aAIOHDWs0B8xiqe7+z4UlW6wewsVk9ZV5ij7RVuBcBUmLJn/RaT87TZ1fRE/s7eNP8sQGfFuU1gTYMw7Nj+/8kA8JjSegxhudaxZAVH6kQ321mEPGVhoZOhLV5/shBXYT39eI2vXtYigmXRz6RLZSvKjA/ZKRuYRxrg4KvdL1sdxcHgrznZN4UxkwdL4RZYUOgb0Hko/3ZLS4qOcPlEEF1LtZa3gqhmmgUQP0Z9qdVSemQYt2K9QFMF75Yy5mx/rRnEwVBOrlIsKZmULphOVakMSKzLlhatx28dFyO7wpMBbt2yzAX3Uw1UVzoI3v2WcDmdXjYwTSaCkpU8iBx5TA7NvkGG538L35ZI/TH04Osu33JYg/hIyVE/GjiD4vEmJo6Qcr/1pSE38stGVNDTqN6beOUUIgAQ9mBV4vDXwWvE8oVUE9I4qJYWKWU="
-
-
 after_success:
   # build and push images
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker build -t codeforpoznan/pah-fm-backend:latest  backend
+  - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
   - docker build -t codeforpoznan/pah-fm-frontend:latest frontend
-  - docker push codeforpoznan
+  - docker build -t codeforpoznan/pah-fm-backend:latest  backend
+  - docker push codeforpoznan/pah-fm-frontend
+  - docker push codeforpoznan/pah-fm-backend
 
   # build and push statics
-  - (cd frontend && npm run build                              && cp -r dist   ../public)
+  - (cd frontend && npm     run       build                    && cp -r dist   ../public)
   - (cd backend  && python3 manage.py collectstatic --no-input && cp -r static ../public)
-  - aws --quiet s3 sync public s3://codeforpoznan-public/dev_pah_fm
-  - aws --quiet cloudfront create-invalidation --paths "/*" --distribution-id E2ESZ1QPNV00X
+  - aws s3         sync                --quiet public s3://codeforpoznan-public/dev_pah_fm
+  - aws cloudfront create-invalidation --quiet --paths "/*" --distribution-id E2ESZ1QPNV00X
 
   # bundle application
   - pip install --quiet -r backend/requirements/base.txt --target packages
