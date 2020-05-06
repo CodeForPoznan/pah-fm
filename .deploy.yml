@@ -9,7 +9,7 @@ env:
 
 after_success:
   # build and push images
-  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t codeforpoznan/pah-fm-backend:latest  backend
   - docker build -t codeforpoznan/pah-fm-frontend:latest frontend
   - docker push codeforpoznan
