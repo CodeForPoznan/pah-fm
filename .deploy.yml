@@ -28,17 +28,20 @@ after_success:
     --function-name dev_pah_fm_serverless_api
     --s3-bucket     codeforpoznan-lambdas
     --s3-key        dev_pah_fm.zip
+    --region        eu-west-1
     | jq 'del(.Environment, .VpcConfig, .Role, .FunctionArn)'
 
   - aws lambda update-function-code
     --function-name dev_pah_fm_migration
     --s3-bucket     codeforpoznan-lambdas
     --s3-key        dev_pah_fm.zip
+    --region        eu-west-1
     | jq 'del(.Environment, .VpcConfig, .Role, .FunctionArn)'
 
   # run migrations
   - aws lambda invoke
     --function-name dev_pah_fm_migration
+    --region        eu-west-1
       response.json
     > request.json
 
