@@ -33,8 +33,8 @@ script:
 
 
 import:
-  # deploy on merge to master
-  - source: .travis.deploy.yml
+  # deploy on merge
+  - source: .deploy.yml
     mode: deep_merge_append
 #   if: branch = master and
 #       type   = push   and
