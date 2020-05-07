@@ -15,15 +15,13 @@ export const requiredFields = [
 
 export const stringFields = requiredFields;
 
-export const isErroring = route => key =>
-  requiredFields.includes(key) && !route[key].trim();
+export const isErroring = (route) => (key) => requiredFields.includes(key) && !route[key].trim();
 
-export const splitCamelCase = label => label.replace(/([A-Z])/g, ' $1');
+export const splitCamelCase = (label) => label.replace(/([A-Z])/g, ' $1');
 
-export const makeErrorMessage = t => field =>
-  t('drive_form.validation_error', { field: splitCamelCase(field) });
+export const makeErrorMessage = (t) => (field) => t('drive_form.validation_error', { field: splitCamelCase(field) });
 
-export const makeErrors = t => (acc, field) => ({
+export const makeErrors = (t) => (acc, field) => ({
   ...acc,
   [field]: makeErrorMessage(t)(field),
 });

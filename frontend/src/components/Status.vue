@@ -49,4 +49,3 @@ export default {
   line-height: inherit;
 }
 </style>
-

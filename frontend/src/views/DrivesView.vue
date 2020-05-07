@@ -160,9 +160,9 @@ export default {
       unsyncedDrivesTotalMileage: UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE,
     }),
     ...mapState(namespaces.drives, {
-      drives: state => state.data || [],
-      totalKilometers: state =>
-        state.data.filter(totalMileageFilter).reduce(totalMileageReducer, 0),
+      drives: (state) => state.data || [],
+      totalKilometers: (state) => state.data
+        .filter(totalMileageFilter).reduce(totalMileageReducer, 0),
     }),
   },
   created() {

@@ -25,7 +25,7 @@ export default {
     links() {
       if (this.user) {
         return flatMap(this.user.groups, ({ name }) => groupBasedRoutes[name.toLowerCase()])
-          .filter(route => route.visibleOnMenu);
+          .filter((route) => route.visibleOnMenu);
       }
       return [];
     },

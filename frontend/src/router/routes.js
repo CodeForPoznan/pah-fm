@@ -88,7 +88,7 @@ export const groupBasedRoutes = {
 export const allGroupBasedRoutes = [
   ...groupBasedRoutes.driver,
   ...groupBasedRoutes.passenger,
-].map(route => route.to.name);
+].map((route) => route.to.name);
 
 export const openRoutes = [loginRoute.name];
 

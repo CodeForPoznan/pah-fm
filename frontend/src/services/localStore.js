@@ -9,7 +9,6 @@ export const getItem = (item) => {
 
 export const setItem = (key, item) => localStorage.setItem(key, JSON.stringify(item));
 
-export const removeItem = item => localStorage.removeItem(item);
+export const removeItem = (item) => localStorage.removeItem(item);
 
 export const clearStorage = () => localStorage.clear();
-

@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import ErrorList from '../components/ErrorList.vue';
+import ErrorList from './ErrorList.vue';
 
 export default {
   name: 'MainForm',

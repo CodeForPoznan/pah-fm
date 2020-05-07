@@ -26,7 +26,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 new Vue({
-  render: h => h(App),
+  render: (h) => h(App),
   router,
   i18n,
 }).$mount('#app');

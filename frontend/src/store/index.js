@@ -70,13 +70,12 @@ const store = new Vuex.Store({
     }),
   ],
   getters: {
-    [GET_HASH]: state => state.hash,
-    [IS_ONLINE]: state => state.isOnline,
-    [UNSYNCHRONISED_DRIVES]: state => state.unsyncedDrives,
-    [UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE]: state =>
-      state.unsyncedDrives
-        .filter(totalMileageFilter)
-        .reduce(totalMileageReducer, 0),
+    [GET_HASH]: (state) => state.hash,
+    [IS_ONLINE]: (state) => state.isOnline,
+    [UNSYNCHRONISED_DRIVES]: (state) => state.unsyncedDrives,
+    [UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE]: (state) => state.unsyncedDrives
+      .filter(totalMileageFilter)
+      .reduce(totalMileageReducer, 0),
   },
 });
 

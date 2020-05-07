@@ -130,7 +130,7 @@ export default {
     submit() {
       this.confirmationOffline = false;
       this.confirmationOnline = false;
-      const passenger = this.passengers.find(p => p.value === this[NEW_DRIVE_FORM].passenger);
+      const passenger = this.passengers.find((p) => p.value === this[NEW_DRIVE_FORM].passenger);
       this.isVerified = verify(
         this[NEW_DRIVE_FORM_CHECKSUM],
         this.form.signature || 0,
@@ -164,13 +164,12 @@ export default {
     ...mapState('data', [NEW_DRIVE_FORM]),
     ...mapGetters('data', [NEW_DRIVE_FORM_CHECKSUM]),
     ...mapState(namespaces.passengers, {
-      passengers: state =>
-        (state.data || []).map(p => ({
-          value: p.id,
-          text: [p.firstName, p.lastName].join(' '),
-          rsaModulusN: p.rsaModulusN,
-          rsaPubE: p.rsaPubE,
-        })),
+      passengers: (state) => (state.data || []).map((p) => ({
+        value: p.id,
+        text: [p.firstName, p.lastName].join(' '),
+        rsaModulusN: p.rsaModulusN,
+        rsaPubE: p.rsaPubE,
+      })),
     }),
     ...mapGetters([IS_ONLINE]),
   },

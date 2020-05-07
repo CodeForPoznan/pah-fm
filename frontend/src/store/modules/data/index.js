@@ -54,21 +54,20 @@ export const NEW_DRIVE_FORM_EMPTY_FIELDS = 'NEW_DRIVE_FORM_EMPTY_FIELDS';
 
 const getters = {
   getField,
-  [NEW_DRIVE_FORM_CHECKSUM]: state =>
-    padWithZeros(
-      hashDict({
-        car: { id: state[NEW_DRIVE_FORM].car },
-        project: { id: state[NEW_DRIVE_FORM].project },
-        passengers: [{ id: state[NEW_DRIVE_FORM].passenger }],
-        startLocation: state[NEW_DRIVE_FORM].startLocation,
-        endLocation: state[NEW_DRIVE_FORM].endLocation,
-        startMileage: state[NEW_DRIVE_FORM].startMileage,
-        endMileage: state[NEW_DRIVE_FORM].endMileage,
-      }),
-      6,
-    ),
-  [NEW_DRIVE_FORM_EMPTY_FIELDS]: state =>
-    requiredFields.filter(field => !isValid(state[NEW_DRIVE_FORM][field])),
+  [NEW_DRIVE_FORM_CHECKSUM]: (state) => padWithZeros(
+    hashDict({
+      car: { id: state[NEW_DRIVE_FORM].car },
+      project: { id: state[NEW_DRIVE_FORM].project },
+      passengers: [{ id: state[NEW_DRIVE_FORM].passenger }],
+      startLocation: state[NEW_DRIVE_FORM].startLocation,
+      endLocation: state[NEW_DRIVE_FORM].endLocation,
+      startMileage: state[NEW_DRIVE_FORM].startMileage,
+      endMileage: state[NEW_DRIVE_FORM].endMileage,
+    }),
+    6,
+  ),
+  [NEW_DRIVE_FORM_EMPTY_FIELDS]: (state) => requiredFields
+    .filter((field) => !isValid(state[NEW_DRIVE_FORM][field])),
 };
 
 export default {

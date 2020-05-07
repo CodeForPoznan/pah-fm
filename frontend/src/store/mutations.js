@@ -17,28 +17,29 @@ export const SET_UPDATE_READY = 'SET_UPDATE_READY';
 export const SET_IS_CONNECTED = 'SET_IS_CONNECTED';
 export const SET_LANG = 'SET_LANG';
 export const SET_VERIFICATION_TOKEN_ACTIVE = 'SET_VERIFICATION_TOKEN_ACTIVE';
-export const SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS =
-  'SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS';
+export const SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS = 'SET_VERIFICATION_TOKEN_SUBMISSION_PROGRESS';
 
 export const mutations = {
   [SYNC_ITEM_SUCCESS](state, timestamp) {
     Object.assign(state, {
       // eslint-disable-next-line
       [UNSYNCHRONISED_DRIVES]: state[UNSYNCHRONISED_DRIVES].filter(
-        drive => drive.timestamp !== timestamp),
+        (drive) => drive.timestamp !== timestamp,
+      ),
     });
   },
   [SYNC_ITEM_FAILURE](state, timestamp) {
     const newIncorrectEntries = [
       ...state[INCORRECT_DRIVE_ENTRIES],
-      state[UNSYNCHRONISED_DRIVES].find(drive => drive.timestamp === timestamp),
+      state[UNSYNCHRONISED_DRIVES].find((drive) => drive.timestamp === timestamp),
     ];
 
     Object.assign(state, {
       [INCORRECT_DRIVE_ENTRIES]: newIncorrectEntries,
       // eslint-disable-next-line
       [UNSYNCHRONISED_DRIVES]: state[UNSYNCHRONISED_DRIVES].filter(
-        drive => drive.timestamp !== timestamp),
+        (drive) => drive.timestamp !== timestamp,
+      ),
     });
   },
   [SET_USER](state, user) {
@@ -63,7 +64,7 @@ export const mutations = {
     Object.assign(state, {
       [UNSYNCHRONISED_DRIVES]: [
         ...state[UNSYNCHRONISED_DRIVES],
-        Object.assign({}, drive),
+        { ...drive },
       ],
     });
   },
