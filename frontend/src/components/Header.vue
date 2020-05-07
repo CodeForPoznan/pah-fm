@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { PL, languages } from '../main';
+import { PL, languages } from '../services/lang';
 
 export default {
   name: 'Header',
@@ -49,7 +49,7 @@ export default {
   max-height: 150px;
   list-style-type: none;
 
-  @include media-breakpoint-down (md) {
+  @include media-breakpoint-down(md) {
     max-width: 180px;
     max-height: 125px;
     margin: 0 auto;

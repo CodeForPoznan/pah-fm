@@ -10,7 +10,6 @@
       <signature-input
         id="hash"
         name="hash"
-        @change="syncToLocalStorage"
         v-model="form.hash"
         class="passenger-input"
         :class="{ 'is-invalid': isInvalid.hash }"
@@ -42,6 +41,7 @@ export default {
   },
   data() {
     return {
+      initialData: initialFormData,
       formId: 'passengerForm',
       requiredFields: ['hash'],
     };

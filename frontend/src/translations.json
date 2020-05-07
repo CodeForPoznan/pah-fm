@@ -17,7 +17,8 @@
       "unexpected_error": "Сталася несподівана помилка. Зверніться до адміністратора.",
       "yes": "так",
       "are_you_sure": "Ти впевнений?",
-      "cancel": "Скасувати"
+      "cancel": "Скасувати",
+      "skip": "пропустити"
     },
     "drive_form": {
       "cars": "Автомобілі",
@@ -109,7 +110,8 @@
       "unexpected_error": "Unexpected error occurred. Please contact the administrator.",
       "yes": "yes",
       "are_you_sure": "Are you sure?",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "skip": "Skip"
     },
     "drive_form": {
       "cars": "Choose a car:",
@@ -201,7 +203,8 @@
       "unexpected_error": "Wystąpił nieoczekiwany błąd. Prosimy o kontakt z administratorem.",
       "yes": "tak",
       "are_you_sure": "Jesteś pewien/pewna?",
-      "cancel": "Anuluj"
+      "cancel": "Anuluj",
+      "skip": "Pomiń"
     },
     "drive_form": {
       "cars": "Wybierz samochód:",
