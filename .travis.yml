@@ -1,9 +1,9 @@
-version: ~> 1.0
-
-
+version:  ~> 1.0
+os:       linux
+dist:     bionic
 language: python
 python:   ["3.6"]
-
+cache:    pip
 services: docker
 addons:
   postgresql: "9.5"
@@ -34,10 +34,15 @@ script:
   - (cd backend  && python manage.py test)
 
 
-import:
-  # deploy on merge
-  - source: .deploy.yml
-    mode: deep_merge_prepend
+deploy:
+  provider: script
+  script: ./deploy.sh
+
+
+#import:
+#  # deploy on merge
+#  - source: .deploy.yml
+#    mode: deep_merge_prepend
 #   if: branch = master and
 #       type   = push   and
 #       repo   = 'CodeForPoznan/pah-fm'
