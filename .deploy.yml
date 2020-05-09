@@ -1,7 +1,7 @@
 services: docker
 
 
-after_success:
+script:
   # build and push images
   - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
   - docker build -t codeforpoznan/pah-fm-frontend:latest frontend
