@@ -37,6 +37,8 @@ script:
 deploy:
   provider: script
   script: bash deploy.sh
+  on:
+    all_branches: true
 
 
 #import:
