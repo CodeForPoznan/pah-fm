@@ -23,6 +23,15 @@ install:
   - psql -U postgres -c "ALTER  USER \"pah-fm\" CREATEDB;"
 
 
+import:
+  # deploy on merge
+  - source: .deploy.yml
+    mode: merge
+#   if: branch = master and
+#       type   = push   and
+#       repo   = 'CodeForPoznan/pah-fm'
+
+
 script:
   # lint and test frontend
   - (cd frontend && npm run lint)
@@ -31,12 +40,3 @@ script:
   # lint and test backend
   - (cd backend  && flake8 .)
   - (cd backend  && python manage.py test)
-
-
-import:
-  # deploy on merge
-  - source: .deploy.yml
-    mode: merge
-#   if: branch = master and
-#       type   = push   and
-#       repo   = 'CodeForPoznan/pah-fm'
