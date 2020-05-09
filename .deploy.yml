@@ -1,8 +1,6 @@
-services: docker
-
-
 script:
   # build and push images
+  - echo "DOCKER_USERNAME is set to $DOCKER_USERNAME !"
   - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
   - docker build -t codeforpoznan/pah-fm-frontend:latest frontend
   - docker build -t codeforpoznan/pah-fm-backend:latest  backend
