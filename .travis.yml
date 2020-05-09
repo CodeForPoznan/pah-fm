@@ -36,7 +36,7 @@ script:
 import:
   # deploy on merge
   - source: .deploy.yml
-    mode: deep_merge_append
+    mode: merge
 #   if: branch = master and
 #       type   = push   and
 #       repo   = 'CodeForPoznan/pah-fm'
