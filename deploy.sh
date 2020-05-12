@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+# build and push images
+echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+docker build -t codeforpoznan/pah-fm-frontend:latest frontend
+docker build -t codeforpoznan/pah-fm-backend:latest  backend
+docker push codeforpoznan/pah-fm-frontend
+docker push codeforpoznan/pah-fm-backend
+
+# build and push statics
+(cd frontend && npm     run       build                    && cp -r dist   ../public)
+(cd backend  && python3 manage.py collectstatic --no-input && cp -r static ../public)
+aws s3         sync                public s3://codeforpoznan-public/dev_pah_fm
+aws cloudfront create-invalidation --paths "/*" --distribution-id E2ESZ1QPNV00X
+
+# bundle application
+pip install --quiet -r backend/requirements/base.txt --target packages
+(cd packages && rm -r psycopg2 && svn checkout https://github.com/jkehler/awslambda-psycopg2/trunk/psycopg2-3.6 && mv psycopg2-3.6 psycopg2)
+cp packages/psycopg2/_psycopg*.so packages/psycopg2/_psycopg.so # hotfix
+(cd packages && rm -r *-info && zip -qgr9 ../lambda.zip .)
+(cd backend  && rm -r static && zip -qgr9 ../lambda.zip .)
+aws s3 cp lambda.zip s3://codeforpoznan-lambdas/dev_pah_fm.zip
+
+# refresh lambdas
+aws lambda update-function-code                           \
+  --function-name dev_pah_fm_serverless_api               \
+  --s3-bucket     codeforpoznan-lambdas                   \
+  --s3-key        dev_pah_fm.zip                          \
+  --region        eu-west-1                               \
+| jq 'del(.Environment, .VpcConfig, .Role, .FunctionArn)' \
+
+aws lambda update-function-code                           \
+  --function-name dev_pah_fm_migration                    \
+  --s3-bucket     codeforpoznan-lambdas                   \
+  --s3-key        dev_pah_fm.zip                          \
+  --region        eu-west-1                               \
+| jq 'del(.Environment, .VpcConfig, .Role, .FunctionArn)' \
+
+# run migrations
+aws lambda invoke                                         \
+  --function-name dev_pah_fm_migration                    \
+  --region        eu-west-1                               \
+  response.json                                           \
+> request.json                                            \
+
+# show migration output
+jq -s add *.json | jq -re '
+  if .FunctionError then
+    .FunctionError, .errorMessage, false
+  else
+    .stdout, .stderr
+  end'
+
+exit $?
