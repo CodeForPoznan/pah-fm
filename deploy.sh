@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # build and push images
-echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+printenv DOCKER_PASSWORD | docker login --username "$DOCKER_USERNAME" --password-stdin
 docker build -t codeforpoznan/pah-fm-frontend:latest frontend
 docker build -t codeforpoznan/pah-fm-backend:latest  backend
 docker push codeforpoznan/pah-fm-frontend
@@ -16,9 +16,9 @@ aws cloudfront create-invalidation --paths "/*" --distribution-id E2ESZ1QPNV00X
 # bundle application
 pip install --quiet -r backend/requirements/base.txt --target packages
 (cd packages && rm -r psycopg2 && svn checkout https://github.com/jkehler/awslambda-psycopg2/trunk/psycopg2-3.6 && mv psycopg2-3.6 psycopg2)
-cp packages/psycopg2/_psycopg*.so packages/psycopg2/_psycopg.so # hotfix
-(cd packages && rm -r *-info && zip -qgr9 ../lambda.zip .)
-(cd backend  && rm -r static && zip -qgr9 ../lambda.zip .)
+(cd packages && cp psycopg2/_psycopg*.so psycopg2/_psycopg.so) # hotfix
+(cd packages && rm -rf *-info && zip -qgr9 ../lambda.zip .)
+(cd backend  && rm -rf static && zip -qgr9 ../lambda.zip .)
 aws s3 cp lambda.zip s3://codeforpoznan-lambdas/dev_pah_fm.zip
 
 # refresh lambdas
