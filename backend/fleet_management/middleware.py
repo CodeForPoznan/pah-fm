@@ -9,8 +9,7 @@ class UpdateLastSeenMiddleware:
 
     def __call__(self, request):
         response = self.get_response(request)
-
-        if hasattr(request, 'user'):
+        if request.user.is_authenticated:
             user = User.objects.get(id=request.user.id)
             user.last_seen = timezone.now()
             user.save()
