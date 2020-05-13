@@ -7,14 +7,16 @@ Vue.use(VueI18n);
 export const GB = 'GB';
 export const PL = 'PL';
 export const UA = 'UA';
+export const SO = 'SO';
 
 export const languages = {
   [GB]: 'gb',
   [PL]: 'pl',
   [UA]: 'ua',
+  [SO]: 'so',
 };
 
-export const languagesOrder = ['pl', 'gb', 'ua'];
+export const languagesOrder = ['pl', 'gb', 'ua', 'so'];
 
 const locale = languages[GB];
 const fallbackLocale = languages[GB];
