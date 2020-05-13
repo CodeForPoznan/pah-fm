@@ -12,7 +12,7 @@ import {
   UNSYNCHRONISED_DRIVES,
 } from './constants';
 
-import { LOGIN as SESSION_LOGIN } from './modules/session';
+import { LOGIN as SESSION_LOGIN, SET_TOKEN } from './modules/session';
 
 export const FETCH_USER = 'FETCH_USER';
 export const LOGIN = 'LOGIN';
@@ -53,7 +53,7 @@ export const actions = {
 
   [LOGOUT]({ commit }) {
     commit(mutations.SET_USER, null);
-    deleteStorageData();
+    commit(`session/${SET_TOKEN}`, null);
   },
 
   [SUBMIT]({ commit, dispatch }, { form }) {
