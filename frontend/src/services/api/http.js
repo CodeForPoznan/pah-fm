@@ -1,4 +1,5 @@
-import { getAuthHeader } from './auth';
+import store from '../../store';
+import { AUTH_HEADER } from '../../store/modules/session';
 
 export const apiUrl = process.env.VUE_APP_API_URL;
 const CONTENT_TYPE_JSON = 'application/json; charset=utf-8';
@@ -19,11 +20,11 @@ async function handleResponse(response) {
 
 function setAuthData(requestOptions, auth) {
   if (auth) {
-    const authHeader = getAuthHeader();
-    const headers = Object.assign({}, requestOptions.headers, authHeader);
-    return Object.assign({}, requestOptions, { headers });
+    const authHeader = store.getters[`session/${AUTH_HEADER}`];
+    const headers = { ...requestOptions.headers, ...authHeader };
+    return { ...requestOptions, headers };
   }
-  return Object.assign({}, requestOptions, { credentials: 'omit' });
+  return { ...requestOptions, credentials: 'omit' };
 }
 
 export function get(url, auth = true) {

@@ -1,5 +1,4 @@
 import { post } from '../services/api/http';
-import { login, saveToken, deleteStorageData } from '../services/api/auth';
 import { getMyself } from '../services/api/user';
 import * as mutations from './mutations';
 import { mapDrive } from './helpers';
@@ -12,6 +11,8 @@ import {
   SYNC_ITEM_FAILURE,
   UNSYNCHRONISED_DRIVES,
 } from './constants';
+
+import { LOGIN as SESSION_LOGIN } from './modules/session';
 
 export const FETCH_USER = 'FETCH_USER';
 export const LOGIN = 'LOGIN';
@@ -34,22 +35,20 @@ export const actions = {
     });
   },
 
-  [LOGIN]({ commit, dispatch }, { username, password }) {
+  async [LOGIN]({ commit, dispatch }, credentials) {
     commit(mutations.SET_LOGIN_PROGRESS, true);
-    login(username, password)
-      .then((token) => {
-        commit(mutations.SET_LOGIN_ERROR, null);
-        saveToken(token);
-        dispatch(FETCH_USER, {
-          callback: () => window.location.replace('/drive'),
-        });
-      })
-      .catch(() => {
-        commit(mutations.SET_LOGIN_ERROR, i18n.tc('login.login_error'));
-      })
-      .finally(() => {
-        commit(mutations.SET_LOGIN_PROGRESS, false);
+    try {
+      await dispatch(`session/${SESSION_LOGIN}`, credentials);
+      commit(mutations.SET_LOGIN_ERROR, null);
+      dispatch(FETCH_USER, {
+        callback: () => window.location.replace('/drive'),
       });
+    } catch (err) {
+      console.error(err);
+      commit(mutations.SET_LOGIN_ERROR, i18n.tc('login.login_error'));
+    } finally {
+      commit(mutations.SET_LOGIN_PROGRESS, false);
+    }
   },
 
   [LOGOUT]({ commit }) {
@@ -78,9 +77,9 @@ export const actions = {
     }
 
     if (
-      state[UNSYNCHRONISED_DRIVES].length === 0 ||
-      !state.user ||
-      !navigator.onLine
+      state[UNSYNCHRONISED_DRIVES].length === 0
+      || !state.user
+      || !navigator.onLine
     ) {
       return;
     }

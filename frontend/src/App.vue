@@ -2,7 +2,7 @@
   <div id="app">
     <Status />
     <Header />
-    <sidebar :show="showMenu && isUserLoggedIn" />
+    <sidebar :show="showMenu && IS_USER_LOGGED_IN" />
     <div
       id="page-wrap"
       class="container"
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 
 import Header from './components/Header.vue';
 import Refresh from './components/Refresh.vue';
@@ -32,7 +32,7 @@ import Status from './components/Status.vue';
 import Sidebar from './components/Sidebar.vue';
 import store, { LANGUAGE } from './store';
 
-import { isUserLoggedIn } from './services/api/user';
+import { IS_USER_LOGGED_IN } from './store/modules/session';
 
 import { SYNC } from './store/constants';
 import { FETCH_USER } from './store/actions';
@@ -53,7 +53,7 @@ export default {
   },
   computed: {
     ...mapState([LANGUAGE]),
-    isUserLoggedIn,
+    ...mapGetters('session', [IS_USER_LOGGED_IN]),
   },
   methods: {
     ...mapActions({
@@ -66,7 +66,7 @@ export default {
       /* eslint-disable-next-line no-underscore-dangle */
       this._i18n.locale = this.language;
     }
-    if (this.isUserLoggedIn) {
+    if (this[IS_USER_LOGGED_IN]) {
       this.sync();
       this.fetchUser();
     }
