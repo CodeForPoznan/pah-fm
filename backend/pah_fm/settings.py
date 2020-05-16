@@ -14,15 +14,13 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '52.232.62.212',
     '.pahfm.codeforpoznan.pl',
+    '.execute-api.eu-west-1.amazonaws.com',
 ]
 
 USE_X_FORWARDED_HOST = True
 
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_DOMAIN = BASE_URL
-
-if DEBUG:
-    ALLOWED_HOSTS = ['*']
 
 # Application definition
 
