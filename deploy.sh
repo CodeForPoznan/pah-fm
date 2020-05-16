@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # build and push images
-printenv DOCKER_PASSWORD | docker login --username "$DOCKER_USERNAME" --password-stdin
+printenv DOCKER_PASSWORD | docker login -u "$DOCKER_USERNAME" --password-stdin
 docker build -t codeforpoznan/pah-fm-frontend:latest frontend
 docker build -t codeforpoznan/pah-fm-backend:latest  backend
 docker push codeforpoznan/pah-fm-frontend
@@ -10,8 +10,8 @@ docker push codeforpoznan/pah-fm-backend
 # build and push statics
 (cd frontend && npm     run       build                    && cp -r dist   ../public)
 (cd backend  && python3 manage.py collectstatic --no-input && cp -r static ../public)
-aws s3         sync                public s3://codeforpoznan-public/dev_pah_fm
-aws cloudfront create-invalidation --paths "/*" --distribution-id E2ESZ1QPNV00X
+aws s3          sync    --quiet   public s3://codeforpoznan-public/dev_pah_fm
+aws cloudfront create-invalidation --paths "/*" --distribution-id EEQ58KIXKBEQ9
 
 # bundle application
 pip install --quiet -r backend/requirements/base.txt --target packages
@@ -44,7 +44,7 @@ aws lambda invoke                                         \
 > request.json                                            \
 
 # show migration output
-jq -s add *.json | jq -re '
+jq -s add ./*.json | jq -re '
   if .FunctionError then
     .FunctionError, .errorMessage, false
   else
