@@ -3,10 +3,13 @@ os:       linux
 dist:     bionic
 language: python
 python:   ["3.6"]
-cache:    pip
 services: docker
 addons:
   postgresql: "9.5"
+cache:
+  pip: true
+  directories:
+    - "$HOME/.npm"
 
 env:
   global:
@@ -16,7 +19,7 @@ env:
 
 install:
   # install dependencies
-  - (cd frontend && npm install --quiet)
+  - (cd frontend && npm ci      --quiet)
   - (cd backend  && pip install --quiet -r requirements/dev.txt)
 
   # prepare database
