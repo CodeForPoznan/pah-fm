@@ -14,7 +14,8 @@ django.setup()
 
 
 def api(event, context):
-    # event["headers"]["X-Forwarded-Host"] = "dev.pahfm.codeforpoznan.pl"
+    event["headers"]["X-Forwarded-Host"] = os.environ["BASE_URL"]
+    print('REQUEST: ', event)
     return handle_request(application, event, context)
 
 
