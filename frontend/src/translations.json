@@ -1,4 +1,97 @@
 {
+  "so": {
+    "common": {
+      "about": "Kusabsan",
+      "error": "Qalad",
+      "home": "Degel",
+      "intro": "Haya'da Polish Humanitarian Action waa haya'd madax banana oo ka holgasha wadanka Poland iyo wadamo kale.Hadafkedu waa inay \"dunida kadhigtaa  meel wanaagsan.\".",
+      "loading": "shaqeyn",
+      "login": "Gal",
+      "logout": "kabax",
+      "new_drive": "kudar safar cusub",
+      "confirm_drive": "xaqiji safarka",
+      "no": "Maya",
+      "page_not_found": "Boga aad radisay lamahelikaro.",
+      "please_correct_errors": "Fadlan sax qaladka:",
+      "drives": "Safarada",
+      "unexpected_error": "Qalad aan lafileyn, fadlan laxiriir mamulka",
+      "yes": "Haa",
+      "are_you_sure": "mahubtaa?",
+      "cancel": "kalabo",
+      "skip": "boodid"
+    },
+    "drive_form": {
+      "cars": "Gaariga xulo:",
+      "signature": "Saxiixa",
+      "date": "Taariiq:",
+      "description": "Faafahin:",
+      "distance_traveled": "masaafo lasafray {distance} km",
+      "drive_added_offline_notification": "Warbixinta safarka waxaa lagu daridonaa keydka onlineka kadib marki laguxariiro qadka internetka",
+      "drive_added_online_notification": "Kudarista safarka keydka onlineka ah walaguguleystay",
+      "drive_hash": "Lambarka safarka",
+      "ending_mileage": "Dhamaadka sacada KM:",
+      "end_location": "gobta safarka kudhamaday:",
+      "end_mileage_error": "Dhamaadka sacada KM wa qalad",
+      "fetching_cars_error": "Xulashada gawarida lagumaguuleysan",
+      "no_project_message": "malahan aqbaarta mashruuca",
+      "no_cars_message": "Wax gawari ah malahan",
+      "passenger": "Rakaab:",
+      "passenger_error": "Rakaab aya lobahanyahay",
+      "project": "Mashruuc",
+      "reset": "dib usax",
+      "start_location": "Goobta safarka kabilaabmo:",
+      "starting_mileage": "Bilawga sacada KM:",
+      "start_mileage_error": "Bilawga sacada KM wa qalad",
+      "submit": "Gudbi",
+      "validation_error": "ina {field} buxisid aya lobahanyahay"
+    },
+    "passenger_form": {
+      "hash": "kodhka darawalka",
+      "invalid_length": "Dheerirka kodhka darawalka kama dheerankaro 6 lambar"
+    },
+    "drives": {
+      "car": "gaariga lasocdo:",
+      "description": "Faafaahin:",
+      "ending_mileage": "Dhamaadka sacada KM:",
+      "from_to": "katagay {from} goobta safarka kuegyahay {destination}",
+      "no_driver_drives": "Wax safar ah kumakeedsano keydkaga onlineka. Makudari kartaa safar adigo kadoranayo xulashada lagusiye.",
+      "synced_drives": "Safaradi hore",
+      "project": "Mashruuc",
+      "starting_mileage": "Bilawga sacada KM:",
+      "unsynced_drives": "Safarada aan shaqeyneyn",
+      "total_mileage": "iskugeyta guud {total} km",
+      "unverified_drive": "Safarkan lamaxaqijin, Laxariir qofka PAH uxilsaran safarada inu xaliyo.",
+      "verified_drive": "Safarkan walaxaqijiye."
+    },
+    "header": {
+      "polish_humanitarian_action": "Polish Humanitarian Action"
+    },
+    "login": {
+      "login_error": "Kumadanguuleysan galida",
+      "password": "lambarka sirta",
+      "password_required": "lambar sireedka lobahanyahay",
+      "user": "Isticmalaha: %{username}",
+      "username": "Isticmalaha",
+      "username_required": "Isticmalaha aya lobahanyahay"
+    },
+    "logout": {
+      "thank_you": "Mahadsanid!",
+      "successfully_logged_out": "kabixista walaguguuleyste.",
+      "login_again": "Markale gal",
+      "offline_logout_warning": "Qadka kumajirtid, hadi aad kabaxdi, magalikartid ilaa aad qadka kasogaleysid markale.",
+      "logout_warning": "Waxaad kaliyo kusolabankartaa marka online noqotid!"
+    },
+    "refresh": {
+      "new_version": "Nooc cusub oo website ah ayad heli kartaa.",
+      "reload": "dib ugal"
+    },
+    "confirmation": {
+      "comment_label": "Fadlan kudar fikirkaga.",
+      "drive_ok_label": "Safarka miyu fiicnaa?",
+      "submission_success": "Xaqijintada waladiray. Mahadsanid!",
+      "token_inactive": "Linkigaga wukadhacay ama walaxaqijiye. Mahadsanid!"
+    }
+  },
   "ua": {
     "common": {
       "about": "Про",
