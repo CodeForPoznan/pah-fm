@@ -16,7 +16,9 @@ services:
 
   backend:
     networks: [pah]
-    image: codeforpoznan/pah-fm-backend
+    build:
+      context: ./backend
+    #image: codeforpoznan/pah-fm-backend
     command: bash docker-entrypoint.sh
     stdin_open: true
     tty: true
