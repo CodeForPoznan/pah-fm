@@ -32,7 +32,7 @@ import Status from './components/Status.vue';
 import Sidebar from './components/Sidebar.vue';
 import store, { LANGUAGE } from './store';
 
-import { IS_USER_LOGGED_IN } from './store/modules/session';
+import { IS_USER_LOGGED_IN } from './store/modules/http';
 
 import { SYNC } from './store/constants';
 import { FETCH_USER } from './store/actions';
@@ -53,7 +53,7 @@ export default {
   },
   computed: {
     ...mapState([LANGUAGE]),
-    ...mapGetters('session', [IS_USER_LOGGED_IN]),
+    ...mapGetters('http', [IS_USER_LOGGED_IN]),
   },
   methods: {
     ...mapActions({

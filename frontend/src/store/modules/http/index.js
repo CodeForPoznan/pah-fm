@@ -2,6 +2,27 @@ import jwtDecode from 'jwt-decode';
 
 import { post } from '../../../services/api/http';
 
+const apiUrl = process.env.VUE_APP_API_URL;
+const baseRequestOptions = {
+  headers: {
+    Accept: 'application/json; charset=utf-8'
+  }
+}
+
+async function handleResponse(response) {
+  try {
+    const message = await response.json();
+    if (response.status >= 200 && response.status < 300) {
+      return message;
+    }
+    // eslint-disable-next-line
+    return Promise.reject({ message, response });
+  } catch (err) {
+    // eslint-disable-next-line
+    return Promise.reject({ err, response });
+  }
+}
+
 export const TOKEN = 'TOKEN';
 
 const moduleState = {
@@ -22,6 +43,7 @@ const mutations = {
 
 export const LOGIN = 'LOGIN';
 export const GET_TOKEN = 'GET_TOKEN';
+export const GET = 'GET';
 
 const actions = {
   /**
@@ -45,13 +67,26 @@ const actions = {
     }
     return state[TOKEN];
   },
+  [GET]: ({ dispatch, getters }, { url, auth = true }) => {
+    let requestOptions = getters[AUTH_DATA]({ requestOptions: baseRequestOptions, auth });
+    return fetch(`${apiUrl}${url}`, requestOptions).then(handleResponse)
+  }
 
 };
 
 export const AUTH_HEADER = 'AUTH_HEADER';
+export const AUTH_DATA = 'AUTH_DATA';
 export const IS_USER_LOGGED_IN = 'IS_USER_LOGGED_IN';
 
 const getters = {
+  [AUTH_DATA]: (state, getters) => ({ requestOptions, auth }) => {
+  if (auth) {
+    const authHeader = getters[AUTH_HEADER];
+    const headers = { ...requestOptions.headers, ...authHeader };
+    return { ...requestOptions, headers };
+  }
+  return { ...requestOptions, credentials: 'omit' };
+  },
   [AUTH_HEADER]: state => (state[TOKEN] ? {
     Authorization: `JWT ${state[TOKEN]}` } : {}),
   [IS_USER_LOGGED_IN]: state => !!state[TOKEN],

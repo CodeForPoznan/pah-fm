@@ -19,7 +19,7 @@ import { totalMileageReducer, totalMileageFilter } from '../utils';
 
 // NEW MODULES - see https://github.com/CodeForPoznan/pah-fm/issues/421
 import data from './modules/data';
-import session from './modules/session';
+import http from './modules/http';
 
 export const USER = 'user';
 export const HASH = 'hash';
@@ -52,7 +52,7 @@ const store = new Vuex.Store({
   modules: {
     ...modules,
     data,
-    session,
+    http,
   },
   mutations,
   plugins: [
@@ -65,7 +65,7 @@ const store = new Vuex.Store({
         LANGUAGE,
         ...Object.values(namespaces),
         'data',
-        'session',
+        'http',
       ],
     }),
   ],

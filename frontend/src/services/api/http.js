@@ -1,5 +1,5 @@
 import store from '../../store';
-import { AUTH_HEADER } from '../../store/modules/session';
+import { AUTH_HEADER } from '../../store/modules/http';
 
 export const apiUrl = process.env.VUE_APP_API_URL;
 const CONTENT_TYPE_JSON = 'application/json; charset=utf-8';
@@ -20,7 +20,7 @@ async function handleResponse(response) {
 
 function setAuthData(requestOptions, auth) {
   if (auth) {
-    const authHeader = store.getters[`session/${AUTH_HEADER}`];
+    const authHeader = store.getters[`http/${AUTH_HEADER}`];
     const headers = { ...requestOptions.headers, ...authHeader };
     return { ...requestOptions, headers };
   }

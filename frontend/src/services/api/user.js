@@ -1,5 +1,6 @@
-import { get } from './http';
+import store from '../../store';
+import { GET } from '../../store/modules/http';
 
 export function getMyself() {
-  return get('users/me');
+  return store.dispatch(`http/${GET}`, { url: 'users/me' });
 }

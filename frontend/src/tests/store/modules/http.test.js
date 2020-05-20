@@ -1,10 +1,10 @@
-import session, { TOKEN, AUTH_HEADER } from '../../../store/modules/session';
+import http, { TOKEN, AUTH_HEADER } from '../../../store/modules/http';
 
-const { getters } = session;
+const { getters } = http;
 
 const exampleJWT = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImhlbGxvQGNvZGVmb3Jwb3puYW4ucGwiLCJleHAiOjE1OTE5ODIxMTYsImVtYWlsIjoiaGVsbG9AY29kZWZvcnBvem5hbi5wbCJ9.HeTCwtaVh8Ws0ZwMqVRpxJE5hdkgSrLcdlyghN9M9WI';
 
-describe('Session Module', () => {
+describe('HTTP Module', () => {
   it('AUTH_HEADER returns valid header object', () => {
     let state = {
       [TOKEN]: exampleJWT,
