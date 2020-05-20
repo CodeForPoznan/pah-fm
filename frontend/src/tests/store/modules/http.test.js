@@ -91,7 +91,6 @@ describe('HTTP Module', () => {
       expect(options.method).toBe(undefined);
       // Authorization header injected
       expect(options.headers.Authorization).toBe(`JWT ${exampleJWT}`);
-      // Content-Type is json
       return Promise.resolve({
         status: 200,
         json: async () => ({ data: 'Do. Or do not. There is no try.' }) });
