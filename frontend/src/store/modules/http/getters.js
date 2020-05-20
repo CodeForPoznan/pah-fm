@@ -7,7 +7,9 @@ export default {
   [AUTH_DATA]: state => ({ requestOptions, auth = true }) => {
     if (auth) {
       if (state[TOKEN]) {
-        const headers = { ...requestOptions.headers, Authorization: `JWT ${state[TOKEN]}` };
+        const authHeader = { Authorization: `JWT ${state[TOKEN]}` };
+        const headers = requestOptions.headers ?
+          { ...requestOptions.headers, ...authHeader } : authHeader;
         return { ...requestOptions, headers };
       }
       return requestOptions;

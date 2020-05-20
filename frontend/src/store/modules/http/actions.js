@@ -22,7 +22,7 @@ async function handleResponse(response) {
 }
 
 export const LOGIN = 'LOGIN';
-export const GET_TOKEN = 'GET_TOKEN';
+export const GET_AUTH_HEADER = 'GET_AUTH_HEADER';
 export const GET = 'GET';
 export const POST = 'POST';
 
@@ -36,28 +36,27 @@ export default {
     const { token } = await dispatch(POST, { url: 'api-token-auth/', payload: credentials, auth: false });
     commit(SET_TOKEN, token);
   },
-  [GET_TOKEN]: ({ state, commit }) => {
+  [GET_AUTH_HEADER]: ({ state, commit, getters }, payload) => {
     if (state[TOKEN]) {
       const now = Math.floor(Date.now() / 1000);
       const decodedToken = jwtDecode(state[TOKEN]);
       if (decodedToken.exp < now) {
         console.debug('Expired token.');
         commit(SET_TOKEN, null);
-        return null;
       }
     }
-    return state[TOKEN];
+    return getters[AUTH_DATA](payload);
   },
-  [GET]: ({ getters }, { url, auth = true }) => {
+  [GET]: ({ dispatch }, { url, auth = true }) => {
     let requestOptions = {
       headers: {
         Accept: CONTENT_TYPE_JSON,
       },
     };
-    requestOptions = getters[AUTH_DATA]({ requestOptions, auth });
+    requestOptions = dispatch(GET_AUTH_HEADER, { requestOptions, auth });
     return fetch(`${apiUrl}${url}`, requestOptions).then(handleResponse);
   },
-  [POST]: ({ getters }, { url, payload, auth = true }) => {
+  [POST]: ({ dispatch }, { url, payload, auth = true }) => {
     let requestOptions = {
       method: 'POST',
       body: JSON.stringify(payload),
@@ -66,7 +65,7 @@ export default {
         'Content-Type': CONTENT_TYPE_JSON,
       },
     };
-    requestOptions = getters[AUTH_DATA]({ requestOptions, auth });
+    requestOptions = dispatch(GET_AUTH_HEADER, { requestOptions, auth });
     return fetch(`${apiUrl}${url}`, requestOptions).then(handleResponse);
   },
 };
