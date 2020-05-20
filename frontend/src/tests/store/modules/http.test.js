@@ -10,8 +10,8 @@ const exampleJWT = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2V
 
 describe('HTTP Module', () => {
   const state = {
-      [TOKEN]: exampleJWT,
-    };
+    [TOKEN]: exampleJWT,
+  };
 
   it('AUTH_DATA returns valid options object', () => {
     let requestOptions = {
@@ -40,19 +40,19 @@ describe('HTTP Module', () => {
 
     delete requestOptions.headers;
 
-    state = {
+    const emptyState = {
       [TOKEN]: null,
     };
 
     // eslint-disable-next-line
-    headers = getters[AUTH_DATA](state)({ requestOptions }).headers;
+    headers = getters[AUTH_DATA](emptyState)({ requestOptions }).headers;
     expect(headers).toBe(undefined);
   });
 
   it('POST runs fetch', () => {
     const mockDispatch = jest.fn((type, payload) => {
       expect(type).toBe(GET_AUTH_HEADER);
-      return getters[AUTH_DATA](state)(payload)
+      return getters[AUTH_DATA](state)(payload);
     });
 
     const payload = { dummy: 'payload' };
@@ -84,14 +84,12 @@ describe('HTTP Module', () => {
       return getters[AUTH_DATA](state)(payload);
     });
 
-    const payload = { dummy: 'payload' };
-
     global.fetch = jest.fn((url, options) => {
       // Use default method
       expect(options.method).toBe(undefined);
       // Authorization header injected
       expect(options.headers.Authorization).toBe(`JWT ${exampleJWT}`);
-      return new Promise((res) => res({
+      return new Promise(res => res({
         status: 200,
         json: async () => ({ data: 'Do. Or do not. There is no try.' }) }));
     });
@@ -118,23 +116,22 @@ describe('HTTP Module', () => {
 
     const authHeader = actions[GET_AUTH_HEADER]({ state, getters: mockGetters, commit }, payload);
     expect.extend({
-      toBeOneOf(received, alternatives) {
-        received = JSON.stringify(received)
-        alternatives = alternatives.map(a => JSON.stringify(a))
-        const pass = alternatives.indexOf(received) !== -1
+      toBeOneOf(r, a) {
+        const received = JSON.stringify(r);
+        const alternatives = a.map(value => JSON.stringify(value));
+        const pass = alternatives.indexOf(received) !== -1;
         if (pass) {
           return {
             message: () => `expected ${received} not to be one of ${alternatives}`,
-            pass: true
-          }
-        } else {
-          return {
-            message: () => `expected ${received} to be one of ${alternatives}`,
-            pass: false
-          }
+            pass: true,
+          };
         }
-      }
-    })
+        return {
+          message: () => `expected ${received} to be one of ${alternatives}`,
+          pass: false,
+        };
+      },
+    });
     // Since exampleJWT will expire at some time
     expect(authHeader.headers).toBeOneOf([
       {
