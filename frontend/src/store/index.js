@@ -17,6 +17,9 @@ import { mutations, SET_IS_CONNECTED } from './mutations';
 import { modules } from './modules';
 import { totalMileageReducer, totalMileageFilter } from '../utils';
 
+// NEW MODULES - see https://github.com/CodeForPoznan/pah-fm/issues/421
+import data from './modules/data';
+
 export const USER = 'user';
 export const HASH = 'hash';
 export const DRIVE_HASH = 'drive_hash';
@@ -30,8 +33,6 @@ Vue.use(Vuex);
 
 const initialState = {
   [USER]: null,
-  [DRIVE_HASH]: null,
-  [DRIVE_FORM]: null,
   [HASH]: null,
   [INCORRECT_DRIVE_ENTRIES]: [],
   [UNSYNCHRONISED_DRIVES]: [],
@@ -47,7 +48,10 @@ const store = new Vuex.Store({
   strict: debug,
   state: initialState,
   actions,
-  modules,
+  modules: {
+    ...modules,
+    data,
+  },
   mutations,
   plugins: [
     createPersistedState({
@@ -58,6 +62,7 @@ const store = new Vuex.Store({
         CARS,
         LANGUAGE,
         ...Object.values(namespaces),
+        'data',
       ],
     }),
   ],

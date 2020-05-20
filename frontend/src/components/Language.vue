@@ -1,8 +1,6 @@
 <template>
   <div>
-    <ul
-      class="lang"
-    >
+    <ul class="lang">
       <li
         v-for="language in languagesOrder"
         :key="language"
@@ -18,9 +16,8 @@
 </template>
 
 <script>
-
 import { mapActions } from 'vuex';
-import { languagesOrder } from '../main';
+import { languagesOrder } from '../services/lang';
 import * as actions from '../store/actions';
 
 export default {

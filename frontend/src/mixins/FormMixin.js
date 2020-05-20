@@ -1,24 +1,7 @@
-import { splitCamelCase } from '../services/splitCamelCase';
-import { getToday } from '../services/time';
-import { getItem, removeItem } from '../services/localStore';
+import { renderErrorMessage } from '../services/errorMessages';
 
-function isValid(requiredFields, form, field) {
-  return (
-    requiredFields.includes(field) &&
-    form[field] &&
-    !!String(form[field]).trim()
-  );
-}
-
-function loadStateFromStorage(formId) {
-  const storageState = getItem(formId);
-  if (storageState && !storageState.date) {
-    return {
-      ...storageState,
-      date: getToday(),
-    };
-  }
-  return storageState;
+export function isValid(field) {
+  return field && !!String(field).trim();
 }
 
 export default {
@@ -30,14 +13,6 @@ export default {
     };
   },
   methods: {
-    getErrorMessage(field) {
-      return this.$t('drive_form.validation_error', {
-        field: splitCamelCase(field),
-      });
-    },
-    syncToLocalStorage() {
-      localStorage.setItem(this.formId, JSON.stringify(this.form));
-    },
     reset() {
       this.clearStorage();
       this.loadFormData();
@@ -52,10 +27,10 @@ export default {
       this.listOfErrors = [];
 
       this.listOfErrors = this.requiredFields
-        .filter(field => !isValid(this.requiredFields, this.form, field))
+        .filter(field => !isValid(this.form[field]))
         .map((field) => {
           this.isInvalid[field] = true;
-          return this.getErrorMessage(field);
+          return renderErrorMessage(field);
         });
 
       if (validator) {
@@ -63,10 +38,8 @@ export default {
       }
     },
     loadFormData() {
-      this.form = loadStateFromStorage(this.formId) || { ...this.initialData };
+      this.form = { ...this.initialData };
     },
-    clearStorage() {
-      removeItem(this.formId);
-    },
+    clearStorage() {},
   },
 };

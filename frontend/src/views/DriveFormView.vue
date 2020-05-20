@@ -1,7 +1,7 @@
 <template>
   <main-form
     @submit="handleSubmit"
-    @reset="reset"
+    @reset="CLEAR_NEW_DRIVE_FORM"
     resetable
     :title="$t('common.new_drive')"
     :list-of-errors="listOfErrors"
@@ -10,8 +10,7 @@
       <label>{{ $t('drive_form.date') }}</label>
       <input
         type="date"
-        @change="syncToLocalStorage"
-        v-model="form.date"
+        v-model="date"
         name="date"
         :max="currentDate"
         class="form-control"
@@ -23,8 +22,7 @@
       <label>{{ $t('drive_form.start_location') }}</label>
       <input
         type="text"
-        v-model="form.startLocation"
-        @input="syncToLocalStorage"
+        v-model="startLocation"
         name="startLocation"
         maxlength="100"
         class="form-control"
@@ -41,9 +39,8 @@
                       && Number(event.key) <= 9
                       && event.target.value < 20000000)"
         type="number"
-        v-model.number="form.startMileage"
+        v-model.number="startMileage"
         name="startMileage"
-        @input="syncToLocalStorage"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['startMileage'] }"
       >
@@ -94,9 +91,8 @@
     <div class="form-group">
       <label>{{ $t('drive_form.passenger') }}</label>
       <v-select
-        v-model="form.passenger"
+        v-model="passenger"
         name="passenger"
-        @input="syncToLocalStorage"
         class="form-control select"
         :class="{ 'is-invalid': isInvalid['passenger'] }"
         label="text"
@@ -109,8 +105,7 @@
       <label>{{ $t('drive_form.description') }}</label>
       <input
         type="text"
-        v-model="form.description"
-        @input="syncToLocalStorage"
+        v-model="description"
         name="description"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['description'] }"
@@ -122,8 +117,7 @@
       <input
         type="text"
         maxlength="100"
-        @input="syncToLocalStorage"
-        v-model="form.endLocation"
+        v-model="endLocation"
         name="endLocation"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['endLocation'] }"
@@ -139,8 +133,7 @@
                       && Number(event.key) <= 9
                       && event.target.value < 20000000)"
         type="number"
-        v-model.number="form.endMileage"
-        @input="syncToLocalStorage"
+        v-model.number="endMileage"
         name="endMileage"
         class="form-control"
         :class="{ 'is-invalid': isInvalid['endMileage'] }"
@@ -153,88 +146,84 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex';
-import vSelect from 'vue-select';
+import { mapActions, mapMutations, mapGetters, mapState } from 'vuex';
+import { createHelpers } from 'vuex-map-fields';
 
+import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 
 import MainForm from '../components/MainForm.vue';
-import FormMixin from '../mixins/FormMixin';
 import GroupGuardMixin from '../mixins/GroupGuardMixin';
-import { driveVerifyRoute } from '../router/routes';
+import { renderErrorMessage } from '../services/errorMessages';
 
-import { USER } from '../store';
-import { SET_DRIVE_FORM } from '../store/actions';
+import { driveVerifyRoute } from '../router/routes';
 
 import {
   namespaces,
   actions as apiActions,
   IS_ONLINE,
 } from '../store/constants';
-import { FORM_STATE } from '../constants/form';
-import { getToday } from '../services/time';
 
-const initialFormData = {
-  date: getToday(),
-  car: '',
-  description: '',
-  startMileage: '',
-  endMileage: '',
-  project: '',
-  passenger: '',
-  startLocation: '',
-  endLocation: '',
-  signature: '',
-};
+import {
+  newDriveFormInitialState,
+  NEW_DRIVE_FORM,
+  NEW_DRIVE_FORM_EMPTY_FIELDS,
+  CLEAR_NEW_DRIVE_FORM,
+} from '../store/modules/data';
 
-const requiredFields = [
-  'date',
-  'car',
-  'project',
-  'startMileage',
-  'endMileage',
-  'startLocation',
-  'endLocation',
-  'passenger',
-];
+const { mapFields } = createHelpers({
+  getterType: 'data/getField',
+  mutationType: 'data/updateField',
+});
 
 export default {
   name: 'DriveFormView',
   components: { vSelect, MainForm },
-  mixins: [FormMixin, GroupGuardMixin],
-  mounted() {
-    this.loadFormData(initialFormData);
-  },
+  mixins: [GroupGuardMixin],
   data() {
     return {
-      formId: FORM_STATE,
-      requiredFields,
-      initialData: initialFormData,
-      confirmationOnline: false,
-      confirmationOffline: false,
       currentDate: new Date().toISOString().split('T')[0],
+      listOfErrors: [],
+      isInvalid: {},
     };
   },
   methods: {
-    ...mapActions([SET_DRIVE_FORM]),
     ...mapActions(namespaces.cars, [apiActions.fetchCars]),
     ...mapActions(namespaces.passengers, [apiActions.fetchPassengers]),
     ...mapActions(namespaces.projects, [apiActions.fetchProjects]),
+    ...mapMutations('data', [CLEAR_NEW_DRIVE_FORM]),
     handleSubmit() {
-      this.validateForm(this.validator);
-      if (this.listOfErrors.length === 0) {
-        this[SET_DRIVE_FORM](this.form);
+      const emptyFields = this[NEW_DRIVE_FORM_EMPTY_FIELDS];
+      this.resetInvalidLabels();
+      const mileageErrors = this.checkMileage();
+      const noErrors = emptyFields.length === 0 && mileageErrors.length === 0;
+
+      if (noErrors) {
         this.$router.push(driveVerifyRoute);
+      } else {
+        emptyFields.forEach((field) => {
+          this.isInvalid[field] = true;
+        });
+        this.listOfErrors = emptyFields
+          .map(field => renderErrorMessage(field))
+          .concat(mileageErrors);
       }
     },
-    validator(data) {
-      const { startMileage, endMileage } = data;
+    checkMileage() {
+      const { startMileage, endMileage } = this;
       if (!!startMileage && !!endMileage && startMileage >= endMileage) {
         const errorStartMileage = this.$t('drive_form.start_mileage_error');
         const errorEndMileage = this.$t('drive_form.end_mileage_error');
+        this.isInvalid.startMileage = true;
+        this.isInvalid.endMileage = true;
         return [errorStartMileage, errorEndMileage];
       }
       return [];
+    },
+    resetInvalidLabels() {
+      Object.keys(this.isInvalid).forEach((field) => {
+        this.isInvalid[field] = false;
+      });
     },
   },
   created() {
@@ -243,6 +232,8 @@ export default {
     this[apiActions.fetchProjects]();
   },
   computed: {
+    // Mapping form fields with vuex store using vuex-map-fields package
+    ...mapFields(Object.keys(newDriveFormInitialState).map(field => `${NEW_DRIVE_FORM}.${field}`)),
     ...mapState(namespaces.cars, {
       cars: state => state,
     }),
@@ -258,10 +249,10 @@ export default {
           rsaPubE: p.rsaPubE,
         })),
     }),
-    ...mapState([USER]),
     ...mapGetters([IS_ONLINE]),
+    ...mapGetters('data', [NEW_DRIVE_FORM_EMPTY_FIELDS]),
     distance() {
-      const distance = this.form.endMileage - this.form.startMileage;
+      const distance = this.endMileage - this.startMileage;
       return distance > 0 ? distance : 0;
     },
   },

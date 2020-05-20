@@ -8,7 +8,7 @@ import {
   SET_ERRORS,
 } from './constants';
 import { get } from '../services/api/http';
-import { i18n } from '../main';
+import i18n from '../services/lang';
 
 const defaultState = {
   [LOADING]: false,
@@ -62,10 +62,4 @@ const mapDrive = drive => ({
   passengers: drive.passengers.map(makeDomainItem),
 });
 
-
-export {
-  mapDrive,
-  makeDomainItem,
-  makeModule,
-  makeFetchData,
-};
+export { mapDrive, makeDomainItem, makeModule, makeFetchData };
