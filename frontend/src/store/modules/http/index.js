@@ -1,13 +1,12 @@
 import jwtDecode from 'jwt-decode';
 
-import { post } from '../../../services/api/http';
-
 const apiUrl = process.env.VUE_APP_API_URL;
+const CONTENT_TYPE_JSON = 'application/json; charset=utf-8';
 const baseRequestOptions = {
   headers: {
-    Accept: 'application/json; charset=utf-8'
-  }
-}
+    Accept: CONTENT_TYPE_JSON,
+  },
+};
 
 async function handleResponse(response) {
   try {
@@ -29,6 +28,26 @@ const moduleState = {
   [TOKEN]: null,
 };
 
+
+export const AUTH_HEADER = 'AUTH_HEADER';
+export const AUTH_DATA = 'AUTH_DATA';
+export const IS_USER_LOGGED_IN = 'IS_USER_LOGGED_IN';
+
+const moduleGetters = {
+  [AUTH_DATA]: (state, getters) => ({ requestOptions, auth }) => {
+    if (auth) {
+      const authHeader = getters[AUTH_HEADER];
+      const headers = { ...requestOptions.headers, ...authHeader };
+      return { ...requestOptions, headers };
+    }
+    return { ...requestOptions, credentials: 'omit' };
+  },
+  [AUTH_HEADER]: state => (state[TOKEN] ? {
+    Authorization: `JWT ${state[TOKEN]}` } : {}),
+  [IS_USER_LOGGED_IN]: state => !!state[TOKEN],
+};
+
+
 export const SET_TOKEN = 'SET_TOKEN';
 export const CLEAR_SESSION = 'CLEAR_SESSION';
 
@@ -44,6 +63,7 @@ const mutations = {
 export const LOGIN = 'LOGIN';
 export const GET_TOKEN = 'GET_TOKEN';
 export const GET = 'GET';
+export const POST = 'POST';
 
 const actions = {
   /**
@@ -51,8 +71,8 @@ const actions = {
      * @arg {string} credentials.username
      * @arg {string} credentials.password
      */
-  [LOGIN]: async ({ commit }, credentials) => {
-    const { token } = await post('api-token-auth/', credentials, false);
+  [LOGIN]: async ({ dispatch, commit }, credentials) => {
+    const { token } = await dispatch(POST, { url: 'api-token-auth/', payload: credentials, auth: false });
     commit(SET_TOKEN, token);
   },
   [GET_TOKEN]: ({ state, commit }) => {
@@ -67,35 +87,30 @@ const actions = {
     }
     return state[TOKEN];
   },
-  [GET]: ({ dispatch, getters }, { url, auth = true }) => {
-    let requestOptions = getters[AUTH_DATA]({ requestOptions: baseRequestOptions, auth });
-    return fetch(`${apiUrl}${url}`, requestOptions).then(handleResponse)
-  }
-
-};
-
-export const AUTH_HEADER = 'AUTH_HEADER';
-export const AUTH_DATA = 'AUTH_DATA';
-export const IS_USER_LOGGED_IN = 'IS_USER_LOGGED_IN';
-
-const getters = {
-  [AUTH_DATA]: (state, getters) => ({ requestOptions, auth }) => {
-  if (auth) {
-    const authHeader = getters[AUTH_HEADER];
-    const headers = { ...requestOptions.headers, ...authHeader };
-    return { ...requestOptions, headers };
-  }
-  return { ...requestOptions, credentials: 'omit' };
+  [GET]: ({ getters }, { url, auth = true }) => {
+    const requestOptions = getters[AUTH_DATA]({ requestOptions: baseRequestOptions, auth });
+    return fetch(`${apiUrl}${url}`, requestOptions).then(handleResponse);
   },
-  [AUTH_HEADER]: state => (state[TOKEN] ? {
-    Authorization: `JWT ${state[TOKEN]}` } : {}),
-  [IS_USER_LOGGED_IN]: state => !!state[TOKEN],
+  [POST]: ({ getters }, { url, payload, auth = true }) => {
+    let requestOptions = {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      mode: 'cors',
+      headers: {
+        'Content-Type': CONTENT_TYPE_JSON,
+      },
+    };
+    requestOptions = getters[AUTH_DATA]({ requestOptions, auth });
+    return fetch(`${apiUrl}${url}`, requestOptions).then(handleResponse);
+  },
+
 };
+
 
 export default {
   namespaced: true,
   state: moduleState,
   mutations,
   actions,
-  getters,
+  getters: moduleGetters,
 };

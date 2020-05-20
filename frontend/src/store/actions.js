@@ -1,4 +1,3 @@
-import { post } from '../services/api/http';
 import { getMyself } from '../services/api/user';
 import * as mutations from './mutations';
 import { mapDrive } from './helpers';
@@ -12,7 +11,7 @@ import {
   UNSYNCHRONISED_DRIVES,
 } from './constants';
 
-import { LOGIN as SESSION_LOGIN, SET_TOKEN } from './modules/http';
+import { LOGIN as SESSION_LOGIN, SET_TOKEN, POST } from './modules/http';
 
 export const FETCH_USER = 'FETCH_USER';
 export const LOGIN = 'LOGIN';
@@ -88,7 +87,7 @@ export const actions = {
     const { timestamp } = mappedDrive;
 
     try {
-      await post('drives', mappedDrive);
+      await dispatch(`http/${POST}`, { url: 'drives', payload: mappedDrive });
       commit(SYNC_ITEM_SUCCESS, timestamp);
       dispatch(SYNC);
     } catch (e) {
