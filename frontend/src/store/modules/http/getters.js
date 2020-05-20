@@ -1,4 +1,4 @@
-import { TOKEN } from './state'
+import { TOKEN } from './state';
 
 export const AUTH_HEADER = 'AUTH_HEADER';
 export const AUTH_DATA = 'AUTH_DATA';

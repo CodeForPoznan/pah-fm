@@ -50,10 +50,10 @@ export default {
   },
   [GET]: ({ getters }, { url, auth = true }) => {
     let requestOptions = {
-        headers: {
-            Accept: CONTENT_TYPE_JSON
-        }
-    }
+      headers: {
+        Accept: CONTENT_TYPE_JSON,
+      },
+    };
     requestOptions = getters[AUTH_DATA]({ requestOptions, auth });
     return fetch(`${apiUrl}${url}`, requestOptions).then(handleResponse);
   },

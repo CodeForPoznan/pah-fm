@@ -12,7 +12,7 @@ import {
 } from './constants';
 
 import { LOGIN as HTTP_LOGIN, POST } from './modules/http/actions';
-import { SET_TOKEN } from './modules/http/mutations'
+import { SET_TOKEN } from './modules/http/mutations';
 
 export const FETCH_USER = 'FETCH_USER';
 export const LOGIN = 'LOGIN';

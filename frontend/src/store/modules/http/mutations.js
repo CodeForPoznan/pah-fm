@@ -1,4 +1,4 @@
-import { TOKEN } from './state'
+import { TOKEN } from './state';
 
 export const SET_TOKEN = 'SET_TOKEN';
 export const CLEAR_SESSION = 'CLEAR_SESSION';
