@@ -25,7 +25,9 @@ async function handleResponse(response) {
 export const TOKEN = 'TOKEN';
 
 const moduleState = {
-  [TOKEN]: null,
+  // LEGACY SUPPORT
+  // After merge to new version remove localStorage
+  [TOKEN]: localStorage.getItem('jwt') || null,
 };
 
 
