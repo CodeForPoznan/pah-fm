@@ -32,7 +32,7 @@ import Status from './components/Status.vue';
 import Sidebar from './components/Sidebar.vue';
 import store, { LANGUAGE } from './store';
 
-import { IS_USER_LOGGED_IN } from './store/modules/http';
+import { IS_USER_LOGGED_IN } from './store/modules/http/getters';
 
 import { SYNC } from './store/constants';
 import { FETCH_USER } from './store/actions';

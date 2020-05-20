@@ -11,7 +11,8 @@ import {
   UNSYNCHRONISED_DRIVES,
 } from './constants';
 
-import { LOGIN as SESSION_LOGIN, SET_TOKEN, POST } from './modules/http';
+import { LOGIN as HTTP_LOGIN, POST } from './modules/http/actions';
+import { SET_TOKEN } from './modules/http/mutations'
 
 export const FETCH_USER = 'FETCH_USER';
 export const LOGIN = 'LOGIN';
@@ -37,7 +38,7 @@ export const actions = {
   async [LOGIN]({ commit, dispatch }, credentials) {
     commit(mutations.SET_LOGIN_PROGRESS, true);
     try {
-      await dispatch(`http/${SESSION_LOGIN}`, credentials);
+      await dispatch(`http/${HTTP_LOGIN}`, credentials);
       commit(mutations.SET_LOGIN_ERROR, null);
       dispatch(FETCH_USER, {
         callback: () => window.location.replace('/drive'),

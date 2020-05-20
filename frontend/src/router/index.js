@@ -4,7 +4,7 @@ import Router from 'vue-router';
 import flatMap from 'array.prototype.flatmap';
 
 import store from '../store';
-import { IS_USER_LOGGED_IN } from '../store/modules/http';
+import { IS_USER_LOGGED_IN } from '../store/modules/http/getters';
 
 import routes, {
   openRoutes,

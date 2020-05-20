@@ -7,7 +7,7 @@ import {
   SET_DATA,
   SET_ERRORS,
 } from './constants';
-import { GET } from '../store/modules/http';
+import { GET } from '../store/modules/http/actions';
 import i18n from '../services/lang';
 
 const defaultState = {

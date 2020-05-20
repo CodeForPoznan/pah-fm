@@ -1,4 +1,6 @@
-import http, { TOKEN, AUTH_HEADER } from '../../../store/modules/http';
+import http from '../../../store/modules/http';
+import { TOKEN } from '../../../store/modules/http/state';
+import { AUTH_HEADER } from '../../../store/modules/http/getters';
 
 const { getters } = http;
 
