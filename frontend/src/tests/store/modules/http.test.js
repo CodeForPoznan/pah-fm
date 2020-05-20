@@ -17,6 +17,7 @@ describe('HTTP Module', () => {
       method: 'POST',
     };
 
+    // eslint-disable-next-line
     let headers = getters[AUTH_DATA](state)({ requestOptions }).headers;
     expect(headers).toStrictEqual({
       Authorization: `JWT ${exampleJWT}`,
@@ -29,6 +30,7 @@ describe('HTTP Module', () => {
       },
     };
 
+    // eslint-disable-next-line
     headers = getters[AUTH_DATA](state)({ requestOptions }).headers;
     expect(headers).toStrictEqual({
       Accept: 'application/json',
@@ -41,6 +43,7 @@ describe('HTTP Module', () => {
       [TOKEN]: null,
     };
 
+    // eslint-disable-next-line
     headers = getters[AUTH_DATA](state)({ requestOptions }).headers;
     expect(headers).toBe(undefined);
   });
@@ -64,7 +67,7 @@ describe('HTTP Module', () => {
       // Payload is stringified
       expect(typeof options.body).toBe('string');
       // Content-Type is json
-      expect(options.headers['Content-Type']).toBe('application/json; charset=utf-8')
+      expect(options.headers['Content-Type']).toBe('application/json; charset=utf-8');
       return Promise.resolve({
         status: 200,
         json: async () => ({ data: 'Do. Or do not. There is no try.' }) });
@@ -101,5 +104,5 @@ describe('HTTP Module', () => {
         expect(response.data).toBe('Do. Or do not. There is no try.');
       });
     expect(fetch.mock.calls.length).toBe(1);
-  })
+  });
 });
