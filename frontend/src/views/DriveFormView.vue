@@ -49,8 +49,7 @@
       <label>{{ $t('drive_form.project') }}</label>
       <v-select
         v-if="projects.data"
-        @input="syncToLocalStorage"
-        v-model="form.project"
+        v-model="project"
         name="project"
         class="form-control select"
         :class="{ 'is-invalid': isInvalid['project'] }"
@@ -71,8 +70,7 @@
       <label>{{ $t('drive_form.cars') }}</label>
       <v-select
         v-if="cars.data"
-        v-model="form.car"
-        @input="syncToLocalStorage"
+        v-model="car"
         name="car"
         class="form-control select"
         :class="{ 'is-invalid': isInvalid['car'] }"
