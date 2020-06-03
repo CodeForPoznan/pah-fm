@@ -57,7 +57,6 @@
         :reduce="(project) => project.id"
         :options="projects.data"
       />
-      <p>{{ project }} </p>
       <p
         class="font-weight-bold"
         v-if="!cars.data"
