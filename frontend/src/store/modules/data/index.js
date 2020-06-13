@@ -40,6 +40,7 @@ const mutations = {
   [CLEAR_NEW_DRIVE_FORM]: state =>
     Object.assign(state, {
       [NEW_DRIVE_FORM]: {
+	...newDriveFormInitialState,
         date: getToday(),
         car: state[NEW_DRIVE_FORM].car,
       },
