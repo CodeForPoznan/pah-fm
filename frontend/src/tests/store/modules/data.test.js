@@ -27,6 +27,13 @@ describe('Data Module', () => {
     expect(state[NEW_DRIVE_FORM]).toStrictEqual({
       date: getToday(),
       car: 4,
+      description: '',
+      startMileage: '',
+      endMileage: '',
+      project: '',
+      passenger: '',
+      startLocation: '',
+      endLocation: '',
     });
   });
 });
