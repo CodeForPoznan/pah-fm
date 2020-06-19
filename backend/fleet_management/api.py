@@ -12,6 +12,7 @@ from .serializers import (
 )
 from .constants import Groups
 
+
 class CurrentUserRetrieveView(views.APIView):
 
     def get(self, request):

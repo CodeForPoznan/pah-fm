@@ -1,60 +1,45 @@
-sudo: required
-services:
-  - docker
+version:  ~> 1.0
+os:       linux
+dist:     bionic
+language: python
+python:   ["3.6"]
+services: docker
 addons:
   postgresql: "9.5"
-language: python
-python:
-  - 3.6
+cache:
+  pip: true
+  directories:
+    - "$HOME/.npm"
+
 env:
   global:
-  - SECRET_KEY="TRAVIS-SECRET-KEY"
-  - secure: "FvksvizyP/p/ZmMD+Dq5STciE5EXAtPFMG4GI84QbQ7jcAFyIqSqxHAfhBpC4mW0Mu3Tv8Iz8/K24bcAL3AwKINKD3L+G7qing+y+/5XzGNudLMFNt9Ag+bm3o3KkbSVSGmH1zWccuE2SpFwFYT7MpBsvXIoYyeuesPpoUtr0SopYvBKXPOCxqNrC27tVWsND1AyM7T0+xmLye4S6s4cuDcIuzUw9XhIUK4tZdEPZkKODwjQ8aAIOHDWs0B8xiqe7+z4UlW6wewsVk9ZV5ij7RVuBcBUmLJn/RaT87TZ1fRE/s7eNP8sQGfFuU1gTYMw7Nj+/8kA8JjSegxhudaxZAVH6kQ321mEPGVhoZOhLV5/shBXYT39eI2vXtYigmXRz6RLZSvKjA/ZKRuYRxrg4KvdL1sdxcHgrznZN4UxkwdL4RZYUOgb0Hko/3ZLS4qOcPlEEF1LtZa3gqhmmgUQP0Z9qdVSemQYt2K9QFMF75Yy5mx/rRnEwVBOrlIsKZmULphOVakMSKzLlhatx28dFyO7wpMBbt2yzAX3Uw1UVzoI3v2WcDmdXjYwTSaCkpU8iBx5TA7NvkGG538L35ZI/TH04Osu33JYg/hIyVE/GjiD4vEmJo6Qcr/1pSE38stGVNDTqN6beOUUIgAQ9mBV4vDXwWvE8oVUE9I4qJYWKWU="
+    - SECRET_KEY="TRAVIS-SECRET-KEY"
+    - secure: "FvksvizyP/p/ZmMD+Dq5STciE5EXAtPFMG4GI84QbQ7jcAFyIqSqxHAfhBpC4mW0Mu3Tv8Iz8/K24bcAL3AwKINKD3L+G7qing+y+/5XzGNudLMFNt9Ag+bm3o3KkbSVSGmH1zWccuE2SpFwFYT7MpBsvXIoYyeuesPpoUtr0SopYvBKXPOCxqNrC27tVWsND1AyM7T0+xmLye4S6s4cuDcIuzUw9XhIUK4tZdEPZkKODwjQ8aAIOHDWs0B8xiqe7+z4UlW6wewsVk9ZV5ij7RVuBcBUmLJn/RaT87TZ1fRE/s7eNP8sQGfFuU1gTYMw7Nj+/8kA8JjSegxhudaxZAVH6kQ321mEPGVhoZOhLV5/shBXYT39eI2vXtYigmXRz6RLZSvKjA/ZKRuYRxrg4KvdL1sdxcHgrznZN4UxkwdL4RZYUOgb0Hko/3ZLS4qOcPlEEF1LtZa3gqhmmgUQP0Z9qdVSemQYt2K9QFMF75Yy5mx/rRnEwVBOrlIsKZmULphOVakMSKzLlhatx28dFyO7wpMBbt2yzAX3Uw1UVzoI3v2WcDmdXjYwTSaCkpU8iBx5TA7NvkGG538L35ZI/TH04Osu33JYg/hIyVE/GjiD4vEmJo6Qcr/1pSE38stGVNDTqN6beOUUIgAQ9mBV4vDXwWvE8oVUE9I4qJYWKWU="
+
+
 install:
-  - pip install awscli==1.18.9
-  - pip install -r backend/requirements/dev.txt
+  # install dependencies
+  - (cd frontend && npm ci      --quiet)
+  - (cd backend  && pip install --quiet -r requirements/dev.txt)
 
-  - nvm install 8.12.0
-  - cd frontend && npm install && cd -
-before_script:
-  - psql -c "CREATE USER \"pah-fm\" WITH PASSWORD 'pah-fm';" -U postgres
-  - psql -c "ALTER USER \"pah-fm\" CREATEDB;" -U postgres
+  # prepare database
+  - psql -U postgres -c "CREATE USER \"pah-fm\" WITH PASSWORD 'pah-fm';"
+  - psql -U postgres -c "ALTER  USER \"pah-fm\" CREATEDB;"
+
+
 script:
-  - cd backend
-  - flake8 backend --config=backend/.flake8
-  - python manage.py test
-  - cd ..
+  # lint and test frontend
+  - (cd frontend && npm run lint)
+  - (cd frontend && npm run test)
 
-  - cd frontend
-  - npm run lint
-  - npm run test
-  - cd ..
-after_success:
-  - |
-    if [ "$TRAVIS_REPO_SLUG" == "CodeForPoznan/pah-fm" ] &&
-       [ "$TRAVIS_BRANCH" == "develop" ] &&
-       [ "$TRAVIS_PULL_REQUEST" = false ];
-    then
-      docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD;
-      cd backend;
-      docker build -f Dockerfile -t codeforpoznan/pah-fm-backend:latest .;
-      docker push codeforpoznan/pah-fm-backend;
-      cd ../frontend;
-      docker build -f Dockerfile -t codeforpoznan/pah-fm-frontend:latest .;
-      docker push codeforpoznan/pah-fm-frontend;
-      cd ..;
+  # lint and test backend
+  - (cd backend  && flake8 .)
+  - (cd backend  && python manage.py test)
 
-      pip install -r backend/requirements/base.txt --target ./lambda_dependencies;
-      cd lambda_dependencies;
-      zip -r9 ../dev_pah_fm.zip .;
-      cd ../backend;
-      zip -g -r ../dev_pah_fm.zip .;
-      cd ..;
-      aws s3 cp dev_pah_fm.zip s3://codeforpoznan-lambdas/dev_pah_fm_migration.zip
-      aws lambda update-function-code --function-name arn:aws:lambda:eu-west-1:232105177011:function:dev_pah_fm_migration \
-                                      --s3-bucket codeforpoznan-lambdas \
-                                      --s3-key dev_pah_fm_migration.zip \
-                                      --region eu-west-1 > /dev/null
-      aws lambda invoke --function-name arn:aws:lambda:eu-west-1:232105177011:function:dev_pah_fm_migration --region eu-west-1 output.json
-      cat output.json
-    fi
+
+deploy:
+  provider: script
+  script: bash deploy.sh
+  on:
+    repo: CodeForPoznan/pah-fm
+    branch: master
