@@ -43,6 +43,9 @@ test:  ## Run tests
 	make test-frontend
 	make test-backend
 
+format:  ## Run formatters on backend
+	make format-backend
+
 manage:  ## Use manage.py, i.e make manage CMD=collectstatic
 	docker-compose run --rm --no-deps backend python3 manage.py ${CMD}
 
@@ -65,6 +68,9 @@ lint-backend:  ## Run linters on backend container
 
 lint-frontend:  ## Run linters on frontend container
 	docker-compose run --rm --no-deps frontend npm run lint:fix
+
+format-backend:  ## Run formatters on backend
+	docker-compose run --rm --no-deps backend black .
 
 test-frontend: ## Run tests on frontend container
 	docker-compose run --rm --no-deps frontend npm run test

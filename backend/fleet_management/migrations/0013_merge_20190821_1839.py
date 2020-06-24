@@ -6,10 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0012_remove_mileage'),
-        ('fleet_management', '0012_passengers_country'),
-        ('fleet_management', '0012_auto_20190810_2109'),
+        ("fleet_management", "0012_remove_mileage"),
+        ("fleet_management", "0012_passengers_country"),
+        ("fleet_management", "0012_auto_20190810_2109"),
     ]
 
-    operations = [
-    ]
+    operations = []

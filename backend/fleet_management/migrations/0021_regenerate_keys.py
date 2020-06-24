@@ -6,7 +6,7 @@ from fleet_management.crypto import find_pair_of_keys
 
 def generate_rsa_keys_for_existing_users(apps, schema_editor):
     User = apps.get_model("fleet_management", "User")
-    for user in User.objects.filter(rsa_priv_d=''):
+    for user in User.objects.filter(rsa_priv_d=""):
         pub, priv = find_pair_of_keys()
         user.rsa_modulus_n = str(pub.n).zfill(6)
         user.rsa_pub_e = str(pub.e).zfill(6)
@@ -17,7 +17,7 @@ def generate_rsa_keys_for_existing_users(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0020_auto_20191023_1925'),
+        ("fleet_management", "0020_auto_20191023_1925"),
     ]
 
     operations = [

@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pah_fm.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pah_fm.settings")
 
 application = get_wsgi_application()

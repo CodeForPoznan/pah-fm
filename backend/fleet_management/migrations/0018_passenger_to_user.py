@@ -14,14 +14,14 @@ def migrate_passenger_to_user(apps, schema_editor):
         u, created = User.objects.get_or_create(
             username=p.email,
             defaults={
-                'email': p.email,
-                'is_superuser': False,
-                'is_staff': False,
-                'country': p.country or 'UA',
-                'is_active': True,
-                'first_name': p.first_name,
-                'last_name': p.last_name
-            }
+                "email": p.email,
+                "is_superuser": False,
+                "is_staff": False,
+                "country": p.country or "UA",
+                "is_active": True,
+                "first_name": p.first_name,
+                "last_name": p.last_name,
+            },
         )
         u.save()
         g.user_set.add(u)
@@ -36,7 +36,7 @@ def migrate_passenger_to_user(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0017_auto_20191002_1858'),
+        ("fleet_management", "0017_auto_20191002_1858"),
     ]
 
     operations = [

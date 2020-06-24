@@ -7,3 +7,4 @@ tqdm==4.28.1
 ipdb==0.12.2
 pdbpp==0.10.2
 awscli==1.18.53
+black==19.10b0
