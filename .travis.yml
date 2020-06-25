@@ -32,7 +32,7 @@ script:
   - (cd frontend && npm run lint)
   - (cd frontend && npm run test)
 
-  # lint, format and test backend
+  # lint and test backend
   - (cd backend  && flake8 .)
   - (cd backend  && black --check .)
   - (cd backend  && python manage.py test)
