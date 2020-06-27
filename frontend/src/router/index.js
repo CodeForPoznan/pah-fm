@@ -4,7 +4,7 @@ import Router from 'vue-router';
 import flatMap from 'array.prototype.flatmap';
 
 import store from '../store';
-import { isUserLoggedIn } from '../services/api/user';
+import { IS_USER_LOGGED_IN } from '../store/modules/http/getters';
 
 import routes, {
   openRoutes,
@@ -23,7 +23,7 @@ const router = new Router({
 });
 
 router.beforeEach((to, _from, next) => {
-  const userLoggedIn = isUserLoggedIn();
+  const userLoggedIn = store.getters[`http/${IS_USER_LOGGED_IN}`];
 
   // 404 if not route matches
   if (to.name === pageNotFoundRoute.name) {

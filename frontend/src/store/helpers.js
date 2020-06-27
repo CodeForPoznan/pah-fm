@@ -7,7 +7,7 @@ import {
   SET_DATA,
   SET_ERRORS,
 } from './constants';
-import { get } from '../services/api/http';
+import { GET } from '../store/modules/http/actions';
 import i18n from '../services/lang';
 
 const defaultState = {
@@ -43,8 +43,8 @@ const makeModule = moduleActions => ({
   actions: moduleActions,
 });
 
-const makeFetchData = url => ({ commit }) => {
-  get(url)
+const makeFetchData = url => ({ dispatch, commit }) => {
+  dispatch(`http/${GET}`, { url }, { root: true })
     .then((data) => {
       commit(SET_DATA, data);
     })

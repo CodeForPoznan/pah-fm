@@ -1,5 +1,3 @@
-import { post } from '../services/api/http';
-import { login, saveToken, deleteStorageData } from '../services/api/auth';
 import { getMyself } from '../services/api/user';
 import * as mutations from './mutations';
 import { mapDrive } from './helpers';
@@ -12,6 +10,9 @@ import {
   SYNC_ITEM_FAILURE,
   UNSYNCHRONISED_DRIVES,
 } from './constants';
+
+import { LOGIN as HTTP_LOGIN, POST } from './modules/http/actions';
+import { SET_TOKEN } from './modules/http/mutations';
 
 export const FETCH_USER = 'FETCH_USER';
 export const LOGIN = 'LOGIN';
@@ -34,27 +35,25 @@ export const actions = {
     });
   },
 
-  [LOGIN]({ commit, dispatch }, { username, password }) {
+  async [LOGIN]({ commit, dispatch }, credentials) {
     commit(mutations.SET_LOGIN_PROGRESS, true);
-    login(username, password)
-      .then((token) => {
-        commit(mutations.SET_LOGIN_ERROR, null);
-        saveToken(token);
-        dispatch(FETCH_USER, {
-          callback: () => window.location.replace('/drive'),
-        });
-      })
-      .catch(() => {
-        commit(mutations.SET_LOGIN_ERROR, i18n.tc('login.login_error'));
-      })
-      .finally(() => {
-        commit(mutations.SET_LOGIN_PROGRESS, false);
+    try {
+      await dispatch(`http/${HTTP_LOGIN}`, credentials);
+      commit(mutations.SET_LOGIN_ERROR, null);
+      dispatch(FETCH_USER, {
+        callback: () => window.location.replace('/drive'),
       });
+    } catch (err) {
+      console.error(err);
+      commit(mutations.SET_LOGIN_ERROR, i18n.tc('login.login_error'));
+    } finally {
+      commit(mutations.SET_LOGIN_PROGRESS, false);
+    }
   },
 
   [LOGOUT]({ commit }) {
     commit(mutations.SET_USER, null);
-    deleteStorageData();
+    commit(`http/${SET_TOKEN}`, null);
   },
 
   [SUBMIT]({ commit, dispatch }, { form }) {
@@ -78,9 +77,9 @@ export const actions = {
     }
 
     if (
-      state[UNSYNCHRONISED_DRIVES].length === 0 ||
-      !state.user ||
-      !navigator.onLine
+      state[UNSYNCHRONISED_DRIVES].length === 0
+      || !state.user
+      || !navigator.onLine
     ) {
       return;
     }
@@ -89,7 +88,7 @@ export const actions = {
     const { timestamp } = mappedDrive;
 
     try {
-      await post('drives', mappedDrive);
+      await dispatch(`http/${POST}`, { url: 'drives', payload: mappedDrive });
       commit(SYNC_ITEM_SUCCESS, timestamp);
       dispatch(SYNC);
     } catch (e) {

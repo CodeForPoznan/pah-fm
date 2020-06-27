@@ -1,11 +1,6 @@
-import { get } from './http';
-import { getItem } from '../localStore';
-import { tokenKey } from './auth';
+import store from '../../store';
+import { GET } from '../../store/modules/http/actions';
 
 export function getMyself() {
-  return get('users/me');
-}
-
-export function isUserLoggedIn() {
-  return !!getItem(tokenKey);
+  return store.dispatch(`http/${GET}`, { url: 'users/me' });
 }
