@@ -13,7 +13,7 @@ export const flatten = (obj, depth = 5, sep = ',') => {
 
   if (obj.constructor === Array || obj.constructor === Object) {
     const values = [];
-    Object.entries(obj).forEach((v) => values.push(flatten(v[1], depth - 1, sep)));
+    Object.entries(obj).forEach(v => values.push(flatten(v[1], depth - 1, sep)));
     return values.join(sep);
   }
 
@@ -37,7 +37,7 @@ const modexp = (base, exp, mod) => {
   return res;
 };
 
-const int = (n) => parseInt(n, 10);
+const int = n => parseInt(n, 10);
 
 export const sign = (msg, d, n) => modexp(int(msg), int(d), int(n));
 

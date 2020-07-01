@@ -8,7 +8,7 @@ const groups = user ? user.groups.map(({ name }) => name.toLowerCase()) : [];
 const getRouteGroup = (routeName) => {
   const groupBasedRouteNames = Object.keys(groupBasedRoutes).reduce(
     (acc, key) => {
-      acc[key] = groupBasedRoutes[key].map((route) => route.to.name);
+      acc[key] = groupBasedRoutes[key].map(route => route.to.name);
       return acc;
     },
     {},

@@ -13,7 +13,7 @@
  *  value3: key2
  * }
  */
-export const reverseObject = (objectToReverse) => Object.entries(objectToReverse).reduce(
+export const reverseObject = objectToReverse => Object.entries(objectToReverse).reduce(
   (acc, [key, value]) => ({
     ...acc,
     ...value.reduce((a, v) => ({ ...a, ...{ [v]: key } }), {}),

@@ -37,14 +37,13 @@ export const CLEAR_NEW_DRIVE_FORM = 'CLEAR_NEW_DRIVE_FORM';
 
 const mutations = {
   updateField,
-  [CLEAR_NEW_DRIVE_FORM]: state =>
-    Object.assign(state, {
-      [NEW_DRIVE_FORM]: {
-        ...newDriveFormInitialState,
-        date: getToday(),
-        car: state[NEW_DRIVE_FORM].car,
-      },
-    }),
+  [CLEAR_NEW_DRIVE_FORM]: state => Object.assign(state, {
+    [NEW_DRIVE_FORM]: {
+      ...newDriveFormInitialState,
+      date: getToday(),
+      car: state[NEW_DRIVE_FORM].car,
+    },
+  }),
 };
 
 const actions = {};
@@ -54,7 +53,7 @@ export const NEW_DRIVE_FORM_EMPTY_FIELDS = 'NEW_DRIVE_FORM_EMPTY_FIELDS';
 
 const getters = {
   getField,
-  [NEW_DRIVE_FORM_CHECKSUM]: (state) => padWithZeros(
+  [NEW_DRIVE_FORM_CHECKSUM]: state => padWithZeros(
     hashDict({
       car: { id: state[NEW_DRIVE_FORM].car },
       project: { id: state[NEW_DRIVE_FORM].project },
@@ -66,8 +65,8 @@ const getters = {
     }),
     6,
   ),
-  [NEW_DRIVE_FORM_EMPTY_FIELDS]: (state) => requiredFields
-    .filter((field) => !isValid(state[NEW_DRIVE_FORM][field])),
+  [NEW_DRIVE_FORM_EMPTY_FIELDS]: state => requiredFields
+    .filter(field => !isValid(state[NEW_DRIVE_FORM][field])),
 };
 
 export default {

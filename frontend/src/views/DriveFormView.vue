@@ -202,7 +202,7 @@ export default {
           this.isInvalid[field] = true;
         });
         this.listOfErrors = emptyFields
-          .map((field) => renderErrorMessage(field))
+          .map(field => renderErrorMessage(field))
           .concat(mileageErrors);
       }
     },
@@ -230,15 +230,15 @@ export default {
   },
   computed: {
     // Mapping form fields with vuex store using vuex-map-fields package
-    ...mapFields(Object.keys(newDriveFormInitialState).map((field) => `${NEW_DRIVE_FORM}.${field}`)),
+    ...mapFields(Object.keys(newDriveFormInitialState).map(field => `${NEW_DRIVE_FORM}.${field}`)),
     ...mapState(namespaces.cars, {
-      cars: (state) => state,
+      cars: state => state,
     }),
     ...mapState(namespaces.projects, {
-      projects: (state) => state,
+      projects: state => state,
     }),
     ...mapState(namespaces.passengers, {
-      passengers: (state) => (state.data || []).map((p) => ({
+      passengers: state => (state.data || []).map(p => ({
         value: p.id,
         text: [p.firstName, p.lastName].join(' '),
         rsaModulusN: p.rsaModulusN,

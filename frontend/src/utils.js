@@ -5,7 +5,7 @@ export const totalMileageReducer = (
   current,
 ) => total + (current.endMileage - current.startMileage);
 
-export const totalMileageFilter = (drive) => drive
+export const totalMileageFilter = drive => drive
   .date.slice(0, 7) === format(new Date(), 'yyyy-MM');
 
 export const padWithZeros = (num, width) => {

@@ -8,8 +8,8 @@ export default {
     if (auth) {
       if (state[TOKEN]) {
         const authHeader = { Authorization: `JWT ${state[TOKEN]}` };
-        const headers = requestOptions.headers ?
-          { ...requestOptions.headers, ...authHeader } : authHeader;
+        const headers = requestOptions.headers
+          ? { ...requestOptions.headers, ...authHeader } : authHeader;
         return { ...requestOptions, headers };
       }
       return requestOptions;

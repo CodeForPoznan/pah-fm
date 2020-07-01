@@ -7,7 +7,7 @@ import {
   SET_DATA,
   SET_ERRORS,
 } from './constants';
-import { GET } from '../store/modules/http/actions';
+import { GET } from './modules/http/actions';
 import i18n from '../services/lang';
 
 const defaultState = {
@@ -16,7 +16,7 @@ const defaultState = {
   [ERRORS]: null,
 };
 
-const makeModule = (moduleActions) => ({
+const makeModule = moduleActions => ({
   namespaced: true,
   state: { ...defaultState },
   mutations: {
@@ -53,9 +53,9 @@ const makeFetchData = url => ({ dispatch, commit }) => {
     });
 };
 
-const makeDomainItem = (id) => ({ id });
+const makeDomainItem = id => ({ id });
 
-const mapDrive = (drive) => ({
+const mapDrive = drive => ({
   ...drive,
   car: makeDomainItem(drive.car),
   project: makeDomainItem(drive.project),
