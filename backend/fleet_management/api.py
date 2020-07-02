@@ -41,7 +41,7 @@ class CarListView(generics.ListAPIView):
     ordering = ("plates",)
 
     def get_queryset(self):
-        return Car.objects.filter(country=self.request.user.country,)
+        return Car.objects.filter(country=self.request.user.country)
 
 
 class DriveView(generics.ListCreateAPIView):
@@ -55,7 +55,7 @@ class DriveView(generics.ListCreateAPIView):
         return {"driver": self.request.user}
 
     def get_queryset(self):
-        return Drive.objects.filter(driver__id=self.request.user.id,)
+        return Drive.objects.filter(driver=self.request.user)
 
 
 class ProjectView(generics.ListAPIView):
@@ -65,4 +65,4 @@ class ProjectView(generics.ListAPIView):
     serializer_class = ProjectSerializer
 
     def get_queryset(self):
-        return Project.objects.filter(country=self.request.user.country,)
+        return Project.objects.filter(country=self.request.user.country)

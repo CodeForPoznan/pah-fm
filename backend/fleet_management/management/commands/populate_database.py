@@ -62,7 +62,7 @@ class Command(BaseCommand):
         for index, username in enumerate(drivers):
             self.stdout.write(
                 self.style.SUCCESS(
-                    "{index}. {username}".format(index=index, username=username,)
+                    "{index}. {username}".format(index=index, username=username)
                 )
             )
 
@@ -70,7 +70,7 @@ class Command(BaseCommand):
         for index, username in enumerate(passengers):
             self.stdout.write(
                 self.style.SUCCESS(
-                    "{index}. {username}".format(index=index, username=username,)
+                    "{index}. {username}".format(index=index, username=username)
                 )
             )
 
