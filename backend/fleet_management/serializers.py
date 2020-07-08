@@ -155,3 +155,23 @@ class DriveSerializer(serializers.ModelSerializer):
             ):
                 err.status_code = status.HTTP_409_CONFLICT
             raise err
+
+
+class RefuelSerializer(serializers.ModelSerializer):
+    driver = UserSerializer(read_only=True)
+    car = CarSerializer()
+
+    class Meta:
+        model = Drive
+        fields = (
+            "id",
+            "driver",
+            "car",
+            "date",
+            "current_mileage",
+            "refueled_liters",
+            "price_per_liter",
+            "currency",
+        )
+
+        # add create function

@@ -35,6 +35,7 @@ INSTALLED_APPS = [
 
     # 3rd party apps
     'corsheaders',
+    'djmoney',
     'rest_framework',
 
     # local apps

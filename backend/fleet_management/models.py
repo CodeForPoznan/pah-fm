@@ -1,9 +1,11 @@
 import calendar
 import time
 
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 from django_countries.fields import CountryField
+
+from djmoney.models.fields import MoneyField
 
 from fleet_management.crypto import PublicKey, PrivateKey, find_pair_of_keys, hash_dict
 
@@ -122,3 +124,15 @@ class Drive(models.Model):
             "endMileage": initial_data["end_mileage"],
         }
         return hash_dict(required_fields)
+
+
+class Refuel(models.Model):
+    driver = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="drives_refueled"
+    )
+    car = models.ForeignKey(Car, null=False, on_delete=models.CASCADE)
+    date = models.DateField(auto_now_add=True, blank=False)
+    current_mileage = models.IntegerField(null=False)
+    refueled_liters = models.IntegerField(null=False)
+    price_per_liter = models.IntegerField(null=False)
+    currency = MoneyField(max_digits=10, decimal_places=2, null=False, default_currency="USD")
