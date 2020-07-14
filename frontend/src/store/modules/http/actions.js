@@ -53,10 +53,10 @@ export default {
         Accept: CONTENT_TYPE_JSON,
       },
     };
-    requestOptions = await dispatch(GET_AUTH_HEADER, {requestOptions, auth});
+    requestOptions = await dispatch(GET_AUTH_HEADER, { requestOptions, auth });
     return fetch(`${apiUrl}${url}`, requestOptions).then(handleResponse);
   },
-  [POST]: async ({dispatch}, {url, payload, auth = true}) => {
+  [POST]: async ({ dispatch }, { url, payload, auth = true }) => {
     let requestOptions = {
       method: 'POST',
       body: JSON.stringify(payload),
@@ -65,7 +65,7 @@ export default {
         'Content-Type': CONTENT_TYPE_JSON,
       },
     };
-    requestOptions = await dispatch(GET_AUTH_HEADER, {requestOptions, auth});
+    requestOptions = await dispatch(GET_AUTH_HEADER, { requestOptions, auth });
     return fetch(`${apiUrl}${url}`, requestOptions).then(handleResponse);
   },
 };
