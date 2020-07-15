@@ -173,5 +173,3 @@ class RefuelSerializer(serializers.ModelSerializer):
             "price_per_liter",
             "currency",
         )
-
-        # add create function

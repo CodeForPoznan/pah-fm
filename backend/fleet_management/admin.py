@@ -125,4 +125,6 @@ class CustomUserAdmin(UserAdmin):
 @admin.register(Refuel)
 class RefuelAdmin(admin.ModelAdmin):
     list_filter = ("driver", "car")  # project, country?
-    list_display = ("driver", "car", "date", "current_mileage", "refueled_liters", "price_per_liter", "currency")
+    list_display = (
+        "driver", "car", "date", "current_mileage", "refueled_liters", "price_per_liter", "currency"
+    )
