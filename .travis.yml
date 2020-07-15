@@ -18,6 +18,9 @@ env:
 
 
 install:
+  # install languages
+  - nvm install 8.12.0
+
   # install dependencies
   - (cd frontend && npm ci      --quiet)
   - (cd backend  && pip install --quiet -r requirements/dev.txt)
