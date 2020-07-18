@@ -15,14 +15,14 @@ def migrate_drive__driver__country_to_drive__country(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0023_user_last_seen'),
+        ("fleet_management", "0023_user_last_seen"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='drive',
-            name='country',
-            field=django_countries.fields.CountryField(default='', max_length=2),
+            model_name="drive",
+            name="country",
+            field=django_countries.fields.CountryField(default="", max_length=2),
             preserve_default=False,
         ),
         migrations.RunPython(migrate_drive__driver__country_to_drive__country),
