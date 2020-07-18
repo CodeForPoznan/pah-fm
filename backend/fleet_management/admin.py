@@ -77,7 +77,15 @@ class DriveResource(resources.ModelResource):
 class DriveAdmin(ImportExportModelAdmin):
     resource_class = DriveResource
     list_filter = (DriveCountryFilter,)
-    list_display = ("__str__", "country__name", "is_verified")
+    list_display = (
+        "date",
+        "start_location",
+        "end_location",
+        "driver",
+        "passenger",
+        "country__name",
+        "is_verified",
+    )
 
     def country__name(self, drive):
         return drive.country.name
