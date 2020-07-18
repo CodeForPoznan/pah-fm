@@ -74,8 +74,8 @@ describe('HTTP Module', () => {
     actions[POST]({ dispatch: mockDispatch }, { url: 'test', payload })
       .then((response) => {
         expect(response.data).toBe('Do. Or do not. There is no try.');
+        expect(fetch).toHaveBeenCalledTimes(1);
       });
-    expect(fetch.mock.calls.length).toBe(1);
   });
 
   it('GET runs fetch', () => {
@@ -97,8 +97,8 @@ describe('HTTP Module', () => {
     actions[GET]({ dispatch: mockDispatch }, { url: 'test' })
       .then((response) => {
         expect(response.data).toBe('Do. Or do not. There is no try.');
+        expect(fetch).toHaveBeenCalledTimes(1);
       });
-    expect(fetch.mock.calls.length).toBe(1);
   });
 
   it('GET_AUTH_HEADER runs AUTH_DATA getter', () => {
