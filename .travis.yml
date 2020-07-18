@@ -34,6 +34,7 @@ script:
 
   # lint and test backend
   - (cd backend  && flake8 .)
+  - (cd backend  && black --check .)
   - (cd backend  && python manage.py test)
 
 

@@ -9,23 +9,33 @@ import django_countries.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0016_auto_20190825_2051'),
+        ("fleet_management", "0016_auto_20190825_2051"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='drive',
-            name='passenger',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='drives_taken', to=settings.AUTH_USER_MODEL),
+            model_name="drive",
+            name="passenger",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="drives_taken",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AlterField(
-            model_name='drive',
-            name='driver',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='drives_driven', to=settings.AUTH_USER_MODEL),
+            model_name="drive",
+            name="driver",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="drives_driven",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AlterField(
-            model_name='project',
-            name='country',
+            model_name="project",
+            name="country",
             field=django_countries.fields.CountryField(default=None, max_length=2),
         ),
     ]

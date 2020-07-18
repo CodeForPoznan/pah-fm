@@ -8,45 +8,62 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0002_auto_20181114_1913'),
+        ("fleet_management", "0002_auto_20181114_1913"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Drive',
+            name="Drive",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField(default=django.utils.timezone.now)),
-                ('start_mileage', models.IntegerField()),
-                ('end_mileage', models.IntegerField()),
-                ('description', models.CharField(max_length=1000)),
-                ('car', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='fleet_management.Car')),
-                ('driver', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('passengers', models.ManyToManyField(to='fleet_management.Passenger')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date", models.DateField(default=django.utils.timezone.now)),
+                ("start_mileage", models.IntegerField()),
+                ("end_mileage", models.IntegerField()),
+                ("description", models.CharField(max_length=1000)),
+                (
+                    "car",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="fleet_management.Car",
+                    ),
+                ),
+                (
+                    "driver",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                ("passengers", models.ManyToManyField(to="fleet_management.Passenger")),
             ],
         ),
         migrations.CreateModel(
-            name='Project',
+            name="Project",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=50)),
-                ('description', models.CharField(max_length=1000)),
-                ('drives', models.ManyToManyField(to='fleet_management.Drive')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=50)),
+                ("description", models.CharField(max_length=1000)),
+                ("drives", models.ManyToManyField(to="fleet_management.Drive")),
             ],
         ),
-        migrations.RemoveField(
-            model_name='route',
-            name='car',
-        ),
-        migrations.RemoveField(
-            model_name='route',
-            name='driver',
-        ),
-        migrations.RemoveField(
-            model_name='route',
-            name='passengers',
-        ),
-        migrations.DeleteModel(
-            name='Route',
-        ),
+        migrations.RemoveField(model_name="route", name="car",),
+        migrations.RemoveField(model_name="route", name="driver",),
+        migrations.RemoveField(model_name="route", name="passengers",),
+        migrations.DeleteModel(name="Route",),
     ]

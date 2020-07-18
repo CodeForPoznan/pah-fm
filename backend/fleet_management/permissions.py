@@ -27,15 +27,15 @@ class GroupPermission(permissions.BasePermission):
 
 
 all_passenger_methods = {
-    'GET': [Groups.Passenger.name],
-    'POST': [Groups.Passenger.name],
-    'PUT': [Groups.Passenger.name],
-    'DELETE': [Groups.Passenger.name],
+    "GET": [Groups.Passenger.name],
+    "POST": [Groups.Passenger.name],
+    "PUT": [Groups.Passenger.name],
+    "DELETE": [Groups.Passenger.name],
 }
 
 all_driver_methods = {
-    'GET': [Groups.Driver.name],
-    'POST': [Groups.Driver.name],
-    'PUT': [Groups.Driver.name],
-    'DELETE': [Groups.Driver.name],
+    "GET": [Groups.Driver.name],
+    "POST": [Groups.Driver.name],
+    "PUT": [Groups.Driver.name],
+    "DELETE": [Groups.Driver.name],
 }

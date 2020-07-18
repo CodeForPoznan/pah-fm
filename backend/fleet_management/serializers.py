@@ -24,7 +24,14 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ("id", "username", "groups", "rsa_modulus_n", "rsa_pub_e", "rsa_priv_d")
+        fields = (
+            "id",
+            "username",
+            "groups",
+            "rsa_modulus_n",
+            "rsa_pub_e",
+            "rsa_priv_d",
+        )
 
 
 class PassengerSerializer(serializers.ModelSerializer):
@@ -115,7 +122,9 @@ class DriveSerializer(serializers.ModelSerializer):
 
         if form_signature:
             signature = sign(self.hashed_form, passenger.private_key())
-            is_verified = verify(self.hashed_form, form_signature, passenger.public_key())
+            is_verified = verify(
+                self.hashed_form, form_signature, passenger.public_key()
+            )
             is_verified = is_verified and signature == form_signature
 
         with transaction.atomic():
@@ -137,7 +146,7 @@ class DriveSerializer(serializers.ModelSerializer):
         max_number = 10 ** num_digits - 1
 
         if value > max_number:
-            raise ValidationError('Signature field contains incorrect value')
+            raise ValidationError("Signature field contains incorrect value")
 
         return value
 

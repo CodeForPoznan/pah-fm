@@ -98,7 +98,14 @@ class ProjectAdmin(admin.ModelAdmin):
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     list_filter = ("groups", CountryFilter)
-    list_display = ("username", "first_name", "last_name", "country", "is_staff", "last_seen")
+    list_display = (
+        "username",
+        "first_name",
+        "last_name",
+        "country",
+        "is_staff",
+        "last_seen",
+    )
 
     fieldsets = (
         (None, {"fields": ("username", "password")}),
