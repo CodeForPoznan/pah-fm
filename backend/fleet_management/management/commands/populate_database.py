@@ -1,19 +1,17 @@
 import random
 
 from django.core.management.base import BaseCommand
+from django.contrib.auth.models import Group
+from django.db import transaction
 from tqdm import tqdm
 
-from django.contrib.auth.models import Group
-from ...constants import Groups
-
-
+from fleet_management.constants import Groups
 from fleet_management.factories import (
     CarFactory,
     DriveFactory,
     ProjectFactory,
     UserFactory,
 )
-from ...models import Project, User
 
 
 class Command(BaseCommand):
@@ -21,60 +19,106 @@ class Command(BaseCommand):
 
     help = "Populates database with fake items."
 
+    @transaction.atomic
     def handle(self, *args, **options):
         driver_group = Group.objects.get(name=Groups.Driver.name)
         passenger_group = Group.objects.get(name=Groups.Passenger.name)
 
-        self.stdout.write(self.style.SUCCESS("Creating 5 cars"))
-        for _ in tqdm(range(5)):
-            CarFactory.create()
+        def info(message):
+            self.stdout.write(self.style.SUCCESS(message))
 
-        self.stdout.write(self.style.SUCCESS("Creating 5 drivers"))
-        drivers = []
+        cars = [
+            CarFactory.make(
+                plates="UA000000",
+                description="Default Car",
+                fuel_consumption=10.0,
+                country="UA",
+            ),
+        ]
+        info("Creating 5 random cars")
         for _ in tqdm(range(5)):
-            drivers.append(UserFactory.create(groups=[driver_group]).username)
+            cars.append(CarFactory.make())
 
-        passengers = []
-        self.stdout.write(self.style.SUCCESS("Creating 10 passengers"))
+        drivers = [
+            UserFactory.make(
+                username="driver@codeforpoznan.pl",
+                email="driver@codeforpoznan.pl",
+                first_name="Default",
+                last_name="Driver",
+                country="UA",
+                groups=[driver_group],
+            ),
+        ]
+        info("Creating 5 random drivers")
+        for _ in tqdm(range(5)):
+            drivers.append(UserFactory.make(groups=[driver_group]))
+
+        passengers = [
+            UserFactory.make(
+                username="passenger@codeforpoznan.pl",
+                email="passenger@codeforpoznan.pl",
+                first_name="Default",
+                last_name="Passenger",
+                country="UA",
+                groups=[passenger_group],
+            ),
+        ]
+        info("Creating 10 passengers")
         for _ in tqdm(range(10)):
-            passengers.append(UserFactory.create(groups=[passenger_group]).username)
+            passengers.append(UserFactory.make(groups=[passenger_group]))
 
-        self.stdout.write(self.style.SUCCESS("Creating 5 projects"))
+        projects = [
+            ProjectFactory.make(
+                title="Default Project",
+                description="Default Project",
+                country="UA",
+            )
+        ]
+        info("Creating 5 projects")
         for _ in tqdm(range(5)):
-            ProjectFactory.create()
+            projects.append(ProjectFactory.make())
 
-        self.stdout.write(self.style.SUCCESS("Creating 50 drives"))
-        all_drivers = list(User.objects.filter(groups=driver_group))
-        all_passengers = list(User.objects.filter(groups=passenger_group))
-        all_projects = list(Project.objects.all())
-
+        DriveFactory.make(
+            driver=drivers[0],
+            project=projects[0],
+            passenger=passengers[0],
+            car=cars[0],
+            start_mileage=1,
+            end_mileage=100,
+            description="Default verified drive",
+            start_location="Start",
+            end_location="End",
+            is_verified=True,
+        )
+        DriveFactory.make(
+            driver=drivers[0],
+            project=projects[0],
+            passenger=passengers[0],
+            car=cars[0],
+            start_mileage=1,
+            end_mileage=100,
+            description="Default unverified drive",
+            start_location="Start",
+            end_location="End",
+            is_verified=False,
+        )
+        info("Creating 50 drives")
         for _ in tqdm(range(50)):
-            DriveFactory.create(
-                passenger=random.choice(all_passengers),
-                project=random.choice(all_projects),
-                driver=random.choice(all_drivers),
+            DriveFactory.make(
+                passenger=random.choice(passengers),
+                project=random.choice(projects),
+                driver=random.choice(drivers),
             )
 
-        self.stdout.write(self.style.SUCCESS("Database successfully populated"))
+        info("Database successfully populated")
+        info("=" * 60)
 
-        self.stdout.write("=" * 50)
-        self.stdout.write(self.style.SUCCESS("Newly created drivers:"))
-        for index, username in enumerate(drivers):
-            self.stdout.write(
-                self.style.SUCCESS(
-                    "{index}. {username}".format(index=index, username=username)
-                )
-            )
+        info(f"{'Newly created drivers (username : password)':>56}")
+        for index, user in enumerate(drivers, start=1):
+            info(f"{index:02d}. {user.username:>40} : {UserFactory.password}")
 
-        self.stdout.write(self.style.SUCCESS("Newly created passengers:"))
-        for index, username in enumerate(passengers):
-            self.stdout.write(
-                self.style.SUCCESS(
-                    "{index}. {username}".format(index=index, username=username)
-                )
-            )
+        info("=" * 60)
 
-        default_user = User.objects.filter(email="hello@codeforpoznan.pl").first()
-
-        driver_group.user_set.add(default_user)
-        passenger_group.user_set.add(default_user)
+        info(f"{'Newly created passengers (username : password)':>56}")
+        for index, user in enumerate(passengers, start=1):
+            info(f"{index:02d}. {user.username:>40} : {UserFactory.password}")

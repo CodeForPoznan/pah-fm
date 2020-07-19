@@ -39,11 +39,13 @@ class MakeFactoryMixin:
             with transaction.atomic():
                 return super().create(**kwargs)
         except IntegrityError:
-            try:
-                model = cls._meta.model
-                return model.objects.get(**kwargs)
-            except model.MultipleObjectsReturned:
-                return model.objects.last()
+            for k, v in kwargs.copy().items():
+                if isinstance(v, list):
+                    kwargs[f"{k}__in"] = v
+                    kwargs.pop(k)
+
+            model = cls._meta.model
+            return model.objects.filter(**kwargs)[0]
 
     @classmethod
     def make_batch(cls, size, **kwargs):
@@ -382,4 +384,4 @@ class DriveFactory(MakeFactoryMixin, DjangoModelFactory):
     timestamp = fuzzy.FuzzyInteger(1, 999999999)
     start_location = Faker("city", locale="uk_UA")
     end_location = Faker("city", locale="uk_UA")
-    is_verified = False
+    is_verified = fuzzy.FuzzyChoice((True, False))
