@@ -69,9 +69,7 @@ class Command(BaseCommand):
 
         projects = [
             ProjectFactory.make(
-                title="Default Project",
-                description="Default Project",
-                country="UA",
+                title="Default Project", description="Default Project", country="UA",
             )
         ]
         info("Creating 5 projects")
