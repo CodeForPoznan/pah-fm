@@ -6,15 +6,10 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0018_passenger_to_user'),
+        ("fleet_management", "0018_passenger_to_user"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='drive',
-            name='passengers',
-        ),
-        migrations.DeleteModel(
-            name='Passenger',
-        ),
+        migrations.RemoveField(model_name="drive", name="passengers",),
+        migrations.DeleteModel(name="Passenger",),
     ]

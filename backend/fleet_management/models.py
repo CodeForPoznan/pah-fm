@@ -17,6 +17,7 @@ class User(AbstractUser):
     rsa_modulus_n = models.CharField(max_length=6, null=False, default="")
     rsa_pub_e = models.CharField(max_length=6, null=False, default="")
     rsa_priv_d = models.CharField(max_length=6, null=False, default="")
+    last_seen = models.DateTimeField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if self.pk is None:

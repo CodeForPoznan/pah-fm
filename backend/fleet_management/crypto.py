@@ -106,7 +106,7 @@ def hash_dict(d: dict, depth=5) -> int:
             return ""
         if type(obj) in [list, dict]:
             values = getattr(obj, "values", obj.__iter__)()
-            return sep.join(map(lambda x: flatten(x, dep-1, sep), values))
+            return sep.join(map(lambda x: flatten(x, dep - 1, sep), values))
         return str(obj)
 
     val = flatten(d, depth).encode()

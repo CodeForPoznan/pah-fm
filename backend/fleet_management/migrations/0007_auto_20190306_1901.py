@@ -7,18 +7,19 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0006_verificationtoken'),
+        ("fleet_management", "0006_verificationtoken"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='project',
-            name='drives',
-        ),
+        migrations.RemoveField(model_name="project", name="drives",),
         migrations.AddField(
-            model_name='drive',
-            name='project',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='fleet_management.Project'),
+            model_name="drive",
+            name="project",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="fleet_management.Project",
+            ),
             preserve_default=False,
         ),
     ]

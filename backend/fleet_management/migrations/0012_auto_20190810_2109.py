@@ -14,15 +14,14 @@ def default_is_verified(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0011_add_default_groups'),
+        ("fleet_management", "0011_add_default_groups"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='drive',
-            name='is_verified',
+            model_name="drive",
+            name="is_verified",
             field=models.BooleanField(default=False),
         ),
         migrations.RunPython(default_is_verified),
-
     ]
