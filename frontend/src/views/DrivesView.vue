@@ -3,14 +3,27 @@
     v-if="!drives.length && !unsyncedDrives.length"
     class="alert alert-warning m-5"
     role="alert"
-  >{{ $t('drives.no_driver_drives') }}</div>
+  >
+    {{ $t('drives.no_driver_drives') }}
+  </div>
   <div v-else>
-    <h4 class="heading" v-if="unsyncedDrives.length">{{ $t('drives.unsynced_drives') }}</h4>
+    <h4
+      class="heading"
+      v-if="unsyncedDrives.length"
+    >
+      {{ $t('drives.unsynced_drives') }}
+    </h4>
     <p
       v-if="unsyncedDrives.length"
       class="ml-3"
-    >{{ $t('drives.total_mileage', { total: unsyncedDrivesTotalMileage }) }}</p>
-    <div class="card" v-for="drive in unsyncedDrives" :key="drive.id">
+    >
+      {{ $t('drives.total_mileage', { total: unsyncedDrivesTotalMileage }) }}
+    </p>
+    <div
+      class="card"
+      v-for="drive in unsyncedDrives"
+      :key="drive.id"
+    >
       <div
         class="card-header"
         @click="showDrive(drive.timestamp)"
@@ -51,18 +64,35 @@
             v-if="!drive.isVerified"
             class="alert alert-warning col-xs-12"
             role="alert"
-          >{{ $t('drives.unverified_drive') }}</div>
+          >
+            {{ $t('drives.unverified_drive') }}
+          </div>
         </div>
       </div>
     </div>
 
-    <h4 class="heading mt-3" v-if="drives.length">{{ $t('drives.synced_drives') }}</h4>
+    <h4
+      class="heading mt-3"
+      v-if="drives.length"
+    >
+      {{ $t('drives.synced_drives') }}
+    </h4>
     <p
       v-if="drives.length"
       class="ml-3"
-    >{{ $t('drives.total_mileage', { total: totalKilometers }) }}</p>
-    <div class="card" v-for="drive in drives" :key="drive.id">
-      <div class="card-header" @click="showDrive(drive.id)" :class="{ verified: drive.isVerified }">
+    >
+      {{ $t('drives.total_mileage', { total: totalKilometers }) }}
+    </p>
+    <div
+      class="card"
+      v-for="drive in drives"
+      :key="drive.id"
+    >
+      <div
+        class="card-header"
+        @click="showDrive(drive.id)"
+        :class="{ verified: drive.isVerified }"
+      >
         <h5 class="mb-0">
           <span class="font-weight-bold">{{ drive.date }}</span>
           {{ $t('drives.from_to', { from: drive.startLocation, destination: drive.endLocation }) }}
@@ -98,7 +128,9 @@
             v-if="!drive.isVerified"
             class="alert alert-warning col-xs-12"
             role="alert"
-          >{{ $t('drives.unverified_drive') }}</div>
+          >
+            {{ $t('drives.unverified_drive') }}
+          </div>
         </div>
       </div>
     </div>
@@ -136,8 +168,8 @@ export default {
       unsyncedDrivesTotalMileage: UNSYNCHRONISED_DRIVES_TOTAL_MILEAGE,
     }),
     ...mapState(namespaces.drives, {
-      drives: (state) => state.data || [],
-      totalKilometers: (state) =>
+      drives: state => state.data || [],
+      totalKilometers: state =>
         state.data.filter(totalMileageFilter).reduce(totalMileageReducer, 0),
     }),
   },
