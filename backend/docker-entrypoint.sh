@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-wait-for-it db:5432 || exit 1
+set -ex
+
+wait-for-it db:5432
 
 python3 manage.py migrate
 python3 manage.py create_admin hello@codeforpoznan.pl cfp123 UA --django-admin
