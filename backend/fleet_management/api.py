@@ -56,7 +56,10 @@ class DriveView(generics.ListCreateAPIView):
         return {"driver": self.request.user}
 
     def get_queryset(self):
-        return Drive.objects.filter(driver=self.request.user, date__gte = date.today()-timedelta(days=30))
+        return Drive.objects.filter(
+            driver=self.request.user,
+            date__gte=date.today() - timedelta(days=30)
+            )
 
 
 class ProjectView(generics.ListAPIView):
