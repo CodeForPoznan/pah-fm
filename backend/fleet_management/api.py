@@ -1,3 +1,4 @@
+from datetime import date, timedelta
 from rest_framework import generics, filters, views
 from rest_framework.response import Response
 
@@ -55,7 +56,7 @@ class DriveView(generics.ListCreateAPIView):
         return {"driver": self.request.user}
 
     def get_queryset(self):
-        return Drive.objects.filter(driver=self.request.user)
+        return Drive.objects.filter(driver=self.request.user, date__gte = date.today()-timedelta(days=30))
 
 
 class ProjectView(generics.ListAPIView):
