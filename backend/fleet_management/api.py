@@ -59,8 +59,7 @@ class DriveView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         return Drive.objects.filter(
-            driver=self.request.user,
-            date__gte=timezone.now() - timedelta(days=30)
+            driver=self.request.user, date__gte=timezone.now() - timedelta(days=30)
             )
 
 
