@@ -71,6 +71,7 @@ class Drive(models.Model):
     description = models.CharField(max_length=1000, blank=True)
     start_location = models.CharField(max_length=100, blank=False)
     end_location = models.CharField(max_length=100, blank=False)
+    country = CountryField(blank_label="(use driver's country)", null=False, blank=True)
     timestamp = models.IntegerField(blank=False, default=get_current_timestamp_in_gmt)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     is_verified = models.BooleanField(default=False)
@@ -93,12 +94,14 @@ class Drive(models.Model):
             )
         ]
 
+    def save(self, *args, **kwargs):
+        if not self.country:
+            self.country = self.driver.country
+
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"Drive from {self.start_location} to {self.end_location} (driver: {self.driver})"
-
-    @property
-    def country(self):
-        return self.driver.country
 
     @property
     def fuel_consumption(self):
