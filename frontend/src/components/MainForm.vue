@@ -5,8 +5,9 @@
         <div class="col-lg-8 offset-lg-2">
           <div>
             <error-list
-              v-if="listOfErrors.length"
-              :errors="listOfErrors"
+              v-if="fieldsErrors.length || otherErrors.length"
+              :errors="fieldsErrors"
+              :other-errors="otherErrors"
             />
             <h2>{{ title }}</h2>
             <form
@@ -55,7 +56,11 @@ export default {
       type: String,
       required: true,
     },
-    listOfErrors: {
+    fieldsErrors: {
+      type: Array,
+      default: () => [],
+    },
+    otherErrors: {
       type: Array,
       default: () => [],
     },

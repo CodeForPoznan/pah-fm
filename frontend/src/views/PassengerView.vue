@@ -1,7 +1,8 @@
 <template>
   <main-form
     :title="$t('common.confirm_drive')"
-    :list-of-errors="listOfErrors"
+    :fields-errors="listOfErrors"
+    :other-errors="otherErrors"
     @submit="handleSubmit"
     @reset="reset"
   >
@@ -50,7 +51,7 @@ export default {
     handleSubmit() {
       this.validateForm(this.validator);
 
-      if (this.listOfErrors.length === 0) {
+      if (!this.listOfErrors.length && !this.otherErrors.length) {
         store.dispatch(SET_HASH, this.form.hash);
         this.clearStorage();
         this.loadFormData(initialFormData); // re-initialize form
@@ -60,7 +61,7 @@ export default {
     validator() {
       if (this.form.hash.length !== 6) {
         this.isInvalid.hash = true;
-        return [this.$t('passenger_form.invalid_length')];
+        return ['passenger_form.invalid_length'];
       }
       return [];
     },
