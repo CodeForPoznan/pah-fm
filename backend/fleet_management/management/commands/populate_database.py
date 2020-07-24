@@ -63,8 +63,8 @@ class Command(BaseCommand):
                 groups=[passenger_group],
             ),
         ]
-        info("Creating 10 passengers")
-        for _ in tqdm(range(10)):
+        info("Creating 5 random passengers")
+        for _ in tqdm(range(5)):
             passengers.append(UserFactory.make(groups=[passenger_group]))
 
         projects = [
@@ -72,7 +72,7 @@ class Command(BaseCommand):
                 title="Default Project", description="Default Project", country="UA",
             )
         ]
-        info("Creating 5 projects")
+        info("Creating 5 random projects")
         for _ in tqdm(range(5)):
             projects.append(ProjectFactory.make())
 
@@ -100,15 +100,16 @@ class Command(BaseCommand):
             end_location="End",
             is_verified=False,
         )
-        info("Creating 50 drives")
+        info("Creating 50 random drives")
         for _ in tqdm(range(50)):
             DriveFactory.make(
                 passenger=random.choice(passengers),
                 project=random.choice(projects),
                 driver=random.choice(drivers),
+                car=random.choice(cars),
             )
 
-        info("Database successfully populated")
+        info("Database successfully populated with random data")
         info("=" * 60)
 
         info(f"{'Newly created drivers (username : password)':>56}")
