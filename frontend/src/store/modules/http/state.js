@@ -5,4 +5,3 @@ export default {
   // After merge to new version remove localStorage
   [TOKEN]: localStorage.getItem('jwt') || null,
 };
-
