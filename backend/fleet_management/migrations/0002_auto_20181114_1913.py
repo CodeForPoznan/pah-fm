@@ -6,23 +6,27 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0001_initial'),
+        ("fleet_management", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='car',
-            name='description',
+            model_name="car",
+            name="description",
             field=models.CharField(blank=True, max_length=500),
         ),
         migrations.AddField(
-            model_name='car',
-            name='fuel_consumption',
+            model_name="car",
+            name="fuel_consumption",
             field=models.FloatField(default=0),
         ),
         migrations.AddField(
-            model_name='car',
-            name='mileage_unit',
-            field=models.CharField(choices=[('kilometers', 'kilometers'), ('miles', 'miles')], default='kilometers', max_length=11),
+            model_name="car",
+            name="mileage_unit",
+            field=models.CharField(
+                choices=[("kilometers", "kilometers"), ("miles", "miles")],
+                default="kilometers",
+                max_length=11,
+            ),
         ),
     ]

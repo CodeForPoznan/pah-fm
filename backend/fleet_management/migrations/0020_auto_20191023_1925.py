@@ -6,23 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0019_remove_passenger_model'),
+        ("fleet_management", "0019_remove_passenger_model"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='rsa_modulus_n',
-            field=models.CharField(default='', max_length=6),
+            model_name="user",
+            name="rsa_modulus_n",
+            field=models.CharField(default="", max_length=6),
         ),
         migrations.AddField(
-            model_name='user',
-            name='rsa_priv_d',
-            field=models.CharField(default='', max_length=6),
+            model_name="user",
+            name="rsa_priv_d",
+            field=models.CharField(default="", max_length=6),
         ),
         migrations.AddField(
-            model_name='user',
-            name='rsa_pub_e',
-            field=models.CharField(default='', max_length=6),
+            model_name="user",
+            name="rsa_pub_e",
+            field=models.CharField(default="", max_length=6),
         ),
     ]

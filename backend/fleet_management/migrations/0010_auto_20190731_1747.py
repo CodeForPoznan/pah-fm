@@ -6,17 +6,25 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0009_car_country'),
+        ("fleet_management", "0009_car_country"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='drive',
-            name='timestamp',
+            model_name="drive",
+            name="timestamp",
             field=models.IntegerField(default=1564595270),
         ),
         migrations.AlterUniqueTogether(
-            name='drive',
-            unique_together={('end_mileage', 'start_mileage', 'timestamp', 'start_location', 'end_location')},
+            name="drive",
+            unique_together={
+                (
+                    "end_mileage",
+                    "start_mileage",
+                    "timestamp",
+                    "start_location",
+                    "end_location",
+                )
+            },
         ),
     ]

@@ -8,21 +8,44 @@ import uuid
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0005_passenger_email'),
+        ("fleet_management", "0005_passenger_email"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='VerificationToken',
+            name="VerificationToken",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('comment', models.CharField(max_length=2000, blank=True)),
-                ('is_confirmed', models.BooleanField(default=False)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('is_ok', models.NullBooleanField()),
-                ('token', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('drive', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='fleet_management.Drive')),
-                ('passenger', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='fleet_management.Passenger')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("comment", models.CharField(max_length=2000, blank=True)),
+                ("is_confirmed", models.BooleanField(default=False)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("is_ok", models.NullBooleanField()),
+                (
+                    "token",
+                    models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
+                ),
+                (
+                    "drive",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="fleet_management.Drive",
+                    ),
+                ),
+                (
+                    "passenger",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="fleet_management.Passenger",
+                    ),
+                ),
             ],
         ),
     ]

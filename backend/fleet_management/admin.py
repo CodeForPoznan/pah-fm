@@ -32,12 +32,7 @@ class CountryFilter(admin.SimpleListFilter):
         return queryset
 
 
-class DriveCountryFilter(CountryFilter):
-    parameter_name = "driver__country"
-
-
 class DriveResource(resources.ModelResource):
-    country = Field(attribute="country")
     diff_mileage = Field(attribute="diff_mileage")
     fuel_consumption = Field(attribute="fuel_consumption")
 
@@ -56,7 +51,6 @@ class DriveResource(resources.ModelResource):
             "start_location",
             "end_location",
             "driver",
-            "driver__country",
             "passenger",
             "car__plates",
             "fuel_consumption",
@@ -66,8 +60,8 @@ class DriveResource(resources.ModelResource):
     def dehydrate_driver(self, drive):
         return str(drive.driver)
 
-    def dehydrate_driver__country(self, drive):
-        return str(drive.driver.country.name)
+    def dehydrate_country(self, drive):
+        return str(drive.country.name)
 
     def dehydrate_passenger(self, drive):
         return str(drive.passenger)
@@ -76,11 +70,8 @@ class DriveResource(resources.ModelResource):
 @admin.register(Drive)
 class DriveAdmin(ImportExportModelAdmin):
     resource_class = DriveResource
-    list_filter = (DriveCountryFilter,)
-    list_display = ("__str__", "country__name", "is_verified")
-
-    def country__name(self, drive):
-        return drive.country.name
+    list_filter = (CountryFilter,)
+    list_display = ("__str__", "country", "is_verified")
 
 
 @admin.register(Car)
@@ -98,7 +89,14 @@ class ProjectAdmin(admin.ModelAdmin):
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     list_filter = ("groups", CountryFilter)
-    list_display = ("username", "first_name", "last_name", "country", "is_staff", "last_seen")
+    list_display = (
+        "username",
+        "first_name",
+        "last_name",
+        "country",
+        "is_staff",
+        "last_seen",
+    )
 
     fieldsets = (
         (None, {"fields": ("username", "password")}),
