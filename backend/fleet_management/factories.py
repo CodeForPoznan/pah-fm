@@ -11,7 +11,6 @@ from factory import (
     Faker,
     LazyAttribute,
     lazy_attribute,
-    post_generation,
     SubFactory,
 )
 
