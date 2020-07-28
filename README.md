@@ -20,12 +20,16 @@ make debug-backend
 After finishing debugging detach from shell using *CTRL*+`p` and *CTRL*+`q`.
 
 ## Initial admin credentials
-We have 2 levels of admin users and 2 initial users - with and without Django Admin access:
+We have 2 levels of admin users and 4 initial users - with and without Django Admin access:
 
-username               | password | Django Admin access
----------------------- | -------- | -------------------
-hello@codeforpoznan.pl | cfp123   | yes
-ola@pah.org.pl         | pah123   | no
+username                   | password  | Django Admin access
+-------------------------- | --------- | -------------------
+hello@codeforpoznan.pl     | pass123   | yes
+ola@pah.org.pl             | pass123   | no
+                           |           |
+driver@codeforpoznan.pl    | pass123   | no
+passenger@codeforpoznan.pl | pass123   | no
+
 
 
 ## API documentation
