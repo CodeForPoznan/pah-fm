@@ -10,10 +10,10 @@ from fleet_management.factories import UserFactory
 class AuthTokenApiTestCase(APITestCase):
     def setUp(self):
         self.url = reverse("jwt")
-        self.driver = UserFactory.make(
+        self.driver = UserFactory.create(
             groups=[Group.objects.get(name=Groups.Driver.name)]
         )
-        self.passenger = UserFactory.make(
+        self.passenger = UserFactory.create(
             groups=[Group.objects.get(name=Groups.Passenger.name)]
         )
 

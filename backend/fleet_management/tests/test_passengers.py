@@ -12,10 +12,10 @@ from fleet_management.factories import UserFactory
 class PassengersApiTestCase(APITestCase):
     def setUp(self):
         self.url = reverse("passengers")
-        self.user = UserFactory.make(
+        self.user = UserFactory.create(
             groups=[Group.objects.get(name=Groups.Driver.name)]
         )
-        self.passengers = UserFactory.make_batch(
+        self.passengers = UserFactory.create_batch(
             size=5,
             country=self.user.country,
             groups=[Group.objects.get(name=Groups.Passenger.name)],

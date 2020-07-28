@@ -28,7 +28,7 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS(message))
 
         cars = [
-            CarFactory.make(
+            CarFactory.create(
                 plates="UA000000",
                 description="Default Car",
                 fuel_consumption=10.0,
@@ -37,12 +37,11 @@ class Command(BaseCommand):
         ]
         info("Creating 5 random cars")
         for _ in tqdm(range(5)):
-            cars.append(CarFactory.make())
+            cars.append(CarFactory.create())
 
         drivers = [
-            UserFactory.make(
+            UserFactory.create(
                 username="driver@codeforpoznan.pl",
-                email="driver@codeforpoznan.pl",
                 first_name="Default",
                 last_name="Driver",
                 country="UA",
@@ -51,12 +50,11 @@ class Command(BaseCommand):
         ]
         info("Creating 5 random drivers")
         for _ in tqdm(range(5)):
-            drivers.append(UserFactory.make(groups=[driver_group]))
+            drivers.append(UserFactory.create(groups=[driver_group]))
 
         passengers = [
-            UserFactory.make(
+            UserFactory.create(
                 username="passenger@codeforpoznan.pl",
-                email="passenger@codeforpoznan.pl",
                 first_name="Default",
                 last_name="Passenger",
                 country="UA",
@@ -65,18 +63,18 @@ class Command(BaseCommand):
         ]
         info("Creating 5 random passengers")
         for _ in tqdm(range(5)):
-            passengers.append(UserFactory.make(groups=[passenger_group]))
+            passengers.append(UserFactory.create(groups=[passenger_group]))
 
         projects = [
-            ProjectFactory.make(
+            ProjectFactory.create(
                 title="Default Project", description="Default Project", country="UA",
             )
         ]
         info("Creating 5 random projects")
         for _ in tqdm(range(5)):
-            projects.append(ProjectFactory.make())
+            projects.append(ProjectFactory.create())
 
-        DriveFactory.make(
+        DriveFactory.create(
             driver=drivers[0],
             project=projects[0],
             passenger=passengers[0],
@@ -88,7 +86,7 @@ class Command(BaseCommand):
             end_location="End",
             is_verified=True,
         )
-        DriveFactory.make(
+        DriveFactory.create(
             driver=drivers[0],
             project=projects[0],
             passenger=passengers[0],
@@ -102,7 +100,7 @@ class Command(BaseCommand):
         )
         info("Creating 50 random drives")
         for _ in tqdm(range(50)):
-            DriveFactory.make(
+            DriveFactory.create(
                 passenger=random.choice(passengers),
                 project=random.choice(projects),
                 driver=random.choice(drivers),
