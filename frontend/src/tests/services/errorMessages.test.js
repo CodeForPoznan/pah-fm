@@ -1,6 +1,7 @@
 import {
   splitCamelCase,
   renderErrorMessage,
+  toSnakeCase,
 } from '../../services/errorMessages';
 
 describe('splitCamelCase', () => {
@@ -18,6 +19,18 @@ describe('splitCamelCase', () => {
     const example = 'This Is my Great Example';
     const splitted = splitCamelCase(example);
     expect(splitted).toBe(example);
+  });
+});
+
+describe('toSnakeCase', () => {
+  it('split sample text', () => {
+    const splitted = toSnakeCase('toBeOrNotToBe');
+    expect(splitted).toBe('to_be_or_not_to_be');
+  });
+
+  it("don't split lowercase", () => {
+    const splitted = toSnakeCase('houstonwehaveaproblem');
+    expect(splitted).toBe('houstonwehaveaproblem');
   });
 });
 

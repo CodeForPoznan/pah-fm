@@ -42,8 +42,7 @@
       "start_location": "Goobta safarka kabilaabmo:",
       "starting_mileage": "Bilawga sacada KM:",
       "start_mileage_error": "Bilawga sacada KM wa qalad",
-      "submit": "Gudbi",
-      "validation_error": "ina {field} buxisid aya lobahanyahay"
+      "submit": "Gudbi"
     },
     "passenger_form": {
       "hash": "kodhka darawalka",
@@ -90,6 +89,17 @@
       "drive_ok_label": "Safarka miyu fiicnaa?",
       "submission_success": "Xaqijintada waladiray. Mahadsanid!",
       "token_inactive": "Linkigaga wukadhacay ama walaxaqijiye. Mahadsanid!"
+    },
+    "form_errors": {
+      "car": "gaariga",
+      "end_location": "gobta safarka kudhamaday",
+      "end_mileage": "Dhamaadka sacada",
+      "hash": "kodhka",
+      "passenger": "Rakaab",
+      "project": "Mashruuc",
+      "start_location": "Goobta safarka kabilaabmo",
+      "start_mileage": "Bilawga sacada",
+      "validation_error": "ina {field} buxisid aya lobahanyahay"
     }
   },
   "ua": {
@@ -135,8 +145,7 @@
       "start_location": "Початковий пункт поїздки",
       "starting_mileage": "Початкове значення вимірювального приладу",
       "start_mileage_error": "Початкове значення вимірювального приладу має неправильне значення",
-      "submit": "Надіслати",
-      "validation_error": "Потрібно заповнити {field}"
+      "submit": "Надіслати"
     },
     "passenger_form": {
       "hash": "код драйвера",
@@ -183,6 +192,17 @@
       "drive_ok_label": "Чи був маршрут OK?",
       "submission_success": "Ваше підтвердження надіслано. Дякую!",
       "token_inactive": "Ваше посилання закінчилося або вже підтверджено. Дякую!"
+    },
+    "form_errors": {
+      "car": "Автомобіль",
+      "end_location": "Кінцевий пункт поїздки",
+      "end_mileage": "Кінцеве значення вимірювального приладу",
+      "hash": "код",
+      "passenger": "Пасажир",
+      "project": "Проект",
+      "start_location": "Початковий пункт поїздки",
+      "start_mileage": "Початкове значення вимірювального приладу",
+      "validation_error": "Потрібно заповнити {field}"
     }
   },
   "gb": {
@@ -228,8 +248,7 @@
       "start_location": "Start location:",
       "starting_mileage": "Starting mileage:",
       "start_mileage_error": "Start mileage is incorrect",
-      "submit": "Submit",
-      "validation_error": "{field} is required"
+      "submit": "Submit"
     },
     "passenger_form": {
       "hash": "Driver code",
@@ -276,6 +295,17 @@
       "drive_ok_label": "Was the drive OK?",
       "submission_success": "Your confirmation was sent. Thank you!",
       "token_inactive": "Your link expired or has already been confirmed. Thank you!"
+    },
+    "form_errors": {
+      "car": "Car",
+      "end_location": "End location",
+      "end_mileage": "Ending mileage",
+      "hash": "Code",
+      "passenger": "Passenger",
+      "project": "Project",
+      "start_location": "Start location",
+      "start_mileage": "Starting mileage",
+      "validation_error": "{field} is required"
     }
   },
   "pl": {
@@ -321,8 +351,7 @@
       "start_location": "Lokalizacja początkowa:",
       "starting_mileage": "Początkowy stan licznika:",
       "start_mileage_error": "Stan licznika jest niepoprawny",
-      "submit": "Wyślij",
-      "validation_error": "Pole {field} jest wymagane"
+      "submit": "Wyślij"
     },
     "passenger_form": {
       "hash": "Kod kierowcy",
@@ -368,6 +397,17 @@
       "drive_ok_label": "Czy przejazd był OK?",
       "submission_success": "Potwierdzenie zostało wysłane. Dziękujemy!",
       "token_inactive": "Link wygasł albo został już potwierdzony. Dziękujemy!"
+    },
+    "form_errors": {
+      "car": "Samochód",
+      "end_location": "Lokalizacja końcowa",
+      "end_mileage": "Końcowy stan licznika",
+      "hash": "Kod",
+      "passenger": "Pasażer",
+      "project": "Projekt",
+      "start_location": "Lokalizacja początkowa",
+      "start_mileage": "Początkowy stan licznika",
+      "validation_error": "Pole {field} jest wymagane"
     }
   }
 }
