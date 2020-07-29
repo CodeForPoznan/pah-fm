@@ -41,8 +41,10 @@ class PassengersApiTestCase(APITestCase):
 
     def test_search_passengers_by_first_name(self):
         self.client.force_login(self.user)
-        url_params = urlencode({"search": self.passengers[0].first_name})
+        searched_passenger = self.passengers[0]
+        url_params = urlencode({"search": searched_passenger.first_name})
         res = self.client.get(f"{self.url}?{url_params}")
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(res.data), 1)
-        self.assertEqual(res.data[0]["id"], self.passengers[0].id)
+        returned_ids = map(lambda p: p["id"], res.data)
+        self.assertIn(searched_passenger.id, returned_ids)
+        self.assertTrue(len(res.data))
