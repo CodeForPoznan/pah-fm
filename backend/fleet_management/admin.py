@@ -57,11 +57,11 @@ class DriveResource(resources.ModelResource):
         )
         export_order = fields
 
-    def dehydrate_driver(self, drive):
-        return str(drive.driver)
-
     def dehydrate_country(self, drive):
         return str(drive.country.name)
+
+    def dehydrate_driver(self, drive):
+        return str(drive.driver)
 
     def dehydrate_passenger(self, drive):
         return str(drive.passenger)
@@ -71,19 +71,27 @@ class DriveResource(resources.ModelResource):
 class DriveAdmin(ImportExportModelAdmin):
     resource_class = DriveResource
     list_filter = (CountryFilter,)
-    list_display = ("__str__", "country", "is_verified")
+    list_display = (
+        "date",
+        "start_location",
+        "end_location",
+        "driver",
+        "passenger",
+        "country",
+        "is_verified",
+    )
 
 
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
     list_filter = (CountryFilter,)
-    list_display = ("__str__", "country")
+    list_display = ("plates", "description", "fuel_consumption", "country")
 
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     list_filter = (CountryFilter,)
-    list_display = ("__str__", "country")
+    list_display = ("title", "country")
 
 
 @admin.register(User)
