@@ -7,29 +7,23 @@ import fleet_management.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0013_merge_20190821_1839'),
+        ("fleet_management", "0013_merge_20190821_1839"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='verificationtoken',
-            name='drive',
-        ),
-        migrations.RemoveField(
-            model_name='verificationtoken',
-            name='passenger',
-        ),
+        migrations.RemoveField(model_name="verificationtoken", name="drive",),
+        migrations.RemoveField(model_name="verificationtoken", name="passenger",),
         migrations.AlterField(
-            model_name='drive',
-            name='timestamp',
+            model_name="drive",
+            name="timestamp",
             field=models.IntegerField(default=1566415618),
         ),
-        migrations.DeleteModel(
-            name='VerificationToken',
-        ),
+        migrations.DeleteModel(name="VerificationToken",),
         migrations.AlterField(
-            model_name='drive',
-            name='timestamp',
-            field=models.IntegerField(default=fleet_management.models.get_current_timestamp_in_gmt),
+            model_name="drive",
+            name="timestamp",
+            field=models.IntegerField(
+                default=fleet_management.models.get_current_timestamp_in_gmt
+            ),
         ),
     ]

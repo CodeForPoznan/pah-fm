@@ -7,13 +7,15 @@ import django_countries.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0011_add_default_groups'),
+        ("fleet_management", "0011_add_default_groups"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='passenger',
-            name='country',
-            field=django_countries.fields.CountryField(default=None, max_length=2, null=True),
+            model_name="passenger",
+            name="country",
+            field=django_countries.fields.CountryField(
+                default=None, max_length=2, null=True
+            ),
         ),
     ]

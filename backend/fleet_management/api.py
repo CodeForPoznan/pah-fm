@@ -1,3 +1,6 @@
+from datetime import timedelta
+
+from django.utils import timezone
 from rest_framework import generics, filters, views
 from rest_framework.response import Response
 
@@ -15,11 +18,8 @@ from .constants import Groups
 
 
 class CurrentUserRetrieveView(views.APIView):
-
     def get(self, request):
-        return Response(
-            UserSerializer(request.user).data
-        )
+        return Response(UserSerializer(request.user).data)
 
 
 class PassengerListView(generics.ListAPIView):
@@ -27,16 +27,12 @@ class PassengerListView(generics.ListAPIView):
     required_groups = all_driver_methods
     serializer_class = PassengerSerializer
     filter_backends = (filters.OrderingFilter, filters.SearchFilter)
-    search_fields = (
-        'first_name',
-        'last_name'
-    )
-    ordering = ('first_name', 'last_name')
+    search_fields = ("first_name", "last_name")
+    ordering = ("first_name", "last_name")
 
     def get_queryset(self):
         return User.objects.filter(
-            groups__name=Groups.Passenger.name,
-            country=self.request.user.country
+            groups__name=Groups.Passenger.name, country=self.request.user.country
         ) | User.objects.filter(country=None, groups__name=Groups.Passenger.name)
 
 
@@ -44,14 +40,12 @@ class CarListView(generics.ListAPIView):
     permission_classes = [GroupPermission]
     required_groups = all_driver_methods
     serializer_class = CarSerializer
-    search_fields = ('plates',)
+    search_fields = ("plates",)
     filter_backends = (filters.OrderingFilter, filters.SearchFilter)
-    ordering = ('plates',)
+    ordering = ("plates",)
 
     def get_queryset(self):
-        return Car.objects.filter(
-            country=self.request.user.country,
-        )
+        return Car.objects.filter(country=self.request.user.country)
 
 
 class DriveView(generics.ListCreateAPIView):
@@ -59,14 +53,14 @@ class DriveView(generics.ListCreateAPIView):
     required_groups = all_driver_methods
     serializer_class = DriveSerializer
     filter_backends = (filters.OrderingFilter,)
-    ordering = ('-date',)
+    ordering = ("-date",)
 
     def get_serializer_context(self):
-        return {'driver': self.request.user}
+        return {"driver": self.request.user}
 
     def get_queryset(self):
         return Drive.objects.filter(
-            driver__id=self.request.user.id,
+            driver=self.request.user, date__gte=timezone.now() - timedelta(days=30)
         )
 
 
@@ -77,9 +71,8 @@ class ProjectView(generics.ListAPIView):
     serializer_class = ProjectSerializer
 
     def get_queryset(self):
-        return Project.objects.filter(
-            country=self.request.user.country,
-        )
+
+        return Project.objects.filter(country=self.request.user.country)
 
 
 class RefuelView(generics.ListAPIView):

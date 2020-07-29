@@ -6,14 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0004_auto_20181129_2056'),
+        ("fleet_management", "0004_auto_20181129_2056"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='passenger',
-            name='email',
-            field=models.EmailField(default='email@email.com', max_length=254),
+            model_name="passenger",
+            name="email",
+            field=models.EmailField(default="email@email.com", max_length=254),
             preserve_default=False,
         ),
     ]

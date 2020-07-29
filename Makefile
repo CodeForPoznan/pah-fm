@@ -62,6 +62,7 @@ remove-frontend:  ## Stop and remove frontend container
 
 lint-backend:  ## Run linters on backend container
 	docker-compose run --rm --no-deps backend flake8 .
+	docker-compose run --rm --no-deps backend black .
 
 lint-frontend:  ## Run linters on frontend container
 	docker-compose run --rm --no-deps frontend npm run lint:fix

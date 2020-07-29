@@ -7,13 +7,13 @@ import django_countries.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0014_auto_20190821_1926'),
+        ("fleet_management", "0014_auto_20190821_1926"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='project',
-            name='country',
-            field=django_countries.fields.CountryField(max_length=2, default='UA'),
+            model_name="project",
+            name="country",
+            field=django_countries.fields.CountryField(max_length=2, default="UA"),
         ),
     ]

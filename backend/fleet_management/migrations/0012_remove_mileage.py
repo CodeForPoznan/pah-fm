@@ -6,12 +6,9 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0011_add_default_groups'),
+        ("fleet_management", "0011_add_default_groups"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='car',
-            name='mileage_unit',
-        ),
+        migrations.RemoveField(model_name="car", name="mileage_unit",),
     ]

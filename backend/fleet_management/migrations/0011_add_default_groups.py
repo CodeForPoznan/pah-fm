@@ -20,7 +20,7 @@ def insert_to_groups(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0010_auto_20190731_1747'),
+        ("fleet_management", "0010_auto_20190731_1747"),
     ]
 
     operations = [

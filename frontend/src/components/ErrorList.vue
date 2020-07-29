@@ -7,7 +7,14 @@
         v-for="(error, index) in errors"
         :key="index"
       >
-        {{ error }}
+        {{ $t('form_errors.validation_error', { field: $t(`form_errors.${error}`)}) }}
+      </li>
+      <li
+        class="error"
+        v-for="(error, index) in otherErrors"
+        :key="index"
+      >
+        {{ $t(error) }}
       </li>
     </ul>
   </div>
@@ -20,6 +27,11 @@ export default {
     errors: {
       type: Array,
       required: true,
+    },
+    otherErrors: {
+      type: Array,
+      required: false,
+      default: () => [],
     },
   },
 };

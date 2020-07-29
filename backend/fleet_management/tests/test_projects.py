@@ -10,10 +10,10 @@ from fleet_management.factories import UserFactory, ProjectFactory
 class ProjectsApiTestCase(APITestCase):
     def setUp(self):
         self.url = reverse("projects")
-        self.user = UserFactory.make(
+        self.user = UserFactory.create(
             groups=[Group.objects.get(name=Groups.Driver.name)]
         )
-        self.projects = ProjectFactory.make_batch(size=3, country=self.user.country)
+        self.projects = ProjectFactory.create_batch(size=3, country=self.user.country)
 
     def test_401_for_unlogged_user(self):
         res = self.client.get(self.url)
