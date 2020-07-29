@@ -9,7 +9,7 @@ import djmoney.models.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fleet_management', '0023_user_last_seen'),
+        ('fleet_management', '0024_drive_country'),
     ]
 
     operations = [
