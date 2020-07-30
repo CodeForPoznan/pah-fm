@@ -27,18 +27,18 @@ from fleet_management.api import (
     DriveView,
     PassengerListView,
     ProjectView,
-    RefuelView
+    RefuelView,
 )
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/docs/', include_docs_urls(title='PAH-FM', public=False)),
-    path('api/api-token-auth/', obtain_jwt_token, name='jwt'),
-    path('api/users/me', CurrentUserRetrieveView.as_view(), name='me'),
-    path('api/passengers', PassengerListView.as_view(), name='passengers'),
-    path('api/cars', CarListView.as_view(), name='cars'),
-    path('api/drives', DriveView.as_view(), name='drives'),
-    path('api/projects', ProjectView.as_view(), name='projects'),
-    path('api/refuels', RefuelView.as_view(), name="refuels"),
+    path("admin/", admin.site.urls),
+    path("api/docs/", include_docs_urls(title="PAH-FM", public=False)),
+    path("api/api-token-auth/", obtain_jwt_token, name="jwt"),
+    path("api/users/me", CurrentUserRetrieveView.as_view(), name="me"),
+    path("api/passengers", PassengerListView.as_view(), name="passengers"),
+    path("api/cars", CarListView.as_view(), name="cars"),
+    path("api/drives", DriveView.as_view(), name="drives"),
+    path("api/projects", ProjectView.as_view(), name="projects"),
+    path("api/refuels", RefuelView.as_view(), name="refuels"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

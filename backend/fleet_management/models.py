@@ -138,4 +138,6 @@ class Refuel(models.Model):
     current_mileage = models.IntegerField(null=False)
     refueled_liters = models.IntegerField(null=False)
     price_per_liter = models.IntegerField(null=False)
-    currency = MoneyField(max_digits=10, decimal_places=2, null=False, default_currency="USD")
+    currency = MoneyField(
+        max_digits=10, decimal_places=2, null=False, default_currency="USD"
+    )

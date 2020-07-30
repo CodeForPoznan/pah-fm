@@ -82,6 +82,4 @@ class RefuelView(generics.ListAPIView):
     serializer_class = RefuelSerializer
 
     def get_queryset(self):
-        return Refuel.objects.filter(
-            country=self.request.user.country,
-        )
+        return Refuel.objects.filter(country=self.request.user.country,)
