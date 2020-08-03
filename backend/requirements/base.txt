@@ -10,5 +10,5 @@ Pygments==2.3.1
 django-countries==5.3.3
 django-import-export==2.0.2
 serverless-wsgi==1.7.4
-psycopg2==2.7.5 --no-binary psycopg2
 django-money==1.1
+psycopg2-binary==2.8.5

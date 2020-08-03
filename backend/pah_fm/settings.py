@@ -144,19 +144,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
-
-if os.environ.get("S3_BUCKET") and os.environ.get("S3_KEY"):
-    STATICFILES_STORAGE = "django_s3_storage.storage.StaticS3Storage"
-    S3_BUCKET = os.environ.get("S3_BUCKET")
-    S3_KEY = os.environ.get("S3_KEY")
-
-    AWS_S3_BUCKET_NAME_STATIC = S3_BUCKET
-    AWS_S3_CUSTOM_DOMAIN = f"{S3_BUCKET}.s3.amazonaws.com"
-    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{S3_KEY}"
-else:
-    STATIC_URL = "/static/"
-    STATIC_ROOT = os.path.join(BASE_DIR, "static")
-    STATICFILES_DIRS = [os.path.join(BASE_DIR, "pah_fm/static")]
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "pah_fm/static")]
 
 # Email settings
 EMAIL_HOST = "localhost"
