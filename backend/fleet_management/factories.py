@@ -4,7 +4,6 @@ from datetime import timedelta
 import random
 
 from django.utils.timezone import now
-from django.contrib.auth.hashers import make_password
 from factory import (
     fuzzy,
     DjangoModelFactory,
@@ -39,7 +38,7 @@ class UserFactory(DjangoModelFactory):
     def _create(cls, model_class, *args, **kwargs):
         groups = kwargs.pop("groups", [])
         user = super()._create(model_class, *args, **kwargs)
-        user.password = make_password(user.password)
+        user.set_password(cls.password)
         for g in groups:
             user.groups.add(g)
         user.save()
