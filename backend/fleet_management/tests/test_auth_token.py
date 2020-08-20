@@ -34,10 +34,19 @@ class AuthTokenApiTestCase(APITestCase):
         self.assertEqual(passenger_res.status_code, status.HTTP_200_OK)
         self.assertContains(passenger_res, "token")
 
-    def test_unsuccessful_user_login(self):
+    def test_unsuccessful_user_login_bad_credentials(self):
         res = self.client.post(
             self.url,
             data={"username": self.driver.username, "password": "badpassword"},
             format="json",
         )
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_unsuccessful_user_login_without_group(self):
+        self.driver.groups.clear()
+        res = self.client.post(
+            self.url,
+            data={"username": self.driver.username, "password": "badpassword"},
+            format="json",
+        )
+        self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
