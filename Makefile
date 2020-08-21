@@ -85,7 +85,7 @@ debug-backend:  ## Debug backend container (Django)
 populate-database:  ## Populate database with factory based data
 	make manage CMD=populate_database
 
-checkout:  ## Checkout to existing branch and start clean app, i.e. make checkout BRANCH=develop
+checkout:  ## Checkout to existing branch and start clean app, i.e. make checkout BRANCH=master
 	@test "${BRANCH}" || make help | grep " $@ "
 	@test "${BRANCH}" # fail if variable is not set
 

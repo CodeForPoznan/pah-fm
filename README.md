@@ -1,6 +1,7 @@
 # pah-fm
 
-[Fleet Manager](https://en.wikipedia.org/wiki/Fleet_management) for [Polish Humanitarian Action](https://www.pah.org.pl).
+[Fleet Manager](https://en.wikipedia.org/wiki/Fleet_management) 
+for [Polish Humanitarian Action](https://www.pah.org.pl).
 
 [![Build Status](https://travis-ci.com/CodeForPoznan/pah-fm.svg?branch=master)](https://travis-ci.com/CodeForPoznan/pah-fm)
 [![Join Slack](https://img.shields.io/badge/slack-join%20chat-4a154b)](https://join.slack.com/t/codeforpoznan/shared_invite/enQtNjQ5MTU1MDI0NDA0LWNhYTA3NGQ0MmQ5ODgxODE3ODJlZjc3NWE0NTMzZjhmNDBkN2QwMzNhYWY5OWQ5MGE2OGM3NjAyODBlY2VjNjU)
@@ -61,7 +62,7 @@ or homegrown solutions to already solved problems by using well
 tested and popular libraries/tools.
 
 Application is split between two main directories - backend and frontend.
-Here's a rough description of project's structure:
+Here's a high-level description of the project's structure:
 
 - backend  
   - `main purpose:` REST API for frontend code
@@ -84,7 +85,9 @@ Here's a rough description of project's structure:
   - `framework:` behave
 
 
-You'll probably want to focus on either `frontend` or `backend` directory.
+You'll probably want to focus on either `frontend` or `backend` 
+directory as the two other ones are deprecated and intended for 
+removal in near future.
 
 
 <br>
@@ -96,12 +99,12 @@ You'll need [docker](https://docs.docker.com/desktop/) and
 installed on your computer in order to set up the stack.  
 You will also need `git`, `make` and a decent code editor.
 
-> `NOTE:` if you're trying to install `docker-compose` with `apt` on Linux 
-> then you might end up installing obsolete version!
+> `NOTE:` if you're trying to install `docker-compose` with 
+> `apt` on Linux then you might end up installing obsolete version!
 > Consider using `pip` instead. Try getting one with version `>= 1.25.4`.
 
 
-1. Get the source code. If you intend to send patch via Pull Request then
+1. Get the source code. If you intend to send a Pull Request then
 please follow [Github Flow](https://githubflow.github.io/).
 
 ```shell script
@@ -139,8 +142,9 @@ make populate-database
 ```
 
 
-5. Open up [http://localhost:8080/](http://localhost:8080/) and use the app!
-There's also admin page [http://localhost:8080/admin/](http://localhost:8080/admin/)
+5. Open up [http://localhost:8080/](http://localhost:8080/) and use 
+the app! There's also admin page at
+[http://localhost:8080/admin/](http://localhost:8080/admin/).
 
 
 At this point you'll be able to log in as driver or passenger,
@@ -153,11 +157,11 @@ common data formats such as CSV.
 
 ### How to Debug the Project or Start Working on Pull Request?
 
-First, get familiar with project's handy toolset - `make`!  
-We wrapped many common actions that you'd want to execute 
-as a developer in a `Makefile`.
+First, get familiar with project's handy toolset - `make`!
+We wrapped many common actions in a `Makefile`.
+You can view them all by running `make help` or just `make`.  
+Here's a snippet of the output:
 
-You can view them all by running `make help`.
 ```shell script
 pah-fm$ make
 
@@ -169,37 +173,19 @@ Targets:
               start   Start all containers in background
                stop   Stop all containers
               build   Build backend & frontend containers
-            adminer   run database adminer
-             remove   Stop and remove backend & frontend containers
-            rebuild   Rebuid application
-  rebuild-docker-images   Rebuid backend & frontend containers
-               logs   Attach to logs
-               lint   Run linters
-               test   Run tests
              manage   Use manage.py, i.e make manage CMD=collectstatic
       build-backend   Build backend container
      build-frontend   Build frontend container
-     remove-backend   Stop and remove backend container
-    remove-frontend   Stop and remove frontend container
-       lint-backend   Run linters on backend container
-      lint-frontend   Run linters on frontend container
-      test-frontend   Run tests on frontend container
-       test-backend   Run tests on backend container
-       bash-backend   Enter backend container
-      bash-frontend   Enter frontend container
-      debug-backend   Debug backend container (Django)
-  populate-database   Populate database with factory based data
-           checkout   Checkout to existing branch and start clean app, i.e. make checkout BRANCH=develop
-        checkout-pr   Checkout to Pull Request, i.e. make checkout-pr PR=150
+
+    ...
 ```
 
-As you can see, there's quite a lot of useful commands here,
-but don't worry - many of them are duplicates for backend / frontend
-containers. I advise you to read and get familiar with at least some 
-of them so you can work on the project more easily.
+As you can see, there are quite a lot of useful commands here.
+I advise you to read and get familiar with at least some 
+of them from the top so you can work on the project more easily.
 
-Here's a handy list with some problems and solutions based on above commands
-that you might encounter when developing project locally:
+Here's a handy list with some problems and solutions based on above 
+commands that you might encounter when developing project locally:
 
 `Q:` How to start or stop the project?  
 `A:` `make start` or `make stop`
@@ -207,26 +193,27 @@ that you might encounter when developing project locally:
 `Q:` How to view logs from all containers?  
 `A:` `make logs`
 
-`Q:` My Pull Request build on Travis failed due to lint errors, how can I fix it?  
+`Q:` My Pull Request build on Travis failed due to lint errors, 
+how can I fix it?  
 `A:` `make lint` and `git add . && git commit && git push`
 
 `Q:` How to generate some random data for testing?  
 `A:` `make populate-database`
 
 `Q:` How to debug backend with PDB?  
-`A:` Place `import pdb; pdb.set_trace()` in code, save the file, run `make debug-backend` and interact with page to hit that breakpoint.
+`A:` Place `import pdb; pdb.set_trace()` in code, save the file, 
+run `make debug-backend` and interact with page to hit your breakpoint.
 After debugging detach from shell by pressing `CTRL + P` and `CTRL + Q`.
 
 `Q:` How to debug frontend with Chrome?  
-`A:` Place `debugger;` in code, save the file, run `make logs`, 
-wait a second or two until frontend rebuilds itself
-(you can check it with `make logs`), refresh page in browser and
-interact with it to hit that breakpoint.
+`A:` Place `debugger;` in code, save the file, wait a second or two 
+until frontend rebuilds itself (you can check it with `make logs`), 
+refresh page in browser, open developer tools (`CTRL + F12`) and interact 
+with the page to hit a breakpoint.
 
-<br>
 
 If you have any more questions not described here then please ask us
-on `#pah` on [Slack](https://codeforpoznan.slack.com).
+ on [Slack](https://codeforpoznan.slack.com) (channel name is`#pah`).
 
 
 <br>
@@ -234,12 +221,12 @@ on `#pah` on [Slack](https://codeforpoznan.slack.com).
 #### Initial admin credentials
 We have 2 default users who are always present - `hello` and `ola`,
 but you can create a few more default by running `make populate-database`.
-This command will create `driver` and `passenger` and also few other random
-users and basic entities (Cars, Projects).
+This command will create `driver` and `passenger` and also few other 
+random users and basic entities (Cars, Projects).
 Every user that's randomly created has the same password -`pass123`.
 
 Here's a table with basic users + the default users created 
-when DB is populatd:
+when DB is populated:
 
 username                        | password  | Django Admin access
 ------------------------------- | --------- | -------------------
@@ -260,8 +247,8 @@ You can take a look by going to
 [localhost:8080/api/docs/](http://localhost:8080/api/docs/) or
 [dev.pahfm.codeforpoznan.pl/api/docs/](https://dev.pahfm.codeforpoznan.pl/api/docs/).
 
-> NOTE: documentation is available only to logged-in users because of
-> a DjangoRestFramework quirk, so be sure to log in to Admin panel.
+> `NOTE:` documentation is available only to logged-in users because of
+> a DjangoRestFramework quirk, so be sure to log in to Admin panel beforehand.
 
 
 <br>
@@ -269,8 +256,18 @@ You can take a look by going to
 #### Support for Auto-Completion via Python Environments
 
 If your editor does not support hooking up to Docker containers for 
-python environments then you'll probably have to create that environment
-yourself in order to have a nice code auto completion features.
+python environments then you'll probably have to create python 
+virtual environment yourself in order to have auto completion features.
+
+> `NOTE:` The way it's supposed to be configured varies wildly
+> between editors and toolchains so don't rely too much on this guide.
+> Try finding documentation on configuring python environment
+> for your particular editor, or use the links below:  
+> [instructions for VS Code](https://code.visualstudio.com/docs/python/environments).  
+> [instructions for PyCharm](https://www.jetbrains.com/help/pycharm/creating-virtual-environment.html)  
+> [instructions for Sublime Text](http://technologist.pro/development/using-python-virtual-environments-with-sublime-text)  
+
+The general flow for configuring venv looks like so:
 
 ```shell script
 cd pah-fm
@@ -279,8 +276,11 @@ source ./backend/.venv/bin/activate
 pip3 install -r requirements/dev.txt -r requirements/base.txt
 ```
 
-Now pip modules are located in `backend/.venv/lib/python3.7/site-packages`. 
-You can use them to check what is available in sources, and add it to your IDE for module resolution.
+This will create brand new environment safely separated from your 
+system libraries where all project dependencies are installed
+(more pecisely here: `backend/.venv/lib/python3.X/site-packages`).
+You can use them to check what is available in sources, 
+and add it to your IDE for module resolution / auto completion.
 
 
 <br>
@@ -292,10 +292,11 @@ as AWS Lambda Function to
 [dev.pahfm.codeforpoznan.pl](https://dev.pahfm.codeforpoznan.pl/).
 
 It's built and deployed after every successful merge 
-to master branch. Any new Django migrations are also applied
-after deployment automatically. You can log in there and test 
-the application but you'll need to ask for a new account 
-on `#pah` channel on Slack first.
+to master branch. New Django migrations are also applied 
+automatically after a successful deployment.
+You can log in there and test the application but you'll 
+need to ask for a new account first on 
+[Slack](https://codeforpoznan.slack.com) (channel name is`#pah`).
 
 
 <br>
@@ -303,7 +304,7 @@ on `#pah` channel on Slack first.
 #### Detailed Description of the Backend
 
 Backend code is a classic Django project with one app 
-called `fleet_management` which is the core of backend code.
+called `fleet_management` - that's the core of backend code.
 
 
 ##### Endpoints
