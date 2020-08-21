@@ -52,7 +52,7 @@
         v-model="project"
         name="project"
         class="form-control select"
-        :class="{ 'is-invalid': isInvalid['project'] }"
+        :class="{ 'select-invalid': isInvalid['project'] }"
         label="title"
         :reduce="(project) => project.id"
         :options="projects.data"
@@ -71,7 +71,7 @@
         v-model="car"
         name="car"
         class="form-control select"
-        :class="{ 'is-invalid': isInvalid['car'] }"
+        :class="{ 'select-invalid': isInvalid['car'] }"
         label="plates"
         :reduce="(car) => car.id"
         :options="cars.data"
@@ -89,7 +89,7 @@
         v-model="passenger"
         name="passenger"
         class="form-control select"
-        :class="{ 'is-invalid': isInvalid['passenger'] }"
+        :class="{ 'select-invalid': isInvalid['passenger'] }"
         label="text"
         :reduce="(passenger) => passenger.value"
         :options="passengers"
@@ -259,5 +259,9 @@ export default {
   height: initial;
   padding: 0;
   border-radius: 0.25rem;
+
+  &.select-invalid {
+    border: 1px solid red;
+  }
 }
 </style>
