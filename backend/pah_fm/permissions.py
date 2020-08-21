@@ -4,7 +4,8 @@ from fleet_management.models import User
 
 class UserHasGroupPermission(permissions.BasePermission):
     message = (
-        "You are not allowed to log in because you do not belong to any group. "
+        "You are not allowed to log in because this account "
+        "does not exist or you do not belong to any group. "
         "Please contact admins."
     )
 
