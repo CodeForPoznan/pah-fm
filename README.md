@@ -17,7 +17,7 @@ mission and by passengers helping around the world.
 
 Its purpose is to provide a simple, robust and mobile-first web 
 application that supports submitting drives taken by drivers and 
-cryptographically verifing their authenticity with passengers without 
+cryptographically verifying their authenticity with passengers without 
 the need for an active internet connection.
 Submitted and verified drives are automatically sent back to database 
 when network connection is reestablished (eg. near WiFi Hot-Spot).  
@@ -278,7 +278,7 @@ pip3 install -r requirements/dev.txt -r requirements/base.txt
 
 This will create brand new environment safely separated from your 
 system libraries where all project dependencies are installed
-(more pecisely here: `backend/.venv/lib/python3.X/site-packages`).
+(more precisely here: `backend/.venv/lib/python3.X/site-packages`).
 You can use them to check what is available in sources, 
 and add it to your IDE for module resolution / auto completion.
 
@@ -512,11 +512,15 @@ for very small number of people who couldn't sync yet.
 
 Live instance of this application is running on dedicated server,
 [here](https://pahfm.codeforpoznan.pl/), but the staging environment 
-(every push to master) is running on AWS Lambda service 
+is running on AWS Lambda service 
 [here](https://dev.pahfm.codeforpoznan.pl).
-We're planning to migrate the production environment there as well 
-trough that requires some preparation.
+We're planning to migrate the production environment to lambda
+trough that will require some non-trivial preparation.
 
 Local environment is set up using docker and docker-compose which
-also relies on dockerhub for pulling the latest images from repository.
+also relies on DockerHub for pulling the latest images from repository.
 
+
+If you have any more questions / comments or if some parts of this 
+applications are still difficult to understand then please ask us
+ on [Slack](https://codeforpoznan.slack.com) (channel name is`#pah`).
