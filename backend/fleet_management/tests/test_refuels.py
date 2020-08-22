@@ -9,7 +9,7 @@ from fleet_management.factories import UserFactory
 
 class RefuelsApiTestCase(APITestCase):
     def setUp(self):
-        self.url = reverse("projects")
+        self.url = reverse("refuels")
         self.user = UserFactory.create(
             groups=[Group.objects.get(name=Groups.Driver.name)]
         )
