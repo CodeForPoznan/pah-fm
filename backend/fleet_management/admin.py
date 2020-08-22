@@ -130,7 +130,7 @@ class CustomUserAdmin(UserAdmin):
 
 @admin.register(Refuel)
 class RefuelAdmin(admin.ModelAdmin):
-    list_filter = ("driver", "car")  # project, country?
+    list_filter = ("driver", "car", "project", CountryFilter)
     list_display = (
         "driver",
         "car",
