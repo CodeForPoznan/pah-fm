@@ -4,7 +4,9 @@
       <div class="row">
         <Header />
         <Status />
-        <sidebar class="col-3" :show="showMenu && IS_USER_LOGGED_IN" />
+        <div class="col-3 menu-button">
+          <sidebar :show="showMenu && IS_USER_LOGGED_IN" />
+        </div>
       </div>
       <div
         id="page-wrap"
@@ -101,30 +103,20 @@ export default {
 
   .mobile-menu {
     position: inherit;
-    display: flex;
-    justify-content: center;
 
     .bm-menu {
       background: $pah-color-3;
     }
 
     .bm-burger-button {
-      display: flex;
-      justify-content: center;
       position: inherit;
-      width: 36px;
-      height: 30px;
+      width: 42px;
+      height: 36px;
       cursor: pointer;
     }
 
-    .line-styl {
-      width: 36px;
-    }
-
     .bm-burger-bars {
-      display: flex;
-      position: inherit;
-      width: 36px;
+      background-color: #373a47;
     }
 
     .bm-cross {
@@ -168,7 +160,7 @@ export default {
     min-height: 15vh;
   }
 
-  .column {
+  .menu-button {
     display: flex;
     justify-content: center;
   }
