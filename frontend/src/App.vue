@@ -2,15 +2,9 @@
   <div id="app">
     <div class="container">
       <div class="row">
-        <div class="col-6 p-0">
-          <Header />
-        </div>
-        <div class="col-3">
-          <Status />
-        </div>
-        <div class="col-3">
-          <sidebar :show="showMenu && IS_USER_LOGGED_IN" />
-        </div>
+        <Header />
+        <Status />
+        <sidebar class="col-3" :show="showMenu && IS_USER_LOGGED_IN" />
       </div>
       <div
         id="page-wrap"
@@ -106,17 +100,31 @@ export default {
   }
 
   .mobile-menu {
+    position: inherit;
+    display: flex;
+    justify-content: center;
+
     .bm-menu {
       background: $pah-color-3;
     }
 
     .bm-burger-button {
-      position: fixed;
+      display: flex;
+      justify-content: center;
+      position: inherit;
       width: 36px;
       height: 30px;
-      left: 36px;
-      top: 44px;
       cursor: pointer;
+    }
+
+    .line-styl {
+      width: 36px;
+    }
+
+    .bm-burger-bars {
+      display: flex;
+      position: inherit;
+      width: 36px;
     }
 
     .bm-cross {
@@ -158,5 +166,10 @@ export default {
     justify-items: center;
     align-items: center;
     min-height: 15vh;
+  }
+
+  .column {
+    display: flex;
+    justify-content: center;
   }
 </style>

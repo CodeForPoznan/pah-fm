@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isLogin && user">
+  <div v-if="!isLogin && user" class="col-3">
     <div
       v-if="isOnline"
       class="online"

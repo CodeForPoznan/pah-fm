@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="header col-6">
     <b-nav-item
       class="logo-container"
       to="/drive"
