@@ -36,6 +36,7 @@ export default {
   @include p(3);
   @include flex(row, center);
 
+  justify-content: flex-start;
   text-align: center;
   background: $white;
   height: 120px;

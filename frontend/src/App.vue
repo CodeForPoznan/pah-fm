@@ -162,6 +162,6 @@ export default {
 
   .menu-button {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
   }
 </style>
