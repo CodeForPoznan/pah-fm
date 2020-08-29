@@ -4,7 +4,7 @@
       <div class="row">
         <Header />
         <Status />
-        <div class="col-3 menu-button">
+        <div class="col-2 menu-button">
           <sidebar :show="showMenu && IS_USER_LOGGED_IN" />
         </div>
       </div>
@@ -155,7 +155,6 @@ export default {
 
   .row {
     display: flex;
-    justify-items: center;
     align-items: center;
     min-height: 15vh;
   }
