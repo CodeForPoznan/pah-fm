@@ -13,15 +13,15 @@
         </div>
       </div>
       <div
-              id="page-wrap"
-              class="container"
+        id="page-wrap"
+        class="container"
       >
         <div class="row">
           <div class="col-xs-12 page">
             <transition
-                    name="fade"
-                    mode="out-in"
-                    appear
+              name="fade"
+              mode="out-in"
+              appear
             >
               <router-view @hide-menu="showMenu = false" />
             </transition>
@@ -34,54 +34,54 @@
 </template>
 
 <script>
-  import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 
-  import Header from './components/Header.vue';
-  import Refresh from './components/Refresh.vue';
-  import Status from './components/Status.vue';
-  import Sidebar from './components/Sidebar.vue';
-  import store, { LANGUAGE } from './store';
+import Header from './components/Header.vue';
+import Refresh from './components/Refresh.vue';
+import Status from './components/Status.vue';
+import Sidebar from './components/Sidebar.vue';
+import store, { LANGUAGE } from './store';
 
-  import { IS_USER_LOGGED_IN } from './store/modules/http/getters';
+import { IS_USER_LOGGED_IN } from './store/modules/http/getters';
 
-  import { SYNC } from './store/constants';
-  import { FETCH_USER } from './store/actions';
+import { SYNC } from './store/constants';
+import { FETCH_USER } from './store/actions';
 
-  export default {
-    name: 'App',
-    store,
-    components: {
-      Refresh,
-      Header,
-      Status,
-      Sidebar,
-    },
-    data() {
-      return {
-        showMenu: true,
-      };
-    },
-    computed: {
-      ...mapState([LANGUAGE]),
-      ...mapGetters('http', [IS_USER_LOGGED_IN]),
-    },
-    methods: {
-      ...mapActions({
-        sync: SYNC,
-        fetchUser: FETCH_USER,
-      }),
-    },
-    created() {
-      if (this.language) {
-        /* eslint-disable-next-line no-underscore-dangle */
-        this._i18n.locale = this.language;
-      }
-      if (this[IS_USER_LOGGED_IN]) {
-        this.sync();
-        this.fetchUser();
-      }
-    },
-  };
+export default {
+  name: 'App',
+  store,
+  components: {
+    Refresh,
+    Header,
+    Status,
+    Sidebar,
+  },
+  data() {
+    return {
+      showMenu: true,
+    };
+  },
+  computed: {
+    ...mapState([LANGUAGE]),
+    ...mapGetters('http', [IS_USER_LOGGED_IN]),
+  },
+  methods: {
+    ...mapActions({
+      sync: SYNC,
+      fetchUser: FETCH_USER,
+    }),
+  },
+  created() {
+    if (this.language) {
+      /* eslint-disable-next-line no-underscore-dangle */
+      this._i18n.locale = this.language;
+    }
+    if (this[IS_USER_LOGGED_IN]) {
+      this.sync();
+      this.fetchUser();
+    }
+  },
+};
 </script>
 
 <style lang="scss">
