@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <div class="container">
-      <div class="row">
+    <div>
+      <div class="header-row">
         <Header />
         <Status />
-        <div class="col-2 menu-button">
+        <div class="col-2 button-flexbox">
           <sidebar :show="showMenu && IS_USER_LOGGED_IN" />
         </div>
       </div>
@@ -153,14 +153,17 @@ export default {
     width: 100%;
   }
 
-  .row {
+  .header-row {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     min-height: 15vh;
+    padding: 0 15px;
+    margin: 0;
   }
 
-  .menu-button {
+  .button-flexbox {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
   }
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div
-      v-if="!isLogin && user"
-      class="is-online"
-      :class="{ online: isOnline }"
+    v-if="!isLogin && user"
+    class="is-online"
+    :class="{ online: isOnline }"
   />
 </template>
 
