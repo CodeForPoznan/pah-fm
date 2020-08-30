@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <div>
-      <div class="header-row">
+      <div class="header-layout">
         <Header />
         <Status />
-        <div class="col-2 button-flexbox">
+        <div class="col-2 header-menu-button">
           <sidebar :show="showMenu && IS_USER_LOGGED_IN" />
         </div>
       </div>
@@ -92,11 +92,6 @@ export default {
     min-height: 100vh;
   }
 
-  .bm-item-list {
-    margin-right: 10%;
-    margin-left: 10%;
-  }
-
   .nav {
     flex-wrap: nowrap;
   }
@@ -128,6 +123,11 @@ export default {
       right: 36px !important;
     }
 
+    .bm-item-list {
+      margin-right: 10%;
+      margin-left: 10%;
+    }
+
     & .nav-item a {
       color: $white;
     }
@@ -153,7 +153,7 @@ export default {
     width: 100%;
   }
 
-  .header-row {
+  .header-layout {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -162,7 +162,7 @@ export default {
     margin: 0;
   }
 
-  .button-flexbox {
+  .header-menu-button {
     display: flex;
     justify-content: center;
   }
