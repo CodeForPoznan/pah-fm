@@ -11,6 +11,7 @@ import App from './App.vue';
 import './registerServiceWorker';
 import router from './router/index';
 import i18n from './services/lang';
+import store from './store/index';
 
 Vue.use(FlagIcon);
 
@@ -29,4 +30,5 @@ new Vue({
   render: h => h(App),
   router,
   i18n,
+  store,
 }).$mount('#app');

@@ -38,6 +38,7 @@ export default {
 
   justify-content: flex-start;
   text-align: center;
+  justify-self: flex-start;
   background: $white;
   height: 120px;
 }

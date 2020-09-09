@@ -155,7 +155,7 @@ export default {
 
   .header-layout {
     display: flex;
-    justify-content: space-between;
+    //justify-content: space-between;
     align-items: center;
     min-height: 15vh;
     padding: 0 15px;
