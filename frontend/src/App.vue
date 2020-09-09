@@ -4,6 +4,7 @@
       <div class="header-layout">
         <Header />
         <Status />
+        <SyncButton />
         <div class="col-2 header-menu-button">
           <sidebar :show="showMenu && IS_USER_LOGGED_IN" />
         </div>
@@ -36,6 +37,7 @@ import Header from './components/Header.vue';
 import Refresh from './components/Refresh.vue';
 import Status from './components/Status.vue';
 import Sidebar from './components/Sidebar.vue';
+import SyncButton from './components/SyncButton.vue';
 import store, { LANGUAGE } from './store';
 
 import { IS_USER_LOGGED_IN } from './store/modules/http/getters';
@@ -47,6 +49,7 @@ export default {
   name: 'App',
   store,
   components: {
+    SyncButton,
     Refresh,
     Header,
     Status,
