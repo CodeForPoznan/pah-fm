@@ -62,6 +62,7 @@ remove-frontend:  ## Stop and remove frontend container
 
 lint-backend:  ## Run linters on backend container
 	docker-compose run --rm --no-deps backend flake8 .
+	docker-compose run --rm --no-deps backend black .
 
 lint-frontend:  ## Run linters on frontend container
 	docker-compose run --rm --no-deps frontend npm run lint:fix
@@ -84,7 +85,7 @@ debug-backend:  ## Debug backend container (Django)
 populate-database:  ## Populate database with factory based data
 	make manage CMD=populate_database
 
-checkout:  ## Checkout to existing branch and start clean app, i.e. make checkout BRANCH=develop
+checkout:  ## Checkout to existing branch and start clean app, i.e. make checkout BRANCH=master
 	@test "${BRANCH}" || make help | grep " $@ "
 	@test "${BRANCH}" # fail if variable is not set
 

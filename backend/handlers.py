@@ -9,13 +9,13 @@ from serverless_wsgi import handle_request
 from pah_fm.wsgi import application
 
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pah_fm.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pah_fm.settings")
 django.setup()
 
 
 def api(event, context):
     event["headers"]["X-Forwarded-Host"] = os.environ["BASE_URL"]
-    print('REQUEST: ', event)
+    print("REQUEST: ", event)
     return handle_request(application, event, context)
 
 

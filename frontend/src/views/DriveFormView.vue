@@ -4,7 +4,8 @@
     @reset="CLEAR_NEW_DRIVE_FORM"
     resetable
     :title="$t('common.new_drive')"
-    :list-of-errors="listOfErrors"
+    :fields-errors="listOfErrors"
+    :other-errors="otherErrors"
   >
     <div class="form-group">
       <label>{{ $t('drive_form.date') }}</label>
@@ -17,7 +18,6 @@
         :class="{ 'is-invalid': isInvalid['date'] }"
       >
     </div>
-
     <div class="form-group">
       <label>{{ $t('drive_form.start_location') }}</label>
       <input
@@ -52,7 +52,7 @@
         v-model="project"
         name="project"
         class="form-control select"
-        :class="{ 'is-invalid': isInvalid['project'] }"
+        :class="{ 'select-invalid': isInvalid['project'] }"
         label="title"
         :reduce="(project) => project.id"
         :options="projects.data"
@@ -64,7 +64,6 @@
         {{ $t('drive_form.no_project_message') }}
       </p>
     </div>
-
     <div class="form-group">
       <label>{{ $t('drive_form.cars') }}</label>
       <v-select
@@ -72,7 +71,7 @@
         v-model="car"
         name="car"
         class="form-control select"
-        :class="{ 'is-invalid': isInvalid['car'] }"
+        :class="{ 'select-invalid': isInvalid['car'] }"
         label="plates"
         :reduce="(car) => car.id"
         :options="cars.data"
@@ -84,20 +83,18 @@
         {{ $t('drive_form.no_cars_message') }}
       </p>
     </div>
-
     <div class="form-group">
       <label>{{ $t('drive_form.passenger') }}</label>
       <v-select
         v-model="passenger"
         name="passenger"
         class="form-control select"
-        :class="{ 'is-invalid': isInvalid['passenger'] }"
+        :class="{ 'select-invalid': isInvalid['passenger'] }"
         label="text"
         :reduce="(passenger) => passenger.value"
         :options="passengers"
       />
     </div>
-
     <div class="form-group">
       <label>{{ $t('drive_form.description') }}</label>
       <input
@@ -108,7 +105,6 @@
         :class="{ 'is-invalid': isInvalid['description'] }"
       >
     </div>
-
     <div class="form-group">
       <label>{{ $t('drive_form.end_location') }}</label>
       <input
@@ -151,7 +147,7 @@ import 'vue-select/dist/vue-select.css';
 
 import MainForm from '../components/MainForm.vue';
 import GroupGuardMixin from '../mixins/GroupGuardMixin';
-import { renderErrorMessage } from '../services/errorMessages';
+import { toSnakeCase } from '../services/errorMessages';
 
 import { driveVerifyRoute } from '../router/routes';
 
@@ -181,6 +177,7 @@ export default {
     return {
       currentDate: new Date().toISOString().split('T')[0],
       listOfErrors: [],
+      otherErrors: [],
       isInvalid: {},
     };
   },
@@ -193,7 +190,7 @@ export default {
       const emptyFields = this[NEW_DRIVE_FORM_EMPTY_FIELDS];
       this.resetInvalidLabels();
       const mileageErrors = this.checkMileage();
-      const noErrors = emptyFields.length === 0 && mileageErrors.length === 0;
+      const noErrors = emptyFields.length === 0 && this.otherErrors.length === 0;
 
       if (noErrors) {
         this.$router.push(driveVerifyRoute);
@@ -202,15 +199,15 @@ export default {
           this.isInvalid[field] = true;
         });
         this.listOfErrors = emptyFields
-          .map(field => renderErrorMessage(field))
-          .concat(mileageErrors);
+          .map(field => toSnakeCase(field));
+        this.otherErrors = mileageErrors;
       }
     },
     checkMileage() {
       const { startMileage, endMileage } = this;
       if (!!startMileage && !!endMileage && startMileage >= endMileage) {
-        const errorStartMileage = this.$t('drive_form.start_mileage_error');
-        const errorEndMileage = this.$t('drive_form.end_mileage_error');
+        const errorStartMileage = 'drive_form.start_mileage_error';
+        const errorEndMileage = 'drive_form.end_mileage_error';
         this.isInvalid.startMileage = true;
         this.isInvalid.endMileage = true;
         return [errorStartMileage, errorEndMileage];
@@ -261,5 +258,9 @@ export default {
   height: initial;
   padding: 0;
   border-radius: 0.25rem;
+
+  &.select-invalid {
+    border: 1px solid red;
+  }
 }
 </style>

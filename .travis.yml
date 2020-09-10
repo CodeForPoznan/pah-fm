@@ -18,9 +18,12 @@ env:
 
 
 install:
+  # install languages
+  - nvm install 8.12.0
+
   # install dependencies
-  - (cd frontend && npm ci      --quiet)
-  - (cd backend  && pip install --quiet -r requirements/dev.txt)
+  - (cd frontend && npm ci)
+  - (cd backend  && pip install -r requirements/dev.txt)
 
   # prepare database
   - psql -U postgres -c "CREATE USER \"pah-fm\" WITH PASSWORD 'pah-fm';"
@@ -34,6 +37,7 @@ script:
 
   # lint and test backend
   - (cd backend  && flake8 .)
+  - (cd backend  && black --check .)
   - (cd backend  && python manage.py test)
 
 

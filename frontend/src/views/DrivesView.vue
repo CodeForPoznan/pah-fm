@@ -45,6 +45,10 @@
             <span>{{ drive.car.plates }}</span>
           </p>
           <p>
+            <span class="font-weight-bold mr-1">{{ $t('drive_form.passenger') }}</span>
+            <span>{{ drive.passengers[0].firstName }} {{ drive.passengers[0].lastName }}</span>
+          </p>
+          <p>
             <span class="font-weight-bold mr-1">{{ $t('drives.project') }}</span>
             <span>{{ drive.project.title }}</span>
           </p>
@@ -103,6 +107,10 @@
           <p>
             <span class="font-weight-bold mr-1">{{ $t('drives.car') }}</span>
             <span>{{ drive.car.plates }}</span>
+          </p>
+          <p>
+            <span class="font-weight-bold mr-1">{{ $t('drive_form.passenger') }}</span>
+            <span>{{ drive.passengers[0].firstName }} {{ drive.passengers[0].lastName }}</span>
           </p>
           <p>
             <span class="font-weight-bold mr-1">{{ $t('drives.project') }}</span>

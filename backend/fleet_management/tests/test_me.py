@@ -10,9 +10,9 @@ from fleet_management.factories import UserFactory
 class MeApiTestCase(APITestCase):
     def setUp(self):
         self.url = reverse("me")
-        self.user = UserFactory.make(
+        self.user = UserFactory.create(
             username="driver@codeforpoznan.pl",
-            groups=[Group.objects.get(name=Groups.Driver.name)]
+            groups=[Group.objects.get(name=Groups.Driver.name)],
         )
 
     def test_401_for_unlogged_user(self):

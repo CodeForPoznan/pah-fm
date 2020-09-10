@@ -19,18 +19,22 @@ class DrivesApiTestCase(APITestCase):
         self.drivers_group = Group.objects.get(name=Groups.Driver.name)
         self.passengers_group = Group.objects.get(name=Groups.Passenger.name)
 
-        self.car = CarFactory.make(id=29)
-        self.project = ProjectFactory.make(id=42, country="UA")
-        self.driver = UserFactory.make(id=51, groups=[self.drivers_group])
-        self.passenger = UserFactory.make(
+        self.car = CarFactory.create(id=29)
+        self.project = ProjectFactory.create(id=42, country="UA")
+        self.driver = UserFactory.create(id=51, groups=[self.drivers_group])
+        self.passenger = UserFactory.create(
             id=35,
             rsa_pub_e=257,
             rsa_priv_d=30593,
             rsa_modulus_n=50927,
             groups=[self.passengers_group],
         )
-        self.drives = DriveFactory.make_batch(
-            size=10, driver=self.driver, passenger=self.passenger
+        self.drives = DriveFactory.create_batch(
+            size=10,
+            driver=self.driver,
+            passenger=self.passenger,
+            car=self.car,
+            project=self.project,
         )
 
     def test_401_for_unlogged_user(self):
@@ -38,8 +42,14 @@ class DrivesApiTestCase(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_can_retrieve_only_my_drives(self):
-        new_driver = UserFactory.make(groups=[self.drivers_group])
-        DriveFactory.make_batch(size=4, driver=new_driver, passenger=self.passenger)
+        new_driver = UserFactory.create(groups=[self.drivers_group])
+        DriveFactory.create_batch(
+            size=4,
+            driver=new_driver,
+            passenger=self.passenger,
+            car=self.car,
+            project=self.project,
+        )
 
         self.client.force_login(self.driver)
         res = self.client.get(self.url)
@@ -107,10 +117,10 @@ class DrivesApiTestCase(APITestCase):
         self.assertFalse(drive.is_verified)
 
     def test_fuel_consumption_is_valid(self):
-        drive = DriveFactory.make(start_mileage=100300, end_mileage=100500)
+        drive = DriveFactory.create(start_mileage=100300, end_mileage=100500)
         drive.car.fuel_consumption = 9.73
         self.assertEqual(drive.fuel_consumption, 19.46)
 
     def test_diff_mileage(self):
-        drive = DriveFactory.make(start_mileage=100300, end_mileage=100800)
+        drive = DriveFactory.create(start_mileage=100300, end_mileage=100800)
         self.assertEqual(drive.diff_mileage, 500)
