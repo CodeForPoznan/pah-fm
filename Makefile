@@ -4,7 +4,11 @@ help:  ## Display this help
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n\nTargets:\n"} \
 	 /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%17s\033[0m  %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 
+git-sync: ## Update .gitHash.json file for frontend image
+	$(SHELL) get_head.sh
+
 start:  ## Start all containers in background
+	$(SHELL) get_head.sh
 	docker-compose up --detach
 
 stop:  ## Stop all containers
@@ -52,6 +56,7 @@ build-backend:  ## Build backend container
 
 build-frontend:  ## Build frontend container
 	docker-compose stop frontend || true
+	$(SHELL) get_head.sh
 	docker build --tag codeforpoznan/pah-fm-frontend frontend
 
 remove-backend:  ## Stop and remove backend container

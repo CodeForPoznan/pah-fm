@@ -1,10 +1,12 @@
+import gitHash from "../../../../.gitHash.json"
+
 export const APPLIED_MIGRATIONS = "APPLIED_MIGRATIONS";
 export const CURRENT_VERSION = "CURRENT_VERSION";
 //export const UPDATE_READY = "UPDATE_READY";
 
 const moduleState = {
   [APPLIED_MIGRATIONS]: [],
-  [CURRENT_VERSION]: process.env.VUE_APP_GIT_HASH,
+  [CURRENT_VERSION]: gitHash.head,
 };
 
 export const BUMP_VERSION = "BUMP_VERSION";

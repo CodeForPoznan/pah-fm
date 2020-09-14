@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+echo "generating .gitHash.json"
+bash get_head.sh
 echo "build and push images"
 printenv DOCKER_PASSWORD | docker login -u "$DOCKER_USERNAME" --password-stdin
 docker build -t codeforpoznan/pah-fm-frontend:latest frontend
