@@ -53,15 +53,29 @@ export default {
   },
   methods: {
     ...mapActions({ sync: SYNC }),
-    async triggerSync() {
+    triggerSync() {
       this.sync();
       this.syncStatus = 'loading';
-      this.$store.subscribe(mutation => {
+      this.watchMutation();
+    },
+    watchMutation() {
+      const watching = this.$store.subscribe((mutation) => {
         if (mutation.type === 'drives/setData') {
           this.syncStatus = 'success';
           this.unsubscribe();
         }
       });
+      return new Promise((resolve) => {
+        setTimeout(() => { resolve(watching()); }, 5000);
+      })
+        .then(() => {
+          if (this.syncStatus !== 'success') {
+            this.syncStatus = 'fail';
+          }
+        })
+        .finally(() => {
+          setTimeout(() => { this.syncStatus = 'untouched'; }, 3000);
+        });
     },
   },
   watch: {
