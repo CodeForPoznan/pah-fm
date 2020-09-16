@@ -273,6 +273,7 @@
     },
     "login": {
       "login_error": "Login unsuccessful",
+      "login_group_error": "You are not allowed to log in because this account does not exist or you do not belong to any group. If you want to log in, ask the admin to add you to the group of Passengers or Drivers.",
       "password": "Password",
       "password_required": "Password is required",
       "user": "User: %{username}",
@@ -372,6 +373,8 @@
       "verified_drive": "Ten przejazd został zweryfikowany."
     },
     "login": {
+      "login_error": "Logowanie nie powiodło się",
+      "login_group_error": "Nie możesz się zalogować ponieważ konto nie istnieje lub nie należysz do żadnej grupy. Poproś administratora o dodanie do grupy Kierowców lub Pasażerów.",
       "password": "Hasło",
       "password_required": "Hasło jest wymagane",
       "user": "Użytkownik: %{username}",

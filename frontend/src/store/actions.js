@@ -40,15 +40,19 @@ export const actions = {
 
   async [LOGIN]({ commit, dispatch }, credentials) {
     commit(mutations.SET_LOGIN_PROGRESS, true);
+    commit(mutations.SET_LOGIN_ERROR, null);
     try {
       await dispatch(`http/${HTTP_LOGIN}`, credentials);
-      commit(mutations.SET_LOGIN_ERROR, null);
       dispatch(FETCH_USER, {
         callback: () => window.location.replace('/drive'),
       });
     } catch (err) {
       console.error(err);
-      commit(mutations.SET_LOGIN_ERROR, i18n.tc('login.login_error'));
+      const { response: {
+        status,
+      } } = err;
+
+      commit(mutations.SET_LOGIN_ERROR, status === 403 ? i18n.tc('login.login_group_error') : i18n.tc('login.login_error'));
     } finally {
       commit(mutations.SET_LOGIN_PROGRESS, false);
     }

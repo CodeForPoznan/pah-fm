@@ -4,12 +4,13 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <div
-              v-if="loginError"
-              class="alert alert-danger"
+            <b-alert
+              variant="danger"
+              dismissible
+              :show="!!loginError"
             >
               {{ loginError }}
-            </div>
+            </b-alert>
             <h2>{{ $t('common.login') }}</h2>
             <form @submit.prevent="handleSubmit">
               <div class="form-group">
