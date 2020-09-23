@@ -39,6 +39,7 @@ router.beforeEach((to, _from, next) => {
   if (!userLoggedIn && !openRoutes.includes(to.name)) {
     return next({ path: loginRoute.path });
   }
+
   // Redirect home if logged-in user tries to access login route
   if (userLoggedIn && to.name === loginRoute.name) {
     return next({ path: homeRoute.path });
@@ -54,7 +55,7 @@ router.beforeEach((to, _from, next) => {
     const routeAccessible = availableRoutes.includes(to.name);
 
     if (!routeAccessible) {
-      return next({ path: availableRoutes[0].path });
+      return next({ path: availableRoutes[0] ? availableRoutes[0].path : homeRoute.path });
     }
   }
 
