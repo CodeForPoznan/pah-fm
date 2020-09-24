@@ -369,6 +369,5 @@ class RefuelFactory(DjangoModelFactory):
     refueled_liters = fuzzy.FuzzyInteger(1, 1000)
     price_per_liter = fuzzy.FuzzyInteger(1, 1000)
     currency = Money(
-        currency=random.choice(CURRENCY_CHOICES)[0],
-        amount=round(random.random(), 2)
+        currency=random.choice(CURRENCY_CHOICES)[0], amount=round(random.random(), 2)
     )
