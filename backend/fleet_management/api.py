@@ -71,7 +71,6 @@ class ProjectView(generics.ListAPIView):
     serializer_class = ProjectSerializer
 
     def get_queryset(self):
-
         return Project.objects.filter(country=self.request.user.country)
 
 
@@ -82,4 +81,4 @@ class RefuelView(generics.ListAPIView):
     serializer_class = RefuelSerializer
 
     def get_queryset(self):
-        return Refuel.objects.filter(country=self.request.user.country)
+        return Refuel.objects.filter()

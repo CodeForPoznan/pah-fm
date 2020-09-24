@@ -7,7 +7,7 @@ from rest_framework import fields, serializers, status
 from rest_framework.exceptions import ValidationError
 
 from fleet_management.crypto import sign, verify
-from fleet_management.models import Car, Drive, User, Project
+from fleet_management.models import Car, Drive, User, Project, Refuel
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -171,7 +171,7 @@ class RefuelSerializer(serializers.ModelSerializer):
     car = CarSerializer()
 
     class Meta:
-        model = Drive
+        model = Refuel
         fields = (
             "id",
             "driver",
