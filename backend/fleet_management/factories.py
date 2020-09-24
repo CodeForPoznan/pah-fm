@@ -13,8 +13,9 @@ from factory import (
     SubFactory,
 )
 
-
-from fleet_management.models import Car, Drive, Project, User
+from djmoney.money import Money
+from djmoney.settings import CURRENCY_CHOICES
+from fleet_management.models import Car, Drive, Project, User, Refuel
 
 
 COUNTRIES = ("UA", "SS")
@@ -355,3 +356,19 @@ class DriveFactory(DjangoModelFactory):
     start_location = Faker("city", locale="uk_UA")
     end_location = Faker("city", locale="uk_UA")
     is_verified = fuzzy.FuzzyChoice((True, False))
+
+
+class RefuelFactory(DjangoModelFactory):
+    class Meta:
+        model = Refuel
+
+    driver = SubFactory(UserFactory)
+    car = SubFactory(CarFactory)
+    date = fuzzy.FuzzyDate((now() - timedelta(days=1000)).date())
+    current_mileage = fuzzy.FuzzyInteger(1, 1000)
+    refueled_liters = fuzzy.FuzzyInteger(1, 1000)
+    price_per_liter = fuzzy.FuzzyInteger(1, 1000)
+    currency = Money(
+        currency=random.choice(CURRENCY_CHOICES)[0],
+        amount=round(random.random(), 2)
+    )

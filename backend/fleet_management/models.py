@@ -137,6 +137,7 @@ class Refuel(models.Model):
     date = models.DateField(auto_now_add=True, blank=False)
     current_mileage = models.PositiveIntegerField(null=False)
     refueled_liters = models.PositiveIntegerField(null=False)
+    price_per_liter = models.PositiveIntegerField(null=False)
     currency = MoneyField(
         max_digits=10, decimal_places=2, null=False, default_currency="USD"
     )
