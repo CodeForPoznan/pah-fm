@@ -1,10 +1,12 @@
 from django.contrib.auth.models import Group
 
+from djmoney.money import Money
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 from fleet_management.constants import Groups
-from fleet_management.factories import UserFactory, RefuelFactory
+from fleet_management.factories import UserFactory, RefuelFactory, CarFactory
+from fleet_management.models import Refuel
 
 
 class RefuelsApiTestCase(APITestCase):
@@ -14,6 +16,10 @@ class RefuelsApiTestCase(APITestCase):
             groups=[Group.objects.get(name=Groups.Driver.name)]
         )
         self.refuels = RefuelFactory.create_batch(size=3)
+
+        self.car = CarFactory.create()
+        self.driver = UserFactory.create()
+        self.currency = Money(25, "USD")
 
     def test_401_for_unlogged_user(self):
         res = self.client.get(self.url)
@@ -37,3 +43,31 @@ class RefuelsApiTestCase(APITestCase):
                 refuel["price_per_liter"], res.data[idx]["price_per_liter"]
             )
             self.assertEqual(refuel["currency"], res.data[idx]["currency"])
+
+    def test_create_a_refuel(self):
+        payload = {
+            "car": {"id": self.car.id},
+            "driver": {"id": self.driver.id},
+            "date": "2020-09-25",
+            "current_mileage": 0,
+            "refueled_liters": 5,
+            "price_per_liter": 34,
+            "currency.amount": str(self.currency.amount),
+            "currency.currency": self.currency.currency.code,
+        }
+
+        self.client.force_login(self.user)
+        res = self.client.post(self.url, data=payload, format="json")
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+
+        refuel = Refuel.objects.filter(id=res.data["id"])
+        self.assertEqual(refuel.count(), 1)
+
+        refuel = refuel[0]
+        self.assertEqual(refuel.car.id, self.car.id)
+        self.assertEqual(refuel.driver.id, self.driver.id)
+        self.assertEqual(refuel.date.isoformat(), res.data["date"])
+        self.assertEqual(refuel.current_mileage, res.data["current_mileage"])
+        self.assertEqual(refuel.refueled_liters, res.data["refueled_liters"])
+        self.assertEqual(refuel.price_per_liter, res.data["price_per_liter"])
+        self.assertEqual(str(refuel.currency.amount), res.data["currency"])

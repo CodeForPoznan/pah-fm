@@ -74,7 +74,7 @@ class ProjectView(generics.ListAPIView):
         return Project.objects.filter(country=self.request.user.country)
 
 
-class RefuelView(generics.ListAPIView):
+class RefuelView(generics.ListCreateAPIView):
     permission_classes = [GroupPermission]
     required_groups = all_driver_methods
 

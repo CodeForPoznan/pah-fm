@@ -2,6 +2,7 @@ from django.db import transaction
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.exceptions import ObjectDoesNotExist
+from djmoney.money import Money
 
 from rest_framework import fields, serializers, status
 from rest_framework.exceptions import ValidationError
@@ -182,3 +183,24 @@ class RefuelSerializer(serializers.ModelSerializer):
             "price_per_liter",
             "currency",
         )
+
+    def create(self, validated_data):
+        try:
+            driver = User.objects.get(id=self.context["request"].data["driver"]["id"])
+            car = Car.objects.get(id=self.context["request"].data["car"]["id"])
+        except ObjectDoesNotExist as e:
+            raise ValidationError(e.args[0])
+
+        validated_data.pop("car")["id"]
+        currency = Money(
+            self.context["request"].data["currency.amount"],
+            self.context["request"].data["currency.currency"],
+        )
+
+        with transaction.atomic():
+            refuel = Refuel.objects.create(
+                driver=driver, car=car, currency=currency, **validated_data
+            )
+            refuel.save()
+
+            return refuel
