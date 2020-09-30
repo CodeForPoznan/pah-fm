@@ -76,7 +76,7 @@ export default {
       this._i18n.locale = this.language;
     }
     if (this[IS_USER_LOGGED_IN]) {
-      // this.sync();
+      this.sync();
       this.fetchUser();
     }
   },
