@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="!isLogin && user"
+    v-if="!isLogin && unsyncedDrives.length"
     class="col-2 button-container"
   >
     <div v-if="inDrivesView">
@@ -33,20 +33,20 @@
 </template>
 
 <script>
-import { IS_ONLINE, SYNC } from '@/store/constants';
-import { USER } from '@/store';
-import { mapActions, mapState } from 'vuex';
+import { IS_ONLINE, SYNC, UNSYNCHRONISED_DRIVES } from '@/store/constants';
+import { mapActions, mapState, mapGetters } from 'vuex';
 import { driveListRoute, loginRoute } from '@/router/routes';
 
 export default {
   name: 'SyncButton',
   computed: {
-    ...mapState([IS_ONLINE, USER]),
+    ...mapState([IS_ONLINE ]),
+    ...mapGetters({ unsyncedDrives: UNSYNCHRONISED_DRIVES }),
   },
   data() {
     return {
       isLogin: this.$router.currentRoute.path === loginRoute.path,
-      inDrivesView: false,
+      inDrivesView: null,
       syncStatus: 'untouched',
       watchingIsOn: false,
     };
@@ -74,7 +74,7 @@ export default {
           }
         })
         .finally(() => {
-          setTimeout(() => { this.syncStatus = 'untouched'; }, 3000);
+          setTimeout(() => { this.syncStatus = 'untouched'; }, 2000);
         });
     },
   },
@@ -98,6 +98,7 @@ export default {
 .icon {
   width: 40px;
   height: 40px;
+  transition: 3s;
 }
 
 .success {
