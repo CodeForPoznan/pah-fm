@@ -40,7 +40,7 @@ import { driveListRoute, loginRoute } from '@/router/routes';
 export default {
   name: 'SyncButton',
   computed: {
-    ...mapState([IS_ONLINE ]),
+    ...mapState([IS_ONLINE]),
     ...mapGetters({ unsyncedDrives: UNSYNCHRONISED_DRIVES }),
   },
   data() {
