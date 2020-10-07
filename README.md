@@ -228,13 +228,13 @@ Every user that's randomly created has the same password -`pass123`.
 Here's a table with basic users + the default users created 
 when DB is populated:
 
-username                        | password  | Django Admin access
-------------------------------- | --------- | -------------------
-hello@codeforpoznan.pl          | pass123   | yes
-ola@pah.org.pl                  | pass123   | no
-...after `populate-database`... | ...       | ...
-driver@codeforpoznan.pl         | pass123   | no
-passenger@codeforpoznan.pl      | pass123   | no
+username                        | password  | Vue app access | Django Admin access |
+------------------------------- | --------- | -------------- | ------------------- |
+hello@codeforpoznan.pl          | pass123   | no             | yes                 |
+ola@pah.org.pl                  | pass123   | no             | no                  |
+...after `populate-database`... | ...       | ...            | ...                 |
+driver@codeforpoznan.pl         | pass123   | yes            | no                  |
+passenger@codeforpoznan.pl      | pass123   | yes            | no                  |
 
 
 <br>
