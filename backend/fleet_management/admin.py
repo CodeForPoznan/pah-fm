@@ -13,23 +13,35 @@ class CountryFilter(admin.SimpleListFilter):
     title = _("Country")
     parameter_name = "country"
 
+    def get_parameter(self, obj):
+        for part in self.parameter_name.split("__"):
+            obj = getattr(obj, part)
+        return obj
+
     def lookups(self, request, model_admin):
         objects = model_admin.model.objects.distinct(self.parameter_name)
-        countries = [(o.country.code, o.country.name) for o in objects]
-        countries = sorted(countries, key=lambda c: c[1])  # sort by name, A-Z
+        countries = [self.get_parameter(o) for o in set(objects)]
+        countries = [(c.code, c.name) for c in countries]
+        countries.sort(key=lambda c: c[1])  # sort by name, A-Z
         return [("ALL", _("Global"))] + countries
 
     def queryset(self, request, queryset):
         value = self.value()
 
-        # "ALL" is special value used for showing global users (with empty country)
+        # no query was applied, skip filtering
+        if value is None:
+            return queryset
+
+        # "ALL" is special value used for showing
+        # global users (those with empty country)
         if value == "ALL":
             value = ""
 
-        if value is not None:
-            return queryset.filter(**{self.parameter_name: value})
+        return queryset.filter(**{self.parameter_name: value})
 
-        return queryset
+
+class CarCountryFilter(CountryFilter):
+    parameter_name = "car__country"
 
 
 class DriveResource(resources.ModelResource):
