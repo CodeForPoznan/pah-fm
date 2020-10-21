@@ -1,33 +1,31 @@
 <template>
   <div
-    v-if="!isLogin && unsyncedDrives.length"
+    v-if="isOnline && isDrivesList && unsyncedDrives.length"
     class="col-2 button-container"
   >
-    <div v-if="inDrivesView">
-      <div v-if="syncStatus === 'untouched'">
-        <svg
-          class="icon"
-          @click="triggerSync"
-        >
-          <use xlink:href="../assets/sprite.svg#sync-alt" />
-        </svg>
-      </div>
-      <div v-else-if="syncStatus === 'loading'">
-        <div class="spinner-border icon" />
-      </div>
-      <div v-else-if="syncStatus === 'success'">
-        <svg class="icon success">
-          <use xlink:href="../assets/sprite.svg#success" />
-        </svg>
-      </div>
-      <div v-else-if="syncStatus === 'fail'">
-        <svg class="icon fail">
-          <use
-            xlink:href="../assets/sprite.svg#fail"
-            href="../assets/sprite.svg#fail"
-          />
-        </svg>
-      </div>
+    <div v-if="syncStatus === 'untouched'">
+      <svg
+        class="icon"
+        @click="triggerSync"
+      >
+        <use xlink:href="../assets/sprite.svg#sync-alt" />
+      </svg>
+    </div>
+    <div v-else-if="syncStatus === 'loading'">
+      <div class="spinner-border icon" />
+    </div>
+    <div v-else-if="syncStatus === 'success'">
+      <svg class="icon success">
+        <use xlink:href="../assets/sprite.svg#success" />
+      </svg>
+    </div>
+    <div v-else-if="syncStatus === 'fail'">
+      <svg class="icon fail">
+        <use
+          xlink:href="../assets/sprite.svg#fail"
+          href="../assets/sprite.svg#fail"
+        />
+      </svg>
     </div>
   </div>
 </template>
@@ -40,13 +38,13 @@ import { driveListRoute, loginRoute } from '@/router/routes';
 export default {
   name: 'SyncButton',
   computed: {
-    ...mapState([IS_ONLINE]),
+    ...mapState({isOnline: IS_ONLINE}),
     ...mapGetters({ unsyncedDrives: UNSYNCHRONISED_DRIVES }),
   },
   data() {
     return {
       isLogin: this.$router.currentRoute.path === loginRoute.path,
-      inDrivesView: null,
+      isDrivesList: null,
       syncStatus: 'untouched',
       watchingIsOn: false,
     };
@@ -80,7 +78,7 @@ export default {
   },
   watch: {
     $route() {
-      this.inDrivesView = this.$router.currentRoute.path === driveListRoute.path;
+      this.isDrivesList = this.$router.currentRoute.path === driveListRoute.path;
     },
   },
 };
