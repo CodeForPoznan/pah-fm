@@ -19,7 +19,7 @@ class RefuelsApiTestCase(APITestCase):
 
         self.car = CarFactory.create()
         self.driver = UserFactory.create()
-        self.currency = Money(25, "USD")
+        self.total_cost = Money(25, "PLN")
 
     def test_401_for_unlogged_user(self):
         res = self.client.get(self.url)
@@ -42,7 +42,7 @@ class RefuelsApiTestCase(APITestCase):
             self.assertEqual(
                 refuel["price_per_liter"], res.data[idx]["price_per_liter"]
             )
-            self.assertEqual(refuel["currency"], res.data[idx]["currency"])
+            self.assertEqual(refuel["total_cost"], res.data[idx]["total_cost"])
 
     def test_create_a_refuel(self):
         payload = {
@@ -52,11 +52,12 @@ class RefuelsApiTestCase(APITestCase):
             "current_mileage": 0,
             "refueled_liters": 5,
             "price_per_liter": 34,
-            "currency.amount": str(self.currency.amount),
-            "currency.currency": self.currency.currency.code,
+            "total_cost.amount": str(self.total_cost.amount),
+            "total_cost.currency": self.total_cost.currency.code,
         }
 
         self.client.force_login(self.user)
+
         res = self.client.post(self.url, data=payload, format="json")
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
@@ -70,4 +71,4 @@ class RefuelsApiTestCase(APITestCase):
         self.assertEqual(refuel.current_mileage, res.data["current_mileage"])
         self.assertEqual(refuel.refueled_liters, res.data["refueled_liters"])
         self.assertEqual(refuel.price_per_liter, res.data["price_per_liter"])
-        self.assertEqual(str(refuel.currency.amount), res.data["currency"])
+        self.assertEqual(str(refuel.total_cost.amount), res.data["total_cost"])

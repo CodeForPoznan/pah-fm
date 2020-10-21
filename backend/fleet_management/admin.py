@@ -133,7 +133,7 @@ class RefuelAdmin(admin.ModelAdmin):
     list_filter = (
         "driver",
         "car",
-    )  # add filter by Project, CountryFilter
+    )
     list_display = (
         "driver",
         "car",
@@ -141,5 +141,5 @@ class RefuelAdmin(admin.ModelAdmin):
         "current_mileage",
         "refueled_liters",
         "price_per_liter",
-        "currency",
+        "total_cost",
     )

@@ -81,4 +81,4 @@ class RefuelView(generics.ListCreateAPIView):
     serializer_class = RefuelSerializer
 
     def get_queryset(self):
-        return Refuel.objects.filter()
+        return Refuel.objects.all()

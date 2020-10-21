@@ -181,26 +181,25 @@ class RefuelSerializer(serializers.ModelSerializer):
             "current_mileage",
             "refueled_liters",
             "price_per_liter",
-            "currency",
+            "total_cost",
         )
 
     def create(self, validated_data):
+        car_id = validated_data.pop("car")["id"]
+        data = self.context["request"].data
         try:
-            driver = User.objects.get(id=self.context["request"].data["driver"]["id"])
-            car = Car.objects.get(id=self.context["request"].data["car"]["id"])
+            driver = User.objects.get(id=data["driver"]["id"])
+            car = Car.objects.get(id=car_id)
         except ObjectDoesNotExist as e:
             raise ValidationError(e.args[0])
 
-        validated_data.pop("car")["id"]
-        currency = Money(
-            self.context["request"].data["currency.amount"],
-            self.context["request"].data["currency.currency"],
+        total_cost = Money(
+            currency=data["total_cost.currency"], amount=data["total_cost.amount"]
         )
 
         with transaction.atomic():
             refuel = Refuel.objects.create(
-                driver=driver, car=car, currency=currency, **validated_data
+                total_cost=total_cost, driver=driver, car=car, **validated_data
             )
-            refuel.save()
 
-            return refuel
+        return refuel

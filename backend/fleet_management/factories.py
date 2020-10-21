@@ -365,9 +365,12 @@ class RefuelFactory(DjangoModelFactory):
     driver = SubFactory(UserFactory)
     car = SubFactory(CarFactory)
     date = fuzzy.FuzzyDate((now() - timedelta(days=1000)).date())
-    current_mileage = fuzzy.FuzzyInteger(1, 1000)
-    refueled_liters = fuzzy.FuzzyInteger(1, 1000)
-    price_per_liter = fuzzy.FuzzyInteger(1, 1000)
-    currency = Money(
-        currency=random.choice(CURRENCY_CHOICES)[0], amount=round(random.random(), 2)
-    )
+    current_mileage = fuzzy.FuzzyInteger(1, 100000)
+    refueled_liters = fuzzy.FuzzyInteger(1, 100)
+    price_per_liter = fuzzy.FuzzyInteger(1, 10)
+
+    @lazy_attribute
+    def total_cost(self):
+        currency = random.choice(CURRENCY_CHOICES)[0]
+        amount = round(random.random(), 2)
+        return Money(currency=currency, amount=amount)
