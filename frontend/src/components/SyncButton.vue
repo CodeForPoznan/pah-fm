@@ -3,7 +3,7 @@
     v-if="isDrivesList"
     class="col-2 button-container"
   >
-    <div v-if="syncStatus.untouched">
+    <div v-if="syncStatus === syncStatuses.untouched">
       <svg
         class="icon"
         @click="triggerSync"
@@ -11,15 +11,15 @@
         <use xlink:href="../assets/sprite.svg#sync-alt" />
       </svg>
     </div>
-    <div v-else-if="syncStatus.loading">
+    <div v-else-if="syncStatus === syncStatuses.loading">
       <div class="spinner-border icon" />
     </div>
-    <div v-else-if="syncStatus.success">
+    <div v-else-if="syncStatus === syncStatuses.success">
       <svg class="icon success">
         <use xlink:href="../assets/sprite.svg#success" />
       </svg>
     </div>
-    <div v-else-if="syncStatus.fail">
+    <div v-else-if="syncStatus === syncStatuses.fail">
       <svg class="icon fail">
         <use
           xlink:href="../assets/sprite.svg#fail"
@@ -45,11 +45,12 @@ export default {
     return {
       isLogin: this.$router.currentRoute.path === loginRoute.path,
       isDrivesList: null,
-      syncStatus: {
-        untouched: true,
-        loading: false,
-        success: false,
-        fail: false,
+      syncStatus: 'untouched',
+      syncStatuses: {
+        untouched: 'untouched',
+        loading: 'loading',
+        success: 'success',
+        fail: 'fail',
       },
       watchingIsOn: false,
     };
@@ -58,15 +59,13 @@ export default {
     ...mapActions({ sync: SYNC }),
     triggerSync() {
       this.sync();
-      this.syncStatus.untouched = false;
-      this.syncStatus.loading = true;
+      this.syncStatus = this.syncStatuses.loading;
       this.watchMutation();
     },
     watchMutation() {
       const watching = this.$store.subscribe((mutation) => {
         if (mutation.type === 'drives/setData') {
-          this.syncStatus.loading = false;
-          this.syncStatus.success = true;
+          this.syncStatus = this.syncStatuses.success;
           this.unsubscribe();
         }
       });
@@ -74,13 +73,12 @@ export default {
         setTimeout(() => { resolve(watching()); }, 3000);
       })
         .then(() => {
-          if (this.syncStatus.success !== true) {
-            this.syncStatus.loading = false;
-            this.syncStatus.fail = true;
+          if (this.syncStatus !== this.syncStatuses.success) {
+            this.syncStatus = this.syncStatuses.fail;
           }
         })
         .finally(() => {
-          setTimeout(() => { this.syncStatus.untouched = true; }, 1000);
+          setTimeout(() => { this.syncStatus = this.syncStatuses.untouched; }, 1000);
         });
     },
   },
