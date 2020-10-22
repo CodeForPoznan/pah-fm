@@ -104,7 +104,6 @@ export default {
 .icon {
   width: 40px;
   height: 40px;
-  transition: 3s;
 }
 
 .success {
