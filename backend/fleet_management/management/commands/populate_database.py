@@ -109,7 +109,7 @@ class Command(BaseCommand):
             )
         info("Creating 50 random refuels")
         for _ in tqdm(range(50)):
-            RefuelFactory.create()
+            RefuelFactory.create(driver=random.choice(drivers), car=random.choice(cars))
 
         info("Database successfully populated with random data")
         info("=" * 60)
