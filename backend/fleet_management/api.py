@@ -5,13 +5,14 @@ from rest_framework import generics, filters, views
 from rest_framework.response import Response
 
 from .permissions import GroupPermission, all_driver_methods
-from .models import User, Car, Drive, Project
+from .models import User, Car, Drive, Project, Refuel
 from .serializers import (
     CarSerializer,
     DriveSerializer,
     PassengerSerializer,
     UserSerializer,
     ProjectSerializer,
+    RefuelSerializer,
 )
 from .constants import Groups
 
@@ -71,3 +72,13 @@ class ProjectView(generics.ListAPIView):
 
     def get_queryset(self):
         return Project.objects.filter(country=self.request.user.country)
+
+
+class RefuelView(generics.ListCreateAPIView):
+    permission_classes = [GroupPermission]
+    required_groups = all_driver_methods
+
+    serializer_class = RefuelSerializer
+
+    def get_queryset(self):
+        return Refuel.objects.all()

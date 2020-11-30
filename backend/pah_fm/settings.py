@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "import_export",
     # 3rd party apps
     "corsheaders",
+    "djmoney",
     "rest_framework",
     # local apps
     "fleet_management",

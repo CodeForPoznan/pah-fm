@@ -27,6 +27,7 @@ from fleet_management.api import (
     DriveView,
     PassengerListView,
     ProjectView,
+    RefuelView,
 )
 
 
@@ -39,4 +40,5 @@ urlpatterns = [
     path("api/cars", CarListView.as_view(), name="cars"),
     path("api/drives", DriveView.as_view(), name="drives"),
     path("api/projects", ProjectView.as_view(), name="projects"),
+    path("api/refuels", RefuelView.as_view(), name="refuels"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
