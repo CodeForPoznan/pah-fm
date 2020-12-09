@@ -6,7 +6,7 @@ from import_export.admin import ImportExportModelAdmin
 from import_export.fields import Field
 from import_export import resources
 
-from fleet_management.models import Car, Drive, User, Project
+from fleet_management.models import Car, Drive, User, Project, Refuel
 
 
 class CountryFilter(admin.SimpleListFilter):
@@ -137,4 +137,21 @@ class CustomUserAdmin(UserAdmin):
             },
         ),
         (_("Important dates"), {"fields": ("last_seen", "last_login", "date_joined")}),
+    )
+
+
+@admin.register(Refuel)
+class RefuelAdmin(admin.ModelAdmin):
+    list_filter = (
+        "driver",
+        "car",
+    )
+    list_display = (
+        "driver",
+        "car",
+        "date",
+        "current_mileage",
+        "refueled_liters",
+        "price_per_liter",
+        "total_cost",
     )

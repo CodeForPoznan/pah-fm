@@ -2,12 +2,13 @@ from django.db import transaction
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.exceptions import ObjectDoesNotExist
+from djmoney.money import Money
 
 from rest_framework import fields, serializers, status
 from rest_framework.exceptions import ValidationError
 
 from fleet_management.crypto import sign, verify
-from fleet_management.models import Car, Drive, User, Project
+from fleet_management.models import Car, Drive, User, Project, Refuel
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -164,3 +165,41 @@ class DriveSerializer(serializers.ModelSerializer):
             ):
                 err.status_code = status.HTTP_409_CONFLICT
             raise err
+
+
+class RefuelSerializer(serializers.ModelSerializer):
+    driver = UserSerializer(read_only=True)
+    car = CarSerializer()
+
+    class Meta:
+        model = Refuel
+        fields = (
+            "id",
+            "driver",
+            "car",
+            "date",
+            "current_mileage",
+            "refueled_liters",
+            "price_per_liter",
+            "total_cost",
+        )
+
+    def create(self, validated_data):
+        car_id = validated_data.pop("car")["id"]
+        data = self.context["request"].data
+        try:
+            driver = User.objects.get(id=data["driver"]["id"])
+            car = Car.objects.get(id=car_id)
+        except ObjectDoesNotExist as e:
+            raise ValidationError(e.args[0])
+
+        total_cost = Money(
+            currency=data["total_cost.currency"], amount=data["total_cost.amount"]
+        )
+
+        with transaction.atomic():
+            refuel = Refuel.objects.create(
+                total_cost=total_cost, driver=driver, car=car, **validated_data
+            )
+
+        return refuel
