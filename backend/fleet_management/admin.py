@@ -145,6 +145,7 @@ class RefuelAdmin(admin.ModelAdmin):
     list_filter = (
         "driver",
         "car",
+        CarCountryFilter,
     )
     list_display = (
         "driver",
