@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
 
-
 import { login } from './store/slices/auth';
 
 import './App.css';

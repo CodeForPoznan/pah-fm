@@ -3,7 +3,8 @@ import {
   createAsyncThunk,
 } from '@reduxjs/toolkit';
 
-import request from '../utils/request';
+import request from '../../utils/request';
+import { setToken } from '../../utils/token';
 
 const initialState = {
   error: null,
@@ -21,8 +22,10 @@ export const login = createAsyncThunk(
   async (values) => {
     try {
       const response = await request.post('/api-token-auth/', values);
+      const token = response.data.token;
 
-      console.log(response);
+      request.setAuthToken(token);
+      setToken(token);
 
       return null;
     } catch (error) {
@@ -36,21 +39,18 @@ const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: builder => {
-    builder.addCase(login.pending, state => ({
-      ...state,
-      error: null,
-      isFetching: true,
-    }));
-    builder.addCase(login.fulfilled, state => ({
-      ...state,
-      isFetching: false,
-      isAuthenticated: true,
-    }));
-    builder.addCase(login.rejected, (state, { payload }) => ({
-      ...state,
-      isFetching: false,
-      error: payload,
-    }));
+    builder.addCase(login.pending, state => {
+      state.error = null;
+      state.isFetching = true;
+    });
+    builder.addCase(login.fulfilled, state => {
+      state.isFetching =false;
+      state.isAuthenticated = true;
+    });
+    builder.addCase(login.rejected, (state, { payload }) => {
+      state.isFetching = false;
+      state.error = payload;
+    });
   },
 });
 

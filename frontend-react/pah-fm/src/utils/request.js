@@ -3,18 +3,36 @@ import {
   toCamelCase,
   toSnakeCase,
 } from 'case-converter';
+import { getToken } from './token';
 
-const BACKEND_URL = 'http://localhost:8080/api';
+const { REACT_APP_BACKEND_URL: BACKEND_URL } = process.env;
 
 class Request {
   constructor() {
     this.initConfig();
+    this.token = null;
+  }
+
+  setAuthToken(token) {
+    this.token = token;
+    this.instance.defaults.headers.common.Authorization = `JWT ${token}`;
+  }
+
+  removeAuthToken() {
+    this.token = null;
+    delete this.instance.defaults.headers.common.Authorization;
   }
 
   initConfig() {
     this.instance = axios.create({
-      baseURL: BACKEND_URL,
+      baseURL: `${BACKEND_URL}/api`,
     });
+
+    const token = getToken();
+
+    if (token) {
+      this.setAuthToken(token);
+    }
 
     this.instance.interceptors.request.use(async config => ({
       ...config,

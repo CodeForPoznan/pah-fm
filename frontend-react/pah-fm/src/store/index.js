@@ -1,23 +1,11 @@
-import {
-  configureStore,
-  combineReducers,
-} from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 
-import { authReducer } from './slices/auth';
+import rootReducer from './rootReducer'
 
-const rootReducer = combineReducers({
-  auth: authReducer,
-});
+const store = configureStore({ reducer: rootReducer });
 
-const store = configureStore({
-  devTools: process.env.NODE_ENV === 'development',
-  reducer: rootReducer
-});
-
-// if (process.env.NODE_ENV === 'development' && module.hot) {
-//   module.hot.accept('./rootReducer', () => {
-//     store.replaceReducer(rootReducer);
-//   });
-// }
+if (process.env.NODE_ENV !== 'production' && module.hot) {
+  module.hot.accept('./rootReducer', () => store.replaceReducer(rootReducer))
+}
 
 export default store;

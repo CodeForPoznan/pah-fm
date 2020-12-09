@@ -8,7 +8,6 @@
   },
   "rules": {
     "arrow-parens": [
-      2,
       "as-needed"
     ],
     "array-bracket-newline": [
@@ -37,19 +36,6 @@
         "functions": "never"
       }
     ],
-    "import/no-extraneous-dependencies": "off",
-    "import/no-unresolved": "off",
-    "import/prefer-default-export": "off",
-    "jsx-a11y/anchor-is-valid": [ "error", {
-      "components": [ "Link" ],
-      "specialLink": [ "hrefLeft", "hrefRight" ],
-      "aspects": [ "invalidHref", "preferButton" ]
-    }],
-    "jsx-a11y/label-has-for": [ 2, {
-      "required": {
-          "some": [ "nesting", "id" ]
-      }
-    }],
     "multiline-ternary": [
       "warn",
       "always-multiline"
@@ -100,21 +86,15 @@
     "react/no-did-update-set-state": "warn",
     "react-hooks/exhaustive-deps": "warn",
     "react-hooks/rules-of-hooks": "error",
-    "react/jsx-max-props-per-line": ["error", { "maximum": 1 }],
-    "react/jsx-fragments": ["error", "element"],
-    "sort-imports": [
+    "react/jsx-max-props-per-line": [
       "error",
       {
-        "ignoreCase": true,
-        "ignoreDeclarationSort": true,
-        "ignoreMemberSort": false,
-        "memberSyntaxSortOrder": [
-          "single",
-          "multiple",
-          "all",
-          "none"
-        ]
+        "maximum": 1
       }
+    ],
+    "react/jsx-fragments": [
+      "error",
+      "element"
     ],
     "sort-keys": [
       "error",

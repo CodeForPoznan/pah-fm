@@ -39,8 +39,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {
@@ -62,8 +61,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "yarn eslint",
-      "yarn stylelint \"app/**/*.js\""
+      "yarn eslint"
     ],
     "*.jsx": [
       "yarn eslint"
