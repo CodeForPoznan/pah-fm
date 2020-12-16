@@ -16,6 +16,7 @@ const initialState = {
 const PREFIX = 'auth';
 
 const LOGIN = 'login';
+const GET_ME = 'get me';
 
 export const login = createAsyncThunk(
   `${PREFIX}/${LOGIN}`,
@@ -34,6 +35,19 @@ export const login = createAsyncThunk(
   }
 )
 
+export const getMe = createAsyncThunk(
+  `${PREFIX}/${GET_ME}`,
+  async () => {
+    try {
+      const response = await request.get('/users/me');
+
+      return response.data;
+    } catch (error) {
+      return error.response.message;
+    }
+  }
+)
+
 const authSlice = createSlice({
   name: PREFIX,
   initialState,
@@ -44,10 +58,22 @@ const authSlice = createSlice({
       state.isFetching = true;
     });
     builder.addCase(login.fulfilled, state => {
-      state.isFetching =false;
+      state.isFetching = false;
       state.isAuthenticated = true;
     });
     builder.addCase(login.rejected, (state, { payload }) => {
+      state.isFetching = false;
+      state.error = payload;
+    });
+    builder.addCase(getMe.pending, state => {
+      state.error = null;
+      state.isFetching = true;
+    });
+    builder.addCase(getMe.fulfilled, (state, { payload }) => {
+      state.isFetching = false;
+      state.user = payload;
+    });
+    builder.addCase(getMe.rejected, (state, { payload }) => {
       state.isFetching = false;
       state.error = payload;
     });

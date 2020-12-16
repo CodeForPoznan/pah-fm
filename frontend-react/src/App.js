@@ -4,7 +4,10 @@ import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import routes, { renderRoutes } from './routes';
 
-import { login } from './store/slices/auth';
+import {
+  getMe,
+  login,
+} from './store/slices/auth';
 
 import './App.css';
 const history = createBrowserHistory();
@@ -13,10 +16,15 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(login({
-      username: 'driver@codeforpoznan.pl',
-      password: 'pass123',
-    }));
+    const authenticate = async () => {
+      await dispatch(login({
+        username: 'driver@codeforpoznan.pl',
+        password: 'pass123',
+      }));
+      dispatch(getMe());
+    }
+
+    authenticate();
   }, [dispatch]);
 
   return (

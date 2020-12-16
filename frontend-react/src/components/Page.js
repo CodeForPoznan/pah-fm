@@ -1,27 +1,15 @@
-import React, {
-  forwardRef,
-} from 'react';
-import { Helmet } from 'react-helmet';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-const Page = forwardRef(({
+const Page = ({
   children,
   title = '',
   ...rest
-}, ref) => {
-
-  return (
-    <div
-      ref={ref}
-      {...rest}
-    >
-      <Helmet>
-        <title>{title}</title>
-      </Helmet>
-      {children}
-    </div>
-  );
-});
+}) => (
+  <div {...rest}>
+    {children}
+  </div>
+);
 
 Page.propTypes = {
   children: PropTypes.node.isRequired,
