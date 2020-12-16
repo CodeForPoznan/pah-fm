@@ -150,9 +150,13 @@ class RefuelAdmin(admin.ModelAdmin):
     list_display = (
         "driver",
         "car",
+        "car__country",
         "date",
         "current_mileage",
         "refueled_liters",
         "price_per_liter",
         "total_cost",
     )
+
+    def car__country(self, refuel):
+        return refuel.car.country.name
