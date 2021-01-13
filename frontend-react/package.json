@@ -22,7 +22,11 @@
     "web-vitals": "^0.2.4"
   },
   "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-react": "^7.12.10",
     "babel-eslint": "^10.1.0",
+    "babel-plugin-i18next-extract": "^0.8.2",
     "eslint": "^7.0.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-react-app": "^5.2.1",
@@ -39,7 +43,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "i18n-extract": "NODE_ENV=development babel -f .babelrc 'src/**/*.{js,jsx,ts,tsx}'"
   },
   "eslintConfig": {
     "extends": [
