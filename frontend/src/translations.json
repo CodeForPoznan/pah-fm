@@ -409,5 +409,108 @@
       "start_mileage": "Początkowy stan licznika",
       "validation_error": "Pole {field} jest wymagane"
     }
+  },
+  "ir": {
+    "common": {
+      "about": "سەبارەت",
+      "error": "هەلەیە",
+      "home": "بەشی سەرەکی",
+      "intro": "رێکخراوێکی مرۆی ناحوکمیە کە لە پۆلەندا وڵاتانی دیکە کاردەکات",
+      "loading": "چاوەرێکە",
+      "login": "هاتنە ژوورەوە",
+      "logout": "هاتنە دەرەوە",
+      "new_drive": "گەشتی نوێ",
+      "confirm_drive": "قبوڵکرنی گەشت",
+      "no": "نەخێر",
+      "page_not_found": "ئەو لاپەرەیی کە بەدوای دەگەرێی بونی نیە",
+      "please_correct_errors": "تکایە هەڵەکان راستبکەوە",
+      "drives": "گەشتەکان",
+      "unexpected_error": "هەڵەیەکی چاوەروان نەکراو, هەڵەیەکی چاوەروان نەکراو رویدا تکایە پەیوەندی بە بەشی کارگێری ",
+      "yes": "بەڵێ",
+      "are_you_sure": "دڵنیای",
+      "cancel": "رەتکردنەوە",
+      "skip": "Skip"
+    },
+    "drive_form": {
+      "cars": "هەڵبژاردنی ئۆتۆمۆبێڵ",
+      "signature": "واژۆ",
+      "date": "بەروار",
+      "description": "باسکردن",
+      "distance_traveled": "ماوەی گەشت کردن",
+      "drive_added_offline_notification": "گەشتەکەت زیاد دەکرێت بۆ بنکەی زانیاری دوای  پەیوەندی کردن بە ئەنترنێت",
+      "drive_added_online_notification": "گەشتەکەت بە سەرکەوتوی زیاد کرا بۆ بنکەی زانیاری",
+      "drive_hash": "پشکنینی گەشتەکان",
+      "ending_mileage": "کۆتا کیلۆمەتر",
+      "end_location": "شوێنی کۆتای",
+      "end_mileage_error": "کۆتا کیلۆ مەتر دروست نیە",
+      "fetching_cars_error": "داواکرنی ئۆتۆمۆبێل سەرکەوتو نەبو",
+      "no_project_message": "ناوی پرۆژە پێوستە",
+      "no_cars_message": "هیچ ئۆتۆمۆبێلێک بەردەست نیە",
+      "passenger": "سەرنشین",
+      "passenger_error": "ناوی سەرنشین پێوستە",
+      "project": "پرۆژە",
+      "reset": "دوبارە چاڵاکردن",
+      "start_location": "شوێنی دەست پێکردن",
+      "starting_mileage": "کیلۆمەتری دەستپێک",
+      "start_mileage_error": "کیلۆمەتری دەستپێک دروست نیە",
+      "submit": "ناردن"
+    },
+    "passenger_form": {
+      "hash": "کۆدی شۆفێر",
+      "invalid_length": "کۆدی شۆفێر پێویستە  لە ٦ژمارە پێکبێت"
+    },
+    "drives": {
+      "car": "لەگەڵ ئۆتۆمۆبێل",
+      "description": "وەسف کردن",
+      "ending_mileage": "کۆتا کیلۆ مەتر",
+      "from_to": "From {from} to {destination} لە شوێنی دەستپێک- بۆ شوێنی مەبەست",
+      "no_driver_drives": "ببورە هیچ گەشتێکی پارێزراوت نیە،لە بنکەی زانیاری ، دەتوانی گەشتی نوێ زیاد بکەی لە هەڵبژاردەکان",
+      "synced_drives": "Previous drives",
+      "project": "پرۆژە",
+      "starting_mileage": "کیلۆمەتری دەستپێک",
+      "unsynced_drives": "گەشتە ناهاوتاکان",
+      "total_mileage": "Total {total} km ،کۆی گشتی میل، کیلۆمەتر",
+      "unverified_drive": "بۆ چارەسەرکردنگەشتەکەت دوپات نەکرایەوە، پەیوەندی بکە بە کەسی بەرپرسی گەشتەکان لە رێکخراو",
+      "verified_drive": "گەشتەکەت دوپات کرایەوە"
+    },
+    "header": {
+      "polish_humanitarian_action": "رێکخراوی مرۆی پۆڵەندی"
+    },
+    "login": {
+      "login_error": "ەاتنەژورەکە سەرکەوتوو نەبوو",
+      "password": "ژمارەی نهێنی",
+      "password_required": "ژمارەی نهێنی پێویستە",
+      "user": "User: %{username} ناوی بەکارهێنەر",
+      "username": "ناوی بەکارهێنەر",
+      "username_required": "ناوی بەکارهێنەر پێویستە"
+    },
+    "logout": {
+      "thank_you": "سوپاس",
+      "successfully_logged_out": "چونەدەرەوەکەت سەرکەەتوبوو",
+      "login_again": "دوبارە هاتنە ژورەوە",
+      "offline_logout_warning": "You are offline, so if you log out right now then you won't be able to log in until you become online again.",
+      "logout_warning": "تۆ هێڵەکەت کارا نیە ،بۆیە ئەگەر ئێستا بچیتە دەرەوە ناتوانی دوبارە بچیتە ژورەوە تاکو هێڵەکەت کارا نەکەی بە ئینتەرنێت"
+    },
+    "refresh": {
+      "new_version": "ڤێرژنی نوێی وێبسایت بەردەستە",
+      "reload": "کاراکردنەوە"
+    },
+    "confirmation": {
+      "comment_label": "تکایە بۆچونی خۆت بنوسە",
+      "drive_ok_label": "گەشتەکەت باش بوو؟",
+      "submission_success": "دوپات کردنەوەکەت ناردرا، سوپاس",
+      "token_inactive": "لینکەکەت بەسەر چوە یاخود پێشو تر پشتراست کراوەتوە"
+    },
+    "form_errors": {
+      "car": "Car",
+      "end_location": "End location",
+      "end_mileage": "Ending mileage",
+      "hash": "Code",
+      "passenger": "Passenger",
+      "project": "Project",
+      "start_location": "Start location",
+      "start_mileage": "Starting mileage",
+      "validation_error": "{field} is required"
+    }
   }
 }

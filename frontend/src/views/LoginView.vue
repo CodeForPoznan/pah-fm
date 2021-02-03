@@ -102,7 +102,7 @@ export default {
 @import '../scss/base';
 
 .language-container {
-  max-width: 200px;
+  max-width: 300px;
   margin: 0 auto;
 }
 </style>

@@ -8,15 +8,17 @@ export const GB = 'GB';
 export const PL = 'PL';
 export const UA = 'UA';
 export const SO = 'SO';
+export const IR = 'IR';
 
 export const languages = {
   [GB]: 'gb',
   [PL]: 'pl',
   [UA]: 'ua',
   [SO]: 'so',
+  [IR]: 'ir',
 };
 
-export const languagesOrder = ['pl', 'gb', 'ua', 'so'];
+export const languagesOrder = ['pl', 'gb', 'ua', 'so', 'ir'];
 
 const locale = languages[GB];
 const fallbackLocale = languages[GB];

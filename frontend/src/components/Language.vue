@@ -1,15 +1,20 @@
 <template>
   <div>
-    <ul class="lang">
+    <ul
+      class="lang"
+       v-bind:class="{ 'lang-wrap': wrap }"
+    >
       <li
         v-for="language in languagesOrder"
         :key="language"
         @click="changeLang(language)"
       >
         <flag
+          v-if="language !== 'ir'"
           :iso="language"
           :squared="false"
         />
+        <span v-else>Kurdî / كوردی</span>
       </li>
     </ul>
   </div>
@@ -22,6 +27,12 @@ import * as actions from '../store/actions';
 
 export default {
   name: 'Language',
+  props:  {
+    wrap: {
+      type: Boolean,
+      required: false,
+    },
+  },
   methods: {
     ...mapActions([actions.SWITCH_LANGUAGE]),
     changeLang(languageChecked) {
@@ -45,6 +56,10 @@ ul.lang {
 
   width: 100%;
   margin-top: 80px;
+}
+
+ul.lang-wrap {
+  flex-wrap: wrap;
 }
 
 .lang li span {
