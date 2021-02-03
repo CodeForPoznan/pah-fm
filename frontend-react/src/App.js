@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import routes, { renderRoutes } from './routes';
+import Container from 'react-bootstrap/Container';
 
+import routes, { renderRoutes } from './routes';
 import {
   getMe,
   login,
 } from './store/slices/auth';
 
-import './App.css';
 const history = createBrowserHistory();
 
 const App = () => {
@@ -30,7 +30,9 @@ const App = () => {
   return (
       <div className="App">
         <Router history={history}>
-          {renderRoutes(routes)}
+          <Container className="p-3">
+            {renderRoutes(routes)}
+          </Container>
         </Router>
       </div>
   );

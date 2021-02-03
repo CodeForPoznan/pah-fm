@@ -7,8 +7,10 @@ import reportWebVitals from './reportWebVitals';
 import store from './store';
 import './i18n';
 
-import './index.css';
+// Importing the Bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css';
 
+import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
