@@ -2,7 +2,7 @@
   <div>
     <ul
       class="lang"
-       v-bind:class="{ 'lang-wrap': wrap }"
+      :class="{ 'lang-wrap': wrap }"
     >
       <li
         v-for="language in languagesOrder"
@@ -16,9 +16,6 @@
         />
         <span v-else>
           <div class="custom-flag" />
-          <!-- <img
-            src="../assets/kurdistan_flag.svg"
-          /> -->
         </span>
       </li>
     </ul>
@@ -32,7 +29,7 @@ import * as actions from '../store/actions';
 
 export default {
   name: 'Language',
-  props:  {
+  props: {
     wrap: {
       type: Boolean,
       required: false,
