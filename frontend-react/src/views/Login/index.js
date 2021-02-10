@@ -25,16 +25,22 @@ const LoginView = () => {
             display="flex"
             flexDirection="column"
           >
-            <TextField
-              label={t('login.username')}
-              type="email"
-              placeholder={t('login.username')}
-            />
-            <TextField
-              label={t('login.password')}
-              type="email"
-              placeholder={t('login.password')}
-            />
+            <Box mb={2}>
+              <TextField
+                fullWidth
+                label={t('login.username')}
+                type="email"
+                placeholder={t('login.username')}
+                />
+            </Box>
+            <Box mb={2} width="100%">
+              <TextField
+                fullWidth
+                label={t('login.password')}
+                type="email"
+                placeholder={t('login.password')}
+              />
+            </Box>
             <Button
               variant="contained"
               color="primary"

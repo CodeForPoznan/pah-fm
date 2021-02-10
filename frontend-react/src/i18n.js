@@ -5,19 +5,23 @@ import enTranslation from './translations/en/translation.json';
 import ukTranslation from './translations/uk/translation.json';
 import soTranslation from './translations/so/translation.json';
 import plTranslation from './translations/pl/translation.json';
+import kuTranslation from './translations/ku/translation.json';
 
 const resources = {
   en: {
-    translation: enTranslation
+    translation: enTranslation,
   },
   uk: {
-    translation: ukTranslation
+    translation: ukTranslation,
   },
   so: {
-    translation: soTranslation
+    translation: soTranslation,
   },
   pl: {
-    translation: plTranslation
+    translation: plTranslation,
+  },
+  ku: {
+    translation: kuTranslation,
   },
 };
 
