@@ -1,4 +1,7 @@
 import React from 'react';
+
+import { Typography } from '@material-ui/core'; 
+
 import Page from '../components/Page';
 
 const NotFoundView = () => {
@@ -6,7 +9,9 @@ const NotFoundView = () => {
     <Page
       title="404: Not found"
     >
-       404
+      <Typography>
+        404
+      </Typography>
     </Page>
   );
 };

@@ -1,9 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
-import Jumbotron from 'react-bootstrap/Jumbotron';
+import {
+  Box,
+  Container,
+  Button,
+  TextField,
+  Typography,
+} from '@material-ui/core';
 
 import Page from '../../components/Page';
 
@@ -14,28 +18,33 @@ const LoginView = () => {
     <Page
       title="Login"
     >
-      <Jumbotron>
-        <h2 className="header"> {t('common.login')}</h2>
-        <Form>
-          <Form.Group controlId="username">
-            <Form.Label>{t('login.username')}</Form.Label>
-            <Form.Control
+      <Container>
+        <Typography variant="h2" component="h2"> {t('common.login')}</Typography>
+        <form>
+          <Box
+            display="flex"
+            flexDirection="column"
+          >
+            <TextField
+              label={t('login.username')}
               type="email"
               placeholder={t('login.username')}
             />
-          </Form.Group>
-          <Form.Group controlId="password">
-            <Form.Label>{t('login.password')}</Form.Label>
-            <Form.Control
-              type="password"
+            <TextField
+              label={t('login.password')}
+              type="email"
               placeholder={t('login.password')}
             />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            {t('common.login')}
-          </Button>
-        </Form>
-      </Jumbotron>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              {t('common.login')}
+            </Button>
+          </Box>
+        </form>
+      </Container>
     </Page>
   );
 };

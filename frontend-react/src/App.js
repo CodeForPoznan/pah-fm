@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import Container from 'react-bootstrap/Container';
 
 import routes, { renderRoutes } from './routes';
 import {
@@ -28,13 +27,11 @@ const App = () => {
   }, [dispatch]);
 
   return (
-      <div className="App">
-        <Router history={history}>
-          <Container className="p-3">
-            {renderRoutes(routes)}
-          </Container>
-        </Router>
-      </div>
+    <div className="App">
+      <Router history={history}>
+        {renderRoutes(routes)}
+      </Router>
+    </div>
   );
 }
 
