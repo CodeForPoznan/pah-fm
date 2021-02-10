@@ -14,7 +14,12 @@
           :iso="language"
           :squared="false"
         />
-        <span v-else>Kurdî / كوردی</span>
+        <span v-else>
+          <div class="custom-flag" />
+          <!-- <img
+            src="../assets/kurdistan_flag.svg"
+          /> -->
+        </span>
       </li>
     </ul>
   </div>
@@ -65,6 +70,17 @@ ul.lang-wrap {
 .lang li span {
   cursor: pointer;
   height: 50px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.custom-flag {
+  background-image: url("../assets/kurdistan_flag.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 30px;
   width: 40px;
 }
 </style>
