@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { tx } from '@transifex/native';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -11,6 +12,11 @@ import './i18n';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './index.css';
+
+tx.init({
+  token: '1/0295575608a243c1442a518c21751c8d6b1f2c53',
+  sourceLocale: 'en',
+});
 
 ReactDOM.render(
   <React.StrictMode>

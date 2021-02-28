@@ -1,18 +1,19 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 import Page from '../../components/Page';
+import { T } from "@transifex/react";
 
-const LoginView = () => {
-  const { t } = useTranslation();
+const statement = `
+The Polish Humanitarian Action is a Polish non-governmental organisation which \
+operates in Poland and other countries. Its mission is "to make the world a \
+better place through alleviation of human suffering and promotion of \
+humanitarian values".
+`;
 
-  return (
-    <Page
-      title="Home"
-    >
-      {t('common.intro')}
-    </Page>
-  );
-};
+const LoginView = () => (
+  <Page title="Home">
+    <T _str={statement}/>
+  </Page>
+);
 
 export default LoginView;

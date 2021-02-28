@@ -7,6 +7,9 @@ docker build -t codeforpoznan/pah-fm-backend:latest  backend
 docker push codeforpoznan/pah-fm-frontend
 docker push codeforpoznan/pah-fm-backend
 
+echo "push translations"
+(cd frontend && yarn run txjs-cli --verbose src)
+
 echo "build and push statics"
 mkdir public
 (cd frontend && npm     run       build                    && cp -r dist/* ../public)
