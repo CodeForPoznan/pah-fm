@@ -10,13 +10,9 @@
         @click="changeLang(language)"
       >
         <flag
-          v-if="language !== 'ir'"
           :iso="language"
           :squared="false"
         />
-        <span v-else>
-          <div class="custom-flag" />
-        </span>
       </li>
     </ul>
   </div>
@@ -70,14 +66,5 @@ ul.lang-wrap {
   width: 40px;
   display: flex;
   align-items: center;
-}
-
-.custom-flag {
-  background-image: url("../assets/kurdistan_flag.svg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 30px;
-  width: 40px;
 }
 </style>

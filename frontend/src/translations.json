@@ -410,7 +410,7 @@
       "validation_error": "Pole {field} jest wymagane"
     }
   },
-  "ir": {
+  "iq": {
     "common": {
       "about": "سەبارەت",
       "error": "هەلەیە",
@@ -436,7 +436,7 @@
       "signature": "واژۆ",
       "date": "بەروار",
       "description": "باسکردن",
-      "distance_traveled": "ماوەی گەشت کردن",
+      "distance_traveled": "{distance} km traveled",
       "drive_added_offline_notification": "گەشتەکەت زیاد دەکرێت بۆ بنکەی زانیاری دوای  پەیوەندی کردن بە ئەنترنێت",
       "drive_added_online_notification": "گەشتەکەت بە سەرکەوتوی زیاد کرا بۆ بنکەی زانیاری",
       "drive_hash": "پشکنینی گەشتەکان",
@@ -463,13 +463,13 @@
       "car": "لەگەڵ ئۆتۆمۆبێل",
       "description": "وەسف کردن",
       "ending_mileage": "کۆتا کیلۆ مەتر",
-      "from_to": "From {from} to {destination} لە شوێنی دەستپێک- بۆ شوێنی مەبەست",
+      "from_to": "From {from} to {destination}",
       "no_driver_drives": "ببورە هیچ گەشتێکی پارێزراوت نیە،لە بنکەی زانیاری ، دەتوانی گەشتی نوێ زیاد بکەی لە هەڵبژاردەکان",
       "synced_drives": "Previous drives",
       "project": "پرۆژە",
       "starting_mileage": "کیلۆمەتری دەستپێک",
       "unsynced_drives": "گەشتە ناهاوتاکان",
-      "total_mileage": "Total {total} km ،کۆی گشتی میل، کیلۆمەتر",
+      "total_mileage": "Total {total} km",
       "unverified_drive": "بۆ چارەسەرکردنگەشتەکەت دوپات نەکرایەوە، پەیوەندی بکە بە کەسی بەرپرسی گەشتەکان لە رێکخراو",
       "verified_drive": "گەشتەکەت دوپات کرایەوە"
     },
@@ -480,7 +480,7 @@
       "login_error": "ەاتنەژورەکە سەرکەوتوو نەبوو",
       "password": "ژمارەی نهێنی",
       "password_required": "ژمارەی نهێنی پێویستە",
-      "user": "User: %{username} ناوی بەکارهێنەر",
+      "user": "User: %{username}",
       "username": "ناوی بەکارهێنەر",
       "username_required": "ناوی بەکارهێنەر پێویستە"
     },
