@@ -4,7 +4,7 @@ django-filter==2.0.0
 Django==2.2.13
 djangorestframework-camel-case==1.0b1
 djangorestframework-jwt==1.11.0
-djangorestframework==3.9.1
+djangorestframework==3.11.2
 Markdown==3.0.1
 Pygments==2.3.1
 django-countries==5.3.3
