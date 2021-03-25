@@ -14,7 +14,7 @@ const getFlagCode = (langCode) => {
 
   // not specified explicitly, try to guess
   return langCode.split('_').pop().toUpperCase();
-}
+};
 
 const LanguagePicker = () => (
   <>
