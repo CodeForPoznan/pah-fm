@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/Container';
 
 import routes, { renderRoutes } from './routes';
 import { getMe, login } from './store/slices/auth';
-import LanguagePicker from "./components/LanguagePicker";
+import LanguagePicker from './components/LanguagePicker';
 
 const history = createBrowserHistory();
 

@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './store';
-import { initTranslations } from "./utils/translation";
+import { initTranslations } from './utils/translation';
 
 // Importing the Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';

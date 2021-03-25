@@ -1,9 +1,9 @@
 import React from 'react';
 import Page from '../components/Page';
-import t from '../utils/translation';
+import useT from '../utils/translation';
 
 const NotFoundView = () => {
-  const notFound = t("404: Not Found");
+  const notFound = useT("404: Not Found");
 
   return (
     <Page title="404">
