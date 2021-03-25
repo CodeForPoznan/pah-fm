@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Page from '../../components/Page';
-import useT from "../../utils/translation";
+import useT from '../../utils/translation';
 
 const LoginView = () => {
   // I know this line sucks, but there's no better way to handle this long string now, unfortunately

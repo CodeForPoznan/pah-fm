@@ -5,7 +5,7 @@ import {useLanguages, setLocale} from '../utils/translation';
 const specialFlags = {
   en: 'GB',
   ku: 'IQ',
-}
+};
 
 const getFlagCode = (langCode) => {
   if (langCode in specialFlags) {
