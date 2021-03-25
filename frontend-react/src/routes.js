@@ -19,7 +19,8 @@ export const renderRoutes = (routes = []) => (
 
         return (
           <Route
-            key={route.path} path={route.path}
+            key={route.path} 
+            path={route.path}
             exact={route.exact}
             render={(props) => (
               <Guard>

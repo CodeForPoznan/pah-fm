@@ -1,7 +1,6 @@
 import React from 'react';
-import { tx } from '@transifex/native';
-import { useLanguages } from '@transifex/react';
 import Flag from 'react-world-flags';
+import {useLanguages, setLocale} from '../utils/translation';
 
 const flags = {
   ar_IQ: "IQ",
@@ -12,19 +11,15 @@ const flags = {
   uk_UA: "UA",
 }
 
-const LanguagePicker = () => {
-  const languages = useLanguages();
-
-  return (
-    <>
-      {languages.map(({ code, name }) => (
-        <button key={code} onClick={() => tx.setCurrentLocale(code)}>
-          <Flag code={flags[code]} width={60} height={90}/>
-          {code} - {name}
-        </button>
-      ))}
-    </>
-  );
-}
+const LanguagePicker = () => (
+  <>
+    {useLanguages().map(({ code, localizedName }) => (
+      <button key={code} onClick={() => setLocale(code)}>
+        <Flag code={flags[code]} width={60} height={90}/>
+        {localizedName}
+      </button>
+    ))}
+  </>
+);
 
 export default LanguagePicker;
