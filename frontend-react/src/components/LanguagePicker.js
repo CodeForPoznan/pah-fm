@@ -2,21 +2,26 @@ import React from 'react';
 import Flag from 'react-world-flags';
 import {useLanguages, setLocale} from '../utils/translation';
 
-const flags = {
-  ar_IQ: "IQ",
-  en: "GB",
-  ku: "IQ",
-  so: "SO",
-  pl_PL: "PL",
-  uk_UA: "UA",
+const specialFlags = {
+  en: 'GB',
+  ku: 'IQ',
+}
+
+const getFlagCode = (langCode) => {
+  if (langCode in specialFlags) {
+    return specialFlags[langCode];
+  }
+
+  // not specified explicitly, try to guess
+  return langCode.split('_').pop().toUpperCase();
 }
 
 const LanguagePicker = () => (
   <>
-    {useLanguages().map(({ code, localizedName }) => (
+    {useLanguages().map(({ code, localized_name }) => (
       <button key={code} onClick={() => setLocale(code)}>
-        <Flag code={flags[code]} width={60} height={90}/>
-        {localizedName}
+        <Flag code={getFlagCode(code)} width={60} height={90}/>
+        <div>{localized_name}</div>
       </button>
     ))}
   </>
