@@ -7,6 +7,12 @@ docker build -t codeforpoznan/pah-fm-backend:latest  backend
 docker push codeforpoznan/pah-fm-frontend
 docker push codeforpoznan/pah-fm-backend
 
+# enable when react fork goes live
+#echo "push translations"
+#(cd frontend && yarn run txjs-cli push --verbose src/)
+#(cd frontend && yarn run txjs-cli invalidate)
+
+
 echo "build and push statics"
 mkdir public
 (cd frontend && npm     run       build                    && cp -r dist/* ../public)
