@@ -15,7 +15,7 @@ const LoginView = () => {
   return (
     <Page title="Login">
       <Jumbotron>
-        <h2 className="header"> {login}</h2>
+        <h2 className="header">{login}</h2>
         <Form>
           <Form.Group controlId="username">
             <Form.Label>{username}</Form.Label>
