@@ -4,7 +4,7 @@ import { tx, onEvent, LOCALE_CHANGED } from '@transifex/native';
 const { REACT_APP_TRANSIFEX_TOKEN: TRANSIFEX_TOKEN } = process.env;
 
 const useLanguages = () => txUseLanguages();
-const setLocale = (code) => {tx.setCurrentLocale(code)};
+const setLocale = (code) => tx.setCurrentLocale(code);
 const useT = (str, props) => txUseT(str, props || {});
 
 class ErrorPolicy {
