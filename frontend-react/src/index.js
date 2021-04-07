@@ -16,7 +16,7 @@ import {
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './store';
-import './i18n';
+import { initTranslations } from './utils/translation';
 
 import theme from './theme';
 
@@ -32,6 +32,7 @@ const rtlTheme = createMuiTheme({ direction: "rtl" });
 // React.useLayoutEffect(() => {
 //   document.body.setAttribute("dir", isRtl ? "rtl" : "ltr");
 // }, [isRtl]);
+initTranslations();
 
 ReactDOM.render(
   <React.StrictMode>

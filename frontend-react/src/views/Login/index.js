@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 import {
   Box,
@@ -10,16 +9,19 @@ import {
 } from '@material-ui/core';
 
 import Page from '../../components/Page';
+import useT from '../../utils/translation';
 
 const LoginView = () => {
-  const { t } = useTranslation();
+  const login = useT("Login");
+  const username = useT("Username");
+  const password = useT("Password");
 
   return (
     <Page
       title="Login"
     >
       <Container>
-        <Typography variant="h2" component="h2"> {t('common.login')}</Typography>
+        <Typography variant="h2" component="h2"> {login}</Typography>
         <form>
           <Box
             display="flex"
@@ -28,17 +30,17 @@ const LoginView = () => {
             <Box mb={2}>
               <TextField
                 fullWidth
-                label={t('login.username')}
+                label={username}
                 type="email"
-                placeholder={t('login.username')}
+                placeholder={username}
                 />
             </Box>
             <Box mb={2} width="100%">
               <TextField
                 fullWidth
-                label={t('login.password')}
+                label={password}
                 type="email"
-                placeholder={t('login.password')}
+                placeholder={password}
               />
             </Box>
             <Button
@@ -46,13 +48,13 @@ const LoginView = () => {
               color="primary"
               type="submit"
             >
-              {t('common.login')}
+              {login}
             </Button>
           </Box>
         </form>
       </Container>
     </Page>
   );
-};
+}
 
 export default LoginView;
