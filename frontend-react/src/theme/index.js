@@ -1,17 +1,16 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-
-const theme = createMuiTheme({
+const themeObject = {
+  name: 'PAH',
   palette: {
     primary: {
-      main: '#556cd6',
+      main: '#0072bc',
     },
     secondary: {
-      main: '#19857b',
+      main: '#a8d14d',
     },
     background: {
       default: '#fff',
     },
   },
-});
+};
 
-export default theme;
+export default themeObject;
