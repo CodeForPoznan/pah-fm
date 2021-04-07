@@ -5,10 +5,8 @@ import { createBrowserHistory } from 'history';
 import Container from 'react-bootstrap/Container';
 
 import routes, { renderRoutes } from './routes';
-import {
-  getMe,
-  login,
-} from './store/slices/auth';
+import { getMe, login } from './store/slices/auth';
+import LanguagePicker from './components/LanguagePicker';
 
 const history = createBrowserHistory();
 
@@ -34,6 +32,7 @@ const App = () => {
             {renderRoutes(routes)}
           </Container>
         </Router>
+        <LanguagePicker />
       </div>
   );
 }
