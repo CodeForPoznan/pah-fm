@@ -26,17 +26,15 @@ const LanguagePicker = () => {
   const languages = useLanguages();
   const dispatch = useDispatch();
   
-  const changeLocale = code => {
-    const { rtl } = languages.find(language => language.code === code);
-
+  const changeLocale = (code, rtl) => {
     dispatch(setLocaleAction({ locale: code, direction: rtl ? DIRECTIONS.RTL : DIRECTIONS.LTR }))
     setLocale(code);
   };
 
   return (
     <>
-      {languages.map(({ code, localized_name }) => (
-        <button key={code} onClick={() => changeLocale(code)}>
+      {languages.map(({ code, localized_name , rtl}) => (
+        <button key={code} onClick={() => changeLocale(code, rtl)}>
           <Flag code={getFlagCode(code)} width={60} height={90}/>
           <div>{localized_name}</div>
         </button>
