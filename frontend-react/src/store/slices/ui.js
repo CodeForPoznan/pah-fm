@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { DIRECTIONS } from '../../utils/constants';
 
 const initialState = {
   locale: 'en',
-  direction: DIRECTIONS.LTR,
+  rtl: false,
 };
 
 const PREFIX = 'ui';
@@ -14,7 +13,7 @@ const uiSlice = createSlice({
   reducers: {
     setLocale(state, { payload }) {
       state.locale = payload.locale;
-      state.direction = payload.direction;
+      state.rtl = payload.rtl;
     },
   },
 });

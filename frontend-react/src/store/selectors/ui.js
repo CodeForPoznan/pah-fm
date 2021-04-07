@@ -4,5 +4,5 @@ const uiSelector = state => state.ui;
 
 export const getDirectionSelector = createSelector(
   uiSelector,
-  state => state.direction,
+  ui => ui.rtl,
 );

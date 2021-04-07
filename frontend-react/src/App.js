@@ -1,23 +1,15 @@
 import React, {
   useEffect,
   useLayoutEffect,
-  useState,
 } from 'react';
 import {
   useDispatch,
   useSelector,
 } from 'react-redux';
-import { Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import rtl from 'jss-rtl';
 import { create } from 'jss';
-
-import routes, { renderRoutes } from './routes';
-import { getMe, login } from './store/slices/auth';
-import { getDirectionSelector } from './store/selectors/ui';
-import LanguagePicker from './components/LanguagePicker';
-import { DIRECTIONS } from './utils/constants';
-
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {
   createMuiTheme,
@@ -27,6 +19,11 @@ import {
 } from '@material-ui/core/styles';
 
 import themeObject from './theme';
+import routes, { renderRoutes } from './routes';
+import { getMe, login } from './store/slices/auth';
+import { getDirectionSelector } from './store/selectors/ui';
+import LanguagePicker from './components/LanguagePicker';
+import { DIRECTIONS } from './utils/constants';
 
 const history = createBrowserHistory();
 
@@ -36,14 +33,13 @@ const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 const ltrTheme = createMuiTheme({ ...themeObject, direction: DIRECTIONS.LTR });
 const rtlTheme = createMuiTheme({ ...themeObject, direction: DIRECTIONS.RTL });
 
-
 const App = () => {
   const dispatch = useDispatch();
-  const  direction = useSelector(getDirectionSelector);
+  const isRtl = useSelector(getDirectionSelector);
   
   useLayoutEffect(() => {
-    document.body.setAttribute("dir", direction);
-  }, [direction]);
+    document.body.setAttribute("dir", isRtl ? DIRECTIONS.RTL : DIRECTIONS.LTR);
+  }, [isRtl]);
 
   useEffect(() => {
     const authenticate = async () => {
@@ -59,12 +55,12 @@ const App = () => {
 
   return (
     <StylesProvider jss={jss}>
-      <ThemeProvider theme={direction === DIRECTIONS.LTR ? ltrTheme : rtlTheme}>
+      <ThemeProvider theme={isRtl ? rtlTheme : ltrTheme}>
         <CssBaseline />
         <div className="App">
-          <Router history={history}>
+          <BrowserRouter history={history}>
             {renderRoutes(routes)}
-          </Router>
+          </BrowserRouter>
           <LanguagePicker />
         </div>
       </ThemeProvider>

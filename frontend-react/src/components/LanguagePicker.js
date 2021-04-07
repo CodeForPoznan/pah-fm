@@ -6,7 +6,6 @@ import {
   setLocale,
 } from '../utils/translation';
 import { setLocale as setLocaleAction } from '../store/slices/ui';
-import { DIRECTIONS } from '../utils/constants';
 
 const specialFlags = {
   en: 'GB',
@@ -27,7 +26,7 @@ const LanguagePicker = () => {
   const dispatch = useDispatch();
   
   const changeLocale = (code, rtl) => {
-    dispatch(setLocaleAction({ locale: code, direction: rtl ? DIRECTIONS.RTL : DIRECTIONS.LTR }))
+    dispatch(setLocaleAction({ locale: code, rtl }))
     setLocale(code);
   };
 
