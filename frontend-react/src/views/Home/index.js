@@ -9,10 +9,14 @@ const statement =
   'world a better place through alleviation of human suffering and promotion' +
   'of humanitarian values".';
 
-const LoginView = () => (
-  <Page title="Home">
-    {useT(statement)}
-  </Page>
-);
+const LoginView = () => {
+  const stmt = useT(statement);
+
+  return (
+    <Page title="Home">
+      {stmt}
+    </Page>
+  );
+};
 
 export default LoginView;
