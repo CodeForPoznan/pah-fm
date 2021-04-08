@@ -1,8 +1,12 @@
 import React from 'react';
 
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
-import Jumbotron from 'react-bootstrap/Jumbotron';
+import {
+  Box,
+  Container,
+  Button,
+  TextField,
+  Typography,
+} from '@material-ui/core';
 
 import Page from '../../components/Page';
 import useT from '../../utils/translation';
@@ -13,29 +17,42 @@ const LoginView = () => {
   const password = useT("Password");
 
   return (
-    <Page title="Login">
-      <Jumbotron>
-        <h2 className="header">{login}</h2>
-        <Form>
-          <Form.Group controlId="username">
-            <Form.Label>{username}</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder={username}
-            />
-          </Form.Group>
-          <Form.Group controlId="password">
-            <Form.Label>{password}</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder={password}
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            {login}
-          </Button>
-        </Form>
-      </Jumbotron>
+    <Page
+      title="Login"
+    >
+      <Container>
+        <Typography variant="h2" component="h2"> {login}</Typography>
+        <form>
+          <Box
+            display="flex"
+            flexDirection="column"
+          >
+            <Box mb={2}>
+              <TextField
+                fullWidth
+                label={username}
+                type="email"
+                placeholder={username}
+                />
+            </Box>
+            <Box mb={2} width="100%">
+              <TextField
+                fullWidth
+                label={password}
+                type="email"
+                placeholder={password}
+              />
+            </Box>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              {login}
+            </Button>
+          </Box>
+        </form>
+      </Container>
     </Page>
   );
 }

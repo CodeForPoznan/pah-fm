@@ -1,17 +1,45 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Router } from 'react-router-dom';
+import React, {
+  useEffect,
+  useLayoutEffect,
+} from 'react';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import Container from 'react-bootstrap/Container';
+import rtl from 'jss-rtl';
+import { create } from 'jss';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import {
+  createMuiTheme,
+  jssPreset,
+  StylesProvider,
+  ThemeProvider,
+} from '@material-ui/core/styles';
 
+import themeObject from './theme';
 import routes, { renderRoutes } from './routes';
 import { getMe, login } from './store/slices/auth';
+import { getDirectionSelector } from './store/selectors/ui';
 import LanguagePicker from './components/LanguagePicker';
+import { DIRECTIONS } from './utils/constants';
 
 const history = createBrowserHistory();
 
+// Configure JSS
+const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
+
+const ltrTheme = createMuiTheme({ ...themeObject, direction: DIRECTIONS.LTR });
+const rtlTheme = createMuiTheme({ ...themeObject, direction: DIRECTIONS.RTL });
+
 const App = () => {
   const dispatch = useDispatch();
+  const isRtl = useSelector(getDirectionSelector);
+  
+  useLayoutEffect(() => {
+    document.body.setAttribute("dir", isRtl ? DIRECTIONS.RTL : DIRECTIONS.LTR);
+  }, [isRtl]);
 
   useEffect(() => {
     const authenticate = async () => {
@@ -26,14 +54,17 @@ const App = () => {
   }, [dispatch]);
 
   return (
-      <div className="App">
-        <Router history={history}>
-          <Container className="p-3">
+    <StylesProvider jss={jss}>
+      <ThemeProvider theme={isRtl ? rtlTheme : ltrTheme}>
+        <CssBaseline />
+        <div className="App">
+          <BrowserRouter history={history}>
             {renderRoutes(routes)}
-          </Container>
-        </Router>
-        <LanguagePicker />
-      </div>
+          </BrowserRouter>
+          <LanguagePicker />
+        </div>
+      </ThemeProvider>
+    </StylesProvider>
   );
 }
 
