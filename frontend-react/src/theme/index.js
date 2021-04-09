@@ -10,6 +10,10 @@ const themeObject = {
     background: {
       default: '#fff',
     },
+    sidebar: {
+      fg: '#fff',
+      bg: '#338ec9',
+    }
   },
 };
 
