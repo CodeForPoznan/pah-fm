@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Typography } from '@material-ui/core'; 
+import { Typography } from '@material-ui/core';
 
 import Page from '../components/Page';
 import useT from '../utils/translation';

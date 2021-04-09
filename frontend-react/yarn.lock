@@ -1846,10 +1846,10 @@
   dependencies:
     "@babel/runtime" "^7.12.5"
 
-"@transifex/cli@^0.10.1":
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/@transifex/cli/-/cli-0.10.1.tgz#02e2aa44302122f4b7e456b867947c07c7b5b9b8"
-  integrity sha512-98gcg9NOhBVFolKcGWDodMklCrsNwWzZ53ktYBNuC6sXqDSvpBpF5tJwZ+ArS03eHk7LmlGUPazAAVLDWLX7PQ==
+"@transifex/cli@^0.11.2":
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/@transifex/cli/-/cli-0.11.2.tgz#ddbeb5c63c4b18e531f71780225f91279f55ba43"
+  integrity sha512-ezIRiqFnXCpY1/lTEvugmLvUHbKtbp0CgHyBKVsjtqSSZOWyOPfU3kpew1UwqhEQd6LbhpXiYW1Du2ZoBlkjLg==
   dependencies:
     "@babel/parser" "^7.13.10"
     "@babel/traverse" "^7.13.0"
@@ -1857,7 +1857,7 @@
     "@oclif/config" "^1.17.0"
     "@oclif/errors" "^1.3.4"
     "@oclif/plugin-help" "^3.2.1"
-    "@transifex/native" "^0.10.1"
+    "@transifex/native" "^0.11.2"
     axios "^0.21.1"
     cli-ux "^5.5.1"
     colors "^1.4.0"
@@ -1865,19 +1865,19 @@
     lodash "^4.17.21"
     shelljs "^0.8.4"
 
-"@transifex/native@^0.10.1":
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/@transifex/native/-/native-0.10.1.tgz#a3335b6098957706965ea34fd9e6c07901209fd6"
-  integrity sha512-yfIzc7gnJfJX0PpqbMAAzvHP6qwGYmxR+mO00oTq6bIbxkcSxfon9zY+kJLAx6RNYhVlVI+nQI1ohQTzQOL0Pw==
+"@transifex/native@^0.11.2":
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/@transifex/native/-/native-0.11.2.tgz#e48f356596f9119bac2adab0b42db4f5ca807a9d"
+  integrity sha512-9oaxc7fotcxQN/6z28B9hZUuReK6sR8vvwy+svcF+f7a+5eH905Rj3zkIjcTWUTWn7TFNOWUQqsVjjNfG3a74A==
   dependencies:
     axios "^0.21.1"
     md5 "^2.3.0"
     messageformat "^2.3.0"
 
-"@transifex/react@^0.10.1":
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/@transifex/react/-/react-0.10.1.tgz#0d05eebc5c1d9f45a7fdcb3d253b414cf6bbd323"
-  integrity sha512-XSj9YIR+/39T7cIOqkeTZBt457K73ZME+ePFLYj5HwDhgzIQxiGv9wh/0/kyJV83sdT8RnOD/ZTYKe5m6z27UQ==
+"@transifex/react@^0.11.2":
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/@transifex/react/-/react-0.11.2.tgz#924d5423c516edf6fa62ee223d9569da29b1bf8b"
+  integrity sha512-Gxf+4ONNhy/STyYyS3oFLsQ5CLsS/azIwLzcV5oAziQyHbEfZa4By6TC2mk+qA6mTgaVicvolim26nr0FeLQBQ==
 
 "@types/anymatch@*":
   version "1.3.1"
