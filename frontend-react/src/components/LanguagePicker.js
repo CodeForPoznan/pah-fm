@@ -7,7 +7,6 @@ import {
 } from '../utils/translation';
 import { setLocale as setLocaleAction } from '../store/slices/ui';
 import {
-  Fade,
   List,
   ListItem, ListItemIcon,
   ListItemText
