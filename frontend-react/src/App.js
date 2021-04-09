@@ -12,8 +12,8 @@ import { createBrowserHistory } from 'history';
 import rtl from 'jss-rtl';
 import { create } from 'jss';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Grid, IconButton, Link } from "@material-ui/core";
-import { MenuOpen } from "@material-ui/icons";
+import { Grid, IconButton, Link } from '@material-ui/core';
+import { MenuOpen } from '@material-ui/icons';
 import {
   createMuiTheme,
   jssPreset,

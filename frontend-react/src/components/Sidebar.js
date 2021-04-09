@@ -15,7 +15,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 
 import LanguagePicker from './LanguagePicker';
-import routes from '../routes';
+import routes, {routeKeys} from '../routes';
 import useT from '../utils/translation';
 import logo from '../assets/logo_codeforpoznan.svg';
 
@@ -43,9 +43,9 @@ const Sidebar = ({ open, onClose }) => {
   const classes = useStyles();
   const translations = {
     // keys are taken from routes.js::routes[].key
-    Home: useT('Home page'),
-    Login: useT('Log in'),
-    Logout: useT('Log out'),
+    [routeKeys.HOME]: useT('Home page'),
+    [routeKeys.LOGIN]: useT('Log in'),
+    [routeKeys.LOGOUT]: useT('Log out'),
   };
 
   return (

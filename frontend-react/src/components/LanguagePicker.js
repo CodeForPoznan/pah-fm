@@ -8,10 +8,11 @@ import {
 import { setLocale as setLocaleAction } from '../store/slices/ui';
 import {
   List,
-  ListItem, ListItemIcon,
-  ListItemText
-} from "@material-ui/core";
-import {makeStyles} from "@material-ui/styles";
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from '@material-ui/core';
+import {makeStyles} from '@material-ui/styles';
 
 const specialFlags = {
   en: 'GB',
