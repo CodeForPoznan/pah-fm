@@ -3,19 +3,19 @@
   "name": "PAH Fleet Management",
   "icons": [
     {
-      "src": "img/icons/favicon-16x16.ico",
+      "src": "img/icons/favicon-16x16.png",
       "sizes": "16x16",
-      "type": "image/x-icon"
+      "type": "image/png"
     },
     {
-      "src": "img/icons/favicon-32x32.ico",
+      "src": "img/icons/favicon-32x32.png",
       "sizes": "32x32",
-      "type": "image/x-icon"
+      "type": "image/png"
     },
     {
-      "src": "img/icons/favicon-96x96.ico",
+      "src": "img/icons/favicon-96x96.png",
       "sizes": "96x96",
-      "type": "image/x-icon"
+      "type": "image/png"
     },
     {
       "src": "img/icons/icon-72x72.png",
