@@ -38,35 +38,46 @@ export const renderRoutes = (routes = []) => (
   </Suspense>
 );
 
+const routeKeys = {
+  HOME: 'home',
+  LOGIN: 'login',
+  LOGOUT: 'logout',
+  NOTFOUND: 'notfound',
+  DEFAULT: 'default',
+}
+
 const routes = [
   {
     exact: true,
-    path: '/404',
-    key: 'NotFound',
-    component: lazy(() => import('./views/NotFound'))
+    path: '/',
+    key: routeKeys.HOME,
+    component: lazy(() => import('./views/Home'))
   },
   {
     exact: true,
     path: '/login',
-    key: 'Login',
+    key: routeKeys.LOGIN,
     component: lazy(() => import('./views/Login'))
   },
   {
     exact: true,
-    path: '/',
-    key: 'Home',
-    component: lazy(() => import('./views/Home'))
+    path: '/logout',
+    key: routeKeys.LOGOUT,
+    component: <Redirect to="/404" />
+  },
+  {
+    path: '/404',
+    key: routeKeys.NOTFOUND,
+    component: lazy(() => import('./views/NotFound'))
   },
   {
     path: '*',
-    key: 'Default',
-    routes: [
-      {
-        key: 'Redirect',
-        component: () => <Redirect to="/404" />
-      }
-    ]
-  }
+    key: routeKeys.DEFAULT,
+    component: () => <Redirect to="/404" />
+  },
 ];
 
-export default routes;
+export {
+  routes as default,
+  routeKeys,
+};
