@@ -9,11 +9,17 @@ const themeObject = {
     },
     background: {
       default: '#fff',
+      grayLight: '#e9ecef',
     },
     sidebar: {
       fg: '#fff',
       bg: '#338ec9',
-    }
+    },
+    errorMessage: {
+      fg: '#721c24',
+      bg: '#f8d7da',
+      border: '#f5c6cb'
+    },
   },
 };
 
