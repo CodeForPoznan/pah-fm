@@ -1,6 +1,9 @@
 <template>
   <div>
-    <ul class="lang">
+    <ul
+      class="lang"
+      :class="{ 'lang-wrap': wrap }"
+    >
       <li
         v-for="language in languagesOrder"
         :key="language"
@@ -22,6 +25,12 @@ import * as actions from '../store/actions';
 
 export default {
   name: 'Language',
+  props: {
+    wrap: {
+      type: Boolean,
+      required: false,
+    },
+  },
   methods: {
     ...mapActions([actions.SWITCH_LANGUAGE]),
     changeLang(languageChecked) {
@@ -47,9 +56,15 @@ ul.lang {
   margin-top: 80px;
 }
 
+ul.lang-wrap {
+  flex-wrap: wrap;
+}
+
 .lang li span {
   cursor: pointer;
   height: 50px;
   width: 40px;
+  display: flex;
+  align-items: center;
 }
 </style>
