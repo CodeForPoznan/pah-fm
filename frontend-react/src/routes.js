@@ -74,7 +74,7 @@ const routes = [
   {
     path: '/drive',
     key: routeKeys.DRIVE,
-    component: lazy(() => import('./views/Add Drive'))
+    component: lazy(() => import('./views/AddDrive'))
   },
   {
     path: '*',

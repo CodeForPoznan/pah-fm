@@ -26,6 +26,7 @@ const DriveView = () => {
   // Translated labels
   const title = useT('Add new drive');
   const errorTitle = useT('Please correct the following error(s):');
+  const traveledT = useT('traveled');
 
   // separate object to generate fields dynamically
   const translatedFieldsLabels = {
@@ -42,12 +43,12 @@ const DriveView = () => {
 
   const validationSchema = yup.object().shape({
     startLocation: yup.string().required(useT('Start location is required')),
-    mileageStart: yup.string().required(useT('Starting mileage is required')),
+    mileageStart: yup.number().required(useT('Starting mileage is required')),
     project: yup.string().required(useT('Project is required')),
     car: yup.string().required(useT('Car is required')),
     passenger: yup.string().required(useT('Start location is required')),
     endLocation: yup.string().required(useT('End location is required')),
-    mileageEnd: yup.string().required(useT('Ending mileage is required')),
+    mileageEnd: yup.number().required(useT('Ending mileage is required')),
   });
 
   const formik = useFormik({
@@ -116,7 +117,7 @@ const DriveView = () => {
   });
 
   const classes = useStyles();
-  
+
   return (
     <Page title="Drive" className={classes.root}>
       <Container className={classes.container} maxWidth="md">
@@ -189,7 +190,7 @@ const DriveView = () => {
             })}
           </Box>
           <p>
-            {traveled} km {useT('traveled')}
+            {traveled} km {traveledT}
           </p>
           <ButtonsContainer>
             <Button type="submit" variant="contained" color="primary">
