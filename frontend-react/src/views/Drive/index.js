@@ -27,6 +27,8 @@ const DriveView = () => {
   const title = useT('Add new drive');
   const errorTitle = useT('Please correct the following error(s):');
   const traveledT = useT('traveled');
+  const submit = useT('Submit');
+  const reset = useT('Reset');
 
   // separate object to generate fields dynamically
   const translatedFieldsLabels = {
@@ -194,10 +196,10 @@ const DriveView = () => {
           </p>
           <ButtonsContainer>
             <Button type="submit" variant="contained" color="primary">
-              Submit
+              {submit}
             </Button>
             <Button variant="contained" onClick={formik.resetForm}>
-              Reset
+              {reset}
             </Button>
           </ButtonsContainer>
         </form>
