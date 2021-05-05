@@ -6,7 +6,7 @@
   >
     <b-nav fill>
       <navigation-items />
-      <language />
+      <language wrap />
 
       <a
         class="out-link"
