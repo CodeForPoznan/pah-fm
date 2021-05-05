@@ -20,17 +20,19 @@ const GET_ME = 'get me';
 
 export const login = createAsyncThunk(
   `${PREFIX}/${LOGIN}`,
-  async (values) => {
+  async (values, { rejectWithValue, dispatch }) => {
     try {
       const response = await request.post('/api-token-auth/', values);
       const token = response.data.token;
 
       request.setAuthToken(token);
       setToken(token);
-
+      
+      await dispatch(getMe());
+      
       return null;
     } catch (error) {
-      return error.response.message;
+      return rejectWithValue(error.response.data);
     }
   }
 )

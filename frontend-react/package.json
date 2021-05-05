@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.58",
     "@material-ui/styles": "^4.11.3",
     "@reduxjs/toolkit": "^1.5.0",
     "@testing-library/jest-dom": "^5.11.4",
@@ -15,6 +16,7 @@
     "@transifex/react": "^0.11.2",
     "axios": "^0.21.0",
     "case-converter": "^1.0.1",
+    "formik": "^2.2.6",
     "history": "^5.0.0",
     "js-cookie": "^2.2.1",
     "jss": "^10.6.0",
@@ -28,7 +30,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-world-flags": "^1.4.0",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
