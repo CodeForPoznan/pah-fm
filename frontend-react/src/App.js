@@ -1,14 +1,11 @@
 import React, {
   useState,
-  useEffect,
   useLayoutEffect,
 } from 'react';
 import {
-  useDispatch,
   useSelector,
 } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 import rtl from 'jss-rtl';
 import { create } from 'jss';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -24,13 +21,10 @@ import {
 
 import themeObject from './theme';
 import routes, { renderRoutes } from './routes';
-import { getMe, login } from './store/slices/auth';
 import { getDirectionSelector } from './store/selectors/ui';
 import { DIRECTIONS } from './utils/constants';
 import Sidebar from './components/Sidebar';
 import logo from './assets/logo_pah_en.svg';
-
-const history = createBrowserHistory();
 
 // Configure JSS
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
@@ -51,7 +45,6 @@ const useStyles = makeStyles({
 
 const App = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const isRtl = useSelector(getDirectionSelector);
   const [open, setOpen] = useState(false);
 
@@ -59,23 +52,11 @@ const App = () => {
     document.body.setAttribute("dir", isRtl ? DIRECTIONS.RTL : DIRECTIONS.LTR);
   }, [isRtl]);
 
-  useEffect(() => {
-    const authenticate = async () => {
-      await dispatch(login({
-        username: 'driver@codeforpoznan.pl',
-        password: 'pass123',
-      }));
-      dispatch(getMe());
-    }
-
-    authenticate();
-  }, [dispatch]);
-
   return (
     <StylesProvider jss={jss}>
       <ThemeProvider theme={isRtl ? rtlTheme : ltrTheme}>
         <CssBaseline />
-        <BrowserRouter history={history}>
+        <BrowserRouter>
           <Grid container className={classes.root}>
             <Grid container wrap="nowrap" direction="row">
               <Grid item xs>
