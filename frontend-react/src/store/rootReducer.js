@@ -1,5 +1,4 @@
-import { combineReducers } from '@reduxjs/toolkit'
-
+import { combineReducers } from '@reduxjs/toolkit';
 import { authReducer } from './slices/auth';
 import { uiReducer } from './slices/ui';
 
@@ -8,4 +7,4 @@ const rootReducer = combineReducers({
   ui: uiReducer,
 });
 
-export default rootReducer
+export default rootReducer;
