@@ -66,28 +66,13 @@ Here's a high-level description of the project's structure:
 
 - backend  
   - `main purpose:` REST API for frontend code
-  - `language:` Python 3.6
+  - `language:` Python 3.8
   - `framework:` Django
   
 - frontend
   - `main purpose:` Interactive interface for application
   - `language:` JavaScript
-  - `framework:` Vue
-
-- ansible
-  - `main purpose:` Deployment scripts used on production environment (deprecated)
-  - `language:` YAML
-  - `framework:` Ansible
-
-- behave_test_automation
-  - `main purpose:` End To End Tests for User Interface (deprecated)
-  - `language:` Gherkin
-  - `framework:` behave
-
-
-You'll probably want to focus on either `frontend` or `backend` 
-directory as the two other ones are deprecated and intended for 
-removal in near future.
+  - `framework:` React
 
 
 <br>

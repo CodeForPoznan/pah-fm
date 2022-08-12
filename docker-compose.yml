@@ -37,7 +37,7 @@ services:
     networks: [pah]
     image: postgres:14.4
     ports:
-      - 6866:5432
+      - 5432:5432
     environment:
       POSTGRES_DB: pah-fm
       POSTGRES_USER: pah-fm
