@@ -1,6 +1,6 @@
 <template>
-  <div class="header">
-    <b-nav-item
+  <div class="header col-6">
+    <b-link
       class="logo-container"
       to="/drive"
     >
@@ -8,7 +8,7 @@
         class="logo"
         :src="logo"
       >
-    </b-nav-item>
+    </b-link>
   </div>
 </template>
 
@@ -36,6 +36,7 @@ export default {
   @include p(3);
   @include flex(row, center);
 
+  justify-content: flex-start;
   text-align: center;
   background: $white;
   height: 120px;
@@ -50,6 +51,8 @@ export default {
   list-style-type: none;
 
   @include media-breakpoint-down(md) {
+    float: right;
+    justify-content: flex-start;
     max-width: 180px;
     max-height: 125px;
     margin: 0 auto;

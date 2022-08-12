@@ -42,8 +42,7 @@
       "start_location": "Goobta safarka kabilaabmo:",
       "starting_mileage": "Bilawga sacada KM:",
       "start_mileage_error": "Bilawga sacada KM wa qalad",
-      "submit": "Gudbi",
-      "validation_error": "ina {field} buxisid aya lobahanyahay"
+      "submit": "Gudbi"
     },
     "passenger_form": {
       "hash": "kodhka darawalka",
@@ -90,6 +89,17 @@
       "drive_ok_label": "Safarka miyu fiicnaa?",
       "submission_success": "Xaqijintada waladiray. Mahadsanid!",
       "token_inactive": "Linkigaga wukadhacay ama walaxaqijiye. Mahadsanid!"
+    },
+    "form_errors": {
+      "car": "gaariga",
+      "end_location": "gobta safarka kudhamaday",
+      "end_mileage": "Dhamaadka sacada",
+      "hash": "kodhka",
+      "passenger": "Rakaab",
+      "project": "Mashruuc",
+      "start_location": "Goobta safarka kabilaabmo",
+      "start_mileage": "Bilawga sacada",
+      "validation_error": "ina {field} buxisid aya lobahanyahay"
     }
   },
   "ua": {
@@ -135,8 +145,7 @@
       "start_location": "Початковий пункт поїздки",
       "starting_mileage": "Початкове значення вимірювального приладу",
       "start_mileage_error": "Початкове значення вимірювального приладу має неправильне значення",
-      "submit": "Надіслати",
-      "validation_error": "Потрібно заповнити {field}"
+      "submit": "Надіслати"
     },
     "passenger_form": {
       "hash": "код драйвера",
@@ -183,6 +192,17 @@
       "drive_ok_label": "Чи був маршрут OK?",
       "submission_success": "Ваше підтвердження надіслано. Дякую!",
       "token_inactive": "Ваше посилання закінчилося або вже підтверджено. Дякую!"
+    },
+    "form_errors": {
+      "car": "Автомобіль",
+      "end_location": "Кінцевий пункт поїздки",
+      "end_mileage": "Кінцеве значення вимірювального приладу",
+      "hash": "код",
+      "passenger": "Пасажир",
+      "project": "Проект",
+      "start_location": "Початковий пункт поїздки",
+      "start_mileage": "Початкове значення вимірювального приладу",
+      "validation_error": "Потрібно заповнити {field}"
     }
   },
   "gb": {
@@ -228,8 +248,7 @@
       "start_location": "Start location:",
       "starting_mileage": "Starting mileage:",
       "start_mileage_error": "Start mileage is incorrect",
-      "submit": "Submit",
-      "validation_error": "{field} is required"
+      "submit": "Submit"
     },
     "passenger_form": {
       "hash": "Driver code",
@@ -276,6 +295,17 @@
       "drive_ok_label": "Was the drive OK?",
       "submission_success": "Your confirmation was sent. Thank you!",
       "token_inactive": "Your link expired or has already been confirmed. Thank you!"
+    },
+    "form_errors": {
+      "car": "Car",
+      "end_location": "End location",
+      "end_mileage": "Ending mileage",
+      "hash": "Code",
+      "passenger": "Passenger",
+      "project": "Project",
+      "start_location": "Start location",
+      "start_mileage": "Starting mileage",
+      "validation_error": "{field} is required"
     }
   },
   "pl": {
@@ -321,8 +351,7 @@
       "start_location": "Lokalizacja początkowa:",
       "starting_mileage": "Początkowy stan licznika:",
       "start_mileage_error": "Stan licznika jest niepoprawny",
-      "submit": "Wyślij",
-      "validation_error": "Pole {field} jest wymagane"
+      "submit": "Wyślij"
     },
     "passenger_form": {
       "hash": "Kod kierowcy",
@@ -368,6 +397,120 @@
       "drive_ok_label": "Czy przejazd był OK?",
       "submission_success": "Potwierdzenie zostało wysłane. Dziękujemy!",
       "token_inactive": "Link wygasł albo został już potwierdzony. Dziękujemy!"
+    },
+    "form_errors": {
+      "car": "Samochód",
+      "end_location": "Lokalizacja końcowa",
+      "end_mileage": "Końcowy stan licznika",
+      "hash": "Kod",
+      "passenger": "Pasażer",
+      "project": "Projekt",
+      "start_location": "Lokalizacja początkowa",
+      "start_mileage": "Początkowy stan licznika",
+      "validation_error": "Pole {field} jest wymagane"
+    }
+  },
+  "iq": {
+    "common": {
+      "about": "سەبارەت",
+      "error": "هەلەیە",
+      "home": "بەشی سەرەکی",
+      "intro": "رێکخراوێکی مرۆی ناحوکمیە کە لە پۆلەندا وڵاتانی دیکە کاردەکات",
+      "loading": "چاوەرێکە",
+      "login": "هاتنە ژوورەوە",
+      "logout": "هاتنە دەرەوە",
+      "new_drive": "گەشتی نوێ",
+      "confirm_drive": "قبوڵکرنی گەشت",
+      "no": "نەخێر",
+      "page_not_found": "ئەو لاپەرەیی کە بەدوای دەگەرێی بونی نیە",
+      "please_correct_errors": "تکایە هەڵەکان راستبکەوە",
+      "drives": "گەشتەکان",
+      "unexpected_error": "هەڵەیەکی چاوەروان نەکراو, هەڵەیەکی چاوەروان نەکراو رویدا تکایە پەیوەندی بە بەشی کارگێری ",
+      "yes": "بەڵێ",
+      "are_you_sure": "دڵنیای",
+      "cancel": "رەتکردنەوە",
+      "skip": "Skip"
+    },
+    "drive_form": {
+      "cars": "هەڵبژاردنی ئۆتۆمۆبێڵ",
+      "signature": "واژۆ",
+      "date": "بەروار",
+      "description": "باسکردن",
+      "distance_traveled": "{distance} km traveled",
+      "drive_added_offline_notification": "گەشتەکەت زیاد دەکرێت بۆ بنکەی زانیاری دوای  پەیوەندی کردن بە ئەنترنێت",
+      "drive_added_online_notification": "گەشتەکەت بە سەرکەوتوی زیاد کرا بۆ بنکەی زانیاری",
+      "drive_hash": "پشکنینی گەشتەکان",
+      "ending_mileage": "کۆتا کیلۆمەتر",
+      "end_location": "شوێنی کۆتای",
+      "end_mileage_error": "کۆتا کیلۆ مەتر دروست نیە",
+      "fetching_cars_error": "داواکرنی ئۆتۆمۆبێل سەرکەوتو نەبو",
+      "no_project_message": "ناوی پرۆژە پێوستە",
+      "no_cars_message": "هیچ ئۆتۆمۆبێلێک بەردەست نیە",
+      "passenger": "سەرنشین",
+      "passenger_error": "ناوی سەرنشین پێوستە",
+      "project": "پرۆژە",
+      "reset": "دوبارە چاڵاکردن",
+      "start_location": "شوێنی دەست پێکردن",
+      "starting_mileage": "کیلۆمەتری دەستپێک",
+      "start_mileage_error": "کیلۆمەتری دەستپێک دروست نیە",
+      "submit": "ناردن"
+    },
+    "passenger_form": {
+      "hash": "کۆدی شۆفێر",
+      "invalid_length": "کۆدی شۆفێر پێویستە  لە ٦ژمارە پێکبێت"
+    },
+    "drives": {
+      "car": "لەگەڵ ئۆتۆمۆبێل",
+      "description": "وەسف کردن",
+      "ending_mileage": "کۆتا کیلۆ مەتر",
+      "from_to": "From {from} to {destination}",
+      "no_driver_drives": "ببورە هیچ گەشتێکی پارێزراوت نیە،لە بنکەی زانیاری ، دەتوانی گەشتی نوێ زیاد بکەی لە هەڵبژاردەکان",
+      "synced_drives": "Previous drives",
+      "project": "پرۆژە",
+      "starting_mileage": "کیلۆمەتری دەستپێک",
+      "unsynced_drives": "گەشتە ناهاوتاکان",
+      "total_mileage": "Total {total} km",
+      "unverified_drive": "بۆ چارەسەرکردنگەشتەکەت دوپات نەکرایەوە، پەیوەندی بکە بە کەسی بەرپرسی گەشتەکان لە رێکخراو",
+      "verified_drive": "گەشتەکەت دوپات کرایەوە"
+    },
+    "header": {
+      "polish_humanitarian_action": "رێکخراوی مرۆی پۆڵەندی"
+    },
+    "login": {
+      "login_error": "ەاتنەژورەکە سەرکەوتوو نەبوو",
+      "password": "ژمارەی نهێنی",
+      "password_required": "ژمارەی نهێنی پێویستە",
+      "user": "User: %{username}",
+      "username": "ناوی بەکارهێنەر",
+      "username_required": "ناوی بەکارهێنەر پێویستە"
+    },
+    "logout": {
+      "thank_you": "سوپاس",
+      "successfully_logged_out": "چونەدەرەوەکەت سەرکەەتوبوو",
+      "login_again": "دوبارە هاتنە ژورەوە",
+      "offline_logout_warning": "You are offline, so if you log out right now then you won't be able to log in until you become online again.",
+      "logout_warning": "تۆ هێڵەکەت کارا نیە ،بۆیە ئەگەر ئێستا بچیتە دەرەوە ناتوانی دوبارە بچیتە ژورەوە تاکو هێڵەکەت کارا نەکەی بە ئینتەرنێت"
+    },
+    "refresh": {
+      "new_version": "ڤێرژنی نوێی وێبسایت بەردەستە",
+      "reload": "کاراکردنەوە"
+    },
+    "confirmation": {
+      "comment_label": "تکایە بۆچونی خۆت بنوسە",
+      "drive_ok_label": "گەشتەکەت باش بوو؟",
+      "submission_success": "دوپات کردنەوەکەت ناردرا، سوپاس",
+      "token_inactive": "لینکەکەت بەسەر چوە یاخود پێشو تر پشتراست کراوەتوە"
+    },
+    "form_errors": {
+      "car": "Car",
+      "end_location": "End location",
+      "end_mileage": "Ending mileage",
+      "hash": "Code",
+      "passenger": "Passenger",
+      "project": "Project",
+      "start_location": "Start location",
+      "start_mileage": "Starting mileage",
+      "validation_error": "{field} is required"
     }
   }
 }

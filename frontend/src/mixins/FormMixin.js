@@ -1,4 +1,4 @@
-import { renderErrorMessage } from '../services/errorMessages';
+import { toSnakeCase } from '../services/errorMessages';
 
 export function isValid(field) {
   return field && !!String(field).trim();
@@ -9,6 +9,7 @@ export default {
     return {
       isInvalid: {},
       listOfErrors: [],
+      otherErrors: [],
       form: {},
     };
   },
@@ -25,16 +26,17 @@ export default {
        */
       this.isInvalid = {};
       this.listOfErrors = [];
+      this.otherErrors = [];
 
       this.listOfErrors = this.requiredFields
         .filter(field => !isValid(this.form[field]))
         .map((field) => {
           this.isInvalid[field] = true;
-          return renderErrorMessage(field);
+          return toSnakeCase(field);
         });
 
       if (validator) {
-        this.listOfErrors.push(...validator(this.form));
+        this.otherErrors.push(...validator(this.form));
       }
     },
     loadFormData() {

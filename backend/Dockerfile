@@ -1,14 +1,22 @@
 FROM python:3.8-slim
 
-RUN set -ex \
-    && apt-get update \
+EXPOSE 8000
+
+RUN apt-get update -y \
     && apt-get install -y \
+        libpq-dev \
         wait-for-it \
-        libpq-dev
+        iproute2 \
+    && apt-get autoremove
 
 WORKDIR /pah-fm/backend
-ADD   . /pah-fm/backend
 
-RUN pip3 install -r requirements/dev.txt
+COPY Pipfile Pipfile.lock ./
 
-CMD ["bash", "docker-entrypoint.sh"]
+RUN pip install --upgrade pip \
+    && pip install pipenv==2022.1.8 \
+    && pipenv install --system --dev
+
+ADD . /pah-fm/backend
+
+ENTRYPOINT ["bash", "docker-entrypoint.sh"]

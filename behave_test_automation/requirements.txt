@@ -1,3 +1,0 @@
-behave==1.2.6
-ipython
-selenium==3.3.3

@@ -3,8 +3,6 @@ from datetime import timedelta
 
 import random
 
-from django.db import transaction
-from django.db.utils import IntegrityError
 from django.utils.timezone import now
 from factory import (
     fuzzy,
@@ -12,52 +10,26 @@ from factory import (
     Faker,
     LazyAttribute,
     lazy_attribute,
-    post_generation,
     SubFactory,
 )
 
-
-from fleet_management.models import Car, Drive, Project, User
+from djmoney.money import Money
+from djmoney.settings import CURRENCY_CHOICES
+from fleet_management.models import Car, Drive, Project, User, Refuel
 
 
 COUNTRIES = ("UA", "SS")
 
 
-class MakeFactoryMixin:
-    """
-        This class attaches two new static methods to factory class.
-
-        make() and make_batch() both overwrite the default behaviour of
-        create() and create_batch() in order to protect the developer
-        from pushing to the DB the same instance multiple times.
-        This protects you from getting hit with IntegrityError.
-    """
-
-    @classmethod
-    def make(cls, **kwargs):
-        try:
-            with transaction.atomic():
-                return super().create(**kwargs)
-        except IntegrityError:
-            try:
-                model = cls._meta.model
-                return model.objects.get(**kwargs)
-            except model.MultipleObjectsReturned:
-                return model.objects.last()
-
-    @classmethod
-    def make_batch(cls, size, **kwargs):
-        return [cls.make(**kwargs) for _ in range(size)]
-
-
-class UserFactory(MakeFactoryMixin, DjangoModelFactory):
+class UserFactory(DjangoModelFactory):
     class Meta:
         model = User
+        django_get_or_create = ("username",)
 
     first_name = Faker("first_name", locale="uk_UA")
     last_name = Faker("last_name", locale="uk_UA")
-    email = Faker("email", locale="uk_UA")
-    username = LazyAttribute(lambda obj: obj.email)
+    email = LazyAttribute(lambda obj: obj.username)
+    username = Faker("email", locale="uk_UA")
     country = fuzzy.FuzzyChoice(COUNTRIES)
 
     is_active = True
@@ -65,15 +37,16 @@ class UserFactory(MakeFactoryMixin, DjangoModelFactory):
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):
-        manager = cls._get_manager(model_class)
         groups = kwargs.pop("groups", [])
-        user = manager.create_user(*args, **kwargs)
+        user = super()._create(model_class, *args, **kwargs)
+        user.set_password(cls.password)
         for g in groups:
             user.groups.add(g)
+        user.save()
         return user
 
 
-class CarFactory(MakeFactoryMixin, DjangoModelFactory):
+class CarFactory(DjangoModelFactory):
 
     REGIONAL_PREFIXES = (
         "AA",
@@ -329,6 +302,7 @@ class CarFactory(MakeFactoryMixin, DjangoModelFactory):
     class Meta:
         model = Car
         exclude = ("REGIONAL_PREFIXES", "COLORS", "MODELS")
+        django_get_or_create = ("plates",)
 
     @lazy_attribute
     def plates(self):
@@ -349,27 +323,26 @@ class CarFactory(MakeFactoryMixin, DjangoModelFactory):
         )
 
 
-class ProjectFactory(MakeFactoryMixin, DjangoModelFactory):
+class ProjectFactory(DjangoModelFactory):
     class Meta:
         model = Project
+        django_get_or_create = ("title",)
 
     title = Faker("text", max_nb_chars=50)
     description = Faker("text", max_nb_chars=1000)
     country = fuzzy.FuzzyChoice(COUNTRIES)
 
-    @post_generation
-    def drives(self, create, extracted, **kwargs):
-        if not create:
-            return
 
-        if extracted:
-            for drive in extracted:
-                self.drives.add(drive)
-
-
-class DriveFactory(MakeFactoryMixin, DjangoModelFactory):
+class DriveFactory(DjangoModelFactory):
     class Meta:
         model = Drive
+        django_get_or_create = (
+            "end_mileage",
+            "start_mileage",
+            "timestamp",
+            "start_location",
+            "end_location",
+        )
 
     driver = SubFactory(UserFactory)
     project = SubFactory(ProjectFactory)
@@ -382,4 +355,22 @@ class DriveFactory(MakeFactoryMixin, DjangoModelFactory):
     timestamp = fuzzy.FuzzyInteger(1, 999999999)
     start_location = Faker("city", locale="uk_UA")
     end_location = Faker("city", locale="uk_UA")
-    is_verified = False
+    is_verified = fuzzy.FuzzyChoice((True, False))
+
+
+class RefuelFactory(DjangoModelFactory):
+    class Meta:
+        model = Refuel
+
+    driver = SubFactory(UserFactory)
+    car = SubFactory(CarFactory)
+    date = fuzzy.FuzzyDate((now() - timedelta(days=1000)).date())
+    current_mileage = fuzzy.FuzzyInteger(1, 100000)
+    refueled_liters = fuzzy.FuzzyInteger(1, 100)
+    price_per_liter = fuzzy.FuzzyInteger(1, 10)
+
+    @lazy_attribute
+    def total_cost(self):
+        currency = random.choice(CURRENCY_CHOICES)[0]
+        amount = round(random.random(), 2)
+        return Money(currency=currency, amount=amount)

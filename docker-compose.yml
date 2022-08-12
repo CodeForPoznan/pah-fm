@@ -1,60 +1,41 @@
-version: "3.5"
+version: "3"
+
 services:
 
   frontend:
-    networks: [pah]
+    container_name: pah-fm-frontend
     image: codeforpoznan/pah-fm-frontend
-    # used for local frontend build (enables service worker etc)
-    # environment:
-    #  NODE_ENV: production
-    command: bash docker-entrypoint.sh
+    ports:
+      - 8080:8080
     volumes:
       - ./frontend:/pah-fm/frontend
-      - asset-volume:/pah-fm/frontend/dist
-    depends_on:
-      - webserver
+    environment:
+      VUE_APP_API_URL: http://localhost:8000/api/
 
   backend:
-    networks: [pah]
+    container_name: pah-fm-backend
     image: codeforpoznan/pah-fm-backend
-    command: bash docker-entrypoint.sh
     stdin_open: true
     tty: true
-    environment:
-      BASE_URL: http://localhost:8080
-      PAH_FM_DB_HOST: db
-      SECRET_KEY: pah-fm
-      DEBUG: 1
-      DJANGO_LOG_LEVEL: 'DEBUG'
     links:
-      - db:db
+      - database:database
+    ports:
+      - 8000:8000
     volumes:
       - ./backend:/pah-fm/backend
+    environment:
+      BASE_URL: http://localhost:8000
+      PAH_FM_DB_HOST: database
+      SECRET_KEY: pah-fm
+      DEBUG: 1
+      DJANGO_LOG_LEVEL: DEBUG
 
-  db:
-    networks: [pah]
-    image: postgres:9.5
+  database:
+    container_name: pah-fm-database
+    image: postgres:14.4
     ports:
-      - 6866:5432
+      - 5432:5432
     environment:
       POSTGRES_DB: pah-fm
       POSTGRES_USER: pah-fm
       POSTGRES_PASSWORD: pah-fm
-
-  webserver:
-    networks: [pah]
-    image: nginx
-    volumes:
-      - ./pah-fm.conf:/etc/nginx/nginx.conf
-      - asset-volume:/var/www/:ro
-    ports:
-      - 8080:80
-    depends_on:
-      - backend
-
-volumes:
-  asset-volume:
-
-networks:
-  pah:
-    name: pah

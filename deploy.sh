@@ -8,15 +8,14 @@ docker push codeforpoznan/pah-fm-frontend
 docker push codeforpoznan/pah-fm-backend
 
 echo "build and push statics"
-(cd frontend && npm     run       build                    && cp -r dist   ../public)
+mkdir public
+(cd frontend && npm     run       build                    && cp -r dist/* ../public)
 (cd backend  && python3 manage.py collectstatic --no-input && cp -r static ../public)
-aws s3          sync    --quiet   public s3://codeforpoznan-public/dev_pah_fm
+aws s3         sync                --delete public s3://codeforpoznan-public/dev_pah_fm
 aws cloudfront create-invalidation --paths "/*" --distribution-id EEQ58KIXKBEQ9
 
 echo "bundle application"
-pip install --quiet -r backend/requirements/base.txt --target packages
-(cd packages && rm -r psycopg2 && svn checkout https://github.com/jkehler/awslambda-psycopg2/trunk/psycopg2-3.6 && mv psycopg2-3.6 psycopg2)
-(cd packages && cp psycopg2/_psycopg*.so psycopg2/_psycopg.so) # hotfix
+pip install -r backend/requirements/base.txt --target packages
 (cd packages && rm -rf *-info && zip -qgr9 ../lambda.zip .)
 (cd backend  && rm -rf static && zip -qgr9 ../lambda.zip .)
 

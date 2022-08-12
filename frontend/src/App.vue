@@ -1,21 +1,27 @@
 <template>
   <div id="app">
-    <Status />
-    <Header />
-    <sidebar :show="showMenu && IS_USER_LOGGED_IN" />
-    <div
-      id="page-wrap"
-      class="container"
-    >
-      <div class="row">
-        <div class="col-xs-12 page">
-          <transition
-            name="fade"
-            mode="out-in"
-            appear
-          >
-            <router-view @hide-menu="showMenu = false" />
-          </transition>
+    <div>
+      <div class="header-layout">
+        <Header />
+        <Status />
+        <div class="col-2 header-menu-button">
+          <sidebar :show="showMenu && IS_USER_LOGGED_IN" />
+        </div>
+      </div>
+      <div
+        id="page-wrap"
+        class="container"
+      >
+        <div class="row">
+          <div class="col-xs-12 page">
+            <transition
+              name="fade"
+              mode="out-in"
+              appear
+            >
+              <router-view @hide-menu="showMenu = false" />
+            </transition>
+          </div>
         </div>
       </div>
     </div>
@@ -75,62 +81,89 @@ export default {
 </script>
 
 <style lang="scss">
-@import './scss/base';
+  @import './scss/base';
 
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  background: $white;
-  min-height: 100vh;
-}
-
-.bm-item-list {
-  margin-right: 10%;
-  margin-left: 10%;
-}
-
-.nav {
-  flex-wrap: nowrap;
-}
-
-.mobile-menu {
-  .bm-menu {
-    background: $pah-color-3;
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+    background: $white;
+    min-height: 100vh;
   }
 
-  .bm-cross {
-    height: 30px !important;
+  .nav {
+    flex-wrap: nowrap;
   }
 
-  .cross-style {
-    top: 36px !important;
-    right: 36px !important;
+  .mobile-menu {
+    position: inherit;
+
+    .bm-menu {
+      background: $pah-color-3;
+    }
+
+    .bm-burger-button {
+      position: inherit;
+      width: 42px;
+      height: 36px;
+      cursor: pointer;
+    }
+
+    .bm-burger-bars {
+      background-color: #373a47;
+    }
+
+    .bm-cross {
+      height: 30px !important;
+    }
+
+    .cross-style {
+      top: 36px !important;
+      right: 36px !important;
+    }
+
+    .bm-item-list {
+      margin-right: 10%;
+      margin-left: 10%;
+    }
+
+    & .nav-item a {
+      color: $white;
+    }
+
+    & .nav-item a:hover {
+      text-decoration: underline;
+    }
+
+    & .nav {
+      flex-direction: column;
+    }
+
+    & .username {
+      font-size: 0.75em;
+    }
   }
 
-  & .nav-item a {
-    color: $white;
+  .is-invalid {
+    border-color: red !important;
   }
 
-  & .nav-item a:hover {
-    text-decoration: underline;
+  .page {
+    width: 100%;
   }
 
-  & .nav {
-    flex-direction: column;
+  .header-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 15vh;
+    padding: 0 15px;
+    margin: 0;
   }
 
-  & .username {
-    font-size: 0.75em;
+  .header-menu-button {
+    display: flex;
+    justify-content: center;
   }
-}
-
-.is-invalid {
-  border-color: red !important;
-}
-
-.page {
-  width: 100%;
-}
 </style>

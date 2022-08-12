@@ -12,10 +12,10 @@ from fleet_management.factories import CarFactory, UserFactory
 class CarsApiTestCase(APITestCase):
     def setUp(self):
         self.url = reverse("cars")
-        self.user = UserFactory.make(
+        self.user = UserFactory.create(
             groups=[Group.objects.get(name=Groups.Driver.name)]
         )
-        self.cars = CarFactory.make_batch(size=3, country=self.user.country)
+        self.cars = CarFactory.create_batch(size=3, country=self.user.country)
 
     def test_401_for_unlogged_user(self):
         res = self.client.get(self.url)
@@ -26,14 +26,15 @@ class CarsApiTestCase(APITestCase):
         res = self.client.get(self.url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(len(self.cars), len(res.data))
-        for idx, car in enumerate(sorted(res.data, key=lambda car: car["id"])):
+        for idx, car in enumerate(sorted(res.data, key=lambda c: c["id"])):
             self.assertEqual(car["plates"], self.cars[idx].plates)
 
     def test_search_by_plate(self):
         self.client.force_login(self.user)
-        url_params = urlencode({"search": self.cars[0].plates})
+        searched_car = self.cars[0]
+        url_params = urlencode({"search": searched_car.plates})
         res = self.client.get(f"{self.url}?{url_params}")
-        cars = res.data
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(cars), 1)
-        self.assertEqual(cars[0]["id"], self.cars[0].id)
+        returned_ids = map(lambda c: c["id"], res.data)
+        self.assertIn(searched_car.id, returned_ids)
+        self.assertTrue(len(res.data))

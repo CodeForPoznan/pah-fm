@@ -25,10 +25,13 @@ export const actions = {
   [FETCH_USER]({ dispatch, commit }, { callback } = {}) {
     getMyself().then((user) => {
       commit(mutations.SET_USER, user);
-      dispatch(`${namespaces.passengers}/${apiActions.fetchPassengers}`);
-      dispatch(`${namespaces.cars}/${apiActions.fetchCars}`);
-      dispatch(`${namespaces.drives}/${apiActions.fetchDrives}`);
-      dispatch(`${namespaces.projects}/${apiActions.fetchProjects}`);
+
+      if (user.groups.find(group => group.name === 'Driver')) {
+        dispatch(`${namespaces.passengers}/${apiActions.fetchPassengers}`);
+        dispatch(`${namespaces.cars}/${apiActions.fetchCars}`);
+        dispatch(`${namespaces.drives}/${apiActions.fetchDrives}`);
+        dispatch(`${namespaces.projects}/${apiActions.fetchProjects}`);
+      }
       if (callback) {
         callback();
       }
@@ -71,8 +74,12 @@ export const actions = {
   },
 
   async [SYNC]({ dispatch, state, commit }) {
-    if (state[UNSYNCHRONISED_DRIVES].length === 0 && state.user) {
+    if (state[UNSYNCHRONISED_DRIVES].length === 0 &&
+      state.user &&
+      state.user.groups.find(group => group.name === 'Driver')
+    ) {
       dispatch(`${namespaces.drives}/${apiActions.fetchDrives}`);
+
       return;
     }
 

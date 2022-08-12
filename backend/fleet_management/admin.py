@@ -6,38 +6,45 @@ from import_export.admin import ImportExportModelAdmin
 from import_export.fields import Field
 from import_export import resources
 
-from fleet_management.models import Car, Drive, User, Project
+from fleet_management.models import Car, Drive, User, Project, Refuel
 
 
 class CountryFilter(admin.SimpleListFilter):
     title = _("Country")
     parameter_name = "country"
 
+    def get_parameter(self, obj):
+        for part in self.parameter_name.split("__"):
+            obj = getattr(obj, part)
+        return obj
+
     def lookups(self, request, model_admin):
         objects = model_admin.model.objects.distinct(self.parameter_name)
-        countries = [(o.country.code, o.country.name) for o in objects]
-        countries = sorted(countries, key=lambda c: c[1])  # sort by name, A-Z
+        countries = [self.get_parameter(o) for o in set(objects)]
+        countries = [(c.code, c.name) for c in countries]
+        countries.sort(key=lambda c: c[1])  # sort by name, A-Z
         return [("ALL", _("Global"))] + countries
 
     def queryset(self, request, queryset):
         value = self.value()
 
-        # "ALL" is special value used for showing global users (with empty country)
+        # no query was applied, skip filtering
+        if value is None:
+            return queryset
+
+        # "ALL" is special value used for showing
+        # global users (those with empty country)
         if value == "ALL":
             value = ""
 
-        if value is not None:
-            return queryset.filter(**{self.parameter_name: value})
-
-        return queryset
+        return queryset.filter(**{self.parameter_name: value})
 
 
-class DriveCountryFilter(CountryFilter):
-    parameter_name = "driver__country"
+class CarCountryFilter(CountryFilter):
+    parameter_name = "car__country"
 
 
 class DriveResource(resources.ModelResource):
-    country = Field(attribute="country")
     diff_mileage = Field(attribute="diff_mileage")
     fuel_consumption = Field(attribute="fuel_consumption")
 
@@ -56,18 +63,17 @@ class DriveResource(resources.ModelResource):
             "start_location",
             "end_location",
             "driver",
-            "driver__country",
             "passenger",
             "car__plates",
             "fuel_consumption",
         )
         export_order = fields
 
+    def dehydrate_country(self, drive):
+        return str(drive.country.name)
+
     def dehydrate_driver(self, drive):
         return str(drive.driver)
-
-    def dehydrate_driver__country(self, drive):
-        return str(drive.driver.country.name)
 
     def dehydrate_passenger(self, drive):
         return str(drive.passenger)
@@ -76,23 +82,28 @@ class DriveResource(resources.ModelResource):
 @admin.register(Drive)
 class DriveAdmin(ImportExportModelAdmin):
     resource_class = DriveResource
-    list_filter = (DriveCountryFilter,)
-    list_display = ("__str__", "country__name", "is_verified")
-
-    def country__name(self, drive):
-        return drive.country.name
+    list_filter = (CountryFilter,)
+    list_display = (
+        "date",
+        "start_location",
+        "end_location",
+        "driver",
+        "passenger",
+        "country",
+        "is_verified",
+    )
 
 
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
     list_filter = (CountryFilter,)
-    list_display = ("__str__", "country")
+    list_display = ("plates", "description", "fuel_consumption", "country")
 
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     list_filter = (CountryFilter,)
-    list_display = ("__str__", "country")
+    list_display = ("title", "country")
 
 
 @admin.register(User)
@@ -127,3 +138,25 @@ class CustomUserAdmin(UserAdmin):
         ),
         (_("Important dates"), {"fields": ("last_seen", "last_login", "date_joined")}),
     )
+
+
+@admin.register(Refuel)
+class RefuelAdmin(admin.ModelAdmin):
+    list_filter = (
+        "driver",
+        "car",
+        CarCountryFilter,
+    )
+    list_display = (
+        "driver",
+        "car",
+        "car__country",
+        "date",
+        "current_mileage",
+        "refueled_liters",
+        "price_per_liter",
+        "total_cost",
+    )
+
+    def car__country(self, refuel):
+        return refuel.car.country.name

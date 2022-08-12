@@ -21,6 +21,7 @@ USE_X_FORWARDED_HOST = True
 
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_DOMAIN = BASE_URL
+CSRF_TRUSTED_ORIGINS = ["http://localhost:8080"]
 
 # Application definition
 
@@ -34,7 +35,9 @@ INSTALLED_APPS = [
     "import_export",
     # 3rd party apps
     "corsheaders",
+    "djmoney",
     "rest_framework",
+    "rest_framework_simplejwt",
     # local apps
     "fleet_management",
 ]
@@ -51,7 +54,7 @@ MIDDLEWARE = [
     "fleet_management.middleware.UpdateLastSeenMiddleware",
 ]
 
-CORS_ORIGIN_WHITELIST = ("localhost:8080", "127.0.0.1:8080")
+CORS_ORIGIN_WHITELIST = ("http://localhost:8080", "http://127.0.0.1:8080")
 
 ROOT_URLCONF = "pah_fm.urls"
 
@@ -77,6 +80,7 @@ WSGI_APPLICATION = "pah_fm.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
@@ -93,9 +97,9 @@ DATABASES = {
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_jwt.authentication.JSONWebTokenAuthentication",
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.BasicAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_RENDERER_CLASSES": (
@@ -143,19 +147,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
-
-if os.environ.get("S3_BUCKET") and os.environ.get("S3_KEY"):
-    STATICFILES_STORAGE = "django_s3_storage.storage.StaticS3Storage"
-    S3_BUCKET = os.environ.get("S3_BUCKET")
-    S3_KEY = os.environ.get("S3_KEY")
-
-    AWS_S3_BUCKET_NAME_STATIC = S3_BUCKET
-    AWS_S3_CUSTOM_DOMAIN = f"{S3_BUCKET}.s3.amazonaws.com"
-    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{S3_KEY}"
-else:
-    STATIC_URL = "/static/"
-    STATIC_ROOT = os.path.join(BASE_DIR, "static")
-    STATICFILES_DIRS = [os.path.join(BASE_DIR, "pah_fm/static")]
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "pah_fm/static")]
 
 # Email settings
 EMAIL_HOST = "localhost"
