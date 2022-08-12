@@ -15,7 +15,7 @@ COPY Pipfile Pipfile.lock ./
 
 RUN pip install --upgrade pip \
     && pip install pipenv==2022.1.8 \
-    && pipenv sync --system --dev
+    && pipenv install --system --dev
 
 ADD . /pah-fm/backend
 

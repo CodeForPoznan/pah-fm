@@ -3,7 +3,6 @@
 [Fleet Manager](https://en.wikipedia.org/wiki/Fleet_management) 
 for [Polish Humanitarian Action](https://www.pah.org.pl).
 
-[![Build Status](https://travis-ci.com/CodeForPoznan/pah-fm.svg?branch=master)](https://travis-ci.com/CodeForPoznan/pah-fm)
 [![Join Slack](https://img.shields.io/badge/slack-join%20chat-4a154b)](https://join.slack.com/t/codeforpoznan/shared_invite/enQtNjQ5MTU1MDI0NDA0LWNhYTA3NGQ0MmQ5ODgxODE3ODJlZjc3NWE0NTMzZjhmNDBkN2QwMzNhYWY5OWQ5MGE2OGM3NjAyODBlY2VjNjU)
 
 
@@ -72,7 +71,7 @@ Here's a high-level description of the project's structure:
 - frontend
   - `main purpose:` Interactive interface for application
   - `language:` JavaScript
-  - `framework:` React
+  - `framework:` React.js
 
 
 <br>
