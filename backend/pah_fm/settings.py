@@ -21,6 +21,7 @@ USE_X_FORWARDED_HOST = True
 
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_DOMAIN = BASE_URL
+CSRF_TRUSTED_ORIGINS = ["http://localhost:8080"]
 
 # Application definition
 
@@ -36,6 +37,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "djmoney",
     "rest_framework",
+    "rest_framework_simplejwt",
     # local apps
     "fleet_management",
 ]
@@ -52,7 +54,7 @@ MIDDLEWARE = [
     "fleet_management.middleware.UpdateLastSeenMiddleware",
 ]
 
-CORS_ORIGIN_WHITELIST = ("localhost:3000", "localhost:8080", "127.0.0.1:8080")
+CORS_ORIGIN_WHITELIST = ("http://localhost:8080", "http://127.0.0.1:8080")
 
 ROOT_URLCONF = "pah_fm.urls"
 
@@ -94,9 +96,9 @@ DATABASES = {
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_jwt.authentication.JSONWebTokenAuthentication",
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.BasicAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_RENDERER_CLASSES": (
