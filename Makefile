@@ -14,21 +14,12 @@ build:  ## Build backend & frontend containers
 	make build-backend
 	make build-frontend
 
-adminer: ## run database adminer
-	docker run -d -p 8082:8080 --network="pah" adminer
-
 remove:  ## Stop and remove backend & frontend containers
 	make remove-backend
 	make remove-frontend
 
 rebuild:  ## Rebuid application
-	docker-compose down
-	make remove-backend
-	make remove-frontend
-	make build
-	make start
-
-rebuild-docker-images:  ## Rebuid backend & frontend containers
+	make stop
 	make remove
 	make build
 
@@ -51,7 +42,7 @@ build-backend:  ## Build backend container
 	docker build --tag codeforpoznan/pah-fm-backend backend
 
 build-frontend:  ## Build frontend container
-	docker-compose stop frontend || true
+	docker-compose stop frontend
 	docker build --tag codeforpoznan/pah-fm-frontend frontend
 
 remove-backend:  ## Stop and remove backend container
@@ -84,23 +75,3 @@ debug-backend:  ## Debug backend container (Django)
 
 populate-database:  ## Populate database with factory based data
 	make manage CMD=populate_database
-
-checkout:  ## Checkout to existing branch and start clean app, i.e. make checkout BRANCH=master
-	@test "${BRANCH}" || make help | grep " $@ "
-	@test "${BRANCH}" # fail if variable is not set
-
-	git fetch --all
-	git checkout ${BRANCH}
-	make rebuild
-	docker-compose rm -v --stop --force db
-	make start
-	docker-compose exec backend wait-for-it localhost:8000
-	make populate-database
-	@echo "Complete! Go to http://localhost:8080 and work!"
-
-checkout-pr:  ## Checkout to Pull Request, i.e. make checkout-pr PR=150
-	@test "${PR}" || make help | grep " $@ "
-	@test "${PR}" # fail if variable is not set
-
-	git fetch upstream pull/${PR}/head:${PR}
-	make checkout BRANCH=${PR}
