@@ -122,7 +122,7 @@ make start
 4. Generate some random data for testing
 
 ```shell script
-make populate-database
+make manage populate_database
 ```
 
 
@@ -182,7 +182,7 @@ how can I fix it?
 `A:` `make lint` and `git add . && git commit && git push`
 
 `Q:` How to generate some random data for testing?  
-`A:` `make populate-database`
+`A:` `make manage populate_database`
 
 `Q:` How to debug backend with PDB?  
 `A:` Place `import pdb; pdb.set_trace()` in code, save the file, 
@@ -204,7 +204,7 @@ If you have any more questions not described here then please ask us
 
 #### Initial admin credentials
 We have 2 default users who are always present - `hello` and `ola`,
-but you can create a few more default by running `make populate-database`.
+but you can create a few more default by running `make manage populate_database`.
 This command will create `driver` and `passenger` and also few other 
 random users and basic entities (Cars, Projects).
 Every user that's randomly created has the same password -`pass123`.
@@ -216,7 +216,7 @@ username                        | password  | Vue app access | Django Admin acce
 ------------------------------- | --------- | -------------- | ------------------- |
 hello@codeforpoznan.pl          | pass123   | no             | yes                 |
 ola@pah.org.pl                  | pass123   | no             | no                  |
-...after `populate-database`... | ...       | ...            | ...                 |
+...after `populate_database`... | ...       | ...            | ...                 |
 driver@codeforpoznan.pl         | pass123   | yes            | no                  |
 passenger@codeforpoznan.pl      | pass123   | yes            | no                  |
 

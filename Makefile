@@ -1,5 +1,8 @@
 .DEFAULT_GOAL:=help
 
+%: # skip unknown commands
+	@:
+
 help:  ## Display this help
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n\nTargets:\n"} \
 	 /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%17s\033[0m  %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
@@ -8,7 +11,7 @@ start:  ## Start all containers in background
 	docker-compose up --detach
 
 stop:  ## Stop all containers
-	docker-compose stop ${CONTAINER}
+	docker-compose stop
 
 build:  ## Build backend & frontend containers
 	make build-backend
@@ -34,44 +37,41 @@ test:  ## Run tests
 	make test-frontend
 	make test-backend
 
-manage:  ## Use manage.py, i.e make manage CMD=collectstatic
-	docker-compose run --rm --no-deps backend python3 manage.py ${CMD}
-
-build-backend:  ## Build backend container
-	docker-compose stop backend
-	docker build --tag codeforpoznan/pah-fm-backend backend
+manage:  ## Use manage.py, i.e make manage populate_database
+	docker-compose exec backend ./manage.py $(filter-out $@,$(MAKECMDGOALS))
 
 build-frontend:  ## Build frontend container
 	docker-compose stop frontend
 	docker build --tag codeforpoznan/pah-fm-frontend frontend
 
-remove-backend:  ## Stop and remove backend container
-	docker-compose rm -v --stop --force backend
-
 remove-frontend:  ## Stop and remove frontend container
 	docker-compose rm -v --stop --force frontend
 
-lint-backend:  ## Run linters on backend container
-	docker-compose run --rm --no-deps backend flake8 .
-	docker-compose run --rm --no-deps backend black .
-
 lint-frontend:  ## Run linters on frontend container
-	docker-compose run --rm --no-deps frontend npm run lint:fix
+	docker-compose exec frontend npm run lint:fix
 
 test-frontend: ## Run tests on frontend container
-	docker-compose run --rm --no-deps frontend npm run test
-
-test-backend:  ## Run tests on backend container
-	make manage CMD=test
-
-bash-backend:  ## Enter backend container
-	docker-compose exec backend bash
+	docker-compose exec frontend npm run test
 
 bash-frontend:  ## Enter frontend container
 	docker-compose exec frontend bash
 
+build-backend:  ## Build backend container
+	docker-compose stop backend
+	docker build --tag codeforpoznan/pah-fm-backend backend
+
+remove-backend:  ## Stop and remove backend container
+	docker-compose rm -v --stop --force backend
+
+lint-backend:  ## Run linters on backend container
+	docker-compose exec backend flake8 .
+	docker-compose exec backend black .
+
+test-backend:  ## Run tests on backend container
+	make manage test
+
+bash-backend:  ## Enter backend container
+	docker-compose exec backend bash
+
 debug-backend:  ## Debug backend container (Django)
 	docker attach `docker-compose ps -q backend`
-
-populate-database:  ## Populate database with factory based data
-	make manage CMD=populate_database
