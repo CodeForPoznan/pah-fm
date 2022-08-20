@@ -17,7 +17,7 @@ class ProjectsApiTestCase(APITestCase):
 
     def test_401_for_unlogged_user(self):
         res = self.client.get(self.url)
-        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_get_all_projects(self):
         self.client.force_login(self.user)
