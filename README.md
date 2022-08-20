@@ -3,7 +3,6 @@
 [Fleet Manager](https://en.wikipedia.org/wiki/Fleet_management) 
 for [Polish Humanitarian Action](https://www.pah.org.pl).
 
-[![Build Status](https://travis-ci.com/CodeForPoznan/pah-fm.svg?branch=master)](https://travis-ci.com/CodeForPoznan/pah-fm)
 [![Join Slack](https://img.shields.io/badge/slack-join%20chat-4a154b)](https://join.slack.com/t/codeforpoznan/shared_invite/enQtNjQ5MTU1MDI0NDA0LWNhYTA3NGQ0MmQ5ODgxODE3ODJlZjc3NWE0NTMzZjhmNDBkN2QwMzNhYWY5OWQ5MGE2OGM3NjAyODBlY2VjNjU)
 
 
@@ -66,28 +65,13 @@ Here's a high-level description of the project's structure:
 
 - backend  
   - `main purpose:` REST API for frontend code
-  - `language:` Python 3.6
+  - `language:` Python 3.8
   - `framework:` Django
   
 - frontend
   - `main purpose:` Interactive interface for application
   - `language:` JavaScript
-  - `framework:` Vue
-
-- ansible
-  - `main purpose:` Deployment scripts used on production environment (deprecated)
-  - `language:` YAML
-  - `framework:` Ansible
-
-- behave_test_automation
-  - `main purpose:` End To End Tests for User Interface (deprecated)
-  - `language:` Gherkin
-  - `framework:` behave
-
-
-You'll probably want to focus on either `frontend` or `backend` 
-directory as the two other ones are deprecated and intended for 
-removal in near future.
+  - `framework:` React.js
 
 
 <br>
@@ -138,7 +122,7 @@ make start
 4. Generate some random data for testing
 
 ```shell script
-make populate-database
+make manage populate_database
 ```
 
 
@@ -198,7 +182,7 @@ how can I fix it?
 `A:` `make lint` and `git add . && git commit && git push`
 
 `Q:` How to generate some random data for testing?  
-`A:` `make populate-database`
+`A:` `make manage populate_database`
 
 `Q:` How to debug backend with PDB?  
 `A:` Place `import pdb; pdb.set_trace()` in code, save the file, 
@@ -220,7 +204,7 @@ If you have any more questions not described here then please ask us
 
 #### Initial admin credentials
 We have 2 default users who are always present - `hello` and `ola`,
-but you can create a few more default by running `make populate-database`.
+but you can create a few more default by running `make manage populate_database`.
 This command will create `driver` and `passenger` and also few other 
 random users and basic entities (Cars, Projects).
 Every user that's randomly created has the same password -`pass123`.
@@ -232,7 +216,7 @@ username                        | password  | Vue app access | Django Admin acce
 ------------------------------- | --------- | -------------- | ------------------- |
 hello@codeforpoznan.pl          | pass123   | no             | yes                 |
 ola@pah.org.pl                  | pass123   | no             | no                  |
-...after `populate-database`... | ...       | ...            | ...                 |
+...after `populate_database`... | ...       | ...            | ...                 |
 driver@codeforpoznan.pl         | pass123   | yes            | no                  |
 passenger@codeforpoznan.pl      | pass123   | yes            | no                  |
 
