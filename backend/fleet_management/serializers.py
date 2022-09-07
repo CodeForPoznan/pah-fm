@@ -193,13 +193,9 @@ class RefuelSerializer(serializers.ModelSerializer):
         except ObjectDoesNotExist as e:
             raise ValidationError(e.args[0])
 
-        total_cost = Money(
-            currency=data["total_cost.currency"], amount=data["total_cost.amount"]
-        )
-
         with transaction.atomic():
             refuel = Refuel.objects.create(
-                total_cost=total_cost, driver=driver, car=car, **validated_data
+                driver=driver, car=car, **validated_data
             )
 
         return refuel

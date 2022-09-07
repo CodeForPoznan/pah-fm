@@ -55,14 +55,12 @@ class RefuelsApiTestCase(APITestCase):
             "current_mileage": 0,
             "refueled_liters": 5,
             "price_per_liter": 34,
-            "total_cost.amount": str(self.total_cost.amount),
-            "total_cost.currency": self.total_cost.currency.code,
+            "total_cost": int(self.total_cost.amount),
+            "total_cost_currency": self.total_cost.currency.code,
         }
 
-        breakpoint()
-        request = self.factory.post(self.url, data=payload, format="json")
-        force_authenticate(request, user=self.user)
-        res = RefuelView.as_view()(request)
+        self.client.force_login(self.user)
+        res = self.client.post(self.url, data=payload, format="json")
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
         refuel = Refuel.objects.filter(id=res.data["id"])
