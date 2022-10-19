@@ -21,7 +21,7 @@ class PassengersApiTestCase(APITestCase):
             groups=[Group.objects.get(name=Groups.Passenger.name)],
         )
 
-    def test_401_for_unlogged_user(self):
+    def test_403_for_unlogged_user(self):
         res = self.client.get(self.url)
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
 
