@@ -54,7 +54,10 @@
         "functions": "never"
       }
     ],
+    "destructuring-newline/object-property-newline": 2,
     "import/prefer-default-export": "off",
+    "modules-newline/import-declaration-newline": "error",
+    "modules-newline/export-declaration-newline": "error",
     "multiline-ternary": [
       "warn",
       "always-multiline"
@@ -133,6 +136,8 @@
   },
   "plugins": [
     "react",
-    "react-hooks"
+    "react-hooks",
+    "modules-newline",
+    "destructuring-newline"
   ]
 }

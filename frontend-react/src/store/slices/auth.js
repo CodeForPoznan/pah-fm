@@ -34,7 +34,8 @@ export const getMe = createAsyncThunk(
 export const login = createAsyncThunk(
   `${PREFIX}/${LOGIN}`,
   async (values, {
-    rejectWithValue, dispatch,
+    rejectWithValue,
+    dispatch,
   }) => {
     try {
       const response = await request.post('/api-token-auth/', values);

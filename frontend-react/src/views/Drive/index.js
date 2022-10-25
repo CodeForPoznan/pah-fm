@@ -92,7 +92,8 @@ const DriveView = () => {
 
   useEffect(() => {
     const {
-      mileageStart, mileageEnd,
+      mileageStart,
+      mileageEnd,
     } = formik.values;
     const mileage = mileageEnd - mileageStart;
 

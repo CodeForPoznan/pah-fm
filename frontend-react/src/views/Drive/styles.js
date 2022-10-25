@@ -1,5 +1,6 @@
 import {
-  makeStyles, styled,
+  makeStyles,
+  styled,
 } from '@material-ui/styles';
 import { Box } from '@material-ui/core';
 

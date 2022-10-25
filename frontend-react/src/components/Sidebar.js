@@ -40,7 +40,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Sidebar = ({
-  open, onClose,
+  open,
+  onClose,
 }) => {
   const classes = useStyles();
   const translations = {

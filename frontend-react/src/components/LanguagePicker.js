@@ -54,7 +54,9 @@ const LanguagePicker = () => {
   return (
     <List>
       {languages.map(({
-        code, localized_name, rtl,
+        code,
+        localized_name,
+        rtl,
       }) => (
         <ListItem
           key={code}
