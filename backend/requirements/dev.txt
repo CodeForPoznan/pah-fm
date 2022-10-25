@@ -4,7 +4,8 @@ factory_boy==2.11.1
 freezegun==0.3.11
 flake8==3.7.4
 tqdm==4.28.1
-ipdb==0.12.2
+ipdb==0.13.9
 pdbpp==0.10.2
 awscli==1.18.53
 black==19.10b0
+remote_pdb==2.1.0
