@@ -2,17 +2,18 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import Flag from 'react-world-flags';
 import {
-  useLanguages,
-  setLocale,
-} from '../utils/translation';
-import { setLocale as setLocaleAction } from '../store/slices/ui';
-import {
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
 } from '@material-ui/core';
-import {makeStyles} from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
+
+import {
+  useLanguages,
+  setLocale,
+} from '../utils/translation';
+import { setLocale as setLocaleAction } from '../store/slices/ui';
 
 const specialFlags = {
   en: 'GB',
@@ -25,7 +26,8 @@ const getFlagCode = (langCode) => {
   }
 
   // not specified explicitly, try to guess
-  return langCode.split('_').pop().toUpperCase();
+  return langCode.split('_').pop()
+    .toUpperCase();
 };
 
 const useStyles = makeStyles({
@@ -42,23 +44,36 @@ const LanguagePicker = () => {
   const dispatch = useDispatch();
 
   const changeLocale = (code, rtl) => {
-    dispatch(setLocaleAction({ locale: code, rtl }));
+    dispatch(setLocaleAction({
+      locale: code,
+      rtl,
+    }));
     setLocale(code);
   };
 
   return (
     <List>
-      {languages.map(({ code, localized_name, rtl }) => (
-        <div key={code} onClick={() => changeLocale(code, rtl)}>
-          <ListItem className={classes.listItem}>
-            <ListItemIcon>
-              <Flag code={getFlagCode(code)} width={30} height={45}/>
-            </ListItemIcon>
-            <ListItemText>
-              {localized_name}
-            </ListItemText>
-          </ListItem>
-        </div>
+      {languages.map(({
+        code, localized_name, rtl,
+      }) => (
+        <ListItem
+          key={code}
+          className={classes.listItem}
+          button
+          onClick={() => changeLocale(code, rtl)
+          }
+        >
+          <ListItemIcon>
+            <Flag
+              code={getFlagCode(code)}
+              width={30}
+              height={45}
+            />
+          </ListItemIcon>
+          <ListItemText>
+            {localized_name}
+          </ListItemText>
+        </ListItem>
       ))}
     </List>
   );

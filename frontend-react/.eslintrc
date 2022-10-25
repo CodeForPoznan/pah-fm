@@ -4,11 +4,29 @@
     "airbnb"
   ],
   "env": {
-    "browser": true
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "jest": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true,
+      "globalReturn": true
+    },
+    "requireConfigFile": false,
+    "babelOptions": {
+      "presets": ["@babel/preset-react"]
+    }
   },
   "rules": {
     "arrow-parens": [
-      "as-needed"
+      2,
+      "as-needed",
+      { "requireForBlockBody": true }
     ],
     "array-bracket-newline": [
       "error",
@@ -36,6 +54,7 @@
         "functions": "never"
       }
     ],
+    "import/prefer-default-export": "off",
     "multiline-ternary": [
       "warn",
       "always-multiline"
@@ -55,6 +74,7 @@
         "maxEOF": 1
       }
     ],
+    "no-param-reassign": ["error", { "props": false }],
     "object-curly-newline": [
       "error",
       {
@@ -94,18 +114,25 @@
     ],
     "react/jsx-fragments": [
       "error",
-      "element"
+      "syntax"
     ],
-    "sort-keys": [
-      "error",
-      "asc",
+    "react/function-component-definition": [
+      2,
       {
-        "caseSensitive": true,
-        "natural": true
+        "namedComponents": ["arrow-function", "function-declaration", "function-expression"],
+        "unnamedComponents": ["arrow-function", "function-expression"]
       }
-    ]
+    ],
+    "react/destructuring-assignment": "warn",
+    "react/forbid-prop-types": "warn",
+    "react/jsx-no-useless-fragment": "warn",
+    "react/no-array-index-key": "warn",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "off"
   },
   "plugins": [
+    "react",
     "react-hooks"
   ]
 }

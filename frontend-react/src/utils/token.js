@@ -3,7 +3,7 @@ import jwtDecode from 'jwt-decode';
 
 const tokenName = 'accessToken';
 
-export const setToken = token => {
+export const setToken = (token) => {
   const { exp } = jwtDecode(token);
 
   const attr = {
@@ -11,12 +11,10 @@ export const setToken = token => {
   };
 
   Cookies.set(tokenName, token, attr);
-}
+};
 
 export const clearToken = () => {
   Cookies.remove(tokenName);
-}
-
-export const getToken = () => {
-  return Cookies.get(tokenName);
 };
+
+export const getToken = () => Cookies.get(tokenName);
