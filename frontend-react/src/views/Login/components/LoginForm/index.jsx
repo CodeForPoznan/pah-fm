@@ -16,19 +16,22 @@ const MIN_PASSWORD = 7;
 const MAX_PASSWORD = 128;
 
 const LoginForm = ({ submitAction }) => {
-  const [notFieldError, setNonFieldError] = useState(null);
-  const login = useT("Login");
-  const username = useT("Username");
-  const password = useT("Password");
-  const passwordRequired = useT("Password is required");
-  const usernameRequired = useT("Username is required");
-  const usernameMax = useT("Should not be longer than {max} characters", { max: MAX_USERNAME });
-  const passwordMin = useT("Should not be shorter than {min} characters", { min: MIN_PASSWORD });
-  const passwordMax = useT("Should not be longer than {max} characters", { max: MAX_PASSWORD });
+  const [
+    notFieldError,
+    setNonFieldError,
+  ] = useState(null);
+  const login = useT('Login');
+  const username = useT('Username');
+  const password = useT('Password');
+  const passwordRequired = useT('Password is required');
+  const usernameRequired = useT('Username is required');
+  const usernameMax = useT('Should not be longer than {max} characters', { max: MAX_USERNAME });
+  const passwordMin = useT('Should not be shorter than {min} characters', { min: MIN_PASSWORD });
+  const passwordMax = useT('Should not be longer than {max} characters', { max: MAX_PASSWORD });
 
   const history = useHistory();
 
-  const validationSchema =  Yup.object().shape({
+  const validationSchema = Yup.object().shape({
     username: Yup.string()
       .required(usernameRequired)
       .max(MAX_USERNAME, usernameMax),
@@ -43,13 +46,13 @@ const LoginForm = ({ submitAction }) => {
       username: '',
       password: '',
     },
-    onSubmit: async (values, formikBag) => {
+    onSubmit: async (values) => {
       const response = await submitAction(values);
 
       if (response?.payload) {
         setNonFieldError(response.payload.detail || response.payload.nonFieldErrors[0]);
       } else {
-        history.push('/')
+        history.push('/');
       }
     },
     validationSchema,

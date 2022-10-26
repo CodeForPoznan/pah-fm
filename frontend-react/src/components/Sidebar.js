@@ -1,6 +1,6 @@
-import React  from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 import {
   Divider,
@@ -8,18 +8,18 @@ import {
   Grid,
   List,
   ListItem,
-  ListItemText
+  ListItemText,
 } from '@material-ui/core';
-import {makeStyles} from "@material-ui/styles";
+import { makeStyles } from '@material-ui/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 
 import LanguagePicker from './LanguagePicker';
-import routes, {routeKeys} from '../routes';
+import routes, { routeKeys } from '../routes';
 import useT from '../utils/translation';
 import logo from '../assets/logo_codeforpoznan.svg';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     color: theme.palette.sidebar.fg,
     background: theme.palette.sidebar.bg,
@@ -39,7 +39,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Sidebar = ({ open, onClose }) => {
+const Sidebar = ({
+  open,
+  onClose,
+}) => {
   const classes = useStyles();
   const translations = {
     // keys are taken from routes.js::routes[].key
@@ -49,30 +52,65 @@ const Sidebar = ({ open, onClose }) => {
   };
 
   return (
-    <Drawer anchor="right" open={open} onClose={onClose} classes={{paper: classes.root}}>
-      <Grid container wrap="nowrap" direction="column">
-        <Grid container wrap="nowrap" justify="flex-end">
-          <IconButton color="primary" component="button" className={classes.close} onClick={onClose}>
+    <Drawer
+      anchor="right"
+      open={open}
+      onClose={onClose}
+      classes={{ paper: classes.root }}
+    >
+      <Grid
+        container
+        wrap="nowrap"
+        direction="column"
+      >
+        <Grid
+          container
+          wrap="nowrap"
+          justify="flex-end"
+        >
+          <IconButton
+            color="primary"
+            component="button"
+            className={classes.close}
+            onClick={onClose}
+          >
             <CloseIcon fontSize="large" />
           </IconButton>
         </Grid>
         <List>
-          {routes.filter(r => r.exact).map(r =>
-            <Link key={r.key} to={r.path} className={classes.link}>
+          {routes.filter(r => r.exact).map(r => (
+            <Link
+              key={r.key}
+              to={r.path}
+              className={classes.link}
+            >
               <ListItem>
                 <ListItemText>
                   {translations[r.key]}
                 </ListItemText>
               </ListItem>
             </Link>
-          )}
+          ))}
         </List>
         <Divider />
         <LanguagePicker />
         <Divider />
-        <Grid container wrap="nowrap" justify="center" className={classes.grid}>
-          <a href="https://codeforpoznan.pl" target="_blank" rel="noreferrer">
-            <img alt="CodeForPoznan logo" src={logo} width={80} />
+        <Grid
+          container
+          wrap="nowrap"
+          justify="center"
+          className={classes.grid}
+        >
+          <a
+            href="https://codeforpoznan.pl"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img
+              alt="CodeForPoznan logo"
+              src={logo}
+              width={80}
+            />
           </a>
         </Grid>
       </Grid>

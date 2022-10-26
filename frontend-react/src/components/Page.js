@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 const Page = ({
   children,
-  title = '',
 }) => (
   <>
     {children}
@@ -12,7 +11,6 @@ const Page = ({
 
 Page.propTypes = {
   children: PropTypes.node.isRequired,
-  title: PropTypes.string
 };
 
 export default Page;

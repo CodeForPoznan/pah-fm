@@ -43,10 +43,7 @@ class Request {
     this.instance.interceptors.response.use(response => ({
       ...response,
       data: toCamelCase(response.data),
-    }), async error => {
-      return Promise.reject(this.parseError(error));
-    }
-    );
+    }), async error => Promise.reject(this.parseError(error)));
   }
 
   parseError(error) {
