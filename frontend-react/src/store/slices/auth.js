@@ -8,8 +8,8 @@ import { setToken } from '../../utils/token';
 
 const initialState = {
   error: null,
-  isFetching: false,
   isAuthenticated: false,
+  isFetching: false,
   user: null,
 };
 
@@ -17,25 +17,6 @@ const PREFIX = 'auth';
 
 const LOGIN = 'login';
 const GET_ME = 'get me';
-
-export const login = createAsyncThunk(
-  `${PREFIX}/${LOGIN}`,
-  async (values, { rejectWithValue, dispatch }) => {
-    try {
-      const response = await request.post('/api-token-auth/', values);
-      const token = response.data.token;
-
-      request.setAuthToken(token);
-      setToken(token);
-      
-      await dispatch(getMe());
-      
-      return null;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-)
 
 export const getMe = createAsyncThunk(
   `${PREFIX}/${GET_ME}`,
@@ -48,18 +29,40 @@ export const getMe = createAsyncThunk(
       return error.response.message;
     }
   }
-)
+);
+
+export const login = createAsyncThunk(
+  `${PREFIX}/${LOGIN}`,
+  async (values, {
+    rejectWithValue,
+    dispatch,
+  }) => {
+    try {
+      const response = await request.post('/api-token-auth/', values);
+      const { token } = response.data;
+
+      request.setAuthToken(token);
+      setToken(token);
+
+      await dispatch(getMe());
+
+      return null;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 const authSlice = createSlice({
   name: PREFIX,
   initialState,
   reducers: {},
-  extraReducers: builder => {
-    builder.addCase(login.pending, state => {
+  extraReducers: (builder) => {
+    builder.addCase(login.pending, (state) => {
       state.error = null;
       state.isFetching = true;
     });
-    builder.addCase(login.fulfilled, state => {
+    builder.addCase(login.fulfilled, (state) => {
       state.isFetching = false;
       state.isAuthenticated = true;
     });
@@ -67,7 +70,7 @@ const authSlice = createSlice({
       state.isFetching = false;
       state.error = payload;
     });
-    builder.addCase(getMe.pending, state => {
+    builder.addCase(getMe.pending, (state) => {
       state.error = null;
       state.isFetching = true;
     });

@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import Page from '../../components/Page';
+import React, {
+  useState,
+  useEffect,
+} from 'react';
 import {
   FormControl,
   Box,
@@ -11,17 +13,25 @@ import {
   Button,
   Typography,
 } from '@material-ui/core';
-
-import useT from '../../utils/translation';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-// styling
-import { useStyles, WhiteBox, ButtonsContainer } from './styles';
+import Page from '../../components/Page';
+
+import useT from '../../utils/translation';
+
+import {
+  useStyles,
+  WhiteBox,
+  ButtonsContainer,
+} from './styles';
 
 const DriveView = () => {
   // local state
-  const [traveled, setTraveled] = useState(0);
+  const [
+    traveled,
+    setTraveled,
+  ] = useState(0);
 
   // Translated labels
   const title = useT('Add new drive');
@@ -44,18 +54,26 @@ const DriveView = () => {
   };
 
   const validationSchema = yup.object().shape({
-    startLocation: yup.string().required(useT('Start location is required')),
-    mileageStart: yup.number().required(useT('Starting mileage is required')),
-    project: yup.string().required(useT('Project is required')),
-    car: yup.string().required(useT('Car is required')),
-    passenger: yup.string().required(useT('Start location is required')),
-    endLocation: yup.string().required(useT('End location is required')),
-    mileageEnd: yup.number().required(useT('Ending mileage is required')),
+    startLocation: yup.string()
+      .required(useT('Start location is required')),
+    mileageStart: yup.number()
+      .required(useT('Starting mileage is required')),
+    project: yup.string()
+      .required(useT('Project is required')),
+    car: yup.string()
+      .required(useT('Car is required')),
+    passenger: yup.string()
+      .required(useT('Start location is required')),
+    endLocation: yup.string()
+      .required(useT('End location is required')),
+    mileageEnd: yup.number()
+      .required(useT('Ending mileage is required')),
   });
 
   const formik = useFormik({
     initialValues: {
-      date: new Date().toISOString().split('T')[0],
+      date: new Date().toISOString()
+        .split('T')[0],
       startLocation: '',
       mileageStart: 0,
       project: '',
@@ -66,26 +84,44 @@ const DriveView = () => {
       mileageEnd: 0,
     },
     validateOnChange: false,
-    validationSchema: validationSchema,
+    validationSchema,
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
     },
   });
 
   useEffect(() => {
-    const { mileageStart, mileageEnd } = formik.values;
+    const {
+      mileageStart,
+      mileageEnd,
+    } = formik.values;
     const mileage = mileageEnd - mileageStart;
 
     if (mileage !== traveled && mileage >= 0) {
       setTraveled(mileage);
     }
-  }, [formik.values, traveled]);
+  }, [
+    formik.values,
+    traveled,
+  ]);
 
   // values to generate MenuItems in select fields. Will be converted to redux slice.
   const selectItems = {
-    project: ['TestProject1', 'TestProject2', 'TestProject3'],
-    car: ['Audi', 'Opel', 'Lamborghini'],
-    passenger: ['Passenger1', 'Passenger2', 'Passenger3'],
+    project: [
+      'TestProject1',
+      'TestProject2',
+      'TestProject3',
+    ],
+    car: [
+      'Audi',
+      'Opel',
+      'Lamborghini',
+    ],
+    passenger: [
+      'Passenger1',
+      'Passenger2',
+      'Passenger3',
+    ],
   };
 
   const selectItemsNames = Object.keys(selectItems);
@@ -121,9 +157,15 @@ const DriveView = () => {
   const classes = useStyles();
 
   return (
-    <Page title="Drive" className={classes.root}>
-      <Container className={classes.container} maxWidth="md">
-        {Object.keys(formik.errors).length > 0 ? (
+    <Page
+      title="Drive"
+      className={classes.root}
+    >
+      <Container
+        className={classes.container}
+        maxWidth="md"
+      >
+        {!!Object.keys(formik.errors).length && (
           <Box className={classes.errorContainer}>
             <Typography
               variant="h4"
@@ -133,23 +175,43 @@ const DriveView = () => {
               {errorTitle}
             </Typography>
             <ul>
-              {Object.values(formik.errors).map((errorText) => (
+              {Object.values(formik.errors).map(errorText => (
                 <li key={errorText}>{errorText}</li>
               ))}
             </ul>
           </Box>
-        ) : null}
-        <form className={classes.formContainer} onSubmit={formik.handleSubmit}>
-          <Typography variant="h2" component="h2" className={classes.title}>
+        )}
+        <form
+          className={classes.formContainer}
+          onSubmit={formik.handleSubmit}
+        >
+          <Typography
+            variant="h2"
+            component="h2"
+            className={classes.title}
+          >
             {title}
           </Typography>
-          <Box display="flex" flexDirection="column">
+          <Box
+            display="flex"
+            flexDirection="column"
+          >
             {fieldList.map((field) => {
+              const {
+                translatedLabel,
+                labelName,
+                type,
+                items,
+                errorText,
+              } = field;
+
               if (!field.isTextField) {
-                const { translatedLabel, labelName, items, errorText } = field;
                 return (
                   <WhiteBox key={`${labelName}-select-container`}>
-                    <FormControl variant="outlined" fullWidth>
+                    <FormControl
+                      variant="outlined"
+                      fullWidth
+                    >
                       <InputLabel id={`drive-${labelName}-label`}>
                         {translatedLabel}
                       </InputLabel>
@@ -162,8 +224,11 @@ const DriveView = () => {
                         onChange={formik.handleChange}
                         error={!!errorText}
                       >
-                        {items.map((item) => (
-                          <MenuItem key={item} value={item}>
+                        {items.map(item => (
+                          <MenuItem
+                            key={item}
+                            value={item}
+                          >
                             {item}
                           </MenuItem>
                         ))}
@@ -171,34 +236,44 @@ const DriveView = () => {
                     </FormControl>
                   </WhiteBox>
                 );
-              } else {
-                const { translatedLabel, labelName, type, errorText } = field;
-                return (
-                  <WhiteBox key={`${labelName}-container`}>
-                    <TextField
-                      id={`drive-${labelName}`}
-                      name={labelName}
-                      variant="outlined"
-                      fullWidth
-                      label={translatedLabel}
-                      type={type}
-                      value={formik.values[labelName]}
-                      onChange={formik.handleChange}
-                      error={!!errorText}
-                    />
-                  </WhiteBox>
-                );
               }
+
+              return (
+                <WhiteBox key={`${labelName}-container`}>
+                  <TextField
+                    id={`drive-${labelName}`}
+                    name={labelName}
+                    variant="outlined"
+                    fullWidth
+                    label={translatedLabel}
+                    type={type}
+                    value={formik.values[labelName]}
+                    onChange={formik.handleChange}
+                    error={!!errorText}
+                  />
+                </WhiteBox>
+              );
             })}
           </Box>
           <p>
-            {traveled} km {traveledT}
+            {traveled}
+            {' '}
+            km
+            {' '}
+            {traveledT}
           </p>
           <ButtonsContainer>
-            <Button type="submit" variant="contained" color="primary">
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
               {submit}
             </Button>
-            <Button variant="contained" onClick={formik.resetForm}>
+            <Button
+              variant="contained"
+              onClick={formik.resetForm}
+            >
               {reset}
             </Button>
           </ButtonsContainer>

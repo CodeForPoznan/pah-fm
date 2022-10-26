@@ -1,4 +1,7 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+/* eslint-disable */
+import {
+  configureStore, getDefaultMiddleware,
+} from '@reduxjs/toolkit';
 
 import logger from 'redux-logger';
 
@@ -10,9 +13,9 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
+  persistReducer,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { persistReducer } from 'redux-persist';
 
 import rootReducer from './rootReducer';
 
@@ -28,7 +31,14 @@ export const store = configureStore({
   reducer: persistedReducer,
   middleware: getDefaultMiddleware({
     serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      ignoredActions: [
+        FLUSH,
+        REHYDRATE,
+        PAUSE,
+        PERSIST,
+        PURGE,
+        REGISTER,
+      ],
     },
   }).concat(logger),
   // Use logger only in dev mode

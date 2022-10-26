@@ -18,7 +18,7 @@ const themeObject = {
     errorMessage: {
       fg: '#721c24',
       bg: '#f8d7da',
-      border: '#f5c6cb'
+      border: '#f5c6cb',
     },
   },
 };

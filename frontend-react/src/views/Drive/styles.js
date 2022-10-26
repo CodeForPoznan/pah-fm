@@ -1,4 +1,7 @@
-import { makeStyles, styled } from '@material-ui/styles';
+import {
+  makeStyles,
+  styled,
+} from '@material-ui/styles';
 import { Box } from '@material-ui/core';
 
 export const useStyles = makeStyles(({ palette }) => ({
