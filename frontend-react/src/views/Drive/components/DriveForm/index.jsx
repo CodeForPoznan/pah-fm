@@ -34,6 +34,8 @@ const DriveForm = () => {
   };
 
   const validationSchema = yup.object().shape({
+    date: yup.string()
+      .required(useT('Date is required')),
     startLocation: yup.string()
       .required(useT('Start location is required')),
     mileageStart: yup.number()
@@ -91,6 +93,8 @@ const DriveForm = () => {
       console.log('values', values);
     },
   });
+
+  console.log('formik', formik);
 
   const traveledDistance = useMemo(
     () => Math.max(formik.values.mileageEnd - formik.values.mileageStart, 0),
@@ -170,6 +174,7 @@ const DriveForm = () => {
                 onBlur={formik.handleBlur}
                 error={formik.touched[labelName] && Boolean(formik.errors[labelName])}
                 helperText={formik.touched[labelName] && formik.errors[labelName]}
+                {...(type === 'date' ? { InputLabelProps: { shrink: true } } : {})}
               />
             </Box>
           );
