@@ -66,7 +66,7 @@ const Sidebar = ({
         <Grid
           container
           wrap="nowrap"
-          justify="flex-end"
+          justifyContent="flex-end"
         >
           <IconButton
             color="primary"
@@ -98,7 +98,7 @@ const Sidebar = ({
         <Grid
           container
           wrap="nowrap"
-          justify="center"
+          justifyContent="center"
           className={classes.grid}
         >
           <a
