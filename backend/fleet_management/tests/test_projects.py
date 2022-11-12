@@ -15,7 +15,7 @@ class ProjectsApiTestCase(APITestCase):
         )
         self.projects = ProjectFactory.create_batch(size=3, country=self.user.country)
 
-    def test_401_for_unlogged_user(self):
+    def test_403_for_unlogged_user(self):
         res = self.client.get(self.url)
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
 

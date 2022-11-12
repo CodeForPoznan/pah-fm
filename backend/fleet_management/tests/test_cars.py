@@ -19,7 +19,7 @@ class CarsApiTestCase(APITestCase):
         self.cars = CarFactory.create_batch(size=3, country=self.user.country)
         self.factory = APIRequestFactory()
 
-    def test_401_for_unlogged_user(self):
+    def test_403_for_unlogged_user(self):
         res = self.client.get(self.url)
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
 
