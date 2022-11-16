@@ -1,9 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  Container,
-  Typography,
-} from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 import Page from '../../components/Page';
 import LoginForm from './components/LoginForm';
@@ -20,15 +17,13 @@ const LoginView = () => {
 
   return (
     <Page title={login}>
-      <Container maxWidth="sm">
-        <Typography
-          variant="h2"
-          component="h2"
-        >
-          {login}
-        </Typography>
-        <LoginForm submitAction={formSubmit} />
-      </Container>
+      <Typography
+        variant="h2"
+        component="h2"
+      >
+        {login}
+      </Typography>
+      <LoginForm submitAction={formSubmit} />
     </Page>
   );
 };

@@ -1,12 +1,22 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import {
+  Grid,
+  Container,
+} from '@material-ui/core';
 
 const Page = ({
   children,
 }) => (
-  <>
-    {children}
-  </>
+  <Grid
+    container
+    direction="column"
+    justifyContent="flex-start"
+    alignItems="center"
+  >
+    <Container maxWidth="sm">
+      {children}
+    </Container>
+  </Grid>
 );
 
 Page.propTypes = {

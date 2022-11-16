@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core';
 import { MenuOpen } from '@material-ui/icons';
 import {
-  createMuiTheme,
+  createTheme,
   jssPreset,
   StylesProvider,
   ThemeProvider,
@@ -38,11 +38,11 @@ const jss = create({
   ],
 });
 
-const ltrTheme = createMuiTheme({
+const ltrTheme = createTheme({
   ...themeObject,
   direction: DIRECTIONS.LTR,
 });
-const rtlTheme = createMuiTheme({
+const rtlTheme = createTheme({
   ...themeObject,
   direction: DIRECTIONS.RTL,
 });
@@ -92,7 +92,7 @@ const App = () => {
                   container
                   wrap="nowrap"
                   alignItems="flex-start"
-                  justify="flex-start"
+                  justifyContent="flex-start"
                 >
                   <Link to="/">
                     <img
@@ -111,7 +111,7 @@ const App = () => {
                   container
                   wrap="nowrap"
                   alignItems="flex-start"
-                  justify="flex-end"
+                  justifyContent="flex-end"
                 >
                   <IconButton
                     color="primary"

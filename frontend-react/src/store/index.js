@@ -1,10 +1,6 @@
-/* eslint-disable */
-import {
-  configureStore, getDefaultMiddleware,
-} from '@reduxjs/toolkit';
-
+/* eslint-disable import/no-import-module-exports */
+import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
-
 import {
   persistStore,
   FLUSH,
@@ -29,7 +25,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: getDefaultMiddleware({
+  middleware: getDefaultMiddleware => getDefaultMiddleware({
     serializableCheck: {
       ignoredActions: [
         FLUSH,
