@@ -60,6 +60,9 @@ build-backend:  ## Build backend container
 	docker-compose stop backend
 	docker build --tag codeforpoznan/pah-fm-backend backend
 
+build-backend-runtime:  ## Build backend container
+	docker build --tag codeforpoznan/pah-fm-backend-runtime --target backend-runtime backend
+
 remove-backend:  ## Stop and remove backend container
 	docker-compose rm -v --stop --force backend
 

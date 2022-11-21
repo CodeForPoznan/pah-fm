@@ -1,0 +1,40 @@
+version: "3.5"
+services:
+
+  frontend:
+    container_name: pah-fm-frontend
+    image: codeforpoznan/pah-fm-frontend
+    ports:
+      - 8080:8080
+    volumes:
+      - ./frontend:/pah-fm/frontend
+    environment:
+      VUE_APP_API_URL: http://localhost:8000/api/
+
+  backend:
+    container_name: pah-fm-backend
+    image: codeforpoznan/pah-fm-backend-runtime
+    stdin_open: true
+    tty: true
+    links:
+      - database:database
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend:/pah-fm/backend
+    environment:
+      BASE_URL: http://localhost:8000
+      PAH_FM_DB_HOST: database
+      SECRET_KEY: pah-fm
+      DEBUG: 1
+      DJANGO_LOG_LEVEL: DEBUG
+
+  database:
+    container_name: pah-fm-database
+    image: postgres:14.4
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: pah-fm
+      POSTGRES_USER: pah-fm
+      POSTGRES_PASSWORD: pah-fm
