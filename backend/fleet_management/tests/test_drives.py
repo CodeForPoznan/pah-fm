@@ -37,9 +37,9 @@ class DrivesApiTestCase(APITestCase):
             project=self.project,
         )
 
-    def test_401_for_unlogged_user(self):
+    def test_403_for_unlogged_user(self):
         res = self.client.get(self.url)
-        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_can_retrieve_only_my_drives(self):
         new_driver = UserFactory.create(groups=[self.drivers_group])

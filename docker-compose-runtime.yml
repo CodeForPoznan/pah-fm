@@ -13,14 +13,13 @@ services:
 
   backend:
     container_name: pah-fm-backend
-    image: codeforpoznan/pah-fm-backend
+    image: codeforpoznan/pah-fm-backend-runtime
     stdin_open: true
     tty: true
     links:
       - database:database
     ports:
       - 8000:8000
-      - 4444:4444
     volumes:
       - ./backend:/pah-fm/backend
     environment:

@@ -3,7 +3,8 @@ from django.contrib.auth.models import Group
 from djmoney.money import Money
 from django.urls import reverse
 from rest_framework import status
-from rest_framework.test import APITestCase
+from rest_framework.test import APIRequestFactory, APITestCase, force_authenticate
+from fleet_management.api import RefuelView
 from fleet_management.constants import Groups
 from fleet_management.factories import UserFactory, RefuelFactory, CarFactory
 from fleet_management.models import Refuel
@@ -21,9 +22,11 @@ class RefuelsApiTestCase(APITestCase):
         self.driver = UserFactory.create()
         self.total_cost = Money(25, "PLN")
 
-    def test_401_for_unlogged_user(self):
+        self.factory = APIRequestFactory()
+
+    def test_403_for_unlogged_user(self):
         res = self.client.get(self.url)
-        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_get_all_refuels(self):
         self.client.force_login(self.user)
@@ -52,12 +55,11 @@ class RefuelsApiTestCase(APITestCase):
             "current_mileage": 0,
             "refueled_liters": 5,
             "price_per_liter": 34,
-            "total_cost.amount": str(self.total_cost.amount),
-            "total_cost.currency": self.total_cost.currency.code,
+            "total_cost": int(self.total_cost.amount),
+            "total_cost_currency": self.total_cost.currency.code,
         }
 
         self.client.force_login(self.user)
-
         res = self.client.post(self.url, data=payload, format="json")
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
