@@ -408,7 +408,7 @@ in some undefined time from when the form was submitted.
 
 This process can also be started again after executing 13th point
 with no affect on any previous drive. This allows the user to be offline
-virtually for how long he pleases to be, or until he finaly decides to 
+virtually for how long he pleases to be, or until he finally decides to 
 synchronize his Drives back with backend.
 
 
@@ -452,7 +452,7 @@ Shows the main form for submitting Drives.
 Visible only to the Driver.
 
 - `DrivesView`  
-Shows the list of submitted Drives (including sychronized and not).  
+Shows the list of submitted Drives (including synchronized and not).
 Visible only to the Driver.
 
 - `DriveVerifyView`  
@@ -499,7 +499,7 @@ Live instance of this application is running on dedicated server,
 is running on AWS Lambda service 
 [here](https://dev.pahfm.codeforpoznan.pl).
 We're planning to migrate the production environment to lambda
-trough that will require some non-trivial preparation.
+through that will require some non-trivial preparation.
 
 Local environment is set up using docker and docker-compose which
 also relies on DockerHub for pulling the latest images from repository.
