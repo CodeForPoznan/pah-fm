@@ -142,9 +142,9 @@ class DriveSerializer(serializers.ModelSerializer):
             return drive
 
     def validate_signature(self, value):
-        """ validate the actual number in case someone sends 2^32 of 9's """
-        num_digits = len(str(2 ** settings.RSA_BIT_LENGTH))
-        max_number = 10 ** num_digits - 1
+        """validate the actual number in case someone sends 2^32 of 9's"""
+        num_digits = len(str(2**settings.RSA_BIT_LENGTH))
+        max_number = 10**num_digits - 1
 
         if value > max_number:
             raise ValidationError("Signature field contains incorrect value")
@@ -194,8 +194,6 @@ class RefuelSerializer(serializers.ModelSerializer):
             raise ValidationError(e.args[0])
 
         with transaction.atomic():
-            refuel = Refuel.objects.create(
-                driver=driver, car=car, **validated_data
-            )
+            refuel = Refuel.objects.create(driver=driver, car=car, **validated_data)
 
         return refuel

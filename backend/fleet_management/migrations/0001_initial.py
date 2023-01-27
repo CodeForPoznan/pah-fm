@@ -127,7 +127,9 @@ class Migration(migrations.Migration):
                 "abstract": False,
                 "verbose_name": "user",
             },
-            managers=[("objects", django.contrib.auth.models.UserManager()),],
+            managers=[
+                ("objects", django.contrib.auth.models.UserManager()),
+            ],
         ),
         migrations.CreateModel(
             name="Car",

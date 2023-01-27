@@ -11,7 +11,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="project", name="drives",),
+        migrations.RemoveField(
+            model_name="project",
+            name="drives",
+        ),
         migrations.AddField(
             model_name="drive",
             name="project",
