@@ -12,7 +12,6 @@ from pah_fm.wsgi import application
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pah_fm.settings")
 django.setup()
 
-
 def api(event, context):
     event["headers"]["X-Forwarded-Host"] = os.environ["BASE_URL"]
     print("REQUEST: ", event)
