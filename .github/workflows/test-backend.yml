@@ -1,0 +1,24 @@
+name: test backend
+
+on:
+  workflow_call:
+  pull_request:
+    branches: [master]
+    paths: ['backend/**']
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: CodeForPoznan/actions/setup-backend@v2
+
+      - run: pipenv run black --check .
+      - run: pipenv run pytest
+
+      - uses: CodeForPoznan/actions/pack-backend@v2
+        if: github.event_name != 'pull_request'

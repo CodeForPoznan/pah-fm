@@ -1,0 +1,21 @@
+name: deploy to production
+
+on:
+  workflow_dispatch:
+  release:
+    types: [released]
+
+jobs:
+  frontend:
+    uses: ./.github/workflows/test-frontend.yml
+
+  backend:
+    uses: ./.github/workflows/test-backend.yml
+
+  deploy:
+    uses: CodeForPoznan/actions/.github/workflows/call-deploy.yml@v2
+    needs: [frontend, backend]
+    secrets: inherit
+    with:
+      environment-name: production
+      environment-url: https://pahfm.codeforpoznan.pl
