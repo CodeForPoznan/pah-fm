@@ -21,7 +21,7 @@ USE_X_FORWARDED_HOST = True
 
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_DOMAIN = BASE_URL
-CSRF_TRUSTED_ORIGINS = ["http://localhost:8080"]
+CSRF_TRUSTED_ORIGINS = [f"http://{BASE_URL}"]
 
 # Application definition
 

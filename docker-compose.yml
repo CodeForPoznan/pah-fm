@@ -2,8 +2,9 @@ version: "3.5"
 services:
 
   frontend:
+    #image: codeforpoznan/pah-fm-frontend
     container_name: pah-fm-frontend
-    image: codeforpoznan/pah-fm-frontend
+    build: frontend
     ports:
       - 8080:8080
     volumes:
@@ -12,8 +13,9 @@ services:
       VUE_APP_API_URL: http://localhost:8000/api/
 
   backend:
+    #image: codeforpoznan/pah-fm-backend
     container_name: pah-fm-backend
-    image: codeforpoznan/pah-fm-backend
+    build: backend
     stdin_open: true
     tty: true
     links:
@@ -24,7 +26,7 @@ services:
     volumes:
       - ./backend:/pah-fm/backend
     environment:
-      BASE_URL: http://localhost:8000
+      BASE_URL: localhost:8000
       PAH_FM_DB_HOST: database
       SECRET_KEY: pah-fm
       DEBUG: 1
