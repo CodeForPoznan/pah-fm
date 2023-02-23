@@ -1,13 +1,12 @@
 from django.contrib.auth.models import Group
 from django.urls import reverse
 from djmoney.money import Money
-from rest_framework import status
-from rest_framework.test import APIRequestFactory, APITestCase, force_authenticate
-
 from fleet_management.api import RefuelView
 from fleet_management.constants import Groups
 from fleet_management.factories import CarFactory, RefuelFactory, UserFactory
 from fleet_management.models import Refuel
+from rest_framework import status
+from rest_framework.test import APIRequestFactory, APITestCase, force_authenticate
 
 
 class RefuelsApiTestCase(APITestCase):

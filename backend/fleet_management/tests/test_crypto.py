@@ -1,8 +1,6 @@
 from secrets import randbits
 
 from django.conf import settings
-from rest_framework.test import APISimpleTestCase
-
 from fleet_management.crypto import (
     find_p_q_phi,
     find_pair_of_keys,
@@ -13,6 +11,7 @@ from fleet_management.crypto import (
     sign,
     verify,
 )
+from rest_framework.test import APISimpleTestCase
 
 
 class CryptoTest(APISimpleTestCase):

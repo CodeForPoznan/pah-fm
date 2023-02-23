@@ -60,14 +60,12 @@ build-backend:  ## Build backend container
 	docker-compose stop backend
 	docker build --tag codeforpoznan/pah-fm-backend backend
 
-build-backend-runtime:  ## Build backend container
-	docker build --tag codeforpoznan/pah-fm-backend-runtime --target backend-runtime backend
-
 remove-backend:  ## Stop and remove backend container
 	docker-compose rm -v --stop --force backend
 
 lint-backend:  ## Run linters on backend container
-	docker-compose exec backend isort --profile black .
+	# we need to cd to upper directory for consistency with github actions
+	docker-compose exec backend sh -c 'cd .. && isort --profile black backend'
 	docker-compose exec backend black .
 
 test-backend:  ## Run tests on backend container

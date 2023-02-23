@@ -13,7 +13,6 @@ from factory import (
     fuzzy,
     lazy_attribute,
 )
-
 from fleet_management.models import Car, Drive, Project, Refuel, User
 
 COUNTRIES = ("UA", "SS")

@@ -3,8 +3,6 @@ import random
 from django.contrib.auth.models import Group
 from django.core.management.base import BaseCommand
 from django.db import transaction
-from tqdm import tqdm
-
 from fleet_management.constants import Groups
 from fleet_management.factories import (
     CarFactory,
@@ -13,6 +11,7 @@ from fleet_management.factories import (
     RefuelFactory,
     UserFactory,
 )
+from tqdm import tqdm
 
 
 class Command(BaseCommand):

@@ -1,10 +1,9 @@
 from django.contrib.auth.models import Group
 from django.urls import reverse
-from rest_framework import status
-from rest_framework.test import APITestCase
-
 from fleet_management.constants import Groups
 from fleet_management.factories import UserFactory
+from rest_framework import status
+from rest_framework.test import APITestCase
 
 
 class AuthTokenApiTestCase(APITestCase):
