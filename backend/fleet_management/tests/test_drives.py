@@ -5,8 +5,8 @@ from rest_framework.test import APITestCase
 
 from fleet_management.constants import Groups
 from fleet_management.factories import (
-    DriveFactory,
     CarFactory,
+    DriveFactory,
     ProjectFactory,
     UserFactory,
 )

@@ -4,10 +4,9 @@ import time
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django_countries.fields import CountryField
-
 from djmoney.models.fields import MoneyField
 
-from fleet_management.crypto import PublicKey, PrivateKey, find_pair_of_keys, hash_dict
+from fleet_management.crypto import PrivateKey, PublicKey, find_pair_of_keys, hash_dict
 
 
 def get_current_timestamp_in_gmt():

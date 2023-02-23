@@ -1,12 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
-
+from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 from import_export.fields import Field
-from import_export import resources
 
-from fleet_management.models import Car, Drive, User, Project, Refuel
+from fleet_management.models import Car, Drive, Project, Refuel, User
 
 
 class CountryFilter(admin.SimpleListFilter):

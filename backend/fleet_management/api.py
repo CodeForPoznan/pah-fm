@@ -1,20 +1,20 @@
 from datetime import timedelta
 
 from django.utils import timezone
-from rest_framework import generics, filters, views
+from rest_framework import filters, generics, views
 from rest_framework.response import Response
 
+from .constants import Groups
+from .models import Car, Drive, Project, Refuel, User
 from .permissions import GroupPermission, all_driver_methods
-from .models import User, Car, Drive, Project, Refuel
 from .serializers import (
     CarSerializer,
     DriveSerializer,
     PassengerSerializer,
-    UserSerializer,
     ProjectSerializer,
     RefuelSerializer,
+    UserSerializer,
 )
-from .constants import Groups
 
 
 class CurrentUserRetrieveView(views.APIView):

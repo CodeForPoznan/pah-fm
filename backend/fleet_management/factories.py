@@ -1,22 +1,20 @@
+import random
 import string
 from datetime import timedelta
 
-import random
-
 from django.utils.timezone import now
+from djmoney.money import Money
+from djmoney.settings import CURRENCY_CHOICES
 from factory import (
-    fuzzy,
     DjangoModelFactory,
     Faker,
     LazyAttribute,
-    lazy_attribute,
     SubFactory,
+    fuzzy,
+    lazy_attribute,
 )
 
-from djmoney.money import Money
-from djmoney.settings import CURRENCY_CHOICES
-from fleet_management.models import Car, Drive, Project, User, Refuel
-
+from fleet_management.models import Car, Drive, Project, Refuel, User
 
 COUNTRIES = ("UA", "SS")
 

@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from fleet_management.constants import Groups
-from fleet_management.factories import UserFactory, ProjectFactory
+from fleet_management.factories import ProjectFactory, UserFactory
 
 
 class ProjectsApiTestCase(APITestCase):

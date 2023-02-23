@@ -2,15 +2,16 @@ from secrets import randbits
 
 from django.conf import settings
 from rest_framework.test import APISimpleTestCase
+
 from fleet_management.crypto import (
-    sign,
-    verify,
-    inverse_of,
-    is_prime,
-    find_prime,
     find_p_q_phi,
     find_pair_of_keys,
+    find_prime,
     hash_dict,
+    inverse_of,
+    is_prime,
+    sign,
+    verify,
 )
 
 

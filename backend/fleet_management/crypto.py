@@ -1,10 +1,9 @@
+from collections import namedtuple
 from hashlib import md5
 from math import floor, sqrt
 from secrets import randbits
-from collections import namedtuple
 
 from django.conf import settings
-
 
 PublicKey = namedtuple("PublicKey", "n e")
 PrivateKey = namedtuple("PrivateKey", "n d")

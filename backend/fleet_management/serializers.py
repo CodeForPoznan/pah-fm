@@ -1,14 +1,13 @@
-from django.db import transaction
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import transaction
 from djmoney.money import Money
-
 from rest_framework import fields, serializers, status
 from rest_framework.exceptions import ValidationError
 
 from fleet_management.crypto import sign, verify
-from fleet_management.models import Car, Drive, User, Project, Refuel
+from fleet_management.models import Car, Drive, Project, Refuel, User
 
 
 class GroupSerializer(serializers.ModelSerializer):

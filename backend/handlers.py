@@ -3,11 +3,9 @@ import os
 
 import django
 from django.core.management import call_command
-
 from serverless_wsgi import handle_request
 
 from pah_fm.wsgi import application
-
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pah_fm.settings")
 django.setup()
