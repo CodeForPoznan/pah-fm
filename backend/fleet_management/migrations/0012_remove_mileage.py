@@ -10,5 +10,8 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="car", name="mileage_unit",),
+        migrations.RemoveField(
+            model_name="car",
+            name="mileage_unit",
+        ),
     ]

@@ -11,14 +11,22 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="verificationtoken", name="drive",),
-        migrations.RemoveField(model_name="verificationtoken", name="passenger",),
+        migrations.RemoveField(
+            model_name="verificationtoken",
+            name="drive",
+        ),
+        migrations.RemoveField(
+            model_name="verificationtoken",
+            name="passenger",
+        ),
         migrations.AlterField(
             model_name="drive",
             name="timestamp",
             field=models.IntegerField(default=1566415618),
         ),
-        migrations.DeleteModel(name="VerificationToken",),
+        migrations.DeleteModel(
+            name="VerificationToken",
+        ),
         migrations.AlterField(
             model_name="drive",
             name="timestamp",

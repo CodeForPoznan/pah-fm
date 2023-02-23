@@ -11,6 +11,8 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="drive", name="date", field=models.DateField(auto_now_add=True),
+            model_name="drive",
+            name="date",
+            field=models.DateField(auto_now_add=True),
         ),
     ]

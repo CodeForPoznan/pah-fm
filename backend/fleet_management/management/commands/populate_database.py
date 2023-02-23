@@ -67,7 +67,9 @@ class Command(BaseCommand):
 
         projects = [
             ProjectFactory.create(
-                title="Default Project", description="Default Project", country="UA",
+                title="Default Project",
+                description="Default Project",
+                country="UA",
             )
         ]
         info("Creating 5 random projects")

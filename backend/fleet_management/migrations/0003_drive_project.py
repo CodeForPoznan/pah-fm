@@ -62,8 +62,19 @@ class Migration(migrations.Migration):
                 ("drives", models.ManyToManyField(to="fleet_management.Drive")),
             ],
         ),
-        migrations.RemoveField(model_name="route", name="car",),
-        migrations.RemoveField(model_name="route", name="driver",),
-        migrations.RemoveField(model_name="route", name="passengers",),
-        migrations.DeleteModel(name="Route",),
+        migrations.RemoveField(
+            model_name="route",
+            name="car",
+        ),
+        migrations.RemoveField(
+            model_name="route",
+            name="driver",
+        ),
+        migrations.RemoveField(
+            model_name="route",
+            name="passengers",
+        ),
+        migrations.DeleteModel(
+            name="Route",
+        ),
     ]

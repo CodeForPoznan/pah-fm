@@ -7,12 +7,12 @@ from django.db.utils import OperationalError
 
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
-        timeout = 15 # seconds
-        self.stdout.write('waiting for db ...')
+        timeout = 15  # seconds
+        self.stdout.write("waiting for db ...")
 
         for t in range(timeout):
             try:
-                _ = connections['default']
+                _ = connections["default"]
                 self.stdout.write(self.style.SUCCESS(f"db available after {t} seconds"))
                 break
 
@@ -20,4 +20,6 @@ class Command(BaseCommand):
                 self.stdout.write("Database unavailable, waiting ...")
                 sleep(1)
         else:
-            raise RuntimeError(f"Error: Database is unavailable after {timeout} seconds")
+            raise RuntimeError(
+                f"Error: Database is unavailable after {timeout} seconds"
+            )

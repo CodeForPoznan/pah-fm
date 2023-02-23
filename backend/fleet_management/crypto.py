@@ -68,7 +68,7 @@ def find_prime(bits: int) -> int:
 
 def find_p_q_phi() -> (int, int, int):
     """Returns RSA key components."""
-    limit = (2 ** settings.RSA_BIT_LENGTH) // 2
+    limit = (2**settings.RSA_BIT_LENGTH) // 2
     p_bits = settings.RSA_BIT_LENGTH // 2 + 3
     q_bits = settings.RSA_BIT_LENGTH // 2 - 3
     p, q = find_prime(p_bits), find_prime(q_bits)
@@ -112,4 +112,4 @@ def hash_dict(d: dict, depth=5) -> int:
     val = md5(val).hexdigest()
     val = int(val[-6:], 16)
 
-    return val % 2 ** settings.RSA_BIT_LENGTH
+    return val % 2**settings.RSA_BIT_LENGTH

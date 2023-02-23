@@ -14,7 +14,9 @@ class Command(BaseCommand):
         parser.add_argument("password", type=str)
         parser.add_argument("country", type=str)
         parser.add_argument(
-            "--django-admin", action="store_true", dest="django_admin",
+            "--django-admin",
+            action="store_true",
+            dest="django_admin",
         )
 
     def handle(self, *args, **options):
