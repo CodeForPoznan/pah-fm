@@ -16,10 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: CodeForPoznan/actions/setup-backend@v2
-        with:
-          python-version: 3.9
+      - uses: CodeForPoznan/actions/lint-backend@v2
 
-      - run: pipenv run black --check .
       - run: pipenv run pytest
 
       - uses: CodeForPoznan/actions/pack-backend@v2
