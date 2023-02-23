@@ -67,7 +67,7 @@ remove-backend:  ## Stop and remove backend container
 	docker-compose rm -v --stop --force backend
 
 lint-backend:  ## Run linters on backend container
-	docker-compose exec backend flake8 .
+	docker-compose exec backend isort --profile black .
 	docker-compose exec backend black .
 
 test-backend:  ## Run tests on backend container

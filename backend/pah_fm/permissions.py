@@ -1,5 +1,6 @@
-from fleet_management.models import User
 from rest_framework import permissions
+
+from fleet_management.models import User
 
 
 class UserHasGroupPermission(permissions.BasePermission):

@@ -18,6 +18,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
+from rest_framework.schemas import get_schema_view
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 from fleet_management.api import (
     CarListView,
     CurrentUserRetrieveView,
@@ -26,8 +29,6 @@ from fleet_management.api import (
     ProjectView,
     RefuelView,
 )
-from rest_framework.schemas import get_schema_view
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
