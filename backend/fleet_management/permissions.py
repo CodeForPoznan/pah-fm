@@ -4,9 +4,9 @@ from rest_framework import permissions
 from .constants import Groups
 
 
-def is_in_group(user, group_name):
+def is_in_group(user_id, group_name):
     try:
-        return Group.objects.get(name=group_name).user_set.filter(id=user.id).exists()
+        return Group.objects.get(name=group_name).user_set.filter(id=user_id).exists()
     except Group.DoesNotExist:
         return None
 
@@ -19,7 +19,7 @@ class GroupPermission(permissions.BasePermission):
 
         return all(
             [
-                is_in_group(request.user, group_name)
+                is_in_group(request.auth.get("user_id"), group_name)
                 if group_name != "__all__"
                 else True
                 for group_name in required_groups

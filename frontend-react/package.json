@@ -1,0 +1,100 @@
+{
+  "name": "pah-fm",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@babel/eslint-parser": "^7.19.1",
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.58",
+    "@material-ui/styles": "^4.11.3",
+    "@reduxjs/toolkit": "^1.8.6",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@transifex/cli": "^0.11.2",
+    "@transifex/native": "^0.11.2",
+    "@transifex/react": "^0.11.2",
+    "axios": "^0.21.0",
+    "case-converter": "^1.0.1",
+    "eslint-plugin-modules-newline": "^0.0.6",
+    "formik": "^2.2.9",
+    "history": "^5.0.0",
+    "js-cookie": "^2.2.1",
+    "jss": "^10.6.0",
+    "jss-rtl": "^0.3.0",
+    "jwt-decode": "^3.0.0",
+    "node-sass": "^7.0.3",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-redux": "^7.2.2",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.1",
+    "react-world-flags": "^1.5.1",
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^6.0.0",
+    "reselect": "^4.1.6",
+    "web-vitals": "^0.2.4",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.19.6",
+    "@babel/preset-react": "^7.18.6",
+    "babel-plugin-i18next-extract": "^0.9.0",
+    "eslint": "^7.11.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-destructuring-newline": "0.0.2",
+    "eslint-plugin-flowtype": "^4.7.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-webpack-plugin": "^3.2.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "i18n-push": "txjs-cli push --verbose --purge src/",
+    "i18n-push:dry": "txjs-cli push --verbose --purge --dry-run src/",
+    "i18n-invalidate": "txjs-cli invalidate",
+    "lint": "eslint --quiet \"src/**/*.{js,jsx}\"",
+    "lint:fix": "eslint --quiet \"src/**/*.{js,jsx}\" --fix"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "yarn eslint"
+    ],
+    "*.jsx": [
+      "yarn eslint"
+    ]
+  }
+}
