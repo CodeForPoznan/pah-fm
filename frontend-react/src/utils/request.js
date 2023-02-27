@@ -25,7 +25,7 @@ class Request {
 
   initConfig() {
     this.instance = axios.create({
-      baseURL: `${BACKEND_URL}/api`,
+      baseURL: BACKEND_URL,
     });
 
     const token = getToken();

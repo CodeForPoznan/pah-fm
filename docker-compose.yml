@@ -12,6 +12,18 @@ services:
     environment:
       VUE_APP_API_URL: http://localhost:8000/api/
 
+  frontend-react:
+    #image: codeforpoznan/pah-fm-frontend
+    container_name: pah-fm-frontend-react
+    build: frontend-react
+    ports:
+      - 8090:8090
+    volumes:
+      - ./frontend-react:/pah-fm/frontend
+    environment:
+      REACT_APP_BACKEND_URL: http://localhost:8080/api/
+      PORT: 8090
+
   backend:
     #image: codeforpoznan/pah-fm-backend
     container_name: pah-fm-backend
