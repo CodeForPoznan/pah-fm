@@ -21,7 +21,7 @@ services:
     volumes:
       - ./frontend-react:/pah-fm/frontend
     environment:
-      REACT_APP_BACKEND_URL: http://localhost:8080/api/
+      REACT_APP_BACKEND_URL: http://localhost:8000/api/
       PORT: 8090
 
   backend:
