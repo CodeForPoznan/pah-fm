@@ -49,11 +49,9 @@ manage:  ## Use manage.py, i.e make manage populate_database
 	docker-compose exec backend ./manage.py $(filter-out $@,$(MAKECMDGOALS))
 
 build-frontend:  ## Build frontend container
-	docker-compose stop frontend
 	docker build --tag codeforpoznan/pah-fm-frontend frontend
 
 build-frontend-react:  ## Build frontend container
-	docker-compose stop frontend-react
 	docker build --tag codeforpoznan/pah-fm-frontend-react frontend-react
 
 remove-frontend:  ## Stop and remove frontend container
@@ -69,7 +67,6 @@ bash-frontend:  ## Enter frontend container
 	docker-compose exec frontend bash
 
 build-backend:  ## Build backend container
-	docker-compose stop backend
 	docker build --tag codeforpoznan/pah-fm-backend backend
 
 remove-backend:  ## Stop and remove backend container

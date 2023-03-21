@@ -4,22 +4,28 @@ services:
   frontend:
     container_name: pah-fm-frontend
     build: frontend
+    depends_on:
+      - backend
+    links:
+      - backend:backend
     ports:
       - 8080:8080
-    volumes:
-      - ./frontend:/pah-fm/frontend
     environment:
-      VUE_APP_API_URL: http://localhost:8000/api/
+      VUE_APP_API_URL: http://backend:8000/api/
 
   frontend-react:
     container_name: pah-fm-frontend-react
     build: frontend-react
+    depends_on:
+      - backend
+    links:
+      - backend:backend
     ports:
       - 8090:8090
     volumes:
-      - ./frontend-react:/pah-fm/frontend
+      - ./frontend-react:/pah-fm/frontend-react
     environment:
-      REACT_APP_BACKEND_URL: http://localhost:8000/api/
+      REACT_APP_BACKEND_URL: http://backend:8000/api/
       PORT: 8090
 
   backend:
