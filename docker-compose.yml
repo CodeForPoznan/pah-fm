@@ -2,7 +2,6 @@ version: "3.5"
 services:
 
   frontend:
-    #image: codeforpoznan/pah-fm-frontend
     container_name: pah-fm-frontend
     build: frontend
     ports:
@@ -13,7 +12,6 @@ services:
       VUE_APP_API_URL: http://localhost:8000/api/
 
   frontend-react:
-    #image: codeforpoznan/pah-fm-frontend
     container_name: pah-fm-frontend-react
     build: frontend-react
     ports:
@@ -25,7 +23,6 @@ services:
       PORT: 8090
 
   backend:
-    #image: codeforpoznan/pah-fm-backend
     container_name: pah-fm-backend
     build: backend
     stdin_open: true

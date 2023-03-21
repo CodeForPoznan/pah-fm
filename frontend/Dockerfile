@@ -10,4 +10,4 @@ RUN npm install
 
 ADD ./ ./
 
-ENTRYPOINT ["bash", "docker-entrypoint.sh"]
+ENTRYPOINT ["npm", "run", "serve"]

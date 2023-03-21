@@ -16,6 +16,7 @@ stop:  ## Stop all containers
 build:  ## Build backend & frontend containers
 	make build-backend
 	make build-frontend
+	make build-frontend-react
 
 remove:  ## Stop and remove backend & frontend containers
 	make remove-backend
@@ -25,6 +26,13 @@ rebuild:  ## Rebuid application
 	make stop
 	make remove
 	make build
+
+clean:  ## Clean all caches
+	make stop
+	make remove
+	-rm -r backend/__pycache__
+	-rm -r frontend/node_modules
+	-rm -r frontend-react/node_modules
 
 logs:  ## Attach to logs
 	docker-compose logs --tail 100 --follow
@@ -43,6 +51,10 @@ manage:  ## Use manage.py, i.e make manage populate_database
 build-frontend:  ## Build frontend container
 	docker-compose stop frontend
 	docker build --tag codeforpoznan/pah-fm-frontend frontend
+
+build-frontend-react:  ## Build frontend container
+	docker-compose stop frontend-react
+	docker build --tag codeforpoznan/pah-fm-frontend-react frontend-react
 
 remove-frontend:  ## Stop and remove frontend container
 	docker-compose rm -v --stop --force frontend
