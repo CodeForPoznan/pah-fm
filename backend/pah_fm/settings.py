@@ -54,7 +54,7 @@ MIDDLEWARE = [
     "fleet_management.middleware.UpdateLastSeenMiddleware",
 ]
 
-CORS_ORIGIN_WHITELIST = ("http://localhost:8080", "http://127.0.0.1:8080")
+CORS_ORIGIN_WHITELIST = ("http://localhost:8080", "http://localhost:8090")
 
 ROOT_URLCONF = "pah_fm.urls"
 
@@ -155,7 +155,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "pah_fm/static")]
 EMAIL_HOST = "localhost"
 EMAIL_PORT = 25
 EMAIL_USE_TLS = False
-EMAIL_ADDRESS = "hello@cfp.com"
+EMAIL_ADDRESS = "hello@codeforpoznan.pl"
 
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"

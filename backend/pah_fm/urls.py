@@ -15,6 +15,7 @@ from rest_framework.schemas import get_schema_view
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
+    path("", TemplateView.as_view(template_name="index.html"), name="index"),
     path("admin/", admin.site.urls),
     path("api/docs/", get_schema_view(title="PAH-FM"), name="openapi-schema"),
     path(

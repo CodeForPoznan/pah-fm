@@ -2,54 +2,56 @@ version: "3.5"
 services:
 
   frontend:
-    #image: codeforpoznan/pah-fm-frontend
     container_name: pah-fm-frontend
     build: frontend
     ports:
-      - 8080:8080
+      - 8080:8080 # webui
     volumes:
+      - /pah-fm/frontend/node_modules
       - ./frontend:/pah-fm/frontend
     environment:
       VUE_APP_API_URL: http://localhost:8000/api/
 
   frontend-react:
-    #image: codeforpoznan/pah-fm-frontend
     container_name: pah-fm-frontend-react
     build: frontend-react
     ports:
-      - 8090:8090
+      - 8090:8090 # webui
     volumes:
-      - ./frontend-react:/pah-fm/frontend
+      - /pah-fm/frontend-react/node_modules
+      - ./frontend-react:/pah-fm/frontend-react
     environment:
       REACT_APP_BACKEND_URL: http://localhost:8000/api/
       PORT: 8090
 
   backend:
-    #image: codeforpoznan/pah-fm-backend
     container_name: pah-fm-backend
     build: backend
     stdin_open: true
     tty: true
-    links:
-      - database:database
     ports:
-      - 8000:8000
-      - 4444:4444
+      - 8000:8000 # rest api
+      - 4444:4444 # debugging
     volumes:
       - ./backend:/pah-fm/backend
     environment:
+      DEBUG: 1
+      SECRET_KEY: pah-fm
+      DJANGO_LOG_LEVEL: DEBUG
       BASE_URL: localhost:8000
       PAH_FM_DB_HOST: database
-      SECRET_KEY: pah-fm
-      DEBUG: 1
-      DJANGO_LOG_LEVEL: DEBUG
 
   database:
     container_name: pah-fm-database
     image: postgres:14.4
     ports:
       - 5432:5432
+    volumes:
+      - database:/var/lib/postgresql/data/
     environment:
       POSTGRES_DB: pah-fm
       POSTGRES_USER: pah-fm
       POSTGRES_PASSWORD: pah-fm
+
+volumes:
+  database:
