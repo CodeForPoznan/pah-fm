@@ -6,8 +6,8 @@ WORKDIR /pah-fm/frontend-react
 
 COPY package.json yarn.lock ./
 
-RUN yarn config set network-timeout 999999 \
-    && yarn install
+RUN yarn install \
+    && yarn cache clean
 
 ADD ./ ./
 

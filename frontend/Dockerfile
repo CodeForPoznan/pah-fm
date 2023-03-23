@@ -6,7 +6,8 @@ WORKDIR /pah-fm/frontend
 
 COPY package.json package-lock.json ./
 
-RUN npm install
+RUN npm install \
+    && npm cache clean --force
 
 ADD ./ ./
 
