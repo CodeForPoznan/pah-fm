@@ -13,8 +13,11 @@ def is_in_group(user_id, group_name):
 
 class GroupPermission(permissions.BasePermission):
     def has_permission(self, request, view):
-        required_groups_mapping = getattr(view, "required_groups", {})
+        # TODO: fix this openapi hack
+        if request._request.path == '/api/docs/':
+            return True
 
+        required_groups_mapping = getattr(view, "required_groups", {})
         required_groups = required_groups_mapping.get(request.method, [])
 
         return all(
