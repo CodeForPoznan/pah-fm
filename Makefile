@@ -30,6 +30,7 @@ rebuild:  ## Rebuid application
 clean:  ## Clean all caches
 	make stop
 	make remove
+	-rm -r backend/.venv
 	-rm -r backend/__pycache__
 	-rm -r frontend/node_modules
 	-rm -r frontend-react/node_modules
