@@ -34,12 +34,14 @@ services:
       - 4444:4444 # debugging
     volumes:
       - ./backend:/pah-fm/backend
+      - /pah-fm/backend/.venv
     environment:
       DEBUG: 1
       SECRET_KEY: pah-fm
       DJANGO_LOG_LEVEL: DEBUG
       BASE_URL: localhost:8000
       PAH_FM_DB_HOST: database
+      PIPENV_VENV_IN_PROJECT: 1
 
   database:
     container_name: pah-fm-database

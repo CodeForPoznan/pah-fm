@@ -23,6 +23,13 @@
       h1, h2, h3 {
         line-height: 1.2
       }
+
+      .emoji[title]:before {
+        font-size: 1.5rem;
+        vertical-align: bottom;
+        content: attr(title);
+        text-shadow: 0 0 0 #000000;
+      }
     </style>
   </head>
   <body>
@@ -39,7 +46,7 @@
         <li><em><a href="http://localhost:8000/admin/">Django Admin</a></em></li>
         <li><em><a href="http://localhost:8000/api/docs/">REST API docs</a> (log in to django admin first)</em></li>
       </ul>
-      <aside>that's where the real magic happens 🪄</aside>
+      <aside>that's where the real magic happens <span class="emoji" title="🪄"></span></aside>
     </header>
   </body>
 </html>
