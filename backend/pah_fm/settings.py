@@ -1,29 +1,54 @@
 import datetime
 import os
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# Base URL without trailing slash
 BASE_URL = os.environ.get("BASE_URL")
 SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG", "0") == "1"
 
 ALLOWED_HOSTS = [
     "localhost",
-    "127.0.0.1",
     "52.232.62.212",
     ".pahfm.codeforpoznan.pl",
     ".execute-api.eu-west-1.amazonaws.com",
 ]
 
-USE_X_FORWARDED_HOST = True
+ROOT_URLCONF = "pah_fm.urls"
+WSGI_APPLICATION = "pah_fm.wsgi.application"
+AUTH_USER_MODEL = "fleet_management.User"
+LANGUAGE_CODE = "en-us"
+TIME_ZONE = "UTC"
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
+MEDIA_URL = "/media/"
+STATIC_URL = "/static/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "pah_fm/static")]
+API_TOKEN_LIFETIME = datetime.timedelta(days=30)
 
+RSA_PUBLIC_EXP = 257
+RSA_BIT_LENGTH = 19
+
+USE_X_FORWARDED_HOST = True
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_DOMAIN = BASE_URL
 CSRF_TRUSTED_ORIGINS = [f"http://{BASE_URL}"]
+CORS_ORIGIN_WHITELIST = (
+    "http://localhost:8000",
+    "http://localhost:8080",
+    "http://localhost:8090",
+)
 
-# Application definition
+EMAIL_HOST = "localhost"
+EMAIL_PORT = 25
+EMAIL_USE_TLS = False
+EMAIL_ADDRESS = "hello@codeforpoznan.pl"
+
+if DEBUG:
+    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+    EMAIL_FILE_PATH = os.path.join(BASE_DIR, "emails")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -32,8 +57,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "import_export",
     # 3rd party apps
+    "import_export",
     "corsheaders",
     "djmoney",
     "rest_framework",
@@ -54,10 +79,6 @@ MIDDLEWARE = [
     "fleet_management.middleware.UpdateLastSeenMiddleware",
 ]
 
-CORS_ORIGIN_WHITELIST = ("http://localhost:8080", "http://localhost:8090")
-
-ROOT_URLCONF = "pah_fm.urls"
-
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -74,12 +95,6 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "pah_fm.wsgi.application"
-
-
-# Database
-# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 DATABASES = {
     "default": {
@@ -92,8 +107,16 @@ DATABASES = {
     }
 }
 
-
-# DRF settings
+AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.AllowAllUsersModelBackend",)
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        "NAME": "django.contrib.auth.password_validation"
+        ".UserAttributeSimilarityValidator",
+    },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -111,65 +134,18 @@ REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
 }
 
+# we need to support both:
+# (JWT, Sliding)  => legacy vuejs option
+# Bearer, Access) => current reactjs option
 
-# Password validation
-# https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation"
-        ".UserAttributeSimilarityValidator",
-    },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
-]
-
-
-# Custom user model
-
-AUTH_USER_MODEL = "fleet_management.User"
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/2.1/topics/i18n/
-
-LANGUAGE_CODE = "en-us"
-
-TIME_ZONE = "UTC"
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.0/howto/static-files/
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "pah_fm/static")]
-
-# Email settings
-EMAIL_HOST = "localhost"
-EMAIL_PORT = 25
-EMAIL_USE_TLS = False
-EMAIL_ADDRESS = "hello@codeforpoznan.pl"
-
-if DEBUG:
-    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-    EMAIL_FILE_PATH = os.path.join(BASE_DIR, "emails")
-
-# verify if it's required for registering user
-AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.AllowAllUsersModelBackend",)
-
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-MEDIA_URL = "/media/"
-
-JWT_AUTH = {
-    "JWT_EXPIRATION_DELTA": datetime.timedelta(days=30),
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": API_TOKEN_LIFETIME,
+    "REFRESH_TOKEN_LIFETIME": API_TOKEN_LIFETIME,
+    "SLIDING_TOKEN_LIFETIME": API_TOKEN_LIFETIME,
+    "SLIDING_TOKEN_REFRESH_LIFETIME": API_TOKEN_LIFETIME,
+    "AUTH_HEADER_TYPES": ("Bearer", "JWT"),
+    "AUTH_TOKEN_CLASSES": (
+        "rest_framework_simplejwt.tokens.AccessToken",
+        "rest_framework_simplejwt.tokens.SlidingToken",
+    ),
 }
-
-RSA_PUBLIC_EXP = 257
-RSA_BIT_LENGTH = 19
