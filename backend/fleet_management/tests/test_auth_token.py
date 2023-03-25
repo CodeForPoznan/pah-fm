@@ -23,7 +23,7 @@ class AuthTokenApiTestCase(APITestCase):
             format="json",
         )
         self.assertEqual(driver_res.status_code, status.HTTP_200_OK)
-        self.assertContains(driver_res, "access")
+        self.assertContains(driver_res, "token")
 
         passenger_res = self.client.post(
             self.url,
@@ -31,7 +31,7 @@ class AuthTokenApiTestCase(APITestCase):
             format="json",
         )
         self.assertEqual(passenger_res.status_code, status.HTTP_200_OK)
-        self.assertContains(passenger_res, "access")
+        self.assertContains(passenger_res, "token")
 
     def test_unsuccessful_user_login_bad_credentials(self):
         res = self.client.post(

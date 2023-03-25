@@ -14,7 +14,7 @@ def is_in_group(user_id, group_name):
 class GroupPermission(permissions.BasePermission):
     def has_permission(self, request, view):
         # TODO: fix this openapi hack
-        if request._request.path == '/api/docs/':
+        if request._request.path == "/api/docs/":
             return True
 
         required_groups_mapping = getattr(view, "required_groups", {})
@@ -22,7 +22,7 @@ class GroupPermission(permissions.BasePermission):
 
         return all(
             [
-                is_in_group(request.auth.get("user_id"), group_name)
+                is_in_group(request.user.id, group_name)
                 if group_name != "__all__"
                 else True
                 for group_name in required_groups

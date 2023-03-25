@@ -12,7 +12,11 @@ from fleet_management.api import (
     RefuelView,
 )
 from rest_framework.schemas import get_schema_view
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenObtainSlidingView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="index.html"), name="index"),
@@ -32,6 +36,7 @@ urlpatterns = [
     path("api/drives", DriveView.as_view(), name="drives"),
     path("api/projects", ProjectView.as_view(), name="projects"),
     path("api/refuels", RefuelView.as_view(), name="refuels"),
-    path("api/api-token-auth/", TokenObtainPairView.as_view(), name="jwt"),
+    path("api/authenticate", TokenObtainPairView.as_view(), name="authenticate"),
+    path("api/api-token-auth/", TokenObtainSlidingView.as_view(), name="jwt"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
