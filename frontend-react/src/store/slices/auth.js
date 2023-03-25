@@ -38,11 +38,11 @@ export const login = createAsyncThunk(
     dispatch,
   }) => {
     try {
-      const response = await request.post('/api-token-auth/', values);
-      const { token } = response.data;
+      const response = await request.post('/authenticate', values);
+      const { access } = response.data;
 
-      request.setAuthToken(token);
-      setToken(token);
+      request.setAuthToken(access);
+      setToken(access);
 
       await dispatch(getMe());
 

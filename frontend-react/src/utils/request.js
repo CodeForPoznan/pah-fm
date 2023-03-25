@@ -15,7 +15,7 @@ class Request {
 
   setAuthToken(token) {
     this.token = token;
-    this.instance.defaults.headers.common.Authorization = `JWT ${token}`;
+    this.instance.defaults.headers.common.Authorization = `Bearer ${token}`;
   }
 
   removeAuthToken() {
