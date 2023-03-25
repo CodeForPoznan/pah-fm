@@ -21,7 +21,7 @@ describe('HTTP Module', () => {
     // eslint-disable-next-line
     let headers = getters[AUTH_DATA](state)({ requestOptions }).headers;
     expect(headers).toStrictEqual({
-      Authorization: `Bearer ${exampleJWT}`,
+      Authorization: `JWT ${exampleJWT}`,
     });
 
     requestOptions = {
@@ -35,7 +35,7 @@ describe('HTTP Module', () => {
     headers = getters[AUTH_DATA](state)({ requestOptions }).headers;
     expect(headers).toStrictEqual({
       Accept: 'application/json',
-      Authorization: `Bearer ${exampleJWT}`,
+      Authorization: `JWT ${exampleJWT}`,
     });
 
     delete requestOptions.headers;
@@ -61,7 +61,7 @@ describe('HTTP Module', () => {
       // Valid method
       expect(options.method).toBe('POST');
       // Authorization header injected
-      expect(options.headers.Authorization).toBe(`Bearer ${exampleJWT}`);
+      expect(options.headers.Authorization).toBe(`JWT ${exampleJWT}`);
       // Payload is stringified
       expect(typeof options.body).toBe('string');
       // Content-Type is json
@@ -88,7 +88,7 @@ describe('HTTP Module', () => {
       // Use default method
       expect(options.method).toBe(undefined);
       // Authorization header injected
-      expect(options.headers.Authorization).toBe(`Bearer ${exampleJWT}`);
+      expect(options.headers.Authorization).toBe(`JWT ${exampleJWT}`);
       return new Promise(res => res({
         status: 200,
         json: async () => ({ data: 'Do. Or do not. There is no try.' }) }));
@@ -135,7 +135,7 @@ describe('HTTP Module', () => {
     // Since exampleJWT will expire at some time
     expect(authHeader.headers).toBeOneOf([
       {
-        Authorization: `Bearer ${exampleJWT}`,
+        Authorization: `JWT ${exampleJWT}`,
       },
       undefined,
     ]);

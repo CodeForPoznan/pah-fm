@@ -33,8 +33,8 @@ export default {
      * @arg {string} credentials.password
      */
   [LOGIN]: async ({ dispatch, commit }, credentials) => {
-    const { access } = await dispatch(POST, { url: 'api-token-auth/', payload: credentials, auth: false });
-    commit(SET_TOKEN, access);
+    const { token } = await dispatch(POST, { url: 'api-token-auth/', payload: credentials, auth: false });
+    commit(SET_TOKEN, token);
   },
   [GET_AUTH_HEADER]: ({ state, commit, getters }, payload) => {
     if (state[TOKEN]) {
