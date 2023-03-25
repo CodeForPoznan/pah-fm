@@ -18,18 +18,8 @@ build:  ## Build backend & frontend containers
 	make build-frontend
 	make build-frontend-react
 
-remove:  ## Stop and remove backend & frontend containers
-	make remove-backend
-	make remove-frontend
-
-rebuild:  ## Rebuid application
-	make stop
-	make remove
-	make build
-
 clean:  ## Clean all caches
-	make stop
-	make remove
+	docker-compose down --volumes --rmi all --remove-orphans
 	-rm -r backend/.venv
 	-rm -r backend/__pycache__
 	-rm -r frontend/node_modules
@@ -38,7 +28,7 @@ clean:  ## Clean all caches
 logs:  ## Attach to logs
 	docker-compose logs --tail 100 --follow
 
-lint:   ## Run linters
+lint:  ## Run linters
 	make lint-frontend
 	make lint-backend
 
@@ -51,35 +41,29 @@ manage:  ## Use manage.py, i.e make manage populate_database
 
 build-frontend:  ## Build frontend container
 	docker build --tag codeforpoznan/pah-fm-frontend frontend
-
-build-frontend-react:  ## Build frontend container
 	docker build --tag codeforpoznan/pah-fm-frontend-react frontend-react
-
-remove-frontend:  ## Stop and remove frontend container
-	docker-compose rm -v --stop --force frontend
-
-lint-frontend:  ## Run linters on frontend container
-	docker-compose exec frontend npm run lint:fix
-
-test-frontend: ## Run tests on frontend container
-	docker-compose exec frontend npm run test
-
-bash-frontend:  ## Enter frontend container
-	docker-compose exec frontend bash
 
 build-backend:  ## Build backend container
 	docker build --tag codeforpoznan/pah-fm-backend backend
 
-remove-backend:  ## Stop and remove backend container
-	docker-compose rm -v --stop --force backend
+lint-frontend:  ## Run linters on frontend container
+	docker-compose exec frontend npm run lint:fix
+	docker-compose exec frontend-react yarn run lint:fix
 
 lint-backend:  ## Run linters on backend container
 	# we need to cd to upper directory for consistency with github actions
 	docker-compose exec backend sh -c 'cd .. && isort --profile black backend'
 	docker-compose exec backend black .
 
+test-frontend: ## Run tests on frontend container
+	docker-compose exec frontend npm run test
+	# docker-compose exec frontend-react yarn run test
+
 test-backend:  ## Run tests on backend container
-	make manage test
+	docker-compose exec backend ./manage.py test
+
+bash-frontend:  ## Enter frontend container
+	docker-compose exec frontend bash
 
 bash-backend:  ## Enter backend container
 	docker-compose exec backend bash

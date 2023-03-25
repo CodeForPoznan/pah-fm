@@ -41,7 +41,6 @@ services:
       DJANGO_LOG_LEVEL: DEBUG
       BASE_URL: localhost:8000
       PAH_FM_DB_HOST: database
-      PIPENV_VENV_IN_PROJECT: 1
 
   database:
     container_name: pah-fm-database
