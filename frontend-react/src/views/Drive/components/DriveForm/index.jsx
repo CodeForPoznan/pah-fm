@@ -13,10 +13,41 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 
 import useT from '../../../../utils/translation';
-import { selectItems } from './mockItems';
 import { FIELDS } from './helpers';
 
-const DriveForm = () => {
+const DriveForm = ({
+  cars,
+  projects,
+  passengers,
+}) => {
+  const selectItems = useMemo(() => ({
+    project: projects.map(({
+      id,
+      title,
+    }) => ({
+      id,
+      name: title,
+    })),
+    car: cars.map(({
+      id,
+      plates,
+    }) => ({
+      id,
+      name: plates,
+    })),
+    passenger: passengers.map(({
+      id,
+      firstName,
+      lastName,
+    }) => ({
+      id,
+      name: `${firstName} ${lastName}`,
+    })),
+  }), [
+    cars,
+    passengers,
+    projects,
+  ]);
   const traveled = useT('traveled');
   const submit = useT('Submit');
   const clear = useT('Clear');
@@ -93,8 +124,6 @@ const DriveForm = () => {
       console.log('values', values);
     },
   });
-
-  console.log('formik', formik);
 
   const traveledDistance = useMemo(
     () => Math.max(formik.values.mileageEnd - formik.values.mileageStart, 0),
