@@ -9,3 +9,9 @@ export const REQUEST_STATUSES = {
   SUCCEEDED: 'succeeded',
   FAILED: 'failed',
 };
+
+export const ROUTES_VISIBILITY = {
+  ALWAYS: 'always',
+  AUTHENTICATED: 'authenticated',
+  GUEST: 'guest',
+};

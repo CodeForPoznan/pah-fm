@@ -180,7 +180,10 @@ const DriveForm = ({
   }, [formErrors]);
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form
+      onSubmit={formik.handleSubmit}
+      noValidate
+    >
       <Box
         display="flex"
         flexDirection="column"
@@ -208,7 +211,6 @@ const DriveForm = ({
                     {translatedLabel}
                   </InputLabel>
                   <Select
-                    id={labelName}
                     name={labelName}
                     label={translatedLabel}
                     value={formik.values[labelName]}
