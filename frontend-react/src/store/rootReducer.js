@@ -5,6 +5,7 @@ import { uiReducer } from './slices/ui';
 import { carsReducer } from './slices/cars';
 import { projectsReducer } from './slices/projects';
 import { passengersReducer } from './slices/passengers';
+import { drivesReducer } from './slices/drives';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   cars: carsReducer,
   passengers: passengersReducer,
   projects: projectsReducer,
+  drives: drivesReducer,
 });
 
 export default rootReducer;

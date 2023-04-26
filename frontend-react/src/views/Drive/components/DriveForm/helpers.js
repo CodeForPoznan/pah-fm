@@ -8,7 +8,7 @@ export const FIELDS = [
     type: 'text',
   },
   {
-    labelName: 'mileageStart',
+    labelName: 'startMileage',
     type: 'number',
   },
   {
@@ -32,7 +32,7 @@ export const FIELDS = [
     type: 'text',
   },
   {
-    labelName: 'mileageEnd',
+    labelName: 'endMileage',
     type: 'number',
   },
 ];

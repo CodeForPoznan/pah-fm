@@ -28,6 +28,7 @@ class MissingPolicy {
 }
 
 const initTranslations = () => {
+  // eslint-disable-next-line no-console
   onEvent(LOCALE_CHANGED, () => console.log('locale changed!'));
 
   tx.init({

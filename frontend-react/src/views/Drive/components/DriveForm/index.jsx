@@ -1,4 +1,12 @@
-import { useMemo } from 'react';
+import {
+  useEffect,
+  useMemo,
+} from 'react';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+
 import {
   Box,
   Button,
@@ -14,12 +22,20 @@ import * as yup from 'yup';
 
 import useT from '../../../../utils/translation';
 import { FIELDS } from './helpers';
+import {
+  addDrive,
+  getDrives,
+} from '../../../../store/slices/drives';
+import { addDriveErrorsSelector } from '../../../../store/selectors/drives';
 
 const DriveForm = ({
   cars,
   projects,
   passengers,
 }) => {
+  const dispatch = useDispatch();
+  const formErrors = useSelector(addDriveErrorsSelector);
+
   const selectItems = useMemo(() => ({
     project: projects.map(({
       id,
@@ -55,13 +71,13 @@ const DriveForm = ({
   const translatedFieldsLabels = {
     date: useT('Date'),
     startLocation: useT('Start location'),
-    mileageStart: useT('Starting mileage'),
+    startMileage: useT('Starting mileage'),
     project: useT('Project'),
     car: useT('Car'),
     passenger: useT('Passenger'),
     description: useT('Description'),
     endLocation: useT('End location'),
-    mileageEnd: useT('Ending mileage'),
+    endMileage: useT('Ending mileage'),
   };
 
   const validationSchema = yup.object().shape({
@@ -69,7 +85,7 @@ const DriveForm = ({
       .required(useT('Date is required')),
     startLocation: yup.string()
       .required(useT('Start location is required')),
-    mileageStart: yup.number()
+    startMileage: yup.number()
       .min(0, useT('Starting mileage should be greater or equal to 0'))
       .required(useT('Starting mileage is required')),
     project: yup.string()
@@ -80,16 +96,16 @@ const DriveForm = ({
       .required(useT('Passenger is required')),
     endLocation: yup.string()
       .required(useT('End location is required')),
-    mileageEnd: yup.number()
+    endMileage: yup.number()
       .required(useT('Ending mileage is required'))
       .min(0, useT('Ending mileage should be greater or equal to 0'))
       .test(
         {
           message: useT('Ending mileage should be greater or equal to starting mileage'),
           test: (value, path) => {
-            const { parent: { mileageStart } } = path;
+            const { parent: { startMileage } } = path;
 
-            return value - mileageStart >= 0;
+            return value - startMileage >= 0;
           },
         }
       ),
@@ -111,27 +127,57 @@ const DriveForm = ({
       date: new Date().toISOString()
         .split('T')[0],
       startLocation: '',
-      mileageStart: 0,
+      startMileage: 0,
       project: '',
       car: '',
       passenger: '',
       description: '',
       endLocation: '',
-      mileageEnd: 0,
+      endMileage: 0,
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log('values', values);
+      const {
+        car,
+        project,
+        passenger,
+        ...rest
+      } = values;
+      const payload = {
+        ...rest,
+        isVerified: false,
+        car: { id: car },
+        project: { id: project },
+        passengers: [{ id: passenger }],
+        timestamp: Math.floor(Date.now() / 1000),
+      };
+
+      return dispatch(addDrive(payload))
+        .then(() => {
+          dispatch(getDrives());
+        });
     },
   });
 
   const traveledDistance = useMemo(
-    () => Math.max(formik.values.mileageEnd - formik.values.mileageStart, 0),
+    () => Math.max(formik.values.endMileage - formik.values.startMileage, 0),
     [
-      formik.values.mileageStart,
-      formik.values.mileageEnd,
+      formik.values.endMileage,
+      formik.values.startMileage,
     ]
   );
+
+  useEffect(() => {
+    if (formErrors) {
+      const {
+        passengers: passengersError,
+      } = formErrors;
+
+      formik.setErrors({
+        passenger: passengersError?.[0],
+      });
+    }
+  }, [formErrors]);
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -220,7 +266,7 @@ const DriveForm = ({
           type="submit"
           variant="contained"
           color="primary"
-          disabled={!formik.valid}
+          disabled={formik.isSubmitting}
         >
           {submit}
         </Button>
