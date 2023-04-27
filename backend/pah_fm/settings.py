@@ -52,12 +52,13 @@ if DEBUG:
     EMAIL_FILE_PATH = os.path.join(BASE_DIR, "emails")
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.admindocs",
+    "django.contrib.admin",
     # 3rd party apps
     "import_export",
     "corsheaders",
