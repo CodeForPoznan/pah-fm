@@ -9,6 +9,7 @@ import request from '../../utils/request';
 const initialState = {
   list: [],
   status: REQUEST_STATUSES.IDLE,
+  errors: null,
 };
 
 const PREFIX = 'cars';
@@ -35,7 +36,7 @@ const carsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getCars.pending, (state) => {
-      state.error = null;
+      state.errors = null;
       state.status = REQUEST_STATUSES.LOADING;
     });
     builder.addCase(getCars.fulfilled, (state, { payload }) => {
@@ -44,7 +45,7 @@ const carsSlice = createSlice({
     });
     builder.addCase(getCars.rejected, (state, { payload }) => {
       state.status = REQUEST_STATUSES.FAILED;
-      state.error = payload;
+      state.errors = payload;
     });
   },
 });
