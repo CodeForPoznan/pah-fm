@@ -1,14 +1,20 @@
-{% extends 'admin/base.html' %}
+{% extends "admin/base.html" %}
 {% load static %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Admin Area') }}{% endblock %}
 
 {% block branding %}
 <a href="{% url 'admin:index' %}">
-  <h1 id="head">
-    <img src="{% static 'img/logo_en.svg' %}" alt="PAH" height="50" width="80" class="brand_img"> Admin Area
-  </h1>
+  <img src="{% static 'img/logo_en.svg' %}" alt="PAH logo" height="50" width="80">
 </a>
+{% if user.is_anonymous %}
+  {% include "admin/color_theme_toggle.html" %}
+{% endif %}
 {% endblock %}
 
 {% block extrastyle %}
+  {{ block.super }}
   <link rel="stylesheet" href="{% static 'css/admin.css' %}">
 {% endblock %}
+
+{% block nav-global %}{% endblock %}
