@@ -1,0 +1,110 @@
+/* * * branding colors taken from https://www.pah.org.pl/ * * *\
+ * We intentionally do not overwrite the variables, because
+ * there's no way to do that without breaking other parts of
+ * the website (e.g. the nav bar vs breadcrumbs).
+ * That's because the theme is using `--header-*` variables
+ * in places outside the header, thus we need to override
+ * the actual CSS properties directly. We also need to do
+ * it with !important, because that's the only way to override
+ * it without specifying the whole selector.
+\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+#content-related .module h2 {
+  color: #ffffff !important; /* --header-bg */
+}
+
+@media (prefers-color-scheme: light) {
+  #header,
+  [data-theme="auto"] #header,
+  [data-theme="light"] #header {
+    color: #000000 !important; /* --header-color */
+    background-color: #ffffff !important; /* --header-bg */
+  }
+
+  #header .theme-toggle svg,
+  [data-theme="auto"] #header .theme-toggle svg,
+  [data-theme="light"] #header .theme-toggle svg {
+    fill: #0072bc !important; /* --header-link-color */
+    color: #ffffff !important; /* --header-bg */
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  #header,
+  [data-theme="auto"] #header,
+  [data-theme="dark"] #header {
+    color: #ffffff !important; /* --header-color */
+    background-color: #121212 !important; /* --header-bg */
+  }
+
+  #header .theme-toggle svg,
+  [data-theme="auto"] #header .theme-toggle svg,
+  [data-theme="dark"] #header .theme-toggle svg {
+    fill: #0072bc !important; /* --header-link-color */
+    color: #121212 !important; /* --header-bg */
+  }
+}
+
+#header a, #header button {
+  color: #0072bc !important; /* --header-link-color */
+}
+
+.breadcrumbs {
+  background-color: #0072bc !important; /* --breadcrumbs-bg */
+}
+
+.module h2, .module caption, .inline-group h2 {
+  background-color: #0072bc !important; /* --primary */
+}
+
+
+
+
+/*
+
+#changelist-filter a {
+    color: #666 !important;
+}
+
+#changelist-filter ul {
+    padding: 0 0 0 15px !important;
+}
+
+#changelist-filter li.selected {
+    border-left-color: #dbdbdb !important;
+    background-color: #dbdbdb;
+}
+
+#changelist-filter li:hover {
+    background: #eaeaea;
+    border-left: 5px solid #eaeaea;
+    margin-left: -15px;
+    padding-left: 10px;
+}
+
+div.breadcrumbs {
+    background: #0072bc;
+    color:#fff;
+}
+
+div.breadcrumbs a,
+div.breadcrumbs a:link,
+div.breadcrumbs a:visited {
+    color: #c4dce8;
+}
+
+.module h2,
+.module caption,
+.inline-group h2 {
+    background: #0072bc;
+}
+
+.button,
+a.button,
+.submit-row input,
+input[type=submit],
+input[type=button] {
+    background: #0072bc;
+    color: #fff;
+} */
