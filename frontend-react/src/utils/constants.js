@@ -15,3 +15,5 @@ export const ROUTES_VISIBILITY = {
   AUTHENTICATED: 'authenticated',
   GUEST: 'guest',
 };
+
+export const RSA_BIT_LENGTH = 19;
