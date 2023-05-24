@@ -17,3 +17,8 @@ export const ROUTES_VISIBILITY = {
 };
 
 export const RSA_BIT_LENGTH = 19;
+
+export const USER_GROUPS = {
+  PASSENGER: 'Passenger',
+  DRIVER: 'Driver',
+};
