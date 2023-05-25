@@ -255,7 +255,7 @@ In general, everything should work out of the box after the first `make start`.
 The command sets up a local `.venv` and `node_modules` dirs in correct places,
 so the editors should be able to pick it up automatically and use it for autocompletion.
 
-Hovever, the way it's supposed to be configured varies wildly between editors and 
+However, the way it's supposed to be configured varies wildly between editors and 
 toolchains so it may broken for you.
 
 If your editor does not support hooking up to Docker containers for 
