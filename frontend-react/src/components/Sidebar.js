@@ -49,6 +49,8 @@ const Sidebar = ({
     [routeKeys.HOME]: useT('Home page'),
     [routeKeys.LOGIN]: useT('Log in'),
     [routeKeys.LOGOUT]: useT('Log out'),
+    [routeKeys.DRIVE]: useT('Add new drive'),
+    [routeKeys.TEST]: 'Testing',
   };
 
   return (
@@ -84,6 +86,7 @@ const Sidebar = ({
               to={r.path}
               className={classes.link}
             >
+              {console.log('traslations', r)}
               <ListItem>
                 <ListItemText>
                   {translations[r.key]}

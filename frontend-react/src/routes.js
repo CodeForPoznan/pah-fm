@@ -46,6 +46,7 @@ const routeKeys = {
   NOTFOUND: 'notfound',
   DEFAULT: 'default',
   DRIVE: 'drive',
+  TEST: 'test',
 };
 
 const routes = [
@@ -73,9 +74,16 @@ const routes = [
     component: lazy(() => import('./views/NotFound')),
   },
   {
+    exact: true,
     path: '/drive',
     key: routeKeys.DRIVE,
     component: lazy(() => import('./views/Drive')),
+  },
+  {
+    exact: true,
+    path: '/test',
+    key: routeKeys.TEST,
+    component: lazy(() => import('./views/Test')),
   },
   {
     path: '*',
