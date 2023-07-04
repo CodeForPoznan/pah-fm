@@ -16,6 +16,12 @@ const useStyles = makeStyles(theme => ({
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
   },
+  verified: {
+    background: 'linear-gradient(90deg, #28a745 1%, #FAF9F6 0%)',
+  },
+  unverified: {
+    background: 'linear-gradient(90deg, #ffc107 1%, #FAF9F6 0%)',
+  },
 }));
 
 const totalMilage = () => {
@@ -36,9 +42,15 @@ export default function DrivesList() {
     page,
     setPage,
   ] = useState(1);
-  const handleChange = (e, p) => {
-    console.log(e, p);
+  const handlePageChange = (e, p) => {
     setPage(p);
+  };
+  const [
+    expanded,
+    setExpanded,
+  ] = useState();
+  const handleAccordionChange = panel => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
   };
 
   const recordsPerPage = 10;
@@ -49,10 +61,15 @@ export default function DrivesList() {
 
   return (
     <div className={classes.root}>
-      <p>{`Total milage: ${totalMilage()}`}</p>
+      <p>{`Total milage: ${totalMilage()} km`}</p>
       {sliced.map((drive, index) => (
-        <Accordion key={index}>
+        <Accordion
+          key={index}
+          expanded={expanded === index}
+          onChange={handleAccordionChange(index)}
+        >
           <AccordionSummary
+            className={drive.is_verified === '1' ? classes.verified : classes.unverified}
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header"
@@ -70,7 +87,7 @@ export default function DrivesList() {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
+            <Typography component="span">
               <p>
                 {`Description: ${drive.description}`}
               </p>
@@ -92,15 +109,16 @@ export default function DrivesList() {
               <p>
                 {`Miles ridden: ${drive.diff_mileage}`}
               </p>
-              {drive.is_verified === 1 ? <p>This drive is verified</p> :
-              <p>This drive is unverified</p>}
+              <p>
+                {`this drive is ${drive.is_verified}`}
+              </p>
             </Typography>
           </AccordionDetails>
         </Accordion>
       ))}
       <Pagination
         count={numberOfPages}
-        onChange={handleChange}
+        onChange={handlePageChange}
       />
     </div>
   );
