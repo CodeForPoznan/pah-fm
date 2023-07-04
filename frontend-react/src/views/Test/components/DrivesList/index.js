@@ -69,7 +69,7 @@ export default function DrivesList() {
           onChange={handleAccordionChange(index)}
         >
           <AccordionSummary
-            className={drive.is_verified === '1' ? classes.verified : classes.unverified}
+            className={drive.is_verified === 1 ? classes.verified : classes.unverified}
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header"
@@ -109,9 +109,24 @@ export default function DrivesList() {
               <p>
                 {`Miles ridden: ${drive.diff_mileage}`}
               </p>
-              <p>
-                {`this drive is ${drive.is_verified}`}
-              </p>
+              {drive.is_verified === 0 ? (
+                <div style={{
+                  backgroundColor: '#fff3cd',
+                  height: '50px',
+                  display: 'flex',
+                }}
+                >
+                  <p style={{
+                    color: '#907117',
+                    alignContent: 'center',
+                    marginLeft: '20px',
+                  }}
+                  >
+                    This drive was not verified,
+                    contact with a person from PAH responsible for drives to solve it.
+                  </p>
+                </div>
+              ) : ''}
             </Typography>
           </AccordionDetails>
         </Accordion>
