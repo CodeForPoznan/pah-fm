@@ -1,5 +1,6 @@
 import React from 'react';
-
-const TestView = () => (<h1>Testing</h1>);
+import DrivesList from './components/DrivesList';
+// const TestView = () => (<h1>Testing</h1>);
+const TestView = () => (<DrivesList />);
 
 export default TestView;
