@@ -17,11 +17,24 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const totalMilage = () => {
+  let milage = 0;
+
+  mockDrives.map((drive) => {
+    milage += drive.diff_mileage * 1;
+
+    return milage;
+  });
+
+  return milage;
+};
+
 export default function DrivesList() {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
+      <p>{`Total milage: ${totalMilage()}`}</p>
       {mockDrives.map((drive, index) => (
         <Accordion key={index}>
           <AccordionSummary
@@ -44,29 +57,28 @@ export default function DrivesList() {
           <AccordionDetails>
             <Typography>
               <p>
-                {'Description: '}
-                {drive.description}
+                {`Description: ${drive.description}`}
               </p>
               <p>
-                {'With car: '}
-                {drive.car_plates}
+                {`With car: ${drive.car__plates}`}
               </p>
               <p>
-                {'Passenger: '}
-                {drive.passenger}
+                {`Passanger: ${drive.passenger}`}
               </p>
               <p>
-                {'Project: '}
-                {drive.project_title}
+                {`Project: ${drive.project__title}`}
               </p>
               <p>
-                {'Starting milage: '}
-                {drive.start_mileage}
+                {`Starting milage: ${drive.start_mileage}`}
               </p>
               <p>
-                {'Ending milage: '}
-                {drive.end_mileage}
+                {`Ending milage: ${drive.end_mileage}`}
               </p>
+              <p>
+                {`Miles ridden: ${drive.diff_mileage}`}
+              </p>
+              {drive.is_verified === 1 ? <p>This drive is verified</p> :
+              <p>This drive is unverified</p>}
             </Typography>
           </AccordionDetails>
         </Accordion>
