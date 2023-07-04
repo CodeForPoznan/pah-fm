@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Pagination from '@material-ui/lab/Pagination';
 import { mockDrives } from './mockItems';
 
 const useStyles = makeStyles(theme => ({
@@ -31,11 +32,25 @@ const totalMilage = () => {
 
 export default function DrivesList() {
   const classes = useStyles();
+  const [
+    page,
+    setPage,
+  ] = useState(1);
+  const handleChange = (e, p) => {
+    console.log(e, p);
+    setPage(p);
+  };
+
+  const recordsPerPage = 10;
+  const indexOfLastRecord = page * recordsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const sliced = mockDrives.slice(indexOfFirstRecord, indexOfLastRecord);
+  const numberOfPages = Math.ceil(Object.entries(mockDrives).length / recordsPerPage);
 
   return (
     <div className={classes.root}>
       <p>{`Total milage: ${totalMilage()}`}</p>
-      {mockDrives.map((drive, index) => (
+      {sliced.map((drive, index) => (
         <Accordion key={index}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -83,21 +98,10 @@ export default function DrivesList() {
           </AccordionDetails>
         </Accordion>
       ))}
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography className={classes.heading}>Accordion 1</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-            sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
+      <Pagination
+        count={numberOfPages}
+        onChange={handleChange}
+      />
     </div>
   );
 }
