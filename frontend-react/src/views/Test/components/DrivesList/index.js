@@ -10,7 +10,8 @@ import { mockDrives } from './mockItems';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '80%',
+    minWidth: '80%',
+    maxWidth: '1100px',
     marginLeft: 'auto',
     marginRight: 'auto',
   },
