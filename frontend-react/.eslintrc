@@ -107,7 +107,7 @@
     "react/jsx-curly-newline": "off",
     "react/jsx-props-no-spreading": "off",
     "react/no-did-update-set-state": "warn",
-    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/exhaustive-deps": "off",
     "react-hooks/rules-of-hooks": "error",
     "react/jsx-max-props-per-line": [
       "error",

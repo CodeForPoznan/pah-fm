@@ -2,7 +2,7 @@ import datetime
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_URL = os.environ.get("BASE_URL")
+BASE_URL = os.environ.get("BASE_URL", "localhost")
 SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG", "0") == "1"
 

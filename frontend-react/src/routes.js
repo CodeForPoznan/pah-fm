@@ -9,6 +9,7 @@ import {
   Redirect,
   Route,
 } from 'react-router-dom';
+import { ROUTES_VISIBILITY } from './utils/constants';
 
 export const renderRoutes = (routes = []) => (
   <Suspense fallback={<div>Loading...</div>}>
@@ -42,11 +43,10 @@ export const renderRoutes = (routes = []) => (
 const routeKeys = {
   HOME: 'home',
   LOGIN: 'login',
-  LOGOUT: 'logout',
   NOTFOUND: 'notfound',
   DEFAULT: 'default',
   DRIVE: 'drive',
-  TEST: 'test',
+  DRIVES: 'drives',
 };
 
 const routes = [
@@ -55,18 +55,14 @@ const routes = [
     path: '/',
     key: routeKeys.HOME,
     component: lazy(() => import('./views/Home')),
+    visibility: ROUTES_VISIBILITY.ALWAYS,
   },
   {
     exact: true,
     path: '/login',
     key: routeKeys.LOGIN,
     component: lazy(() => import('./views/Login')),
-  },
-  {
-    exact: true,
-    path: '/logout',
-    key: routeKeys.LOGOUT,
-    component: <Redirect to="/404" />,
+    visibility: ROUTES_VISIBILITY.GUEST,
   },
   {
     path: '/404',
@@ -81,9 +77,9 @@ const routes = [
   },
   {
     exact: true,
-    path: '/test',
-    key: routeKeys.TEST,
-    component: lazy(() => import('./views/Test')),
+    path: '/drives',
+    key: routeKeys.DRIVES,
+    component: lazy(() => import('./views/Drives')),
   },
   {
     path: '*',

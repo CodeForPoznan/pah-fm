@@ -1,23 +1,32 @@
-import React from 'react';
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import {
+  Box,
+  Button,
   Divider,
   Drawer,
   Grid,
   List,
   ListItem,
   ListItemText,
+  Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 
+import { useSelector } from 'react-redux';
 import LanguagePicker from './LanguagePicker';
 import routes, { routeKeys } from '../routes';
 import useT from '../utils/translation';
 import logo from '../assets/logo_codeforpoznan.svg';
+import {
+  currentUserUsernameSelector,
+  isAuthenticatedSelector,
+} from '../store/selectors/auth';
+import { ROUTES_VISIBILITY } from '../utils/constants';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     background: theme.palette.sidebar.bg,
     height: '100vh',
     minWidth: 250,
-    padding: 16,
+    padding: theme.spacing(2),
   },
   close: {
     color: theme.palette.sidebar.fg,
@@ -35,7 +44,12 @@ const useStyles = makeStyles(theme => ({
     textDecoration: 'none',
   },
   grid: {
-    paddingTop: 16,
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+  },
+  logoutButton: {
+    color: theme.palette.sidebar.fg,
+    textTransform: 'none',
   },
 }));
 
@@ -44,14 +58,28 @@ const Sidebar = ({
   onClose,
 }) => {
   const classes = useStyles();
+  const isAuthenticated = useSelector(isAuthenticatedSelector);
+  const username = useSelector(currentUserUsernameSelector);
   const translations = {
     // keys are taken from routes.js::routes[].key
     [routeKeys.HOME]: useT('Home page'),
     [routeKeys.LOGIN]: useT('Log in'),
-    [routeKeys.LOGOUT]: useT('Log out'),
     [routeKeys.DRIVE]: useT('Add new drive'),
-    [routeKeys.TEST]: 'Testing',
+    [routeKeys.DRIVES]: useT('Drives'),
   };
+
+  const links = useMemo(
+    () => routes.filter(({ exact }) => exact)
+      .filter(({ visibility }) => (visibility === ROUTES_VISIBILITY.ALWAYS ||
+      (isAuthenticated ?
+        visibility === ROUTES_VISIBILITY.AUTHENTICATED :
+        visibility === ROUTES_VISIBILITY.GUEST)
+      )),
+    [
+      routes,
+      isAuthenticated,
+    ]
+  );
 
   return (
     <Drawer
@@ -80,11 +108,12 @@ const Sidebar = ({
           </IconButton>
         </Grid>
         <List>
-          {routes.filter(r => r.exact).map(r => (
+          {links.map(r => (
             <Link
               key={r.key}
               to={r.path}
               className={classes.link}
+              onClick={onClose}
             >
               {console.log('traslations', r)}
               <ListItem>
@@ -117,6 +146,25 @@ const Sidebar = ({
           </a>
         </Grid>
       </Grid>
+      <Divider />
+      {isAuthenticated && (
+        <Box
+          width="100%"
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          mt={2}
+        >
+          <Button
+            className={classes.logoutButton}
+            onClick={() => { console.log('dispatch logout'); }}
+            disableRipple
+          >
+            <Typography>Logout</Typography>
+          </Button>
+          <Typography>{username}</Typography>
+        </Box>
+      )}
     </Drawer>
   );
 };

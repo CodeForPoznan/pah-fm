@@ -7,6 +7,13 @@ help:  ## Display this help
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n\nTargets:\n"} \
 	 /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%17s\033[0m  %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 
+	@echo
+	@echo "   not sure which one to pick? check out README.md"
+	@[[ `docker-compose ps --services --status running | wc -l | xargs` = 4 ]] \
+		&& echo "🟢 project is running, head out to http://localhost:8000/" \
+		|| echo "⚪ project is stopped, try running 'make start'"
+	@echo
+
 start:  ## Start all containers in background
 	docker-compose up --detach
 
@@ -70,3 +77,6 @@ bash-backend:  ## Enter backend container
 
 debug-backend:  ## Debug backend container (Django)
 	docker attach `docker-compose ps -q backend`
+
+populate-database:  ## Populate database with test data
+	make manage populate_database
