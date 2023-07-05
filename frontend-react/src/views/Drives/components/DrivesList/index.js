@@ -15,15 +15,24 @@ const useStyles = makeStyles(theme => ({
     marginLeft: 'auto',
     marginRight: 'auto',
   },
+  accordion: {
+    margin: '3px',
+    borderRadius: '10px',
+    '&:before': {
+      backgroundColor: 'transparent !important',
+    },
+  },
   heading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
   },
   verified: {
-    background: 'linear-gradient(90deg, #28a745 1%, #FAF9F6 0%)',
+    background: 'linear-gradient(90deg, #28a745 0.5%, #FAF9F6 0%)',
+    borderRadius: '10px',
   },
   unverified: {
-    background: 'linear-gradient(90deg, #ffc107 1%, #FAF9F6 0%)',
+    background: 'linear-gradient(90deg, #ffc107 0.5%, #FAF9F6 0%)',
+    borderRadius: '10px',
   },
   pagination: {
     display: 'flex',
@@ -77,6 +86,7 @@ export default function DrivesList() {
           key={index}
           expanded={expanded === index}
           onChange={handleAccordionChange(index)}
+          className={classes.accordion}
         >
           <AccordionSummary
             className={drive.is_verified === 1 ? classes.verified : classes.unverified}
