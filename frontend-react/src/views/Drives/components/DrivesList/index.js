@@ -95,7 +95,7 @@ export default function DrivesList() {
             id="panel1a-header"
           >
             <Typography className={classes.heading}>
-              {drive.date}
+              <b>{drive.date}</b>
               {' '}
               From
               {' '}
@@ -109,25 +109,32 @@ export default function DrivesList() {
           <AccordionDetails>
             <Typography component="span">
               <p>
-                {`Description: ${drive.description}`}
+                <b>Description: </b>
+                {drive.description}
               </p>
               <p>
-                {`With car: ${drive.car__plates}`}
+                <b>With car: </b>
+                {drive.car__plates}
               </p>
               <p>
-                {`Passanger: ${drive.passenger}`}
+                <b>Passanger: </b>
+                {drive.passenger}
               </p>
               <p>
-                {`Project: ${drive.project__title}`}
+                <b>Project: </b>
+                {drive.project__title}
               </p>
               <p>
-                {`Starting milage: ${drive.start_mileage}`}
+                <b>Starting milage: </b>
+                {drive.start_mileage}
               </p>
               <p>
-                {`Ending milage: ${drive.end_mileage}`}
+                <b>Ending milage: </b>
+                {drive.end_mileage}
               </p>
               <p>
-                {`Miles ridden: ${drive.diff_mileage}`}
+                <b>Miles ridden: </b>
+                {drive.diff_mileage}
               </p>
               {drive.is_verified === 0 ? (
                 <div style={{
