@@ -10,7 +10,9 @@ import { mockDrives } from './mockItems';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '100%',
+    width: '80%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -21,6 +23,10 @@ const useStyles = makeStyles(theme => ({
   },
   unverified: {
     background: 'linear-gradient(90deg, #ffc107 1%, #FAF9F6 0%)',
+  },
+  pagination: {
+    display: 'flex',
+    justifyContent: 'center',
   },
 }));
 
@@ -134,6 +140,7 @@ export default function DrivesList() {
       <Pagination
         count={numberOfPages}
         onChange={handlePageChange}
+        className={classes.pagination}
       />
     </div>
   );
