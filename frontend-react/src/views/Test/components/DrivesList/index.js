@@ -49,13 +49,15 @@ export default function DrivesList() {
     page,
     setPage,
   ] = useState(1);
-  const handlePageChange = (e, p) => {
-    setPage(p);
-  };
   const [
     expanded,
     setExpanded,
   ] = useState();
+
+  const handlePageChange = (e, p) => {
+    setPage(p);
+    setExpanded();
+  };
   const handleAccordionChange = panel => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
