@@ -15,10 +15,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: CodeForPoznan/actions/setup-frontend@v2
+      - uses: CodeForPoznan/actions/setup-frontend@main
 
       - run: yarn run lint
       - run: yarn run test
 
-      - uses: CodeForPoznan/actions/pack-frontend@v2
+      - uses: CodeForPoznan/actions/pack-frontend@main
         if: github.event_name != 'pull_request'
