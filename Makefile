@@ -87,4 +87,4 @@ pack-backend:
 	7z a ../lambda.zip -xr'!.venv' migrations ../backend
 
 pack-frontend:
-	yarn run build --dest ../public
+	npm run build -- --dest ../public
