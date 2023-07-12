@@ -80,3 +80,11 @@ debug-backend:  ## Debug backend container (Django)
 
 populate-database:  ## Populate database with test data
 	make manage populate_database
+
+# AWS Lambda
+pack-backend:
+	7z a ../lambda.zip ./.venv/lib/python*/site-packages/*
+	7z a ../lambda.zip -xr'!.venv' migrations ../backend
+
+pack-frontend:
+	yarn run build --dest ../public
