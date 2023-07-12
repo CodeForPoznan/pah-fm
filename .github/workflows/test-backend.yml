@@ -15,10 +15,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: CodeForPoznan/actions/setup-backend@v2
-      - uses: CodeForPoznan/actions/lint-backend@v2
+      - uses: CodeForPoznan/actions/setup-backend@main
+      - uses: CodeForPoznan/actions/lint-backend@main
 
       - run: pipenv run pytest
 
-      - uses: CodeForPoznan/actions/pack-backend@v2
+      - uses: CodeForPoznan/actions/pack-backend@main
         if: github.event_name != 'pull_request'

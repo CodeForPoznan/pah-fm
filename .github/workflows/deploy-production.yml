@@ -13,7 +13,7 @@ jobs:
     uses: ./.github/workflows/test-backend.yml
 
   deploy:
-    uses: CodeForPoznan/actions/.github/workflows/call-deploy.yml@v2
+    uses: CodeForPoznan/actions/.github/workflows/call-deploy.yml@main
     needs: [frontend, backend]
     secrets: inherit
     with:
