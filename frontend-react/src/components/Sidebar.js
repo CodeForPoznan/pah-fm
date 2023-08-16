@@ -115,7 +115,6 @@ const Sidebar = ({
               className={classes.link}
               onClick={onClose}
             >
-              {console.log('traslations', r)}
               <ListItem>
                 <ListItemText>
                   {translations[r.key]}

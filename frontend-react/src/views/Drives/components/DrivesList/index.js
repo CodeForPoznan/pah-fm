@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import {
+  useState,
+  useMemo,
+} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -41,19 +44,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const totalMilage = () => {
-  let milage = 0;
-
-  mockDrives.map((drive) => {
-    milage += drive.diff_mileage * 1;
-
-    return milage;
-  });
-
-  return milage;
-};
+const calculateMilage = () => mockDrives.reduce(
+  (acc, cur) => acc + cur.end_mileage - cur.start_mileage,
+  0
+);
 
 export default function DrivesList() {
+  const totalMilage = useMemo(() => calculateMilage(), [mockDrives]);
   const classes = useStyles();
   const [
     page,
@@ -80,7 +77,7 @@ export default function DrivesList() {
 
   return (
     <div className={classes.root}>
-      <p>{`Total milage: ${totalMilage()} km`}</p>
+      <p>{`Total milage: ${totalMilage} km`}</p>
       {sliced.map((drive, index) => (
         <Accordion
           key={index}
