@@ -77,6 +77,13 @@ const routes = [
     visibility: ROUTES_VISIBILITY.AUTHENTICATED,
   },
   {
+    exact: true,
+    path: '/drives',
+    key: routeKeys.DRIVES,
+    component: lazy(() => import('./views/Drives')),
+    visibility: ROUTES_VISIBILITY.AUTHENTICATED,
+  },
+  {
     path: '*',
     key: routeKeys.DEFAULT,
     component: () => <Redirect to="/404" />,
