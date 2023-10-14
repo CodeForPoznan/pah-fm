@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.views.generic import TemplateView
 from fleet_management.api import (
     CarListView,
@@ -20,15 +20,16 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="index.html"), name="index"),
+    path("admin/docs/", include("django.contrib.admindocs.urls")),
     path("admin/", admin.site.urls),
-    path("api/docs/", get_schema_view(title="PAH-FM"), name="openapi-schema"),
+    path("api/schema", get_schema_view(title="PAH-FM"), name="api-schema"),
     path(
-        "api/swagger-ui/",
+        "api/docs/",
         TemplateView.as_view(
-            template_name="swagger-ui.html",
-            extra_context={"schema_url": "openapi-schema"},
+            template_name="api-docs.html",
+            extra_context={"schema_url": "api-schema"},
         ),
-        name="swagger-ui",
+        name="api-docs",
     ),
     path("api/users/me", CurrentUserRetrieveView.as_view(), name="me"),
     path("api/passengers", PassengerListView.as_view(), name="passengers"),

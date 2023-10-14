@@ -32,7 +32,10 @@ RSA_PUBLIC_EXP = 257
 RSA_BIT_LENGTH = 19
 
 USE_X_FORWARDED_HOST = True
-CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = None
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_HTTPONLY = not DEBUG
 CSRF_COOKIE_DOMAIN = BASE_URL
 CSRF_TRUSTED_ORIGINS = [f"http://{BASE_URL}"]
 CORS_ORIGIN_WHITELIST = (
@@ -51,12 +54,13 @@ if DEBUG:
     EMAIL_FILE_PATH = os.path.join(BASE_DIR, "emails")
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.admindocs",
+    "django.contrib.admin",
     # 3rd party apps
     "import_export",
     "corsheaders",
