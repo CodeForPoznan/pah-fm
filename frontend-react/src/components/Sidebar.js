@@ -23,6 +23,7 @@ import routes, { routeKeys } from '../routes';
 import useT from '../utils/translation';
 import logo from '../assets/logo_codeforpoznan.svg';
 import {
+  currentUserGroupsSelector,
   currentUserUsernameSelector,
   isAuthenticatedSelector,
 } from '../store/selectors/auth';
@@ -60,12 +61,14 @@ const Sidebar = ({
   const classes = useStyles();
   const isAuthenticated = useSelector(isAuthenticatedSelector);
   const username = useSelector(currentUserUsernameSelector);
+  const userGroups = useSelector(currentUserGroupsSelector);
   const translations = {
     // keys are taken from routes.js::routes[].key
     [routeKeys.HOME]: useT('Home page'),
     [routeKeys.LOGIN]: useT('Log in'),
     [routeKeys.DRIVE]: useT('Add new drive'),
     [routeKeys.DRIVES]: useT('Drives'),
+    [routeKeys.PASSENGER]: useT('Confirm drive'),
   };
 
   const links = useMemo(
@@ -74,7 +77,8 @@ const Sidebar = ({
       (isAuthenticated ?
         visibility === ROUTES_VISIBILITY.AUTHENTICATED :
         visibility === ROUTES_VISIBILITY.GUEST)
-      )),
+      ))
+      .filter(({ groups }) => !groups || userGroups.some(role => groups.includes(role))),
     [
       routes,
       isAuthenticated,

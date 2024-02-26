@@ -9,7 +9,10 @@ import {
   Redirect,
   Route,
 } from 'react-router-dom';
-import { ROUTES_VISIBILITY } from './utils/constants';
+import {
+  ROUTES_VISIBILITY,
+  USER_GROUPS,
+} from './utils/constants';
 
 export const renderRoutes = (routes = []) => (
   <Suspense fallback={<div>Loading...</div>}>
@@ -47,6 +50,7 @@ const routeKeys = {
   DEFAULT: 'default',
   DRIVE: 'drive',
   DRIVES: 'drives',
+  PASSENGER: 'passenger',
 };
 
 const routes = [
@@ -75,6 +79,15 @@ const routes = [
     key: routeKeys.DRIVE,
     component: lazy(() => import('./views/Drive')),
     visibility: ROUTES_VISIBILITY.AUTHENTICATED,
+    groups: [USER_GROUPS.DRIVER],
+  },
+  {
+    exact: true,
+    path: '/passenger',
+    key: routeKeys.PASSENGER,
+    component: lazy(() => import('./views/Passenger')),
+    visibility: ROUTES_VISIBILITY.AUTHENTICATED,
+    groups: [USER_GROUPS.PASSENGER],
   },
   {
     path: '*',
