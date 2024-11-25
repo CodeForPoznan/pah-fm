@@ -7,7 +7,7 @@ name = "pypi"
 python_version = "3.11"
 
 [packages]
-django                         = "==4.1.7"
+django                         = "==4.1.10"
 django-cors-headers            = "==3.13.0"
 django-countries               = "==7.3.2"
 django-filter                  = "==22.1"
